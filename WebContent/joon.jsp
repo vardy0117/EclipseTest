@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
- 브랜치 테스트
+테스트2 
 </body>
 </html>
