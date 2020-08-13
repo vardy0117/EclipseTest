@@ -4,3 +4,4 @@ context.xml # DB연결파일
 .classpath
 RemoteSystemsTempFiles
 Servers
+/build/
