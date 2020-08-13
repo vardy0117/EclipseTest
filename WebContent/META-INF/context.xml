@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+	 <Resource 
+	name="jdbc/jspmodel2"
+	auth="Container"
+	type="javax.sql.DataSource"
+	driverClassName="com.mysql.jdbc.Driver"
+	url="jdbc:mysql://59.20.215.149:3306/jspbeginner"
+	username="jspmodel2"
+	password="jspmodel2"	
+	/>
+
+</Context>
