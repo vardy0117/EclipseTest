@@ -5,7 +5,7 @@
 	auth="Container"
 	type="javax.sql.DataSource"
 	driverClassName="com.mysql.jdbc.Driver"
-	url="jdbc:mysql://59.20.215.149:3306/jspbeginner"
+	url="jdbc:mysql://59.20.215.149:3306/jspmodel2"
 	username="jspmodel2"
 	password="jspmodel2"	
 	/>
