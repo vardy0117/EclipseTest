@@ -26,7 +26,7 @@
 <body>
 	<div id="topDiv">
 		top.jsp
-		<div id="loginAndJoin">로그인 | 회원가입</div>
+		<div id="loginAndJoin"><a href="./login.do">로그인</a> | 회원가입</div>
 	</div>
 </body>
 </html>
