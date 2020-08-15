@@ -8,7 +8,7 @@
 <style>
 	#topDiv{
 		width:1000px;
-		height: 51px;
+		height: 50px;
 		background-color: black;
 		color: white;
 		margin: 0 auto;
@@ -18,15 +18,34 @@
 		right: 0;
 		z-index: 1000;
 	}
+	
+	#topDiv #logo {
+		text-align: center;
+		margin: 10px 0;
+	}
+	
 	#loginAndJoin {
-		float: right;
+		position: absolute;
+		right: 10px;
+		top: 10px;
+	}
+	#loginAndJoin a {
+		text-decoration: none;
+		color: white;
+	}
+	#loginAndJoin a:hover {
+		text-decoration: underline;
+		color: white;
 	}
 </style>
 </head>
 <body>
 	<div id="topDiv">
-		top.jsp
-		<div id="loginAndJoin"><a href="./login.do">로그인</a> | 회원가입</div>
+		<h2 id="logo">Delivengers</h2>
+		<div id="loginAndJoin">
+			<a href="./login.do">로그인</a>
+			 | <a href="./join.do">회원가입</a>
+		 </div>
 	</div>
 </body>
 </html>
