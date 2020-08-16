@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -42,10 +42,28 @@
 <body>
 	<div id="topDiv">
 		<h2 id="logo">Delivengers</h2>
-		<div id="loginAndJoin">
-			<a href="./login.do">로그인</a>
-			 | <a href="./join.do">회원가입</a>
-		 </div>
+		<c:choose>
+		<c:when test="${empty sessionScope.customerNo || empty sessionScope.ceoNo}">
+			<div id="loginAndJoin">
+				<a href="./login.do">로그인</a> | 
+				<a href="./SelectJoin.me">회원가입</a> |	
+			</div>
+		</c:when>
+		<c:when test="${!empty sessionScope.customerNo}">
+			<div id="loginAndJoin">
+				${sessionScope.nickname}님 어서 오세요!
+				<a href="#">?</a> | 
+				<a href="./LogOut.me">logout</a> |	
+			</div>
+		</c:when>
+		<c:when test="${!empty sessionScope.ceoNo}">
+			<div id="loginAndJoin">
+				<a href="#">마이페이지</a> | 
+				<a href="./LogOut.me">logout</a> |	
+			</div>
+		</c:when>
+		</c:choose>	
 	</div>
+	
 </body>
 </html>
