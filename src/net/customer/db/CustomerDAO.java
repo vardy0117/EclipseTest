@@ -1,5 +1,6 @@
 package net.customer.db;
 
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -121,6 +122,8 @@ public class CustomerDAO {
 		
 		boolean result = false;
 		
+
+
 		try {
 			 getConnection();
 			 
@@ -137,12 +140,12 @@ public class CustomerDAO {
 			 rs = pstmt.executeQuery();
 			 
 			 if(rs.next()) {
-				 System.out.println("비밀번호 : " + cb.getPassword() + " 아이디 : : " + cb.getEmail());
+				 System.out.println("비밀번호 : " + cb.getPassword() + " 아이디 : " + cb.getEmail());
 				 System.out.println("아이디 검사 성공! 사용자가 정보를 맞게 입력함");
 				 result = true;
 			 }else{
 				 System.out.println("사용자가 비밀번호 틀림");
-				 System.out.println("비밀번호 : " + cb.getPassword() + " 아이디 : : " + cb.getEmail());
+				 System.out.println("비밀번호 : " + cb.getPassword() + " 아이디 : " + cb.getEmail());
 				result = false;
 			 }
 			
