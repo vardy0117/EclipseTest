@@ -36,7 +36,7 @@ public class FrontController extends HttpServlet {
 		// ----------------------------------------------------------------------
 		if(command.equals("login.do")){
 			forward = new ActionForward();
-			forward.setView("index.jsp?center=member/login.jsp");
+			forward.setView("index.jsp?center=member/selectLogin.jsp");
 			forward.execute(request, response);
 		}
 		
