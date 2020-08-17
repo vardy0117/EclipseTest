@@ -92,6 +92,16 @@ public class CustomerDAO {
 
 			 sql="insert into customer(email, password, nickname, address, bname, phone, agreeAD) "
 			 			     + "values(?, ?, ?, ?, ?, ?, ?)";
+			 /********************************************/
+			 // 잠시 보류
+			 /********************************************/
+			 
+		/*	 sql="insert into customer(email, password, nickname, address, bname, phone, agreeAD) "
+	 			     + "values('?', hex(aes_encrypt(email,?), ?, ?, ?, ?, ?)";*/
+			 /*insert into customer (customerNo, email, password, nickname, address, bname, phone, grade,agreeAD) values 
+			 (null, 'test12@naver.com', hex(aes_encrypt('test12@naver.com','1234')),'닉네임3','서울','상암동',01028017891,5,'T' );
+			 */
+			 
 			
 			 pstmt = con.prepareStatement(sql);
 			
