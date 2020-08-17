@@ -51,8 +51,11 @@ public class CustomerLoginAction implements Action {
 		boolean result = cdao.CheckCustomer(cb); // 로그인시 유저 검사
 		System.out.println("반환받은 로그인 result값" + result);
 		
+
+		
 		if(result != false){
 			log.info("로그인 완료!");
+			req.setAttribute("loginResult", result);
 			return null;
 		}
 				
