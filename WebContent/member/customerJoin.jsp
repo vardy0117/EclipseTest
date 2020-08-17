@@ -27,69 +27,58 @@
 	 }
 	
 	function chkData(){
-		if(document.fr.email.value == ""){
-	    	alert("이메일을 입력하세요.");
+		if(document.fr.emailId.value == ""){
+			$("#emailChkMsg").text("email 이름을 입력하세요");
 	    	document.fr.email.focus();
 	    	return false;
 	 	}		
 		
 		if(document.fr.password.value == ""){
-	    	alert("비밀번호를 입력하세요.");
+			$("#passwordChkMsg").text("비밀번호를 입력하세요");
 	    	document.fr.password.focus();
 	    	return false;
 	 	}
 	 
 	 	if(document.fr.password.value != document.fr.password2.value){
-			alert("비밀번호가 맞지 않습니다..");
+	 		$("#password2ChkMsg").text("비밀번호가 다릅니다.");
 		   	document.fr.password2.focus();
 		   	return false;
 		}
 	 	
 	 	if(document.fr.nickname.value == ""){
-	    	alert("별명을 입력하세요");
+	 		$("#nicknameChkMsg").text("별명을 입력하세요");
 	    	document.fr.nickname.focus();
 	    	return false;
 	 	}
 	 	
 	 	if(document.fr.phone.value == ""){
-	    	alert("연락처를 입력하세요");
+	 		$("#phoneChkMsg").text("연락처를 입력하세요");
 	    	document.fr.phone.focus();
 	    	return false;
 	 	}
 	 	
 	 	if(document.fr.roadAddress.value == ""){
-	    	alert("주소를 입력하세요");
+	 		$("#roadAddressChkMsg").text("주소를 입력하세요");
 	    	document.fr.roadAddress.focus();
 	    	return false;
 	 	}
 	 	
 	 	if(document.fr.detailAddress.value == ""){
-	    	alert("상세 주소를 입력하세요" );
+	 		$("#detailAddressChkMsg").text("상세주소를 입력하세요");
 	    	document.fr.detailAddress.focus();
 	    	return false;
 	 	}
 	 	
 	 	if(document.fr.bname.value == ""){
-	    	alert("배달희망지역을 입력하세요");
+	 		$("#bnameChkMsg").text("배달희망지역을 입력하세요");
 	    	document.fr.bname.focus();
 	    	return false;
-	 	}
-	 	
-	 	if($("#ebtn").val()!="가입 가능!"){
-	 		 alert("가입가능여부가 확인되지 않았습니다. \n 계정 중복 확인을 해주세요");
-	 		 return false;
-	 	}
-	 	
-	 	if($("#pbtn").val()!="가입 가능!"){
-	 		 alert("가입가능여부가 확인되지 않았습니다. \n 연락처 중복 확인을 해주세요");
-	 		 return false;
-	 	}
-	 	
+	 	}	 	
 	}
 	  
 	function checkID(){
-		if($("#email").val()!=""){
-			var email = $("#email").val();
+		if($("#emailId").val()!="" && $("#emailServer").val()!=""){
+			var email = $("#emailId").val()+"@"+$("#emailServer").val();
 			$.ajax({
 				type : "post",
 				async : false,
@@ -98,11 +87,17 @@
 				dataType : "text",
 				success : function(result,textStatus){
 					if(result == "useable"){
-						$("#ebtn").val("가입 가능!");
-						$("#email").attr("readOnly",true);
+						$("#sbtn").prop("disabled", false);
+						$("#sbtn").css("background-color", "#4CAF50");
+						$("#ebtn").css("background-color", "#B0F6AC");
+						$("#emailChkMsg").text("사용 가능한 계정입니다!");
+						return;
 						return;
 					} else {
-						$("#ebtn").val("중복 계정!");
+						$("#sbtn").prop("disabled", true);
+						$("#sbtn").css("background-color", "#aaaaaa");
+						$("#ebtn").css("background-color", "#FFCECE");
+						$("#emailChkMsg").text("이미 가입된 계정입니다!");
 						return;
 					}
 				}, 
@@ -115,7 +110,7 @@
 	} // function
 	
 	function checkPhone(){
-		if($("#phone").val()!=""){
+		if($("#phone").val().length>=7){
 			var phone = $("#phoneFront").val()+$("#phone").val();
 				$.ajax({
 				type : "post",
@@ -125,11 +120,16 @@
 				dataType : "text",
 				success : function(result,textStatus){
 					if(result == "useable"){
-						$("#pbtn").val("가입 가능!");
-						$("#phone").attr("readOnly",true);
+						$("#sbtn").prop("disabled", false);
+						$("#sbtn").css("background-color", "#4CAF50");
+						$("#pbtn").css("background-color", "#B0F6AC");
+						$("#phoneChkMsg").text("사용 가능한 연락처입니다!");
 						return;
 					} else {
-						$("#pbtn").val("중복 번호!");
+						$("#sbtn").prop("disabled", true);
+						$("#sbtn").css("background-color", "#aaaaaa");
+						$("#pbtn").css("background-color", "#FFCECE");
+						$("#phoneChkMsg").text("이미 존재하는 연락처입니다!");
 						return;
 					}
 				}, 
@@ -138,7 +138,12 @@
 					alert("에러가 발생했슈");
 				}
 			}); // $ajax()
-		} // if
+		} else if ($("#phone").val().length<7) {
+			$("#sbtn").prop("disabled", true);
+			$("#sbtn").css("background-color", "#aaaaaa");
+			$("#pbtn").css("background-color", "#FFCECE");
+			$("#phoneChkMsg").text("7자리이상 입력하세요")
+		} // if-else
 	} // function
 	  
 	$(function (){
@@ -190,17 +195,22 @@
 		<form action="./CustomerJoinAction.me" id="join" method="post" name="fr">
 			<fieldset>
 				<label>E-mail</label>
-					<input type="text" id="email" name="email" class="email" size="30">
-					<input type="button" id="ebtn" value="계정 중복 확인" class="dup" onclick="checkID();"> <br>
+					<input type="text" id="emailId" name="emailId" class="email" size="10" placeholder="E-mail 이름" oninput="checkID()" style="text-align:right;">
+					<a id=emailAt>@</a>
+					<input type="text" id="emailServer" name="emailServer" class="email" size="15" placeholder="E-mail 주소" oninput="checkID()">
+					<a id=emailChkMsg></a>
 				<hr>
 				<label>비밀번호</label>
 					<input type="password" id="password" name="password" class="password" value="" size="30">
+					<a id=passwordChkMsg></a>
 				<hr>
 				<label>비밀번호 확인</label>
 					<input type="password" id="password2" name="password2" class="password2" size="30" >
+					<a id=password2ChkMsg></a>
 				<hr>
 				<label>별명</label>
 					<input type="text" id="nickname" name="nickname" size="30">
+					<a id=nicknameChkMsg></a>
 				<hr>	
 				<label>연락처</label>	
 					<select id="phoneFront" name="phoneFront"> 
@@ -210,14 +220,15 @@
 						<option value="017">017</option>
 						<option value="019">019</option>
 					</select>
-						<input type="text" id="phone" name="phone" class="phone" placeholder="숫자만 입력하세요 ex)45458282" size="30" numberOnly >
-						<input type="button" id="pbtn" value="연락처 중복 확인" class="dup" onclick="checkPhone();"> <br>
+						<input type="text" id="phone" name="phone" class="phone" placeholder="숫자만 입력하세요 ex)45458282" oninput="checkPhone()" size="30" numberOnly>
+						<a id=phoneChkMsg></a>	
 				<hr>
 				<label>주소</label>	
 				<table>
 					<tr>		
 						<td>
 							<input type="text" id="roadAddress" name="roadAddress" class="roadAddress" size="50" placeholder="주소찾기 버튼을 이용하세요" readOnly> 
+							<a id=roadAddressChkMsg></a>
 							<input type="button" class="dup" onclick="execDaumPostcode()" value="주소찾기"> 
 						</td>
 					</tr>
@@ -225,12 +236,14 @@
 						<td>
 							<span id="guide" style="color:#999;display:none"></span>
 							<input type="text" id="detailAddress"  name="detailAddress" class="detailAddress" size="50" placeholder="상세 주소 입력">
+							<a id=detailAddressChkMsg></a>
 						</td>
 					</tr>
 				</table>
 				<hr>
 				<label>배달 희망 지역</label> 
-				<input type="text" id="bname" name="bname" class="bname" size="30" placeholder="배달희망지역 ex) 장전동"> <br>
+				<input type="text" id="bname" name="bname" class="bname" size="30" placeholder="배달희망지역 ex) 장전동">
+				<a id=bnameChkMsg></a> <br>
 				<hr>
 				<label>약관 및 동의</label>
 				<!-- 
@@ -247,7 +260,7 @@
 				</fieldset>
 			<div class="clear"></div>
 			<div id="buttons">
-				<input type="submit" id="sbtn" value="작성완료" class="submit">
+				<input type="submit" id="sbtn" value="회원가입" class="submit" disabled="disabled">
 				<input type="reset" id="rbtn" value="다시입력" class="cancel">
 			</div>
 		</form>
