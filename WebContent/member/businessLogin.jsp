@@ -35,6 +35,7 @@
 				
 					<br>사업자 로그인
 					
+					<font size="20" color="red"> 아직 로그인 기능 <br> 추가 안되어있습니다</font>
 				</font>
 			
 				
