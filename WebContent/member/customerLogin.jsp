@@ -27,12 +27,17 @@
 
 	<h1>로그인</h1>
 	<center>
-	<form action="./CustomerLogin.me" method="post">
+	<form action="./CustomerLoginAction.me" method="post">
 	
 			
 			<table>
 				<tr>
-				<font size ="10">디자인 적용 X상태, <br> DB테스트한다고 로그인 기능 넣었습니다</font>
+				<font size ="10">디자인 적용 X상태, <br> DB테스트한다고 로그인 기능 넣었습니다 <br> <br>
+				
+					<br>고객전용 로그인
+					
+				</font>
+			
 				
 					<td class="td_left">
 					<label for="id">이메일 : </label>

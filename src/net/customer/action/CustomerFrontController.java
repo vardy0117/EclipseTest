@@ -96,8 +96,8 @@ public class CustomerFrontController extends HttpServlet {
 					
 			
 			
-			
-			case "/CustomerLogin.me": // 로그인			
+			/********************************************/
+			case "/CustomerLoginAction.me": // 일반고객 로그인 처리 과정	
 				action = new CustomerLoginAction();
 			try{
 				forward = action.execute(req, resp);
@@ -107,6 +107,23 @@ public class CustomerFrontController extends HttpServlet {
 			}
 			
 			break;
+			
+			/********************************************/
+			case "/CustomerLogin.me" : // 일반 고객 로그인 창
+				forward=new ActionForward();
+				forward.setRedirect(true);
+				forward.setPath("./index.jsp?center=member/customerLogin.jsp");
+			break;	
+			/********************************************/
+			
+			/********************************************/
+			case "/BusinessLogin.me" : // 사업자 고객 로그인 창
+				forward=new ActionForward();
+				forward.setRedirect(true);
+				forward.setPath("./index.jsp?center=member/businessLogin.jsp");
+			break;	
+			/********************************************/
+			
 			
 			
 		} // switch문

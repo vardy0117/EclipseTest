@@ -127,26 +127,41 @@ public class CustomerDAO {
 		try {
 			 getConnection();
 			 
-			sql =" select aes_decrypt(unhex(password), ?) from customer where email = ? ";
+			sql =" select aes_decrypt(unhex(password), ?) as email from customer where email = ? ";
 			// mysql에 aes 암호 알고리즘(?) 사용 해서 원본 아이디 비밀번호 검사
 			
-			 
+			 /***************************************************************/
+			// 암호화가 적용된 계정만 위 명령이 먹힙니다 조만간 호환성 보고 회원가입시에도 암호화 할 예정입니다
+			
+			
+			 /***************************************************************/
 			 pstmt = con.prepareStatement(sql);
 			 pstmt.setString(1, cb.getPassword());
 			 pstmt.setString(2, cb.getEmail());
 			 
-
-		//	 result = pstmt.executeUpdate();
-			 rs = pstmt.executeQuery();
+			// rs.getString("email");
 			 
-			 if(rs.next()) {
+	
+			 rs = pstmt.executeQuery();		 
+		
+			 rs.next();
+			 if(rs.getString("email") != null) { // 쿼리가 정상적으로 작동하면 실행, 암호가 다른상태로 select문 되었을때 안맞으면 
+				 								// 무조건 null이 나옴  비밀번호 틀린것으로 간주,   
+				 								// 그리고 암호화가 안된 데이터, 
+				 								// 즉 개발자가 임의로 넣은 테스트 데이터는 이 검사 명령이 안먹힘
+				 	
+				 
+				 System.out.println("유저 DB내용 : " +  cb.getEmail() );
+				 
 				 System.out.println("비밀번호 : " + cb.getPassword() + " 아이디 : " + cb.getEmail());
 				 System.out.println("아이디 검사 성공! 사용자가 정보를 맞게 입력함");
+				 System.out.println("검사 성공 rs.next내용" + rs.next());
 				 result = true;
 			 }else{
 				 System.out.println("사용자가 비밀번호 틀림");
 				 System.out.println("비밀번호 : " + cb.getPassword() + " 아이디 : " + cb.getEmail());
-				result = false;
+				 System.out.println("검사 실패 rs.next내용" + rs.next());
+				 result = false;
 			 }
 			
 		} catch (Exception e){
