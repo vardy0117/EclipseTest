@@ -1,7 +1,0 @@
-context.xml # DB연결파일 
-.metadata
-.project
-.classpath
-RemoteSystemsTempFiles
-Servers
-/build/
