@@ -116,5 +116,46 @@ public class CustomerDAO {
 		
 		return false;
 	} // method
+/***********************************************************************************************/
+	public boolean CheckCustomer(CustomerBean cb) { // 로그인 검사 
+		
+		boolean result = false;
+		
+		try {
+			 getConnection();
+			 
+			sql =" select aes_decrypt(unhex(password), ?) from customer where email = ? ";
+			// mysql에 aes 암호 알고리즘(?) 사용 해서 원본 아이디 비밀번호 검사
+			
+			 
+			 pstmt = con.prepareStatement(sql);
+			 pstmt.setString(1, cb.getPassword());
+			 pstmt.setString(2, cb.getEmail());
+			 
 
+		//	 result = pstmt.executeUpdate();
+			 rs = pstmt.executeQuery();
+			 
+			 if(rs.next()) {
+				 System.out.println("비밀번호 : " + cb.getPassword() + " 아이디 : : " + cb.getEmail());
+				 System.out.println("아이디 검사 성공! 사용자가 정보를 맞게 입력함");
+				 result = true;
+			 }else{
+				 System.out.println("사용자가 비밀번호 틀림");
+				 System.out.println("비밀번호 : " + cb.getPassword() + " 아이디 : : " + cb.getEmail());
+				result = false;
+			 }
+			
+		} catch (Exception e){
+			System.out.println("CheckCustomer메소드 내부에서 예외 발생 : " + e);
+		} finally {
+			resourceClose();
+		}
+		
+		return result;
+	} // method
+	
+/***********************************************************************************************/
+	
+	
 } // class
