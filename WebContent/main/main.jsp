@@ -15,7 +15,6 @@
 		border: 2px solid green;
 		margin: 0 auto;
 		margin-top: 50px;
-		position: relative;
 	}
 	#searchDiv {
 		width: 600px;

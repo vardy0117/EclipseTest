@@ -23,6 +23,10 @@
 		text-align: center;
 		margin: 10px 0;
 	}
+	#topDiv a {
+		text-decoration: none;
+		color: white;
+	}
 	
 	#loginAndJoin {
 		position: absolute;
@@ -41,25 +45,25 @@
 </head>
 <body>
 	<div id="topDiv">
-		<h2 id="logo">Delivengers</h2>
+		<h2 id="logo"><a href="./">Delivengers</a></h2>
 		<c:choose>
 		<c:when test="${empty sessionScope.customerNo || empty sessionScope.ceoNo}">
 			<div id="loginAndJoin">
 				<a href="./login.do">로그인</a> | 
-				<a href="./SelectJoin.me">회원가입</a> |	
+				<a href="./SelectJoin.do">회원가입</a> |	
 			</div>
 		</c:when>
 		<c:when test="${!empty sessionScope.customerNo}">
 			<div id="loginAndJoin">
 				${sessionScope.nickname}님 어서 오세요!
 				<a href="#">?</a> | 
-				<a href="./LogOut.me">logout</a> |	
+				<a href="./LogOut.do">logout</a> |	
 			</div>
 		</c:when>
 		<c:when test="${!empty sessionScope.ceoNo}">
 			<div id="loginAndJoin">
 				<a href="#">마이페이지</a> | 
-				<a href="./LogOut.me">logout</a> |	
+				<a href="./LogOut.do">logout</a> |	
 			</div>
 		</c:when>
 		</c:choose>	
