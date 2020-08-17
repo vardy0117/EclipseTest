@@ -41,6 +41,9 @@ public class CustomerLoginAction implements Action {
 		log.info("로그인 테스트 호출");
 		req.setCharacterEncoding("UTF-8");
 		
+		
+		
+		
 		CustomerBean cb =new CustomerBean();
 		
 		cb.setEmail(req.getParameter("email"));
@@ -49,14 +52,27 @@ public class CustomerLoginAction implements Action {
 		CustomerDAO cdao=new CustomerDAO();
 			
 		boolean result = cdao.CheckCustomer(cb); // 로그인시 유저 검사
-		System.out.println("반환받은 로그인 result값" + result);
+		System.out.println("반환받은 로그인 result값 : " + result);
 		
+	
 
 		
-		if(result != false){
+		if(result == false){
+			PrintWriter out = resp.getWriter();
+			req.setCharacterEncoding("utf-8");
+			 resp.setContentType("text/html;charset=UTF-8"); 
+			 out.println("<script>"); 
+			 out.println("alert('로그인에 실패하셨습니다. 아이디와 비밀번호 확인 후 다시 로그인해주세요.');"); 
+			 out.println("history.back();"); 
+			 out.println("");
+			 out.println("</script>");
+			System.out.println("로그인 실패 result값 " + result);
+			return null;
+			
+		}else{
 			log.info("로그인 완료!");
 			req.setAttribute("loginResult", result);
-			return null;
+			System.out.println("로그인 성공 result값 " + result);
 		}
 				
 		// 페이지 이동 설정 (이동 방식, 경로)
