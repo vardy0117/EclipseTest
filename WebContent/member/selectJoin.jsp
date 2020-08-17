@@ -15,28 +15,82 @@
 		border: 2px solid green;
 		margin: 0 auto;
 		margin-top: 50px;
-		position: relative;
 	}
-	#selJoinDiv {
-		width: 600px;
-		height: 200px;
-		position: absolute;
-		top: 50%;
-    	left: 50%;
-    	transform: translate(-50%, -50%)
+	#customerJoinDiv {
+		width: 400px;
+		height: 300px;
+		border: 2px solid blue;
+		float: left;
+		margin-left: 70px;
+		padding: 50px;
+		text-align: center;
+		border-radius: 15px;
+	}
+	#customerJoinDiv > h2, #customerJoinDiv > p {
+		color: blue;
+		text-align: center;
+	}
+	#customerJoinBtn {
+		font-family: 'BMEULJIRO';
+		width: 200px;
+		height: 50px;
+		background-color: blue;
+		border-radius: 12px;
+		color: white;
+		font-size: 1.5rem;
+		border: 0px;
+		transition-duration: 0.4s;
+	}
+	#customerJoinBtn:hover {
+		color: blue;
+		background-color: white;
+		border: 2px solid blue;
+	}
+	
+	#ceoJoinDiv {
+		width: 400px;
+		height: 300px;
+		border: 2px solid orange;
+		float: right;
+		margin-right: 70px;
+		padding: 50px;
+		text-align: center;
+		border-radius: 15px;
+	}
+	#ceoJoinDiv > h2, #ceoJoinDiv > p {
+		color: orange;
+		text-align: center;
+	}
+	#ceoJoinBtn {
+		font-family: 'BMEULJIRO';
+		width: 200px;
+		height: 50px;
+		background-color: orange;
+		border-radius: 12px;
+		color: white;
+		font-size: 1.5rem;
+		border: 0px;
+		transition-duration: 0.4s;
+	}
+	#ceoJoinBtn:hover {
+		color: orange;
+		background-color: white;
+		border: 2px solid orange;
 	}
 </style>
 </head>
 <body>
 	<div id="mainDiv">
-		<div id="selJoinDiv">
-			<a href="./CustomerJoin.me">
-				<img src="images/customerJoin.jpg" alt="일반회원가입">
-			</a>
-			
-			<a href="#">
-				<img src="images/ceoJoin.jpg" alt="사업자회원가입">
-			</a>
+		<div style="height: 100px;"></div>
+		<div id="customerJoinDiv">
+			<h2>일반회원</h2>
+			<p>주문을 원하시는 고객을 위한 회원</p>
+			<input id="customerJoinBtn" type="button" value="가입하기" onclick="location.href='./CustomerJoin.do'">
+		</div>
+		<div id="ceoJoinDiv">
+			<h2>사업자회원</h2>
+			<p>판매를 원하시는 사업주를 위한 회원</p>
+			<input id="ceoJoinBtn" type="button" value="가입하기" onclick="location.href='./CeoJoin.do'">
 		</div>
 	</div>
 </body>
