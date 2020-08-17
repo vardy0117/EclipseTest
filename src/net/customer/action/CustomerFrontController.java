@@ -93,6 +93,21 @@ public class CustomerFrontController extends HttpServlet {
 				forward.setRedirect(true);
 				forward.setPath("./index.jsp");
 			break;	
+					
+			
+			
+			
+			case "/CustomerLogin.me": // 로그인			
+				action = new CustomerLoginAction();
+			try{
+				forward = action.execute(req, resp);
+				System.out.println("login.me 호출");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			break;
+			
 			
 		} // switch문
 	
