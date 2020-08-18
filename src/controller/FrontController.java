@@ -85,21 +85,7 @@ public class FrontController extends HttpServlet {
 			}
 		}
 		
-		/**************************************************************************************/
-		if(forward!=null){ 
-			if(forward.isRedirect()){
-
-				response.sendRedirect(forward.getView());
-				
-				
-			}else{
-				
-				RequestDispatcher dispatcher=request.getRequestDispatcher(forward.getView());
-				dispatcher.forward(request, response);
-			}
-		}//if 
-		/**************************************************************************************/
-		
+	
 		
 	}
 
