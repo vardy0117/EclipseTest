@@ -90,19 +90,28 @@ public class CustomerDAO {
 		try {
 			 getConnection();
 
-	/*		 sql="insert into customer(email, password, nickname, address, bname, phone, agreeAD) "
-			 			     + "values(?, ?, ?, ?, ?, ?, ?)";
-*/
-			 
-		 sql="insert into customer(customerNo, email, password, nickname, address, bname, phone, agreeAD) "
+			 sql="insert into customer(email, password, nickname, roadAddress, detailAddress, bname, phone, agreeAD) "
+			 			     + "values(?, ?, ?, ?, ?, ?, ?,?)";
+
+/*********암호 잠시 보류**************/			 
+/* sql="insert into customer(customerNo, email, password, nickname, address, bname, phone, agreeAD) "
 	 			     + "values(null, ?, hex(aes_encrypt(?,?)), ?, ?, ?, ?, ?)";
-			 /*insert into customer (customerNo, email, password, nickname, address, bname, phone, grade,agreeAD) values 
-			 (null, 'test12@naver.com', hex(aes_encrypt('test12@naver.com','1234')),'닉네임3','서울','상암동',01028017891,5,'T' );
-			 */
+*/
+
 			 
 			
 			 pstmt = con.prepareStatement(sql);
-			
+			 
+			 pstmt.setString(1, cb.getEmail());
+			 pstmt.setString(2, cb.getPassword());
+			 pstmt.setString(3, cb.getNickname());
+			 pstmt.setString(4, cb.getRoadAddress());
+			 pstmt.setString(5, cb.getDetailAddress());
+			 pstmt.setString(6, cb.getBname());
+			 pstmt.setString(7, cb.getPhone());
+			 pstmt.setString(8, cb.getAgreeAD());
+			 
+			/*// 암호화 전용
 			 pstmt.setString(1, cb.getEmail());
 			 pstmt.setString(2, cb.getEmail());
 			 pstmt.setString(3, cb.getPassword());
@@ -111,7 +120,7 @@ public class CustomerDAO {
 			 pstmt.setString(6, cb.getBname());
 			 pstmt.setString(7, cb.getPhone());
 			 pstmt.setString(8, cb.getAgreeAD());
-			 
+			 */
 			 result = pstmt.executeUpdate();
 			 
 			 if(result != 0) {
@@ -136,12 +145,11 @@ public class CustomerDAO {
 		try {
 			 getConnection();
 			 
-			sql ="select aes_decrypt(unhex(password), ?) as email from customer where email = ? ";
+//			sql ="select aes_decrypt(unhex(password), ?) as email from customer where email = ? ";
+			 sql ="select ? from customer where email = ? ";
 			// mysql에 aes 암호 알고리즘(?) 사용 해서 원본 아이디 비밀번호 검사
-			
-			 /***************************************************************/
-			// 암호화가 적용된 계정만 위 명령이 먹힙니다 조만간 호환성 보고 회원가입시에도 암호화 할 예정입니다			
-			 /***************************************************************/
+
+
 			 pstmt = con.prepareStatement(sql);
 			 pstmt.setString(1, cb.getPassword());
 			 pstmt.setString(2, cb.getEmail());
@@ -152,12 +160,12 @@ public class CustomerDAO {
 			 rs = pstmt.executeQuery();		 
 			 rs.next();
 	
-			 if(rs.getString("email") != null) { // 쿼리가 정상적으로 작동하면 실행, 암호가 다른상태로 select문 되었을때 안맞으면 
+//			 if(rs.getString("email") != null) { // 쿼리가 정상적으로 작동하면 실행, 암호가 다른상태로 select문 되었을때 안맞으면 
 				 								// 무조건 null이 나옴  비밀번호 틀린것으로 간주,   
 				 								// 그리고 암호화가 안된 데이터, 
 				 								// 즉 개발자가 임의로 넣은 테스트 데이터는 이 검사 명령이 안먹힘
 				 	
-				 
+		if(rs.next() == true)		  {
 				 System.out.println("유저 DB내용 : " +  cb.getEmail() );
 				 
 				 System.out.println("비밀번호 : " + cb.getPassword() + " 아이디 : " + cb.getEmail());
