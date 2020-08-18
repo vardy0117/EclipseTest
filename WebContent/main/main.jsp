@@ -15,6 +15,7 @@
 		border: 2px solid green;
 		margin: 0 auto;
 		margin-top: 50px;
+		position: relative;
 	}
 	#searchDiv {
 		width: 600px;
@@ -26,7 +27,7 @@
     	transform: translate(-50%, -50%);
 	}
 	#postDiv {
-		width: 280px;
+		width: 300px;
 		margin: 0 auto;
 	}
 </style>
@@ -34,15 +35,22 @@
 <body>
 	<div id="mainDiv">
 		<h1 style="text-align: center;">main.jsp</h1>
+		<h2 style="text-align: center;">session에 customerNo를 이용해서 ajax통신해 회원주소를 가져와 default값으로 지정</h2>
 		<div id="searchDiv">
 			<h2 style="text-align: center;">주소검색</h2>
 			<input type="hidden" id="sample3_postcode" placeholder="우편번호">
 			<input type="hidden" id="sample3_extraAddress" placeholder="참고항목">
-			<div id="postDiv">
-				<input type="text" id="sample3_address" placeholder="주소" readonly>
-				<input type="button" onclick="sample3_execDaumPostcode()" value="주소 검색하기"><br>
-				<input type="text" id="sample3_detailAddress" placeholder="상세주소">
-			</div>
+			<form action="./SearchStore.do" method="post" name="fr">
+				<div id="postDiv">
+						<input type="text" id="sample3_address" placeholder="주소" name="roadAddress" readonly>
+						<input type="button" onclick="sample3_execDaumPostcode()" value="주소변경"> <br>
+						<input type="text" id="sample3_detailAddress" placeholder="상세주소" name="detailAddress">
+						<input type="hidden" id="bname" name="bname">
+				</div>
+				<div style="width: 200px; margin: 20px auto;">
+					<input type="submit" value="배달가능 가게 검색">
+				</div>				
+			</form>
 		</div>
 		<div id="wrap" style="display:none;border:1px solid;width:500px;height:300px;margin:5px auto;position:absolute;top: 50%; left: 50%; transform: translate(-50%, -50%);">
 			<img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
@@ -67,7 +75,7 @@
         var currentScroll = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
         new daum.Postcode({
             oncomplete: function(data) {
-            	console.log(data.bname); // 주소검색된 동 변수
+            	document.getElementById("bname").value = data.bname;
                 // 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
                 // 각 주소의 노출 규칙에 따라 주소를 조합한다.

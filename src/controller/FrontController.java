@@ -120,7 +120,18 @@ public class FrontController extends HttpServlet {
 		}
 		
 	
-
+		if(command.equals("SearchStore.do")) {
+			// 받은 값 : roadAddress / detailAddress / bname 
+			request.setCharacterEncoding("utf-8");
+			
+			request.getSession().setAttribute("orderRoadAddress", request.getParameter("roadAddress"));
+			request.getSession().setAttribute("orderDetailAddress", request.getParameter("detailAddress"));
+			request.getSession().setAttribute("orderBname", request.getParameter("bname"));
+			
+			forward = new ActionForward();
+			forward.setView("./store/searchStore.jsp");
+			forward.execute(request, response);
+		}
 
 
 
