@@ -35,7 +35,7 @@ public class CustomerJoinAction{
 			break;
 		}
 		
-		// ������ �̵� ���� (�̵� ���, ���)
+		// 占쏙옙占쏙옙占쏙옙 占싱듸옙 占쏙옙占쏙옙 (占싱듸옙 占쏙옙占�, 占쏙옙占�)
 		PrintWriter out = resp.getWriter();
 		out.print(result);
 	} // method
@@ -49,11 +49,13 @@ public class CustomerJoinAction{
 		CustomerBean cb =new CustomerBean();
 		
 		System.out.println(req.getAttribute("agreeAD"));
-		// ���Խ� customerNo�� grade�� ���� Auto-Increment, 5�� DB�� ����
+		// 占쏙옙占쌉쏙옙 customerNo占쏙옙 grade占쏙옙 占쏙옙占쏙옙 Auto-Increment, 5占쏙옙 DB占쏙옙 占쏙옙占쏙옙
 		cb.setEmail(req.getParameter("emailId")+"@"+req.getParameter("emailServer"));
 		cb.setPassword(req.getParameter("password")); 
 		cb.setNickname(req.getParameter("nickname")); 
-		cb.setAddress(req.getParameter("roadAddress")+" "+req.getParameter("detailAddress"));
+		// cb.setAddress(req.getParameter("roadAddress")+" "+req.getParameter("detailAddress"));
+		cb.setRoadAddress(req.getParameter("roadAddress"));
+		cb.setDetailAddress(req.getParameter("detailAddress"));
 		cb.setBname(req.getParameter("bname"));
 		cb.setPhone(req.getParameter("phoneFront")+req.getParameter("phone"));
 		if(req.getParameter("agreeAD") == null) {
@@ -61,7 +63,7 @@ public class CustomerJoinAction{
 		} else { 
 			cb.setAgreeAD("T");
 		}	
-		// ���� ���� ����
+		// 占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙
 		boolean result = false;
 		
 		CustomerDAO cdao=new CustomerDAO();
@@ -69,11 +71,11 @@ public class CustomerJoinAction{
 		result = cdao.insertCustomer(cb);
 		
 		if(result == false){
-			log.info("ȸ�� ���� ����!");
+			log.info("회占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙!");
 			return null;
 		}
 				
-		// ������ �̵� ���� (�̵� ���, ���)
+		// 占쏙옙占쏙옙占쏙옙 占싱듸옙 占쏙옙占쏙옙 (占싱듸옙 占쏙옙占�, 占쏙옙占�)
 		ActionForward forward=new ActionForward();
 		
 		forward.setRedirect(true);

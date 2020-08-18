@@ -9,12 +9,30 @@ public class CustomerBean {
 	private String password;
 	private String nickname;
 	private Timestamp date;
-	private String address;
+
+	private String roadAddress;
+	private String detailAddress;
+	
 	private String bname;
 	private String phone;
 	private String grad;
 	private String agreeAD;
 	
+	
+	
+	
+	public String getRoadAddress() {
+		return roadAddress;
+	}
+	public void setRoadAddress(String roadAddress) {
+		this.roadAddress = roadAddress;
+	}
+	public String getDetailAddress() {
+		return detailAddress;
+	}
+	public void setDetailAddress(String detailAddress) {
+		this.detailAddress = detailAddress;
+	}
 	public String getCustomerNo() {
 		return customerNo;
 	}
@@ -45,12 +63,9 @@ public class CustomerBean {
 	public void setDate(Timestamp date) {
 		this.date = date;
 	}
-	public String getAddress() {
-		return address;
-	}
-	public void setAddress(String address) {
-		this.address = address;
-	}
+
+
+
 	public String getBname() {
 		return bname;
 	}
