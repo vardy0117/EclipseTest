@@ -36,29 +36,6 @@ public class ActionForward {
 		}
 	}
 	
-	public void outData(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
-		request.setCharacterEncoding("UTF-8");
-		
-		String check = request.getParameter("check");
-		String email = request.getParameter("email");
-		String phone = request.getParameter("phone");
-		String result = "notUsable";
-					
-		CustomerDAO cdao=new CustomerDAO();
-					
-		switch (check) {
-			case "emailCk":
-				result = cdao.joinCheckEmail(email);
-			break;
-			
-			case "phoneCk":
-				result = cdao.joinCheckPhone(phone);
-			break;
-		}
-		
-		PrintWriter out = response.getWriter();
-		out.print(result);
-	} // method
+	
 	
 }
