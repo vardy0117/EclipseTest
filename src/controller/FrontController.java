@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import action.ActionForward;
-import net.customer.action.Action;
+import action.AjaxAction;
 import net.customer.action.CustomerJoinAction;
 import net.customer.action.CustomerLoginAction;
 
@@ -35,35 +35,34 @@ public class FrontController extends HttpServlet {
 		// command�� "hello.do"媛� ���λ�� 
 		String command = requestURI.substring(contextPath.length()+1);	
 		ActionForward forward = null;
-		Action action=null;
 		
 		// forward���� view=�대�������댁�, redirect=由щ�ㅼ�대���몃갑���몄� ���ㅽ�⑥�諛⑹���몄�
 		// ----------------------------------------------------------------------
-		// 濡�洹몄�� �������댁�
+		// login
 		if(command.equals("login.do")){
 			forward = new ActionForward();
 			forward.setView("index.jsp?center=member/selectLogin.jsp");
 			forward.execute(request, response);
 		}
 		
-		// ����媛��� �������댁�
+		// select join(customer/ceo)
 		if(command.equals("SelectJoin.do")) {
 			forward = new ActionForward();
 			forward.setView("index.jsp?center=member/selectJoin.jsp");
 			forward.execute(request, response);
 		}
 		
-		// ����媛����� ���⑥�� 泥댄��
+		// ajax
 		if(command.equals("JoinCheck.do")) {
-			forward = new ActionForward();
+			AjaxAction ajax = new AjaxAction();
 			try {
-				forward.outData(request, response);
+				ajax.emailCheck(request, response);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 		
-		// �쇰�����媛��� ���댁�
+		// >customerJoin.jsp
 		if(command.equals("CustomerJoin.do")) {
 			forward = new ActionForward();
 			forward.setView("index.jsp?center=member/customerJoin.jsp");
@@ -77,7 +76,7 @@ public class FrontController extends HttpServlet {
 		}
 		
 		if(command.equals("CustomerLoginAction.do")) {
-			action = new CustomerLoginAction();
+			CustomerLoginAction action = new CustomerLoginAction() ;
 		
 			try {
 				forward = action.execute(request, response);
@@ -90,8 +89,7 @@ public class FrontController extends HttpServlet {
 		
 		
 		if(command.equals("CustomerJoinAction.do")) {
-			action = new CustomerJoinAction();
-		
+			CustomerJoinAction action = new CustomerJoinAction();		
 			try {
 				forward = action.execute(request, response);
 				forward.execute(request, response);
@@ -100,8 +98,6 @@ public class FrontController extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-		
-	
 		
 	}
 
