@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import action.ActionForward;
 import net.customer.db.CustomerBean;
@@ -29,7 +30,7 @@ public class CustomerLoginAction implements Action {
 					
 		
 
-		// ÆäÀÌÁö ÀÌµ¿ ¼³Á¤ (ÀÌµ¿ ¹æ½Ä, °æ·Î)
+		// í˜ì´ì§€ ì´ë™ ì„¤ì • (ì´ë™ ë°©ì‹, ê²½ë¡œ)
 		PrintWriter out = resp.getWriter();
 	
 	} // method
@@ -38,8 +39,9 @@ public class CustomerLoginAction implements Action {
 	public ActionForward execute(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 		
 		log.info("CustomerLoginAction execute()");
-		System.out.println("·Î±×ÀÎ ¾×¼Ç");
-		log.info("·Î±×ÀÎ Å×½ºÆ® È£Ãâ");
+		System.out.println("ë¡œê·¸ì¸ ì•¡ì…˜");
+		log.info("ë¡œê·¸ì¸ í…ŒìŠ¤íŠ¸ í˜¸ì¶œ");
+		
 		req.setCharacterEncoding("UTF-8");
 		
 		
@@ -48,45 +50,74 @@ public class CustomerLoginAction implements Action {
 		CustomerBean cb =new CustomerBean();
 		
 		cb.setEmail(req.getParameter("email"));
+		cb.setNickname(req.getParameter("nickname")); 
 		cb.setPassword(req.getParameter("password")); 
 
 		CustomerDAO cdao=new CustomerDAO();
 			
-		boolean result = cdao.CheckCustomer(cb); // ·Î±×ÀÎ½Ã À¯Àú °Ë»ç
-		System.out.println("¹İÈ¯¹ŞÀº ·Î±×ÀÎ result°ª : " + result);
-		
-	
+		boolean result = cdao.CheckCustomer(cb); // ë¡œê·¸ì¸ì‹œ ìœ ì € ê²€ì‚¬
+		System.out.println("ë°˜í™˜ë°›ì€ ë¡œê·¸ì¸ resultê°’ : " + result);
 
 		
-		if(result == false){
+	
+		ActionForward forward = new ActionForward();
+	
 		
+		if(result == true){
+			HttpSession session=req.getSession();
+			log.info("ë¡œê·¸ì¸ ì™„ë£Œ!");
+			System.out.println("ë¡œê·¸ì¸ ì„±ê³µ resultê°’ " + result); 
+	
+			
+			//	String nickname=req.getParameter("nickname");
+				String email = req.getParameter("email");
+				
+				// cdao.CustomerInformation(email);
+				
+				CustomerBean a = cdao.CustomerInformation(email);
+				
+				System.out.println("-----------------------------------------");
+				System.out.println(a.getCustomerNo() + " - ê°ì²´ ë‚´ìš© ë²ˆí˜¸");
+				System.out.println(a.getNickname() + " - ê°ì²´ ë‹‰ë„¤ì„ ê°€ì ¸ì˜¤ê¸°");
+				System.out.println("-----------------------------------------");
+				
+				System.out.println("íŒŒë¼ë¯¸í„°ë¡œ ê°€ì ¸ì˜¨ ì´ë©”ì¼ ê°’ : " + email);
+				
+				
+
+				// session.setAttribute("nickname", a.getNickname());
+				session.setAttribute("nickname", a.getNickname());
+				session.setAttribute("customerNo", a.getCustomerNo());
+				session.setAttribute("email", email);
+	
+				
+				
+				System.out.println("ì„¸ì…˜ ë“±ë¡ ì™„ë£Œ ");
+				// í˜ì´ì§€ ì´ë™ ì„¤ì • (ì´ë™ ë°©ì‹, ê²½ë¡œ)
+				
+				forward.setRedirect(false);
+				forward.setView("./index.jsp");
+				System.out.println("ë¡œê·¸ì¸ ë¦¬ë‹¤ì´ë ‰íŠ¸ ì‘ë™ " + forward.getView());
+			
+		}else{
+			
 			 resp.setCharacterEncoding("UTF-8");
 			 PrintWriter out = resp.getWriter();
 			 resp.setContentType("text/html;charset=UTF-8"); 
 			 
 			 out.println("<script>"); 
-			 out.println("alert('·Î±×ÀÎ¿¡ ½ÇÆĞÇÏ¼Ì½À´Ï´Ù. \\n ¾ÆÀÌµğ¿Í ºñ¹Ğ¹øÈ£ È®ÀÎ ÈÄ ´Ù½Ã ·Î±×ÀÎÇØÁÖ¼¼¿ä.');"); 
+			 out.println("alert('ë¡œê·¸ì¸ì— ì‹¤íŒ¨í•˜ì…¨ìŠµë‹ˆë‹¤. \\n ì•„ì´ë””ì™€ ë¹„ë°€ë²ˆí˜¸ í™•ì¸ í›„ ë‹¤ì‹œ ë¡œê·¸ì¸í•´ì£¼ì„¸ìš”.');"); 
 			 out.println("history.back();"); 
 			 out.println("</script>");
-			System.out.println("·Î±×ÀÎ ½ÇÆĞ result°ª " + result);
+			System.out.println("ë¡œê·¸ì¸ ì‹¤íŒ¨ resultê°’ " + result);
 			return null;
-			
-		}else{
-			log.info("·Î±×ÀÎ ¿Ï·á!");
-			// req.setAttribute("loginResult", result); // ÀÌ°Å ¿ëµµ°¡ ¹¹¿´Áö?????????????
-			System.out.println("·Î±×ÀÎ ¼º°ø result°ª " + result); 
-			
-			/**********************************/
-			// ¾ÆÁ÷ ·Î±×ÀÎÀ» ÇßÀ»¶§ ¼¼¼ÇÀ» ÁÖ´Â µ¿ÀÛÀº ¾ÈÇÔ
-			// Æ²·È´ÂÁö ¸Â¾Ò´ÂÁö¸¸ È®ÀÎÇÏ´Â Áß 
-			/**********************************/
-			
+		
 		}
-				
-		// ÆäÀÌÁö ÀÌµ¿ ¼³Á¤ (ÀÌµ¿ ¹æ½Ä, °æ·Î)
-		ActionForward forward = new ActionForward();
-		forward.setRedirect(true);
-		forward.setView("./index.jsp"); 
+		
+		
+	
+	
+	
 		
 
 		return forward;

@@ -77,6 +77,7 @@ public class FrontController extends HttpServlet {
 		
 		if(command.equals("CustomerLoginAction.do")) {
 			action = new CustomerLoginAction();
+		
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {
@@ -84,6 +85,20 @@ public class FrontController extends HttpServlet {
 			}
 		}
 		
+		/**************************************************************************************/
+		if(forward!=null){ 
+			if(forward.isRedirect()){
+
+				response.sendRedirect(forward.getView());
+				
+				
+			}else{
+				
+				RequestDispatcher dispatcher=request.getRequestDispatcher(forward.getView());
+				dispatcher.forward(request, response);
+			}
+		}//if 
+		/**************************************************************************************/
 		
 		
 	}

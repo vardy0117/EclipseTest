@@ -49,8 +49,11 @@
 		<c:choose>
 		<c:when test="${empty sessionScope.customerNo || empty sessionScope.ceoNo}">
 			<div id="loginAndJoin">
+			
 				<a href="./login.do">로그인</a> | 
-				<a href="./SelectJoin.do">회원가입</a> |	
+				<a href="./SelectJoin.do">회원가입</a> |
+					customerNo 테스트 : ${sessionScope.customerNo}번 <br>	
+					닉네임 로드 테스트 : ${sessionScope.nickname }		
 			</div>
 		</c:when>
 		<c:when test="${!empty sessionScope.customerNo}">
