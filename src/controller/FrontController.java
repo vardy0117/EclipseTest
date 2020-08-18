@@ -13,6 +13,8 @@ import action.ActionForward;
 import action.AjaxAction;
 import net.customer.action.CustomerJoinAction;
 import net.customer.action.CustomerLoginAction;
+import net.customer.db.CustomerBean;
+import net.customer.db.CustomerDAO;
 
 
 @WebServlet("*.do")
@@ -100,10 +102,17 @@ public class FrontController extends HttpServlet {
 		}
 		
 		if(command.equals("CustomerModify.do")){
-			forward = new ActionForward();
-			forward.setView("./member/customerModify.jsp");
-			forward.execute(request, response);
+			
+			if(request.getSession().getAttribute("customerNo") != null){
+				CustomerDAO cDAO = new CustomerDAO();
+				CustomerBean cBean = cDAO.getCustomer((String)request.getSession().getAttribute("customerNo"));
+				request.setAttribute("cBean", cBean);
+				forward = new ActionForward();
+				forward.setView("./member/customerModify.jsp");
+				forward.execute(request, response);
+			}
 		}
+		
 		
 	}
 
