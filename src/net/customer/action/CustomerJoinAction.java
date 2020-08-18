@@ -50,6 +50,7 @@ public class CustomerJoinAction implements Action {
 		
 		CustomerBean cb =new CustomerBean();
 		
+		System.out.println(req.getAttribute("agreeAD"));
 		// 가입시 customerNo와 grade는 각각 Auto-Increment, 5로 DB에 저장
 		cb.setEmail(req.getParameter("emailId")+"@"+req.getParameter("emailServer"));
 		cb.setPassword(req.getParameter("password")); 

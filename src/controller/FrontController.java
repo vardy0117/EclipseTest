@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import action.ActionForward;
 import net.customer.action.Action;
+import net.customer.action.CustomerJoinAction;
 import net.customer.action.CustomerLoginAction;
 
 
@@ -80,6 +81,21 @@ public class FrontController extends HttpServlet {
 		
 			try {
 				forward = action.execute(request, response);
+				forward.execute(request, response);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+		if(command.equals("CustomerJoinAction.do")) {
+			action = new CustomerJoinAction();
+		
+			try {
+				forward = action.execute(request, response);
+				forward.execute(request, response);
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
