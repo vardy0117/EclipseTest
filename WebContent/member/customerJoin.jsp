@@ -186,7 +186,7 @@
 					@
 					<input type="text" id="emailServer" name="emailServer" class="textBox" style="width:100px;" onfocusout="emailCheck()"/>
 						<select id="emailServerSelBox" name="emailServerSelBox" onchange="emailAddress_Change()" onfocus="readyEmailCheck()" onfocusout="emailCheck()"> 
-							<option value="">流立涝仿</option>
+							<option value="">流立 涝仿</option>
 							<option value="naver.com">naver.com</option>
 							<option value="google.com">google.com</option>
 							<option value="hanmail.net">hanmail.net</option>
