@@ -36,7 +36,7 @@ public class CustomerLogoutAction implements Action {
 	    resp.setContentType("text/html;charset=UTF-8"); 
 		 
 		out.println("<script>");
-		out.println("alert('안녕히가세요');");
+		out.println("alert('로그아웃 되었습니다');");
 		out.println("location.href='./index.jsp';");
 		out.println("</script>");
 		out.close();
