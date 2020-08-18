@@ -48,6 +48,16 @@ public class FrontController extends HttpServlet {
 			forward.execute(request, response);
 		}
 		
+		// 회원가입시 유효성 체크
+		if(command.equals("JoinCheck.do")) {
+			forward = new ActionForward();
+			try {
+				forward.outData(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
 		// 일반회원가입 페이지
 		if(command.equals("CustomerJoin.do")) {
 			forward = new ActionForward();
