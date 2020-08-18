@@ -229,7 +229,7 @@
 						<option value="019">019</option>
 					</select>
 						<input type="text" id="phone" name="phone" class="phone" placeholder="숫자만 입력하세요 ex)45458282" oninput="checkPhone()" size="30" numberOnly>
-						<a id=phoneChkMsg></a>	
+						<span id=phoneChkMsg></span>	
 				<hr>
 				<label>주소</label>	
 				<table>
@@ -263,7 +263,7 @@
 				내용~(자세히 누르면 볼 수 있게)
 				<input type="checkbox"  id="#" name="#" class="#" value="만 14세  이상 이용자 동의(필수)" checked> <br> 
 				-->
-				혜택 알림 동의 (선택) <input type="checkbox"  id="agreeAD" name="agreeAD" class="agree">
+				혜택 알림 동의 (선택) <input type="checkbox"  id="agreeAD" name="agreeAD" class="agree" value="T">
 				</fieldset>
 			<div class="clear"></div>
 			<div id="buttons">
