@@ -200,7 +200,7 @@
 
 	<article id="mainDiv"> 
 		<h1>일반 회원 가입</h1>
-		<form action="./CustomerJoinAction.me" id="join" method="post" name="fr">
+		<form action="./CustomerJoinAction.do" id="join" method="post" name="fr">
 			<fieldset>
 				<label>E-mail</label>
 					<input type="text" id="emailId" name="emailId" class="email" size="10" placeholder="E-mail 이름" oninput="checkID()" style="text-align:right;">
@@ -263,7 +263,7 @@
 				내용~(자세히 누르면 볼 수 있게)
 				<input type="checkbox"  id="#" name="#" class="#" value="만 14세  이상 이용자 동의(필수)" checked> <br> 
 				-->
-				혜택 알림 동의 (선택) <input type="checkbox"  id="agreeAD" name="agreeAD" class="agree" value="T">
+				혜택 알림 동의 (선택) <input type="checkbox"  id="agreeAD" name="agreeAD" class="agree">
 				</fieldset>
 			<div class="clear"></div>
 			<div id="buttons">

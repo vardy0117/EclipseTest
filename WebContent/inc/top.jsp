@@ -47,28 +47,29 @@
 	<div id="topDiv">
 		<h2 id="logo"><a href="./">Delivengers</a></h2>
 		<c:choose>
-		<c:when test="${empty sessionScope.customerNo || empty sessionScope.ceoNo}">
-			<div id="loginAndJoin">
-			
-				<a href="./login.do">로그인</a> | 
-				<a href="./SelectJoin.do">회원가입</a> |
+			<c:when test="${empty sessionScope.customerNo && empty sessionScope.ceoNo}">
+				<div id="loginAndJoin">
+				
+					<a href="./login.do">로그인</a> | 
+					<a href="./SelectJoin.do">회원가입</a> |
+				</div>
+			</c:when>
+			<c:when test="${!empty sessionScope.customerNo}">
+				<div id="loginAndJoin">
+					${sessionScope.nickname}회원님 어서 오세요!
+					<a href="#">?</a> | 
+					<a href="./LogOut.do">logout</a> |	
 					customerNo 테스트 : ${sessionScope.customerNo}번 <br>	
-					닉네임 로드 테스트 : ${sessionScope.nickname }		
-			</div>
-		</c:when>
-		<c:when test="${!empty sessionScope.customerNo}">
-			<div id="loginAndJoin">
-				${sessionScope.nickname}님 어서 오세요!
-				<a href="#">?</a> | 
-				<a href="./LogOut.do">logout</a> |	
-			</div>
-		</c:when>
-		<c:when test="${!empty sessionScope.ceoNo}">
-			<div id="loginAndJoin">
-				<a href="#">마이페이지</a> | 
-				<a href="./LogOut.do">logout</a> |	
-			</div>
-		</c:when>
+						닉네임 로드 테스트 : ${sessionScope.nickname }	
+				</div>
+			</c:when>
+			<c:when test="${!empty sessionScope.ceoNo}">
+				<div id="loginAndJoin">
+						${sessionScope.nickname}사장님 어서 오세요!
+					<a href="#">마이페이지</a> | 
+					<a href="./LogOut.do">logout</a> |	
+				</div>
+			</c:when>
 		</c:choose>	
 	</div>
 	
