@@ -137,13 +137,11 @@ public class CustomerDAO {
 		try {
 			 getConnection();
 			 
-			sql =" select aes_decrypt(unhex(password), ?) as email from customer where email = ? ";
+			sql ="select aes_decrypt(unhex(password), ?) as email from customer where email = ? ";
 			// mysql에 aes 암호 알고리즘(?) 사용 해서 원본 아이디 비밀번호 검사
 			
 			 /***************************************************************/
-			// 암호화가 적용된 계정만 위 명령이 먹힙니다 조만간 호환성 보고 회원가입시에도 암호화 할 예정입니다
-			
-			
+			// 암호화가 적용된 계정만 위 명령이 먹힙니다 조만간 호환성 보고 회원가입시에도 암호화 할 예정입니다			
 			 /***************************************************************/
 			 pstmt = con.prepareStatement(sql);
 			 pstmt.setString(1, cb.getPassword());
@@ -151,10 +149,10 @@ public class CustomerDAO {
 			 
 			// rs.getString("email");
 			 
-	
+			 
 			 rs = pstmt.executeQuery();		 
-		
 			 rs.next();
+	
 			 if(rs.getString("email") != null) { // 쿼리가 정상적으로 작동하면 실행, 암호가 다른상태로 select문 되었을때 안맞으면 
 				 								// 무조건 null이 나옴  비밀번호 틀린것으로 간주,   
 				 								// 그리고 암호화가 안된 데이터, 
@@ -166,6 +164,25 @@ public class CustomerDAO {
 				 System.out.println("비밀번호 : " + cb.getPassword() + " 아이디 : " + cb.getEmail());
 				 System.out.println("아이디 검사 성공! 사용자가 정보를 맞게 입력함");
 				 System.out.println("검사 성공 rs.next내용" + rs.next());
+				 
+				/* *//************************************************************************************//*
+				String sql2 = "select * from customer where email=?";
+				pstmt = con.prepareStatement(sql2);
+				pstmt.setString(1, cb.getEmail());
+				System.out.println("sql2 이메일 쿼리 성공");
+				rs = pstmt.executeQuery();
+				rs.next();
+				*//************************************************************************************//*
+				
+				cb.setNickname(rs.getString("nickname"));
+				cb.setCustomerNo(rs.getString("customerNo"));
+
+				*//************************************************************************************//*
+				// 로그인시 정보 select 해서 가져오기
+				System.out.println("customer dao에서 가져온 닉네임 :  " + cb.getNickname());
+				System.out.println("customer dao에서 가져온 customerNo :  " + cb.getCustomerNo());
+				*//************************************************************************************/
+					 
 				 result = true;
 			 }else{
 				 System.out.println("사용자가 비밀번호 틀림");
@@ -182,7 +199,39 @@ public class CustomerDAO {
 		
 		return result;
 	} // method
-	
+
+	public CustomerBean CustomerInformation (String email) {
+		
+		CustomerBean cb = new CustomerBean();
+		 try {
+			getConnection();
+			String sql2 = "select * from customer where email=?";
+			pstmt = con.prepareStatement(sql2);
+			pstmt.setString(1, email);
+			System.out.println("sql2 CustomerInformation 쿼리 성공");
+			rs = pstmt.executeQuery();
+			rs.next();
+			/************************************************************************************/
+			
+			cb.setNickname(rs.getString("nickname"));
+			cb.setCustomerNo(rs.getString("customerNo"));
+
+			/************************************************************************************/
+			// 로그인시 정보 select 해서 가져오기
+			System.out.println("-----------------------CustomerInformation ------------------------------------");
+			System.out.println("customer dao에서 가져온 닉네임 :  " + cb.getNickname());
+			System.out.println("customer dao에서 가져온 customerNo :  " + cb.getCustomerNo());
+			
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 
+		
+		return cb;
+		
+	}
 /***********************************************************************************************/
 	
 	
