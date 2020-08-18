@@ -90,14 +90,12 @@ public class CustomerDAO {
 		try {
 			 getConnection();
 
-			 sql="insert into customer(email, password, nickname, address, bname, phone, agreeAD) "
+	/*		 sql="insert into customer(email, password, nickname, address, bname, phone, agreeAD) "
 			 			     + "values(?, ?, ?, ?, ?, ?, ?)";
-			 /********************************************/
-			 // 잠시 보류
-			 /********************************************/
+*/
 			 
-		/*	 sql="insert into customer(email, password, nickname, address, bname, phone, agreeAD) "
-	 			     + "values('?', hex(aes_encrypt(email,?), ?, ?, ?, ?, ?)";*/
+		 sql="insert into customer(customerNo, email, password, nickname, address, bname, phone, agreeAD) "
+	 			     + "values(null, ?, hex(aes_encrypt(?,?)), ?, ?, ?, ?, ?)";
 			 /*insert into customer (customerNo, email, password, nickname, address, bname, phone, grade,agreeAD) values 
 			 (null, 'test12@naver.com', hex(aes_encrypt('test12@naver.com','1234')),'닉네임3','서울','상암동',01028017891,5,'T' );
 			 */
@@ -106,12 +104,13 @@ public class CustomerDAO {
 			 pstmt = con.prepareStatement(sql);
 			
 			 pstmt.setString(1, cb.getEmail());
-			 pstmt.setString(2, cb.getPassword());
-			 pstmt.setString(3, cb.getNickname());
-			 pstmt.setString(4, cb.getAddress());
-			 pstmt.setString(5, cb.getBname());
-			 pstmt.setString(6, cb.getPhone());
-			 pstmt.setString(7, cb.getAgreeAD());
+			 pstmt.setString(2, cb.getEmail());
+			 pstmt.setString(3, cb.getPassword());
+			 pstmt.setString(4, cb.getNickname());
+			 pstmt.setString(5, cb.getAddress());
+			 pstmt.setString(6, cb.getBname());
+			 pstmt.setString(7, cb.getPhone());
+			 pstmt.setString(8, cb.getAgreeAD());
 			 
 			 result = pstmt.executeUpdate();
 			 
