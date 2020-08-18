@@ -13,6 +13,7 @@ import action.ActionForward;
 import net.customer.action.Action;
 import net.customer.action.CustomerJoinAction;
 import net.customer.action.CustomerLoginAction;
+import net.customer.action.CustomerLogoutAction;
 
 
 @WebServlet("*.do")
@@ -101,7 +102,20 @@ public class FrontController extends HttpServlet {
 			}
 		}
 		
-	
+		if(command.equals("LogOut.do")) {
+			action = new CustomerLogoutAction();
+		
+			try {
+				forward = action.execute(request, response);
+				forward.execute(request, response);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+		
 		
 	}
 
