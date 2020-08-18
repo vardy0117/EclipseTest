@@ -56,10 +56,10 @@ public class CustomerJoinAction{
 		cb.setAddress(req.getParameter("roadAddress")+" "+req.getParameter("detailAddress"));
 		cb.setBname(req.getParameter("bname"));
 		cb.setPhone(req.getParameter("phoneFront")+req.getParameter("phone"));
-		if(req.getParameter("agreeAD").equals("T")) {
-			cb.setAgreeAD("T");
-		} else { 
+		if(req.getParameter("agreeAD") == null) {
 			cb.setAgreeAD("F");
+		} else { 
+			cb.setAgreeAD("T");
 		}	
 		// ���� ���� ����
 		boolean result = false;
@@ -77,7 +77,7 @@ public class CustomerJoinAction{
 		ActionForward forward=new ActionForward();
 		
 		forward.setRedirect(true);
-		forward.setView("./CusotmerLogin.me");
+		forward.setView("./CusotmerLogin.do ");
 
 		return forward;
 		
