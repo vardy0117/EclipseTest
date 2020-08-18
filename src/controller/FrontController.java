@@ -129,7 +129,19 @@ public class FrontController extends HttpServlet {
 			request.getSession().setAttribute("orderBname", request.getParameter("bname"));
 			
 			forward = new ActionForward();
-			forward.setView("./store/searchStore.jsp");
+			forward.setView("index.jsp?center=store/searchStore.jsp");
+			forward.execute(request, response);
+		}
+		
+		if(command.equals("Store.do")) {
+			String storeNo = request.getParameter("storeNo");
+			// storeNo를 받아서 storeDAO에서 bean(model)을 찾고 request에 넣은뒤 store.jsp로 이동해 사용
+			// 아마도? 리뷰도 여기화면 하단에서 뿌려줄듯
+			// 지금은 우선 storeNo만 request에 저장
+			request.setAttribute("storeNo", storeNo);
+			
+			forward = new ActionForward();
+			forward.setView("index.jsp?center=store/store.jsp");
 			forward.execute(request, response);
 		}
 
