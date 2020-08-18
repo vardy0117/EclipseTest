@@ -99,6 +99,12 @@ public class FrontController extends HttpServlet {
 			}
 		}
 		
+		if(command.equals("CustomerModify.do")){
+			forward = new ActionForward();
+			forward.setView("./member/customerModify.jsp");
+			forward.execute(request, response);
+		}
+		
 	}
 
 }
