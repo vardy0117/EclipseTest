@@ -26,12 +26,13 @@
 </style>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-
+<script src="/Delivengers/js/member/join.js"></script>
 </head>
 <body>
 <script>
 	window.onload = function(){
 	    document.getElementById("sbtn").onclick = chkData;
+
 	 }
 	
 	function chkData(){
@@ -83,8 +84,20 @@
 	    	return false;
 	 	}	 	
 	}
-	  
-	function checkID(){
+	
+	function emailAddress_Change() {
+		var emailAddress = document.fr.emailServerSelBox.value;
+		document.fr.emailServer.value = emailAddress;
+		if (emailAddress != "" || emailAddress == "select") {
+			document.fr.emailServer.setAttribute("readonly", "readonly");
+		} else {
+			document.fr.emailServer.removeAttribute("readonly");
+		}
+	}
+	
+	
+	
+	function emailCheck(){
 		if($("#emailId").val()!="" && $("#emailServer").val()!=""){
 			var email = $("#emailId").val()+"@"+$("#emailServer").val();
 			$.ajax({
@@ -116,18 +129,10 @@
 			}); // $ajax()
 		} // if
 	} // function
-	
-	
-	$(function (){
-		$("#rbtn").click(function(){
-			$("#email").removeAttr("disabled");
-			$("#email").removeAttr("readOnly");
-			$("#phone").removeAttr("disabled");
-			$("#phone").removeAttr("readOnly");
-			$("#ebtn").val("계정 중복 확인");
-			$("#pbtn").val("연락처 중복 확인");
-		})
-	});	
+
+	function readyEmailCheck(){
+		$("#emailChkMsg").text("가능 여부 확인중");
+	}
 
     function execDaumPostcode() {
         new daum.Postcode({
@@ -160,6 +165,16 @@
             }
         }).open();
     } 
+
+	$(function (){
+		$("#rbtn").click(function(){
+			$("#email").removeAttr("disabled");
+			$("#email").removeAttr("readOnly");
+			$("#phone").removeAttr("disabled");
+			$("#phone").removeAttr("readOnly");
+		})
+	});	
+    
 </script>
 
 	<article id="mainDiv"> 
@@ -167,22 +182,29 @@
 		<form action="./CustomerJoinAction.do" id="join" method="post" name="fr">
 			<fieldset>
 				<label>E-mail</label>
-					<input type="text" id="emailId" name="emailId" class="email" size="10" placeholder="E-mail 이름" oninput="checkID()" style="text-align:right;">
-					<a id=emailAt>@</a>
-					<input type="text" id="emailServer" name="emailServer" class="email" size="15" placeholder="E-mail 주소" oninput="checkID()">
-					<a id=emailChkMsg></a>
+					<input type="text" id="emailId" name="emailId" class="email" size="10" placeholder="E-mail 이름" style="text-align:right;">
+					@
+					<input type="text" id="emailServer" name="emailServer" class="textBox" style="width:100px;" onfocusout="emailCheck()"/>
+						<select id="emailServerSelBox" name="emailServerSelBox" onchange="emailAddress_Change()" onfocus="readyEmailCheck()" onfocusout="emailCheck()"> 
+							<option value="">직접입력</option>
+							<option value="naver.com">naver.com</option>
+							<option value="google.com">google.com</option>
+							<option value="hanmail.net">hanmail.net</option>
+							
+						</select>
+					<span id=emailChkMsg></span>
 				<hr>
 				<label>비밀번호</label>
 					<input type="password" id="password" name="password" class="password" value="" size="30">
-					<a id=passwordChkMsg></a>
+					<span id=passwordChkMsg></span>
 				<hr>
 				<label>비밀번호 확인</label>
 					<input type="password" id="password2" name="password2" class="password2" size="30" >
-					<a id=password2ChkMsg></a>
+					<span id=password2ChkMsg></span>
 				<hr>
 				<label>별명</label>
 					<input type="text" id="nickname" name="nickname" size="30">
-					<a id=nicknameChkMsg></a>
+					<span id=nicknameChkMsg></span>
 				<hr>	
 				<label>연락처</label>	
 					<select id="phoneFront" name="phoneFront"> 
@@ -193,7 +215,7 @@
 						<option value="019">019</option>
 					</select>
 						<input type="text" id="phone" name="phone" class="phone" placeholder="숫자만 입력하세요 ex)45458282" oninput="checkPhone()" size="30" numberOnly>
-						<a id=phoneChkMsg></a>	
+						<span id=phoneChkMsg></span>	
 				<hr>
 				<label>주소</label>	
 				<table>
@@ -211,10 +233,8 @@
 						</td>
 					</tr>
 				</table>
-				<hr>
-				<label>배달 희망 지역</label> 
-				<input type="text" id="bname" name="bname" class="bname" size="30" placeholder="배달희망지역 ex) 장전동">
-				<a id=bnameChkMsg></a> <br>
+				<hr> 
+				<input type="hidden" id="bname" name="bname" class="bname" size="30" placeholder="배달희망지역 ex) 장전동">
 				<hr>
 				<label>약관 및 동의</label>
 				<!-- 
@@ -231,7 +251,7 @@
 				</fieldset>
 			<div class="clear"></div>
 			<div id="buttons">
-				<input type="submit" id="sbtn" value="회원가입" class="submit" disabled="disabled">
+				<input type="submit" id="sbtn" value="회원가입" class="submit">
 				<input type="reset" id="rbtn" value="다시입력" class="cancel">
 			</div>
 		</form>
