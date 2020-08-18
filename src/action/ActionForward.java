@@ -1,11 +1,14 @@
 package action;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import net.customer.db.CustomerDAO;
 
 public class ActionForward {
 	private boolean isRedirect = false;
@@ -26,12 +29,36 @@ public class ActionForward {
 	
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		if(isRedirect) {
-			response.sendRedirect(view);	//¸®´ÙÀÌ·ºÆ® ¹æ½Ä
+			response.sendRedirect(view);	//ï¿½ï¿½ï¿½ï¿½ï¿½Ì·ï¿½Æ® ï¿½ï¿½ï¿½
 		} else{
-			RequestDispatcher rdis = request.getRequestDispatcher(view);	//µð½ºÆÐÄ¡ ¹æ½Ä
+			RequestDispatcher rdis = request.getRequestDispatcher(view);	//ï¿½ï¿½ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½
 			rdis.forward(request, response);
 		}
 	}
 	
+	public void outData(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		request.setCharacterEncoding("UTF-8");
+		
+		String check = request.getParameter("check");
+		String email = request.getParameter("email");
+		String phone = request.getParameter("phone");
+		String result = "notUsable";
+					
+		CustomerDAO cdao=new CustomerDAO();
+					
+		switch (check) {
+			case "emailCk":
+				result = cdao.joinCheckEmail(email);
+			break;
+			
+			case "phoneCk":
+				result = cdao.joinCheckPhone(phone);
+			break;
+		}
+		
+		PrintWriter out = response.getWriter();
+		out.print(result);
+	} // method
 	
 }

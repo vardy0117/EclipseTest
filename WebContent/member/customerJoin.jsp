@@ -15,6 +15,14 @@
 		margin-top: 50px;
 		position: relative;
 	}
+	
+	form#join label{width: 100px;
+					float: left;
+					margin: 5px 0}
+
+	form#join input{margin: 5px 0; 
+					border: 1px solid #999;
+					background-color:#FCFDEA }
 </style>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -82,7 +90,7 @@
 			$.ajax({
 				type : "post",
 				async : false,
-				url : "./JoinCheck.me?check=emailCk",
+				url : "./JoinCheck.do?check=emailCk",
 				data : {email:email},
 				dataType : "text",
 				success : function(result,textStatus){
@@ -115,7 +123,7 @@
 				$.ajax({
 				type : "post",
 				async : false,
-				url : "./JoinCheck.me?check=phoneCk",
+				url : "./JoinCheck.do?check=phoneCk",
 				data : {phone:phone},
 				dataType : "text",
 				success : function(result,textStatus){
@@ -227,9 +235,8 @@
 				<table>
 					<tr>		
 						<td>
-							<input type="text" id="roadAddress" name="roadAddress" class="roadAddress" size="50" placeholder="주소찾기 버튼을 이용하세요" readOnly> 
+							<input type="text" id="roadAddress" name="roadAddress" class="roadAddress" size="50" placeholder="주소검색" onclick="execDaumPostcode()" readOnly> 
 							<a id=roadAddressChkMsg></a>
-							<input type="button" class="dup" onclick="execDaumPostcode()" value="주소찾기"> 
 						</td>
 					</tr>
 					<tr>
