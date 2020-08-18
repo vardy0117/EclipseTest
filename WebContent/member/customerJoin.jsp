@@ -90,7 +90,7 @@
 			$.ajax({
 				type : "post",
 				async : false,
-				url : "./JoinCheck.do?check=emailCk",
+				url : "./JoinCheck.do",
 				data : {email:email},
 				dataType : "text",
 				success : function(result,textStatus){
@@ -117,43 +117,7 @@
 		} // if
 	} // function
 	
-	function checkPhone(){
-		if($("#phone").val().length>=7){
-			var phone = $("#phoneFront").val()+$("#phone").val();
-				$.ajax({
-				type : "post",
-				async : false,
-				url : "./JoinCheck.do?check=phoneCk",
-				data : {phone:phone},
-				dataType : "text",
-				success : function(result,textStatus){
-					if(result == "useable"){
-						$("#sbtn").prop("disabled", false);
-						$("#sbtn").css("background-color", "#4CAF50");
-						$("#pbtn").css("background-color", "#B0F6AC");
-						$("#phoneChkMsg").text("사용 가능한 연락처입니다!");
-						return;
-					} else {
-						$("#sbtn").prop("disabled", true);
-						$("#sbtn").css("background-color", "#aaaaaa");
-						$("#pbtn").css("background-color", "#FFCECE");
-						$("#phoneChkMsg").text("이미 존재하는 연락처입니다!");
-						return;
-					}
-				}, 
-				error:function(data,textStatus){
-					console.log(data);
-					alert("에러가 발생했슈");
-				}
-			}); // $ajax()
-		} else if ($("#phone").val().length<7) {
-			$("#sbtn").prop("disabled", true);
-			$("#sbtn").css("background-color", "#aaaaaa");
-			$("#pbtn").css("background-color", "#FFCECE");
-			$("#phoneChkMsg").text("7자리이상 입력하세요")
-		} // if-else
-	} // function
-	  
+	
 	$(function (){
 		$("#rbtn").click(function(){
 			$("#email").removeAttr("disabled");
