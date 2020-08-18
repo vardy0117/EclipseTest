@@ -13,6 +13,7 @@ import action.ActionForward;
 import action.AjaxAction;
 import net.customer.action.CustomerJoinAction;
 import net.customer.action.CustomerLoginAction;
+import net.customer.action.CustomerLogoutAction;
 
 
 @WebServlet("*.do")
@@ -99,11 +100,31 @@ public class FrontController extends HttpServlet {
 			}
 		}
 		
+		if(command.equals("LogOut.do")) {
+			CustomerLogoutAction action = new CustomerLogoutAction() ;
+			try {
+				forward = action.execute(request, response);
+				forward.execute(request, response);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+
+		
 		if(command.equals("CustomerModify.do")){
 			forward = new ActionForward();
 			forward.setView("./member/customerModify.jsp");
 			forward.execute(request, response);
 		}
+		
+	
+
+
+
+
+
 		
 	}
 
