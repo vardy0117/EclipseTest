@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import action.ActionForward;
 import net.customer.db.CustomerBean;
 import net.customer.db.CustomerDAO;
 
@@ -77,7 +78,7 @@ public class CustomerJoinAction implements Action {
 		ActionForward forward=new ActionForward();
 		
 		forward.setRedirect(true);
-		forward.setPath("./CusotmerLogin.me");
+		forward.setView("./CusotmerLogin.me");
 
 		return forward;
 		

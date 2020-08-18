@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import action.ActionForward;
 import net.customer.db.CustomerBean;
 import net.customer.db.CustomerDAO;
 
@@ -85,7 +86,7 @@ public class CustomerLoginAction implements Action {
 		// 페이지 이동 설정 (이동 방식, 경로)
 		ActionForward forward = new ActionForward();
 		forward.setRedirect(true);
-		forward.setPath("./index.jsp"); 
+		forward.setView("./index.jsp"); 
 		
 
 		return forward;

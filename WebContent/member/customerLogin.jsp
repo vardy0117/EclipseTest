@@ -27,7 +27,7 @@
 
 	<h1>로그인</h1>
 	<center>
-	<form action="./CustomerLoginAction.me" method="post">
+	<form action="./CustomerLoginAction.do" method="post">
 	
 			
 			<table>

@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import action.ActionForward;
+import net.customer.action.Action;
+import net.customer.action.CustomerLoginAction;
+
 
 @WebServlet("*.do")
 public class FrontController extends HttpServlet {
@@ -27,28 +30,29 @@ public class FrontController extends HttpServlet {
 		String requestURI = request.getRequestURI();
 		String contextPath = request.getContextPath();
 		
-		// http://localhost:8080/GitTest/hello.do 주소입력시
-		// command에 "hello.do"가 저장됨 
+		// http://localhost:8080/GitTest/hello.do 二쇱�����μ��
+		// command�� "hello.do"媛� ���λ�� 
 		String command = requestURI.substring(contextPath.length()+1);	
 		ActionForward forward = null;
+		Action action=null;
 		
-		// forward속성 view=이동할페이지, redirect=리다이렉트방식인지 디스패치방식인지
+		// forward���� view=�대�������댁�, redirect=由щ�ㅼ�대���몃갑���몄� ���ㅽ�⑥�諛⑹���몄�
 		// ----------------------------------------------------------------------
-		// 로그인 선택페이지
+		// 濡�洹몄�� �������댁�
 		if(command.equals("login.do")){
 			forward = new ActionForward();
 			forward.setView("index.jsp?center=member/selectLogin.jsp");
 			forward.execute(request, response);
 		}
 		
-		// 회원가입 선택페이지
+		// ����媛��� �������댁�
 		if(command.equals("SelectJoin.do")) {
 			forward = new ActionForward();
 			forward.setView("index.jsp?center=member/selectJoin.jsp");
 			forward.execute(request, response);
 		}
 		
-		// 회원가입시 유효성 체크
+		// ����媛����� ���⑥�� 泥댄��
 		if(command.equals("JoinCheck.do")) {
 			forward = new ActionForward();
 			try {
@@ -58,12 +62,28 @@ public class FrontController extends HttpServlet {
 			}
 		}
 		
-		// 일반회원가입 페이지
+		// �쇰�����媛��� ���댁�
 		if(command.equals("CustomerJoin.do")) {
 			forward = new ActionForward();
 			forward.setView("index.jsp?center=member/customerJoin.jsp");
 			forward.execute(request, response);
 		}
+		
+		if(command.equals("CustomerLogin.do")) {
+			forward = new ActionForward();
+			forward.setView("index.jsp?center=member/customerLogin.jsp");
+			forward.execute(request, response);
+		}
+		
+		if(command.equals("CustomerLoginAction.do")) {
+			action = new CustomerLoginAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
 		
 		
 	}

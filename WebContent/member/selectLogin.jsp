@@ -33,11 +33,11 @@
 <body>
 	<div id="mainDiv">
 		<div id="selLoginDiv">
-			<a href="./CustomerLogin.me">
+			<a href="./CustomerLogin.do">
 				<img src="images/customerLogin.jpg" alt="일반로그인">
 			</a>
 			
-			<a href="./BusinessLogin.me">
+			<a href="./BusinessLogin.do">
 				<img src="images/ceoLogin.jpg" alt="사업자로그인">
 			</a>
 		</div>
