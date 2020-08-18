@@ -56,7 +56,7 @@
 			</c:when>
 			<c:when test="${!empty sessionScope.customerNo}">
 				<div id="loginAndJoin">
-					${sessionScope.nickname}회원님 어서 오세요!
+					${sessionScope.nickname} 회원님 어서 오세요!
 					<a href="#"></a> | 
 					<a href="./LogOut.do">logout</a> |	
 					
