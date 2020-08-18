@@ -13,29 +13,10 @@ import net.customer.db.CustomerDAO;
 
 
 
-public class CustomerLoginAction implements Action {
+public class CustomerLoginAction {
 	
 	private final static Logger log = Logger.getGlobal();
 	
-	@Override
-	public void outData(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-		
-		req.setCharacterEncoding("UTF-8");
-		
-		String check = req.getParameter("check");
-		String email = req.getParameter("email");
-
-					
-		CustomerDAO cdao=new CustomerDAO();
-					
-		
-
-		// 페이지 이동 설정 (이동 방식, 경로)
-		PrintWriter out = resp.getWriter();
-	
-	} // method
-	
-	@Override
 	public ActionForward execute(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 		
 		log.info("CustomerLoginAction execute()");

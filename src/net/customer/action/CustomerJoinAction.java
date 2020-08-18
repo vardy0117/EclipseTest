@@ -10,11 +10,10 @@ import action.ActionForward;
 import net.customer.db.CustomerBean;
 import net.customer.db.CustomerDAO;
 
-public class CustomerJoinAction implements Action {
+public class CustomerJoinAction{
 	
 	private final static Logger log = Logger.getGlobal();
-	
-	@Override
+
 	public void outData(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 		
 		req.setCharacterEncoding("UTF-8");
@@ -36,12 +35,11 @@ public class CustomerJoinAction implements Action {
 			break;
 		}
 		
-		// ÆäÀÌÁö ÀÌµ¿ ¼³Á¤ (ÀÌµ¿ ¹æ½Ä, °æ·Î)
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½Ìµï¿½ ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½)
 		PrintWriter out = resp.getWriter();
 		out.print(result);
 	} // method
 	
-	@Override
 	public ActionForward execute(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 		
 		log.info("CustomerJoinAction execute()");
@@ -51,7 +49,7 @@ public class CustomerJoinAction implements Action {
 		CustomerBean cb =new CustomerBean();
 		
 		System.out.println(req.getAttribute("agreeAD"));
-		// °¡ÀÔ½Ã customerNo¿Í grade´Â °¢°¢ Auto-Increment, 5·Î DB¿¡ ÀúÀå
+		// ï¿½ï¿½ï¿½Ô½ï¿½ customerNoï¿½ï¿½ gradeï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Auto-Increment, 5ï¿½ï¿½ DBï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		cb.setEmail(req.getParameter("emailId")+"@"+req.getParameter("emailServer"));
 		cb.setPassword(req.getParameter("password")); 
 		cb.setNickname(req.getParameter("nickname")); 
@@ -63,7 +61,7 @@ public class CustomerJoinAction implements Action {
 		} else { 
 			cb.setAgreeAD("F");
 		}	
-		// °¡ÀÔ ¼º°ø ¿©ºÎ
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		boolean result = false;
 		
 		CustomerDAO cdao=new CustomerDAO();
@@ -71,11 +69,11 @@ public class CustomerJoinAction implements Action {
 		result = cdao.insertCustomer(cb);
 		
 		if(result == false){
-			log.info("È¸¿ø °¡ÀÔ ½ÇÆÐ!");
+			log.info("È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½!");
 			return null;
 		}
 				
-		// ÆäÀÌÁö ÀÌµ¿ ¼³Á¤ (ÀÌµ¿ ¹æ½Ä, °æ·Î)
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½Ìµï¿½ ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½)
 		ActionForward forward=new ActionForward();
 		
 		forward.setRedirect(true);
