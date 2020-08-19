@@ -76,7 +76,7 @@ public class CeoLoginAction {
 				// 페이지 이동 설정 (이동 방식, 경로)
 				
 				forward.setRedirect(true);
-				forward.setView("./");
+				forward.setView("./ceoIndex.jsp");
 				System.out.println("로그인 리다이렉트 작동 " + forward.getView());
 			
 		}else{

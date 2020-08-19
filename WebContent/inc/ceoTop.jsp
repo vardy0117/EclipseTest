@@ -46,7 +46,33 @@
 <body>
 	<div id="topDiv">
 		<h2 id="logo"><a href="">Delivengers 사장님 페이지</a></h2>
+		
+			<div id="topDiv">
+		<h2 id="logo"><a href="./">Delivengers</a></h2>
+		<c:choose>
+			<c:when test="${empty sessionScope.ceoNo}">
+				<div id="loginAndJoin">
+				
+					<a href="./Ceo.do">로그인</a> | 
+					<a href="./CeoJoin.do">회원가입</a> |
+				</div>
+			</c:when>
+			<c:when test="${!empty sessionScope.email}">
+				<div id="loginAndJoin">
+					${sessionScope.email} 사장님 어서 오세요!
+					<a href="#"></a> | 
+					<a href="./LogOut.do">logout</a> |	
+					<a href="./CustomerModifyIntro.do">회원수정</a>
+					<!-- 주소를 변경해야 합니다 -->
+				</div>
+			</c:when>
+		</c:choose>	
 	</div>
+	
+	</div>
+	
+	
+	
 	
 </body>
 </html>
