@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import action.ActionForward;
 import action.AjaxAction;
+import net.ceo.action.CeoJoinAction;
 import net.customer.action.CustomerJoinAction;
 import net.customer.action.CustomerLoginAction;
 import net.customer.action.CustomerLogoutAction;
@@ -58,12 +59,12 @@ public class FrontController extends HttpServlet {
 		}
 		
 		// ajax
-		if(command.equals("JoinCheck.do")) {
+		if(command.equals("CustomerJoinCheck.do")) {
 			AjaxAction ajax = new AjaxAction();
 			try {
-				ajax.emailCheck(request, response);
+				ajax.emailCheckFromCustomer(request, response);
 			} catch (Exception e) {
-				e.printStackTrace();
+					e.printStackTrace();
 			}
 		}
 		
@@ -179,6 +180,38 @@ public class FrontController extends HttpServlet {
 			}
 		}
 		
+		// >ceoJoin.jsp
+		if(command.equals("CeoJoin.do")) {
+			forward = new ActionForward();
+			forward.setView("index.jsp?center=member/ceoJoin.jsp");
+			forward.execute(request, response);
+		}
+				
+		if(command.equals("CeoJoinCheck.do")) {
+			AjaxAction ajax = new AjaxAction();
+			try {
+				ajax.emailCheckFromCeo(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}		
+				
+		if(command.equals("CeoJoinAction.do")) {
+			CeoJoinAction action = new CeoJoinAction();		
+			try {
+				forward = action.execute(request, response);
+				forward.execute(request, response);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+				
+		if(command.equals("CeoLogin.do")) {
+			forward = new ActionForward();
+			forward.setView("index.jsp?center=member/ceoLogin.jsp");
+			forward.execute(request, response);
+		}		
 	
 		if(command.equals("SearchStore.do")) {
 			// 받은 값 : roadAddress / detailAddress / bname 

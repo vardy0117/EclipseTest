@@ -9,7 +9,7 @@ import org.json.simple.JSONObject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
+import net.ceo.db.CeoDAO;
 import net.customer.db.CustomerBean;
 import net.customer.db.CustomerDAO;
 
@@ -35,7 +35,7 @@ public class AjaxAction {
 		String email = request.getParameter("email");
 		String result = "notUsable";
 
-		CustomerDAO cdao = new CustomerDAO();
+		CeoDAO cdao = new CeoDAO();
 			result = cdao.joinCheckEmail(email);
 		
 		PrintWriter out = response.getWriter();
