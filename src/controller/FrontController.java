@@ -125,7 +125,12 @@ public class FrontController extends HttpServlet {
 				forward = new ActionForward();
 				forward.setView("./CustomerModify.do");
 				forward.execute(request, response);
-			} 
+			}else if(password != null && !cBean.getPassword().equals(password)){
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = response.getWriter();
+				out.println("<script>alert('비밀번호가 다릅니다.'); location.href='./CustomerModifyIntro.do';</script>");
+				out.flush();
+			}
 			
 			else if(customerNo != null){
 				forward = new ActionForward();
