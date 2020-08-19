@@ -25,7 +25,15 @@
 					background-color:#FCFDEA }
 		
 	form#join span#emailChkMsg img{margin-left: 10px;
-								  }		
+								  }	
+  
+	#join {
+		width: 700px;
+		margin: 10px auto;
+	}
+	#buttons {
+		text-align: center;
+	}
 					
 </style>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -112,9 +120,11 @@
 				success : function(result,textStatus){
 					if(result == "useable"){
 						$("#emailChkMsg").text(usableMsg);
+						$("#emailChkMsg").css("color", "green");
 						return;
 					} else {
 						$("#emailChkMsg").text(notuseableMsg);
+						$("#emailChkMsg").css("color", "red");
 						return;
 					}
 				}, 
@@ -147,10 +157,13 @@
 			$("#passwordChkMsg").text("");
 			if(document.fr.password2.value ==""){
 				$("#password2ChkMsg").text("비밀번호를 한 번 더 입력해주세요!");
+				$("#password2ChkMsg").css("color", "red");
 			} else if(document.fr.password.value != document.fr.password2.value){
 		 		$("#password2ChkMsg").text("비밀번호가 다릅니다.");
+		 		$("#password2ChkMsg").css("color", "red");
 			} else if (document.fr.password.value == document.fr.password2.value) {
 				$("#password2ChkMsg").text(pwChkSuccessMsg);
+				$("#password2ChkMsg").css("color", "green");
 			}
 		
 			return false;
@@ -192,8 +205,8 @@
     
 </script>
 
-	<article id="mainDiv"> 
-		<h1>일반 회원 가입</h1>
+	<div id="mainDiv"> 
+		<h1 style="text-align: center;">일반 회원 가입</h1>
 		<form action="./CustomerJoinAction.do" id="join" method="post" name="fr">
 			<fieldset>
 				<label>E-mail</label>
@@ -269,7 +282,7 @@
 				<input type="reset" id="rbtn" value="다시입력" class="cancel">
 			</div>
 		</form>
-	</article>
+	</div>
 	<div class="clear"></div>
 	
 </body>

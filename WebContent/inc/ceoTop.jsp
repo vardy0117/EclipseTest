@@ -45,24 +45,7 @@
 </head>
 <body>
 	<div id="topDiv">
-		<h2 id="logo"><a href="./">Delivengers</a></h2>
-		<c:choose>
-			<c:when test="${empty sessionScope.customerNo}">
-				<div id="loginAndJoin">
-				
-					<a href="./CustomerLogin.do">로그인</a> | 
-					<a href="./CustomerJoin.do">회원가입</a> |
-				</div>
-			</c:when>
-			<c:when test="${!empty sessionScope.customerNo}">
-				<div id="loginAndJoin">
-					${sessionScope.nickname} 회원님 어서 오세요!
-					<a href="#"></a> | 
-					<a href="./LogOut.do">logout</a> |	
-					<a href="./CustomerModifyIntro.do">회원수정</a>
-				</div>
-			</c:when>
-		</c:choose>	
+		<h2 id="logo"><a href="">Delivengers 사장님 페이지</a></h2>
 	</div>
 	
 </body>

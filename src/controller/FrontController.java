@@ -183,7 +183,7 @@ public class FrontController extends HttpServlet {
 		// >ceoJoin.jsp
 		if(command.equals("CeoJoin.do")) {
 			forward = new ActionForward();
-			forward.setView("index.jsp?center=member/ceoJoin.jsp");
+			forward.setView("ceoIndex.jsp?center=member/ceoJoin.jsp");
 			forward.execute(request, response);
 		}
 				
@@ -209,7 +209,7 @@ public class FrontController extends HttpServlet {
 				
 		if(command.equals("CeoLogin.do")) {
 			forward = new ActionForward();
-			forward.setView("index.jsp?center=member/ceoLogin.jsp");
+			forward.setView("ceoIndex.jsp?center=member/ceoLogin.jsp");
 			forward.execute(request, response);
 		}		
 	
