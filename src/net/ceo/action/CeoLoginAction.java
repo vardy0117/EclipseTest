@@ -68,6 +68,7 @@ public class CeoLoginAction {
 				// session.setAttribute("nickname", a.getNickname());
 				// session.setAttribute("nickname", a.getNickname());
 				session.setAttribute("ceoNo", a.getCeoNo());
+				System.out.println("들어가있는 ceo번호 "+ a.getCeoNo());
 				session.setAttribute("email", email);
 	
 				
@@ -76,8 +77,8 @@ public class CeoLoginAction {
 				// 페이지 이동 설정 (이동 방식, 경로)
 				
 				forward.setRedirect(true);
-				forward.setView("./ceoIndex.jsp");
-				System.out.println("로그인 리다이렉트 작동 " + forward.getView());
+				forward.setView("./ceoIndex.jsp"); // 사장님 전용페이지가 없어서 일단 여기로 했습니당
+				System.out.println("사장님 로그인 리다이렉트 작동 " + forward.getView());
 			
 		}else{
 			
