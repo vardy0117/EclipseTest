@@ -29,7 +29,7 @@ public class CustomerDAO {
 			if(pstmt!=null) pstmt.close();
 			if(con!=null) con.close();
 		} catch (Exception e) {
-			System.out.println("ÀÚ¿ø ÇØÁ¦ ½ÇÆĞ! : " + e);
+			System.out.println("ï¿½Ú¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½! : " + e);
 		}
 	} // resourceClose()
 
@@ -51,7 +51,7 @@ public class CustomerDAO {
 				 result = "useable";			 				
 			 }
 		} catch (Exception e) {
-			System.out.println("joinCheckEmail¸Ş¼Òµå ³»ºÎ¿¡¼­ ¿¹¿Ü ¹ß»ı : " + e);
+			System.out.println("joinCheckEmailï¿½Ş¼Òµï¿½ ï¿½ï¿½ï¿½Î¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½ : " + e);
 		} finally {
 			resourceClose();
 		}
@@ -76,7 +76,7 @@ public class CustomerDAO {
 				 result = "useable";			 				
 			 }
 		} catch (Exception e) {
-			System.out.println("joinCheckPhone¸Ş¼Òµå ³»ºÎ¿¡¼­ ¿¹¿Ü ¹ß»ı : " + e);
+			System.out.println("joinCheckPhoneï¿½Ş¼Òµï¿½ ï¿½ï¿½ï¿½Î¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½ : " + e);
 		} finally {
 			resourceClose();
 		}
@@ -93,7 +93,7 @@ public class CustomerDAO {
 			 sql="insert into customer(email, password, nickname, roadAddress, detailAddress, bname, phone, agreeAD) "
 			 			     + "values(?, ?, ?, ?, ?, ?, ?,?)";
 
-/*********¾ÏÈ£ Àá½Ã º¸·ù**************/			 
+/*********ï¿½ï¿½È£ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**************/			 
 /* sql="insert into customer(customerNo, email, password, nickname, address, bname, phone, agreeAD) "
 	 			     + "values(null, ?, hex(aes_encrypt(?,?)), ?, ?, ?, ?, ?)";
 */
@@ -111,7 +111,7 @@ public class CustomerDAO {
 			 pstmt.setString(7, cb.getPhone());
 			 pstmt.setString(8, cb.getAgreeAD());
 			 
-			/*// ¾ÏÈ£È­ Àü¿ë
+			/*// ï¿½ï¿½È£È­ ï¿½ï¿½ï¿½ï¿½
 			 pstmt.setString(1, cb.getEmail());
 			 pstmt.setString(2, cb.getEmail());
 			 pstmt.setString(3, cb.getPassword());
@@ -128,7 +128,7 @@ public class CustomerDAO {
 			 }
 			
 		} catch (Exception e){
-			System.out.println("insertCustomer¸Ş¼Òµå ³»ºÎ¿¡¼­ ¿¹¿Ü ¹ß»ı : " + e);
+			System.out.println("insertCustomerï¿½Ş¼Òµï¿½ ï¿½ï¿½ï¿½Î¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½ : " + e);
 		} finally {
 			resourceClose();
 		}
@@ -136,7 +136,7 @@ public class CustomerDAO {
 		return false;
 	} // method
 /***********************************************************************************************/
-	public boolean CheckCustomer(CustomerBean cb) { // ·Î±×ÀÎ °Ë»ç 
+	public boolean CheckCustomer(CustomerBean cb) { // ï¿½Î±ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½ 
 	
 		boolean result = false;
 		
@@ -158,7 +158,7 @@ public class CustomerDAO {
 			 rs = pstmt.executeQuery();		 
 
 			if (rs.next()) {
-				System.out.println("·Î±×ÀÎ ¼º°ø");
+				System.out.println("ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 				result = true;
 
 			}
@@ -167,7 +167,7 @@ public class CustomerDAO {
 
 			
 		} catch (Exception e){
-			System.out.println("CheckCustomer¸Ş¼Òµå ³»ºÎ¿¡¼­ ¿¹¿Ü ¹ß»ı : " + e);
+			System.out.println("CheckCustomerï¿½Ş¼Òµï¿½ ï¿½ï¿½ï¿½Î¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½ : " + e);
 		} finally {
 			resourceClose();
 		}
@@ -183,7 +183,7 @@ public class CustomerDAO {
 			String sql2 = "select * from customer where email=?";
 			pstmt = con.prepareStatement(sql2);
 			pstmt.setString(1, email);
-			System.out.println("sql2 CustomerInformation Äõ¸® ¼º°ø");
+			System.out.println("sql2 CustomerInformation ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 			rs = pstmt.executeQuery();
 			rs.next();
 			/************************************************************************************/
@@ -192,10 +192,10 @@ public class CustomerDAO {
 			cb.setCustomerNo(rs.getString("customerNo"));
 
 			/************************************************************************************/
-			// ·Î±×ÀÎ½Ã Á¤º¸ select ÇØ¼­ °¡Á®¿À±â
+			// ï¿½Î±ï¿½ï¿½Î½ï¿½ ï¿½ï¿½ï¿½ï¿½ select ï¿½Ø¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			System.out.println("-----------------------CustomerInformation ------------------------------------");
-			System.out.println("customer dao¿¡¼­ °¡Á®¿Â ´Ğ³×ÀÓ :  " + cb.getNickname());
-			System.out.println("customer dao¿¡¼­ °¡Á®¿Â customerNo :  " + cb.getCustomerNo());
+			System.out.println("customer daoï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ğ³ï¿½ï¿½ï¿½ :  " + cb.getNickname());
+			System.out.println("customer daoï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ customerNo :  " + cb.getCustomerNo());
 			
 			
 		} catch (Exception e) {
@@ -208,6 +208,58 @@ public class CustomerDAO {
 		
 	}
 /***********************************************************************************************/
+	public CustomerBean getCustomer(String customerNo){
+		CustomerBean cBean = new CustomerBean();
+		try {
+			con=getConnection();
+			sql="select * from customer where customerNo=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, customerNo);
+			rs = pstmt.executeQuery();
+			if(rs.next()){
+				cBean.setCustomerNo(rs.getString(1));
+				cBean.setEmail(rs.getString(2));
+				cBean.setPassword(rs.getString(3));
+				cBean.setNickname(rs.getString(4));
+				cBean.setRoadAddress(rs.getString(5));
+				cBean.setDetailAddress(rs.getString(6));
+				cBean.setBname(rs.getString(7));
+				cBean.setPhone(rs.getString(8));
+				cBean.setGrad(rs.getString(9));
+				cBean.setAgreeAD(rs.getString(10));
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			resourceClose();
+		}
+		return cBean;
+	}
 	
+/***********************************************************************************************/
+	// update Customer
+	public int updateMember(CustomerBean cBean){
+		int result = 0;
+		System.out.println("DAOë¡œ ì´ë™");
+		try {
+			con = getConnection();
+			sql="update customer set password=?,nickname=?,phone=?,roadAddress=?,detailAddress=? "
+					+ "where customerNo=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, cBean.getPassword());
+			pstmt.setString(2, cBean.getNickname());
+			pstmt.setString(3, cBean.getPhone());
+			pstmt.setString(4, cBean.getRoadAddress());
+			pstmt.setString(5, cBean.getDetailAddress());
+			pstmt.setString(6, cBean.getCustomerNo());
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			resourceClose();
+		}
+		return result;
+	}
 	
 } // class

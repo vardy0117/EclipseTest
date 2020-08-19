@@ -59,7 +59,7 @@
 					${sessionScope.nickname} 회원님 어서 오세요!
 					<a href="#"></a> | 
 					<a href="./LogOut.do">logout</a> |	
-					
+					<a href="./CustomerModifyIntro.do">회원수정</a>
 				</div>
 			</c:when>
 			<c:when test="${!empty sessionScope.ceoNo}">
