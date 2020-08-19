@@ -5,6 +5,28 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script type="text/javascript">
+	window.onload = function() {
+		var customerNo = "${sessionScope.customerNo}";
+		if(customerNo != "") {
+			$.ajax({
+				type: "post",
+				url: "./getCustomer.do",
+				data: {customerNo: customerNo},
+				dataType: 'json',
+				contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+				success: function(data) {
+					document.fr.roadAddress.value = data.roadAddress;
+					document.fr.detailAddress.value = data.detailAddress;
+					document.fr.bname.value = data.bname;
+				}
+			});
+		}
+		
+	}
+</script>
+
 <style>
 	div {
 		box-sizing: border-box;

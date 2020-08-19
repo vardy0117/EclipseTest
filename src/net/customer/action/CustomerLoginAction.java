@@ -76,8 +76,8 @@ public class CustomerLoginAction {
 				System.out.println("세션 등록 완료 ");
 				// 페이지 이동 설정 (이동 방식, 경로)
 				
-				forward.setRedirect(false);
-				forward.setView("./index.jsp");
+				forward.setRedirect(true);
+				forward.setView("./");
 				System.out.println("로그인 리다이렉트 작동 " + forward.getView());
 			
 		}else{
