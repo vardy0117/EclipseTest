@@ -67,6 +67,17 @@ public class FrontController extends HttpServlet {
 			}
 		}
 		
+		if(command.equals("getCustomer.do")) {
+			AjaxAction ajax = new AjaxAction();
+			
+			String jsonObj = ajax.getCustomer(request.getParameter("customerNo"));
+			
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.print(jsonObj);
+			
+		}
+		
 		// >customerJoin.jsp
 		if(command.equals("CustomerJoin.do")) {
 			forward = new ActionForward();

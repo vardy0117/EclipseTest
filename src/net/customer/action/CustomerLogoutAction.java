@@ -37,7 +37,7 @@ public class CustomerLogoutAction implements Action {
 		 
 		out.println("<script>");
 		out.println("alert('로그아웃 되었습니다');");
-		out.println("location.href='./index.jsp';");
+		out.println("location.href='./';");
 		out.println("</script>");
 		out.close();
 	
