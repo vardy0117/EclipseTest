@@ -62,8 +62,7 @@
 					${sessionScope.email} 사장님 어서 오세요!
 					<a href="#"></a> | 
 					<a href="./LogOut.do">logout</a> |	
-					<a href="./CustomerModifyIntro.do">회원수정</a>
-					<!-- 주소를 변경해야 합니다 -->
+					<a href="./CeoModifyIntro.do">사장님 정보수정</a>
 				</div>
 			</c:when>
 		</c:choose>	
