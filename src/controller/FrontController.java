@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,6 +15,9 @@ import action.AjaxAction;
 import net.customer.action.CustomerJoinAction;
 import net.customer.action.CustomerLoginAction;
 import net.customer.action.CustomerLogoutAction;
+import net.customer.action.CustomerModifyAction;
+import net.customer.db.CustomerBean;
+import net.customer.db.CustomerDAO;
 
 
 @WebServlet("*.do")
@@ -110,13 +114,53 @@ public class FrontController extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-
+		
+		if(command.equals("CustomerModifyIntro.do")){
+			String password = request.getParameter("password");
+			String customerNo = (String)request.getSession().getAttribute("customerNo");
+			CustomerDAO cDAO = new CustomerDAO();
+			CustomerBean cBean = cDAO.getCustomer(customerNo);
+			
+			if(password != null && cBean.getPassword().equals(password)){
+				forward = new ActionForward();
+				forward.setView("./CustomerModify.do");
+				forward.execute(request, response);
+			} 
+			
+			else if(customerNo != null){
+				forward = new ActionForward();
+				forward.setView("index.jsp?center=member/customerModifyIntro.jsp");
+				forward.execute(request, response);
+			}
+		}
 
 		
 		if(command.equals("CustomerModify.do")){
-			forward = new ActionForward();
-			forward.setView("./member/customerModify.jsp");
-			forward.execute(request, response);
+			
+			if(request.getSession().getAttribute("customerNo") != null){
+				CustomerDAO cDAO = new CustomerDAO();
+				CustomerBean cBean = cDAO.getCustomer((String)request.getSession().getAttribute("customerNo"));
+				request.setAttribute("cBean", cBean);
+				forward = new ActionForward();
+				forward.setView("index.jsp?center=member/customerModify.jsp");
+				forward.execute(request, response);
+			}
+		}
+		if(command.equals("CustomerModifyAction.do")){
+			CustomerModifyAction action = new CustomerModifyAction();
+			try {
+				int result = action.execute(request, response);
+				request.getSession().setAttribute("nickname", request.getParameter("nickname"));
+
+				if(result==1){
+					response.setContentType("text/html; charset=UTF-8");
+					PrintWriter out = response.getWriter();
+					out.println("<script>alert('수정이 완료 되었습니다.'); location.href='./';</script>");
+					out.flush();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		
 	
