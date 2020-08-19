@@ -7,9 +7,8 @@
 <title>Insert title here</title>
 <style>
 	#topDiv{
-		width:1000px;
-		height: 50px;
-		background-color: black;
+		width:100%;
+		height: 80px;
 		color: white;
 		margin: 0 auto;
 		position: fixed;
@@ -17,21 +16,27 @@
 		left: 0;
 		right: 0;
 		z-index: 1000;
+		
+		background: linear-gradient(
+			to right, 
+			hsl(98 100% 62%), 
+			hsl(204 100% 59%)
+		);
+		
 	}
-	
+
 	#topDiv #logo {
-		text-align: center;
-		margin: 10px 0;
-	}
-	#topDiv a {
-		text-decoration: none;
-		color: white;
+		font-size: 2rem;
+		text-shadow: 4px 2px 2px gray;
 	}
 	
 	#loginAndJoin {
 		position: absolute;
 		right: 10px;
 		top: 10px;
+		text-decoration: none;
+		color: white;
+		text-shadow: 2px 1px 1px gray;
 	}
 	#loginAndJoin a {
 		text-decoration: none;
@@ -41,17 +46,25 @@
 		text-decoration: underline;
 		color: white;
 	}
+	#logo {
+		margin: 0;
+	}
+	#logo img {
+		width: 250px;
+	}
 </style>
 </head>
 <body>
 	<div id="topDiv">
-		<h2 id="logo"><a href="./">Delivengers</a></h2>
+		<div id="logoBody">
+			<h2 id="logo"><a href="./"><img src="./images/logo_white.png"></a></h2>
+		</div>
 		<c:choose>
 			<c:when test="${empty sessionScope.customerNo}">
 				<div id="loginAndJoin">
 				
 					<a href="./CustomerLogin.do">로그인</a> | 
-					<a href="./CustomerJoin.do">회원가입</a> |
+					<a href="./CustomerJoin.do">회원가입</a>
 				</div>
 			</c:when>
 			<c:when test="${!empty sessionScope.customerNo}">
