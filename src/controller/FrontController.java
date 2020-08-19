@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import action.ActionForward;
 import action.AjaxAction;
 import net.ceo.action.CeoJoinAction;
+import net.ceo.action.CeoLoginAction;
 import net.customer.action.CustomerJoinAction;
 import net.customer.action.CustomerLoginAction;
 import net.customer.action.CustomerLogoutAction;
@@ -213,6 +214,19 @@ public class FrontController extends HttpServlet {
 			forward.execute(request, response);
 		}		
 	
+		
+		if(command.equals("CeoLoginAction.do")) {
+			CeoLoginAction action = new CeoLoginAction() ;
+		
+			try {
+				forward = action.execute(request, response);
+				forward.execute(request, response);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
 		if(command.equals("SearchStore.do")) {
 			// 받은 값 : roadAddress / detailAddress / bname 
 			request.setCharacterEncoding("utf-8");
