@@ -10,29 +10,88 @@
 	#mainDiv {
 		width: 1000px;
 		min-height: 600px;
-		border: 2px solid green;
 		margin: 0 auto;
-		margin-top: 50px;
+		margin-top: 80px;
 		position: relative;
+		padding: 80px;
+	}
+  
+	#formDiv {
+		width: 800px;
+		height: 550px;
+		margin: 0 auto;
+		border: 2px solid #c7c7c7;
+		border-radius: 15px;
+		box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 	}
 	
-	form#join label{width: 100px;
-					float: left;
-					margin: 5px 0}
-
-	form#join input{margin: 5px 0; 
-					border: 1px solid #999;
-					background-color:#FCFDEA }
-		
-	form#join span#emailChkMsg img{margin-left: 10px;
-								  }	
-  
-	#join {
-		width: 700px;
-		margin: 10px auto;
+	form > table {
+		font-size: 1rem;
+		margin: 0 auto;
 	}
-	#buttons {
-		text-align: center;
+	
+	.td_left {
+		text-align: right;
+	}
+	
+	.textBox {
+		width: 150px;
+		height: 30px;
+		border-radius: 12px;
+		border: 2px solid gray;
+		padding-left: 15px;
+		font-family: Binggrae-Bold;
+		font-size: 1rem;
+	}
+	
+	input[type=password] {
+		font-family: 'pass', 'Roboto', Helvetica, Arial, sans-serif ;
+	}
+	input[type=password]::placeholder {
+		font-family: Binggrae-Bold;
+	}
+	input:focus { outline: none; }
+	select:focus { outline: none; }
+	#roadAddress, #detailAddress {
+		width: 256px;
+	}
+	.td_right {
+		padding-left: 15px;
+	}
+	.btn {
+		width: 25px;
+		background: linear-gradient(
+			to right, 
+			hsl(98 100% 62%), 
+			hsl(204 100% 59%)
+		);
+		font-family: Binggrae-Bold;
+		font-size: 1rem;
+		color: white;
+		border: none;
+		border-radius: 12px;
+		width: 270px;
+		height: 35px;
+		transition-duration: 1s;
+		opacity: 0.7;
+	}
+	.btn:hover {
+		cursor: pointer;
+		opacity: 1;
+	}
+	select {
+		border-radius: 12px;
+	    width: 100px;
+	    height: 37px;
+	    border: 2px solid gray;
+	    font-family: Binggrae-Bold;
+	}
+	#phoneFront {
+		test-align-last: center;
+		width: 55px;
+	}
+	#agreeAD {
+		cursor: pointer;
 	}
 					
 </style>
@@ -206,82 +265,94 @@
 </script>
 
 	<div id="mainDiv"> 
-		<h1 style="text-align: center;">일반 회원 가입</h1>
-		<form action="./CustomerJoinAction.do" id="join" method="post" name="fr">
-			<fieldset>
-				<label>E-mail</label>
-					<input type="text" id="emailId" name="emailId" class="email" size="10" placeholder="E-mail 이름" style="text-align:right;">
-					@
-					<input type="text" id="emailServer" name="emailServer" class="textBox" style="width:100px;" onfocusout="emailCheck()"/>
-						<select id="emailServerSelBox" name="emailServerSelBox" onchange="emailAddress_Change()" onfocus="readyEmailCheck()" onfocusout="emailCheck()"> 
-							<option value="">직접 입력</option>
-							<option value="naver.com">naver.com</option>
-							<option value="google.com">google.com</option>
-							<option value="hanmail.net">hanmail.net</option>
-						</select>
-					<span id=emailChkMsg></span>
-				<hr>
-				<label>비밀번호</label>
-					<input type="password" id="password" name="password" class="password" value="" size="30" onfocusout="passwordCheck()">
-					<span id=passwordChkMsg></span>
-				<hr>
-				<label>비밀번호 확인</label>
-					<input type="password" id="password2" name="password2" class="password2" size="30" onfocusout="passwordCheck()">
-					<span id=password2ChkMsg></span>
-				<hr>
-				<label>별명</label>
-					<input type="text" id="nickname" name="nickname" size="30">
-					<span id=nicknameChkMsg></span>
-				<hr>	
-				<label>연락처</label>	
-					<select id="phoneFront" name="phoneFront"> 
-						<option value="010">010</option>
-						<option value="011">011</option>
-						<option value="016">016</option>
-						<option value="017">017</option>
-						<option value="019">019</option>
-					</select>
-						<input type="text" id="phone" name="phone" class="phone" placeholder="숫자만 입력하세요 ex)45458282" size="30" numberOnly>
-						<span id=phoneChkMsg></span>	
-				<hr>
-				<label>주소</label>	
+		<div id="formDiv">
+			<h1 style="text-align: center;">일반 회원 가입</h1>
+			<form action="./CustomerJoinAction.do" id="join" method="post" name="fr">
 				<table>
-					<tr>		
-						<td>
-							<input type="text" id="roadAddress" name="roadAddress" class="roadAddress" size="50" placeholder="주소검색" onclick="execDaumPostcode()" readOnly> 
-							<a id=roadAddressChkMsg></a>
+					<tr>
+						<td class="td_left">이메일</td>
+						<td class="td_right">
+							<input class="textBox" type="text" name="emailId" size="10" placeholder="이메일 주소"> @
+							<input class="textBox" type="text" name="emailServer" onfocusout="emailCheck()"/>
+							<select id="emailServerSelBox" name="emailServerSelBox" onchange="emailAddress_Change()" onfocus="readyEmailCheck()" onfocusout="emailCheck()"> 
+								<option value="">직접 입력</option>
+								<option value="naver.com">naver.com</option>
+								<option value="google.com">google.com</option>
+								<option value="hanmail.net">hanmail.net</option>
+							</select>
 						</td>
 					</tr>
 					<tr>
-						<td>
+						<td class="td_left"></td>
+						<td class="td_right"><span id=emailChkMsg>　</span></td>
+					</tr>
+					<tr>
+						<td class="td_left">비밀번호</td>
+						<td class="td_right">
+							<input class="textBox" type="password" id="password" name="password" onfocusout="passwordCheck()">
+							<span id=passwordChkMsg></span>
+						</td>
+					</tr>
+					<tr>
+						<td class="td_left">비밀번호 확인</td>
+						<td class="td_right">
+							<input class="textBox" type="password" id="password2" name="password2" class="password2" onfocusout="passwordCheck()">
+							<span id=password2ChkMsg></span>
+						</td>
+					</tr>
+					<tr>
+						<td class="td_left">닉네임</td>
+						<td class="td_right">
+							<input class="textBox" type="text" id="nickname" name="nickname">
+							<span id=nicknameChkMsg></span>
+						</td>
+					</tr>
+					<tr>
+						<td class="td_left">연락처</td>
+						<td class="td_right">
+							<select id="phoneFront" name="phoneFront"> 
+								<option value="010">010</option>
+								<option value="011">011</option>
+								<option value="016">016</option>
+								<option value="017">017</option>
+								<option value="019">019</option>
+							</select>
+							<input class="textBox" type="text" id="phone" name="phone" placeholder="숫자만 입력하세요." numberOnly>
+							<span id=phoneChkMsg></span>
+						</td>
+					</tr>
+					<tr>
+						<td class="td_left">주소</td>
+						<td class="td_right">
+							<input class="textBox" type="text" id="roadAddress" name="roadAddress" size="50" placeholder="클릭하여 주소검색" onclick="execDaumPostcode()" readOnly> 
+							<span id=roadAddressChkMsg></span>
+						</td>
+					</tr>
+					<tr>
+						<td class="td_left"></td>
+						<td class="td_right">
 							<span id="guide" style="color:#999;display:none"></span>
-							<input type="text" id="detailAddress"  name="detailAddress" class="detailAddress" size="50" placeholder="상세 주소 입력">
+							<input class="textBox" type="text" id="detailAddress"  name="detailAddress" size="50" placeholder="상세 주소 입력">
 							<a id=detailAddressChkMsg></a>
 						</td>
 					</tr>
+					<tr>
+						<td colspan="2" style="text-align: center;">
+							<input type="checkbox"  id="agreeAD" name="agreeAD" class="agree" value="T"> 이메일로 광고 수신 여부
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2" style="text-align:center;">
+							<br>
+							<input class="btn" type="submit" id="sbtn" value="회원가입" class="submit">
+							<input class="btn" type="reset" id="rbtn" value="다시입력" class="cancel">
+						</td>
+					</tr>
+					
 				</table>
-
 				<input type="hidden" id="bname" name="bname" class="bname" size="30" placeholder="배달희망지역 ex) 장전동">
-				<hr>
-				<label>약관 및 동의</label>
-				<!-- 
-				<input type="checkbox"  id="#" name="#" class="#" value="전체 동의">
-				<hr>
-				<input type="checkbox"  id="#" name="#" class="#" value="이용약관동의(필수)" checked> <br>
-				내용~(자세히 누르면 볼 수 있게... db에 넣어두면...?)
-				<input type="checkbox"  id="#" name="#" class="#" value="개인 정보 수집 및 이용 동의(필수)" checked> <br> 
-				내용~(자세히 누르면 볼 수 있게)				<input type="checkbox"  id="#" name="#" class="#" value="전자금융거래 이용약관 동의(필수)" checked> <br> 
-				내용~(자세히 누르면 볼 수 있게)
-				<input type="checkbox"  id="#" name="#" class="#" value="만 14세  이상 이용자 동의(필수)" checked> <br> 
-				-->
-				혜택 알림 동의 (선택) <input type="checkbox"  id="agreeAD" name="agreeAD" class="agree" value="T">
-				</fieldset>
-			<div class="clear"></div>
-			<div id="buttons">
-				<input type="submit" id="sbtn" value="회원가입" class="submit">
-				<input type="reset" id="rbtn" value="다시입력" class="cancel">
-			</div>
-		</form>
+			</form>
+		</div>
 	</div>
 	<div class="clear"></div>
 	

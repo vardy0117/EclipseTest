@@ -7,11 +7,16 @@
 <title>Insert title here</title>
 <style>
 	#bottomDiv{
-		width:1000px;
+		width:100%;
 		min-height: 100px;
-		background-color: black;
 		color: white;
 		margin: 0 auto;
+		
+		background: linear-gradient(
+			to right, 
+			hsl(98 100% 62%), 
+			hsl(204 100% 59%)
+		);
 	}
 </style>
 </head>

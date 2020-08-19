@@ -50,7 +50,7 @@ public class CustomerJoinAction{
 		ActionForward forward=new ActionForward();
 		
 		forward.setRedirect(true);
-		forward.setView("./CusotmerLogin.do");
+		forward.setView("./CustomerLogin.do");
 
 		return forward;
 		

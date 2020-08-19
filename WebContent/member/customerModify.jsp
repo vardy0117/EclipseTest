@@ -14,7 +14,7 @@
 		min-height: 600px;
 		border: 2px solid green;
 		margin: 0 auto;
-		margin-top: 50px;
+		margin-top: 80px;
 	}
 </style>
 </head>
