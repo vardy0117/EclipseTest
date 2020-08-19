@@ -261,5 +261,29 @@ public class CustomerDAO {
 		}
 		return result;
 	}
+/***********************************************************************************************/
+	
+	public int deleteCustomer(String customerNo){
+		int result = 0;
+		
+		try {
+			con=getConnection();
+			sql="delete from customer where customerNo=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, customerNo);
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			resourceClose();
+		}
+		
+		return result;
+	}
+
+	
+	
+	
+	
 	
 } // class

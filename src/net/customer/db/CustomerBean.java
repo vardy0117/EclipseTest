@@ -3,7 +3,7 @@ package net.customer.db;
 import java.sql.Timestamp;
 
 public class CustomerBean {
-	//�ڹٺ� 
+	//�ڹٺ� 
 	private String customerNo;
 	private String email;
 	private String password;
@@ -91,5 +91,6 @@ public class CustomerBean {
 		this.agreeAD = agreeAD;
 	}
 
+	
 	
 }
