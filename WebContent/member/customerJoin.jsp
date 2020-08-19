@@ -106,7 +106,7 @@
 			$.ajax({
 				type : "post",
 				async : false,
-				url : "./JoinCheck.do",
+				url : "./CustomerJoinCheck.do",
 				data : {email:email},
 				dataType : "text",
 				success : function(result,textStatus){
