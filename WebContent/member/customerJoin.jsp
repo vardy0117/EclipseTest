@@ -23,6 +23,10 @@
 	form#join input{margin: 5px 0; 
 					border: 1px solid #999;
 					background-color:#FCFDEA }
+		
+	form#join span#emailChkMsg img{margin-left: 10px;
+								  }		
+					
 </style>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -31,59 +35,57 @@
 <body>
 <script>
 	window.onload = function(){
-	    document.getElementById("sbtn").onclick = chkData;
-
-	 }
+	    document.getElementById("sbtn").onclick = checkData;
+	}
 	
-	function chkData(){
+	function checkData(){
 		if(document.fr.emailId.value == ""){
-			$("#emailChkMsg").text("email 이름을 입력하세요");
-	    	document.fr.email.focus();
+			$("#emailChkMsg").text("email 이름을 입력해 주세요");
+	    	document.fr.emailId.focus();
 	    	return false;
 	 	}		
-		
-		if(document.fr.password.value == ""){
-			$("#passwordChkMsg").text("비밀번호를 입력하세요");
-	    	document.fr.password.focus();
+
+		if(document.fr.emailServer.value == ""){
+			$("#emailChkMsg").text("email 주소를 선택해 주세요");
+	    	document.fr.emailId.focus();
 	    	return false;
 	 	}
-	 
-	 	if(document.fr.password.value != document.fr.password2.value){
-	 		$("#password2ChkMsg").text("비밀번호가 다릅니다.");
-		   	document.fr.password2.focus();
+		
+		if($("#emailChkMsg").text() != usableMsg){
+			document.fr.emailId.focus();
+			return false;
+		}
+		
+		if($("#password2ChkMsg").text()!=pwChkSuccessMsg){
+			document.fr.password.focus();
+			return false;
+		}	
+			
+		if(document.fr.nickname.value == ""){
+			$("#nicknameChkMsg").text("닉네임을 입력해 주세요");
+		   	document.fr.nickname.focus();
 		   	return false;
 		}
-	 	
-	 	if(document.fr.nickname.value == ""){
-	 		$("#nicknameChkMsg").text("별명을 입력하세요");
-	    	document.fr.nickname.focus();
-	    	return false;
-	 	}
-	 	
-	 	if(document.fr.phone.value == ""){
-	 		$("#phoneChkMsg").text("연락처를 입력하세요");
-	    	document.fr.phone.focus();
-	    	return false;
-	 	}
-	 	
-	 	if(document.fr.roadAddress.value == ""){
-	 		$("#roadAddressChkMsg").text("주소를 입력하세요");
-	    	document.fr.roadAddress.focus();
-	    	return false;
-	 	}
-	 	
-	 	if(document.fr.detailAddress.value == ""){
-	 		$("#detailAddressChkMsg").text("상세주소를 입력하세요");
-	    	document.fr.detailAddress.focus();
-	    	return false;
-	 	}
-	 	
-	 	if(document.fr.bname.value == ""){
-	 		$("#bnameChkMsg").text("배달희망지역을 입력하세요");
-	    	document.fr.bname.focus();
-	    	return false;
-	 	}	 	
-	}
+		 	
+		if(document.fr.phone.value == ""){
+			$("#phoneChkMsg").text("연락처를 입력해 주세요");
+		   	document.fr.phone.focus();
+		   	return false;
+		}
+		 	
+		 if(document.fr.roadAddress.value == ""){
+		 	$("#roadAddressChkMsg").text("주소를 입력해주세요");
+		   	document.fr.roadAddress.focus();
+		   	return false;
+		 }
+		 	
+		 if(document.fr.detailAddress.value == ""){
+		 	$("#detailAddressChkMsg").text('상세주소를 입력하세요 없을 시 \"없음\"이라고 입력해주세요');
+		   	document.fr.detailAddress.focus();
+		   	return false;
+		 }
+
+ 	}
 	
 	function emailAddress_Change() {
 		var emailAddress = document.fr.emailServerSelBox.value;
@@ -94,8 +96,9 @@
 			document.fr.emailServer.removeAttribute("readonly");
 		}
 	}
-	
-	
+
+	var usableMsg="사용 가능한 계정입니다!";
+	var notuseableMsg="이미 가입된 계정입니다!";
 	
 	function emailCheck(){
 		if($("#emailId").val()!="" && $("#emailServer").val()!=""){
@@ -108,17 +111,10 @@
 				dataType : "text",
 				success : function(result,textStatus){
 					if(result == "useable"){
-						$("#sbtn").prop("disabled", false);
-						$("#sbtn").css("background-color", "#4CAF50");
-						$("#ebtn").css("background-color", "#B0F6AC");
-						$("#emailChkMsg").text("사용 가능한 계정입니다!");
-						return;
+						$("#emailChkMsg").text(usableMsg);
 						return;
 					} else {
-						$("#sbtn").prop("disabled", true);
-						$("#sbtn").css("background-color", "#aaaaaa");
-						$("#ebtn").css("background-color", "#FFCECE");
-						$("#emailChkMsg").text("이미 가입된 계정입니다!");
+						$("#emailChkMsg").text(notuseableMsg);
 						return;
 					}
 				}, 
@@ -130,10 +126,38 @@
 		} // if
 	} // function
 
-	function readyEmailCheck(){
-		$("#emailChkMsg").text("가능 여부 확인중");
-	}
-
+ 	function readyEmailCheck(){
+		$("#emailChkMsg").html("<img src='./images/loading.gif' width='20' height='20' stye='display: block; margin: 0px auto;'>")
+	} 
+		
+	var pwChkSuccessMsg="비밀 번호 확인 완료!";
+	
+	function passwordCheck(){
+		if(document.fr.password.value ==""){
+			$("#passwordChkMsg").text("비밀번호를 입력해주세요!");
+			if(document.fr.password2.value ==""){
+				$("#password2ChkMsg").text("");
+			} else {
+				$("#password2ChkMsg").text("");
+			}
+			
+		   	return false;
+		   	
+		} else if(document.fr.password.value !=""){
+			$("#passwordChkMsg").text("");
+			if(document.fr.password2.value ==""){
+				$("#password2ChkMsg").text("비밀번호를 한 번 더 입력해주세요!");
+			} else if(document.fr.password.value != document.fr.password2.value){
+		 		$("#password2ChkMsg").text("비밀번호가 다릅니다.");
+			} else if (document.fr.password.value == document.fr.password2.value) {
+				$("#password2ChkMsg").text(pwChkSuccessMsg);
+			}
+		
+			return false;
+		}
+	} 
+	
+	
     function execDaumPostcode() {
         new daum.Postcode({
             oncomplete: function(data) {
@@ -165,15 +189,6 @@
             }
         }).open();
     } 
-
-	$(function (){
-		$("#rbtn").click(function(){
-			$("#email").removeAttr("disabled");
-			$("#email").removeAttr("readOnly");
-			$("#phone").removeAttr("disabled");
-			$("#phone").removeAttr("readOnly");
-		})
-	});	
     
 </script>
 
@@ -190,16 +205,15 @@
 							<option value="naver.com">naver.com</option>
 							<option value="google.com">google.com</option>
 							<option value="hanmail.net">hanmail.net</option>
-							
 						</select>
 					<span id=emailChkMsg></span>
 				<hr>
 				<label>비밀번호</label>
-					<input type="password" id="password" name="password" class="password" value="" size="30">
+					<input type="password" id="password" name="password" class="password" value="" size="30" onfocusout="passwordCheck()">
 					<span id=passwordChkMsg></span>
 				<hr>
 				<label>비밀번호 확인</label>
-					<input type="password" id="password2" name="password2" class="password2" size="30" >
+					<input type="password" id="password2" name="password2" class="password2" size="30" onfocusout="passwordCheck()">
 					<span id=password2ChkMsg></span>
 				<hr>
 				<label>별명</label>
@@ -214,7 +228,7 @@
 						<option value="017">017</option>
 						<option value="019">019</option>
 					</select>
-						<input type="text" id="phone" name="phone" class="phone" placeholder="숫자만 입력하세요 ex)45458282" oninput="checkPhone()" size="30" numberOnly>
+						<input type="text" id="phone" name="phone" class="phone" placeholder="숫자만 입력하세요 ex)45458282" size="30" numberOnly>
 						<span id=phoneChkMsg></span>	
 				<hr>
 				<label>주소</label>	
@@ -233,7 +247,7 @@
 						</td>
 					</tr>
 				</table>
-				<hr> 
+
 				<input type="hidden" id="bname" name="bname" class="bname" size="30" placeholder="배달희망지역 ex) 장전동">
 				<hr>
 				<label>약관 및 동의</label>
