@@ -86,11 +86,23 @@
 				<input type="hidden" id="customerNo" name="customerNo" value="${cBean.customerNo }">
 				<input type="hidden" id="oldPass" name="oldPass" value="${cBean.password}">
 				<tr>
-					<td></td>
 					<td><input type="submit" value="회원정보수정"></td>
+					<td><input type="button" value="회원탈퇴" onclick="delCustomer()"></td>
 				</tr>
 			</table>
 		</form>
 	</div>
+	
+	<script type="text/javascript">
+		function delCustomer() {
+			var inputString = prompt('"탈퇴하기"를 입력해주세요',""); 
+			if(inputString == "탈퇴하기"){
+				alert("탈퇴가 완료되었습니다.");
+				location.href="./deleteCustomer.do";
+			}else{
+				alert("잘못입력하셨습니다.");
+			}
+		}
+	</script>
 </body>
 </html>

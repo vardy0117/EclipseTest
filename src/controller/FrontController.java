@@ -194,7 +194,19 @@ public class FrontController extends HttpServlet {
 			forward.execute(request, response);
 		}
 
-
+		// 회원수정페이지에서 회원탈퇴하기 버튼 클릭했을때 이동됨.
+		if(command.equals("deleteCustomer.do")){
+			forward = new ActionForward();
+			// DB에서 delete 작업을 수행할때 필요한 customerNo을 가지고 옴
+			String customerNo = (String)request.getSession().getAttribute("customerNo");
+			CustomerDAO cDAO = new CustomerDAO();
+			int result = cDAO.deleteCustomer(customerNo);
+			if(result==1){
+				request.getSession().invalidate();	//세션 초기화
+				forward.setView("./");
+				forward.execute(request, response);
+			}
+		}
 
 
 		
