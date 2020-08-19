@@ -31,16 +31,16 @@ public class CustomerLogoutAction implements Action {
 
 		System.out.println("로그아웃 처리 함수 호출");
 
-		PrintWriter out=resp.getWriter();
+		resp.setContentType("text/html; charset=UTF-8"); 
 		resp.setCharacterEncoding("UTF-8");
-	    resp.setContentType("text/html;charset=UTF-8"); 
-		 
+		
+		PrintWriter out=resp.getWriter();
 		out.println("<script>");
 		out.println("alert('로그아웃 되었습니다');");
 		out.println("location.href='./';");
 		out.println("</script>");
 		out.close();
-	
+
 		ActionForward forward = new ActionForward();
 	
 		return null;
