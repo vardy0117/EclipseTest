@@ -42,9 +42,6 @@ public class CeoLoginAction {
 		boolean result = cdao.CheckCeo(cb); // 로그인시 유저 검사
 		System.out.println("사장님 반환받은 로그인 result값 : " + result);
 
-		
-	
-		ActionForward forward = new ActionForward();
 	
 		
 		if(result == true){
@@ -79,16 +76,7 @@ public class CeoLoginAction {
 			
 		}else{
 			
-			 resp.setCharacterEncoding("UTF-8");
-			 PrintWriter out = resp.getWriter();
-			 resp.setContentType("text/html;charset=UTF-8"); 
-			 
-			 out.println("<script>"); 
-			 out.println("alert('사업자 로그인에 실패하셨습니다. \\n 아이디와 비밀번호 확인 후 다시 로그인해주세요.');"); 
-			 out.println("history.back();"); 
-			 out.println("</script>");
-			System.out.println("로그인 실패 result값 " + result);
-			
+			System.out.println("ceo로그인 실패");
 		
 		}
 		
