@@ -70,7 +70,7 @@ public class CeoLoginAction {
 				session.setAttribute("ceoNo", a.getCeoNo());
 				System.out.println("들어가있는 ceo번호 "+ a.getCeoNo());
 				session.setAttribute("email", email);
-	
+				System.out.println("세션 겟 에트리 뷰트 " + session.getAttribute(a.getCeoNo()));
 				
 				
 				System.out.println("사장님 세션 등록 완료 ");
