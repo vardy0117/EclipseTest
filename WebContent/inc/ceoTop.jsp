@@ -53,7 +53,7 @@
 			<c:when test="${empty sessionScope.ceoNo}">
 				<div id="loginAndJoin">
 				
-					<a href="./Ceo.do">로그인</a> | 
+					<a href="./CeoLogin.do">로그인</a> | 
 					<a href="./CeoJoin.do">회원가입</a> |
 				</div>
 			</c:when>
