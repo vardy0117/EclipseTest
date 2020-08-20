@@ -313,15 +313,15 @@ public class FrontController extends HttpServlet {
 			int storeNo = Integer.parseInt(request.getParameter("storeNo"));
 			
 			try {
-				 GetStoreInfoAction action1 = new GetStoreInfoAction();
-				 	action1.getStroeInfo(request, response, storeNo);
+				GetStoreInfoAction action1 = new GetStoreInfoAction();
+					action1.getStroeInfo(request, response, storeNo);
 				
-				 GetStoreMenuAction action2 = new GetStoreMenuAction();
+				GetStoreMenuAction action2 = new GetStoreMenuAction();
 					action2.getStoreMenu(request, response, storeNo);
 				
-					forward = new ActionForward();
-					forward.setRedirect(false);
-					forward.setView("index.jsp?center=store/store.jsp");
+				forward = new ActionForward();
+				forward.setRedirect(false);
+				forward.setView("index.jsp?center=store/store.jsp");
 				
 			} catch (Exception e) {
 				e.printStackTrace();

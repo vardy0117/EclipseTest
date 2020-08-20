@@ -41,7 +41,7 @@ public class MenuDAO {
 		try {
 			 con = getConnection();
 			 
-			 sql = "select name, price from menu where storeNo=?";
+			 sql = "select * from menu where storeNo=?";
 			 
 			 pstmt = con.prepareStatement(sql);
 			 
@@ -51,8 +51,8 @@ public class MenuDAO {
 			 
 			 while(rs.next()){
 				 MenuBean mBean = new MenuBean();
-					 mBean.setName(rs.getString("storeNo"));
-					 mBean.setPrice(rs.getInt("name"));
+					 mBean.setStoreNo(rs.getString("storeNo"));
+					 mBean.setName(rs.getString("name"));
 					 mBean.setPrice(rs.getInt("price"));
 					 mBean.setImage(rs.getString("image"));
 					 mBean.setLevel(rs.getString("level"));

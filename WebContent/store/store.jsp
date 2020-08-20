@@ -58,20 +58,27 @@
 		가게이름 : ${info.storeHours} <br>
 		사장님 한마디 : ${info.message} <br>
 		가게 사진: ${info.image} <br>
-		${info.points} <br>
-		${info.orderCount} <br>
-		${info.regNo} <br>
+		별점?: ${info.points} <br>
+		누적주문수 : ${info.orderCount} <br>
+		사업자 등록 번호 : ${info.regNo} <br>
 		
 		<form action="#" method="post">
 			<table border="1">
-				<c:forEach var="menu" items="${requestScope.storeMenu}">
 					<tr>
-					<td>${menu.key}</td>
-					<td>${menu.value}</td>
-					<td><span>수량</span>
-					<input type="number" id="${menu.key}" name="${menu.key}" class="qty" min="0" value="0" type="text">
-					<a href="#" onclick="modifyQty('${menu.key}', 1)"><img src="images/btn_count_up.gif" alt="수량증가" class="qtyUp" usemap="#map_name_quantity"></a>	   
-					<a href="#" onclick="modifyQty('${menu.key}', -1)"><img src="images/btn_count_down.gif" alt="수량감소" class="qtyDown" usemap="#map_name_quantity"></a>	 
+						<td>구분</td>
+						<td>메뉴</td>
+						<td>가격</td>
+						<td>수량</td>
+					</tr>
+				<c:forEach var="menu" items="${requestScope.menuList}">
+					<tr>
+						<td> ${menu.category} </td>
+						<td> ${menu.image} |    ${menu.name} </td>
+						<td> ${menu.price} </td>
+						<td>
+							<input type="number" id="${menu.name}" name="${menu.price}" class="qty" min="0" value="0" type="text">
+							<a href="#" onclick="modifyQty('${menu.name}', 1)"><img src="images/btn_count_up.gif" alt="수량증가" class="qtyUp" usemap="#map_name_quantity"></a>	   
+							<a href="#" onclick="modifyQty('${menu.name}', -1)"><img src="images/btn_count_down.gif" alt="수량감소" class="qtyDown" usemap="#map_name_quantity"></a>	 
 				</c:forEach>
 			</table>
 		</form>

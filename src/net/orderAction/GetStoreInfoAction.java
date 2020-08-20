@@ -15,7 +15,6 @@ public class GetStoreInfoAction {
 		StoreDAO sdao = new StoreDAO();
 		
 		sbean = sdao.getStoreInfo(storeNo);
-		System.out.println(sbean.getStoreNo());
 			
 		req.setAttribute("storeInfo", sbean);
 	

@@ -3,6 +3,7 @@ package net.menu.db;
 public class MenuBean {
 	
 	private String storeNo;
+	private String category;
 	private String name;
 	private int price;
 	private String image;
@@ -45,8 +46,6 @@ public class MenuBean {
 	public void setCategory(String category) {
 		this.category = category;
 	}
-	private String category;
-	
 	
 	
 }
