@@ -14,7 +14,7 @@ public class CustomerJoinAction{
 	
 	private final static Logger log = Logger.getGlobal();
 	
-	public ActionForward execute(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+	public void customerJoin(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 		
 		log.info("CustomerJoinAction execute()");
 		
@@ -42,17 +42,8 @@ public class CustomerJoinAction{
 		result = cdao.insertCustomer(cb);
 		
 		if(result == false){
-			log.info("회占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙!");
-			return null;
+			log.info("customerLogin Fail!");
 		}
-				
-		// 占쏙옙占쏙옙占쏙옙 占싱듸옙 占쏙옙占쏙옙 (占싱듸옙 占쏙옙占�, 占쏙옙占�)
-		ActionForward forward=new ActionForward();
-		
-		forward.setRedirect(true);
-		forward.setView("./CustomerLogin.do");
-
-		return forward;
 		
 	} // method
 

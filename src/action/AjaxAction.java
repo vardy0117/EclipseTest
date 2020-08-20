@@ -14,7 +14,7 @@ import net.customer.db.CustomerBean;
 import net.customer.db.CustomerDAO;
 
 public class AjaxAction {
-	public void emailCheckFromCustomer(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public String emailCheckFromCustomer(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		request.setCharacterEncoding("UTF-8");
 
@@ -24,11 +24,10 @@ public class AjaxAction {
 		CustomerDAO cdao = new CustomerDAO();
 			result = cdao.joinCheckEmail(email);
 		
-		PrintWriter out = response.getWriter();
-		out.print(result);
+		return result;
 	} // method
 	
-	public void emailCheckFromCeo(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public String emailCheckFromCeo(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		request.setCharacterEncoding("UTF-8");
 
@@ -38,8 +37,7 @@ public class AjaxAction {
 		CeoDAO cdao = new CeoDAO();
 			result = cdao.joinCheckEmail(email);
 		
-		PrintWriter out = response.getWriter();
-		out.print(result);
+		return result;
 	} // method
 	
 	public String getCustomer(String customerNo) {

@@ -46,7 +46,8 @@ public class FrontController extends HttpServlet {
 		// forward���� view=�대�������댁�, redirect=由щ�ㅼ�대���몃갑���몄� ���ㅽ�⑥�諛⑹���몄�
 		// ----------------------------------------------------------------------
 		// login
-		if(command.equals("login.do")){
+		/*
+		 if(command.equals("login.do")){
 			forward = new ActionForward();
 			forward.setView("index.jsp?center=member/selectLogin.jsp");
 			forward.execute(request, response);
@@ -57,16 +58,20 @@ public class FrontController extends HttpServlet {
 			forward = new ActionForward();
 			forward.setView("index.jsp?center=member/selectJoin.jsp");
 			forward.execute(request, response);
-		}
+		}*/
 		
-		// ajax
+		// >CustomerJoinCheck >customerJoin.jsp
 		if(command.equals("CustomerJoinCheck.do")) {
 			AjaxAction ajax = new AjaxAction();
+			String result="";
 			try {
-				ajax.emailCheckFromCustomer(request, response);
+				 result = ajax.emailCheckFromCustomer(request, response);
 			} catch (Exception e) {
 					e.printStackTrace();
 			}
+			
+			PrintWriter out = response.getWriter();
+			out.print(result);
 		}
 		
 		if(command.equals("getCustomer.do")) {
@@ -77,7 +82,6 @@ public class FrontController extends HttpServlet {
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();
 			out.print(jsonObj);
-			
 		}
 		
 		// >customerJoin.jsp
@@ -87,6 +91,22 @@ public class FrontController extends HttpServlet {
 			forward.execute(request, response);
 		}
 		
+		// >customerJoinExecute >customerLogin.jsp
+		if(command.equals("CustomerJoinAction.do")) {
+			CustomerJoinAction action = new CustomerJoinAction();
+				try {
+					action.customerJoin(request, response);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+			forward = new ActionForward();
+			forward.setRedirect(true);
+			forward.setView("index.jsp?center=member/customerLogin.jsp");	
+			forward.execute(request, response);
+		}
+		
+		// >Login.jsp
 		if(command.equals("CustomerLogin.do")) {
 			forward = new ActionForward();
 			forward.setView("index.jsp?center=member/customerLogin.jsp");
@@ -103,19 +123,7 @@ public class FrontController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}
-		
-		
-		if(command.equals("CustomerJoinAction.do")) {
-			CustomerJoinAction action = new CustomerJoinAction();		
-			try {
-				forward = action.execute(request, response);
-				forward.execute(request, response);
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+		}		
 		
 		if(command.equals("LogOut.do")) {
 			CustomerLogoutAction action = new CustomerLogoutAction() ;
@@ -188,24 +196,33 @@ public class FrontController extends HttpServlet {
 			forward.execute(request, response);
 		}
 				
+		// CeoJoinCheck >CeoJoin.jsp
 		if(command.equals("CeoJoinCheck.do")) {
 			AjaxAction ajax = new AjaxAction();
+			String result="";
 			try {
-				ajax.emailCheckFromCeo(request, response);
+				result=ajax.emailCheckFromCeo(request, response);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			PrintWriter out = response.getWriter();
+			out.print(result);
 		}		
 				
+		// CeoJoinAction > CeoLogin.jsp
 		if(command.equals("CeoJoinAction.do")) {
 			CeoJoinAction action = new CeoJoinAction();		
 			try {
-				forward = action.execute(request, response);
+				action.ceoJoin(request, response);
 				forward.execute(request, response);
-				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			
+			forward = new ActionForward();
+			forward.setRedirect(true);
+			forward.setView("index.jsp?center=member/ceoLogin.jsp");	
+			forward.execute(request, response);
 		}
 				
 		if(command.equals("CeoLogin.do")) {

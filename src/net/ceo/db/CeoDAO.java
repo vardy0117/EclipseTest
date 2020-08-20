@@ -90,7 +90,7 @@ public class CeoDAO {
 			 pstmt.setString(1, cb.getEmail());
 			 pstmt.setString(2, cb.getPassword());
 			 pstmt.setString(3, cb.getName());
-			 pstmt.setString(7, cb.getPhone());
+			 pstmt.setString(4, cb.getPhone());
 	
 			 result = pstmt.executeUpdate();
 			 
@@ -99,7 +99,7 @@ public class CeoDAO {
 			 }
 			
 		} catch (Exception e){
-			System.out.println("insertCustomer inner Error : " + e);
+			System.out.println("insertCeo inner Error : " + e);
 		} finally {
 			resourceClose();
 		}
@@ -128,13 +128,13 @@ public class CeoDAO {
 
 			 rs = pstmt.executeQuery();		 
 
-			  System.out.println("CEO DAO ³Ñ¾î¿Â °ª" +  cbs.getPassword());
-			  System.out.println("CEO DAO ³Ñ¾î¿Â °ª" + cbs.getEmail());
+			  System.out.println("CEO DAO ï¿½Ñ¾ï¿½ï¿½ ï¿½ï¿½" +  cbs.getPassword());
+			  System.out.println("CEO DAO ï¿½Ñ¾ï¿½ï¿½ ï¿½ï¿½" + cbs.getEmail());
 			 
-			// System.out.println("»çÀå´Ô rs.next°ª" + rs.next());
+			// System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ rs.nextï¿½ï¿½" + rs.next());
 			 
 			if (rs.next()) {
-				System.out.println("»çÀå´Ô ·Î±×ÀÎ ¼º°ø");
+				System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 				result = true;
 
 			}
@@ -144,7 +144,7 @@ public class CeoDAO {
 			
 		} catch (Exception e){
 			System.out.println("-----------------------------");
-			System.out.println("check CEO¿À·ù: " + e);
+			System.out.println("check CEOï¿½ï¿½ï¿½ï¿½: " + e);
 			System.out.println("cb.getPassword() : " + cbs.getPassword());
 			System.out.println("cb.email() : " + cbs.getEmail());
 			System.out.println("-----------------------------");
@@ -183,7 +183,7 @@ public CeoBean CeoInformation (String email) {
 			
 			
 		} catch (Exception e) {
-			System.out.println("»çÀå´Ô Á¤º¸ ÇÔ¼ö¿¡¼­ ¿À·ù°¡ ¹ß»ýÇß´Ù ÈÞ¸Õ " + e);
+			System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½ï¿½ß´ï¿½ ï¿½Þ¸ï¿½ " + e);
 			e.printStackTrace();
 		}
 		 

@@ -16,7 +16,7 @@ public class CeoJoinAction {
 	
 	private final static Logger log = Logger.getGlobal();
 
-	public ActionForward execute(HttpServletRequest req, HttpServletResponse res) throws UnsupportedEncodingException {
+	public void ceoJoin(HttpServletRequest req, HttpServletResponse res) throws UnsupportedEncodingException {
 		
 		log.info("CustomerJoinAction execute()");
 		
@@ -37,17 +37,8 @@ public class CeoJoinAction {
 		result = cdao.insertCeo(cb);
 		
 		if(result == false){
-			log.info("회占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙!");
-			return null;
+			log.info("CeoJoin Fail!");
 		}
-				
-		// 占쏙옙占쏙옙占쏙옙 占싱듸옙 占쏙옙占쏙옙 (占싱듸옙 占쏙옙占�, 占쏙옙占�)
-		ActionForward forward=new ActionForward();
-		
-		forward.setRedirect(true);
-		forward.setView("./CeoLogin.do");
-
-		return forward;
 	}
 
 }
