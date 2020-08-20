@@ -107,14 +107,16 @@
 	
 	function checkData(){
 		if(document.fr.emailId.value == ""){
-			$("#emailChkMsg").text("email 이름을 입력해 주세요");
+			$("#emailChkMsg").text("이메일 아이디를 입력해 주세요");
+			$("#emailChkMsg").css("color", "red");
 	    	document.fr.emailId.focus();
 	    	return false;
 	 	}		
 
 		if(document.fr.emailServer.value == ""){
-			$("#emailChkMsg").text("email 주소를 선택해 주세요");
-	    	document.fr.emailId.focus();
+			$("#emailChkMsg").text("이메일 주소를 입력해 주세요");
+			$("#emailChkMsg").css("color", "red");
+	    	document.fr.emailServer.focus();
 	    	return false;
 	 	}
 		
@@ -130,12 +132,14 @@
 			
 		if(document.fr.name.value == ""){
 			$("#nameChkMsg").text("이름을 입력해 주세요");
+			$("#nameChkMsg").css("color", "red");
 		   	document.fr.name.focus();
 		   	return false;
 		}
 		 	
 		if(document.fr.phone.value == ""){
 			$("#phoneChkMsg").text("연락처를 입력해 주세요");
+			$("#phoneChkMsg").css("color", "red");
 		   	document.fr.phone.focus();
 		   	return false;
 		}
@@ -156,6 +160,7 @@
 	var notuseableMsg="이미 가입된 계정입니다!";
 	
 	function emailCheck(){
+		readyEmailCheck();
 		if($("#emailId").val()!="" && $("#emailServer").val()!=""){
 			var email = $("#emailId").val()+"@"+$("#emailServer").val();
 			$.ajax({
@@ -192,6 +197,7 @@
 	function passwordCheck(){
 		if(document.fr.password.value ==""){
 			$("#passwordChkMsg").text("비밀번호를 입력해주세요!");
+			$("#passwordChkMsg").css("color", "red");
 			if(document.fr.password2.value ==""){
 				$("#password2ChkMsg").text("");
 			} else {
@@ -229,7 +235,7 @@
 						<td class="td_right">
 							<input class="textBox" type="text" name="emailId" size="10" placeholder="이메일 주소"> @
 							<input class="textBox" type="text" name="emailServer" onfocusout="emailCheck()"/>
-							<select id="emailServerSelBox" name="emailServerSelBox" onchange="emailAddress_Change()" onfocus="readyEmailCheck()" onfocusout="emailCheck()"> 
+							<select id="emailServerSelBox" name="emailServerSelBox" onchange="emailAddress_Change()" onfocusout="emailCheck()"> 
 								<option value="">직접 입력</option>
 								<option value="naver.com">naver.com</option>
 								<option value="google.com">google.com</option>
@@ -258,7 +264,7 @@
 					<tr>
 						<td class="td_left">이름</td>
 						<td class="td_right">
-							<input class="textBox" type="text" id="name" name="name">
+							<input class="textBox" type="text" id="name" name="name" onfocusout="if(this.value!=''){document.getElementById('nameChkMsg').innerText='';}">
 							<span id=nameChkMsg></span>
 						</td>
 					</tr>

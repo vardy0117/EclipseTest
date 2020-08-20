@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -39,39 +40,89 @@
 		position: relative;
 	}
 	#searchDiv {
-		width: 600px;
-		height: 200px;
-		border: 2px solid pink;
+		width: 450px;
+		height: 300px;
 		position: absolute;
 		top: 50%;
     	left: 50%;
     	transform: translate(-50%, -50%);
+    	border: 2px solid #c7c7c7;
+	    border-radius: 15px;
+	    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 	}
 	#postDiv {
 		width: 300px;
 		margin: 0 auto;
+		text-align: center;
 	}
+	.textBox {
+		width: 250px;
+		height: 30px;
+		border-radius: 12px;
+		border: 2px solid gray;
+		padding-left: 15px;
+		font-family: Binggrae-Bold;
+		font-size: 1rem;
+		margin-bottom: 10px;
+	}
+	.btn {
+		width: 25px;
+		background: linear-gradient(
+			to right, 
+			hsl(98 100% 62%), 
+			hsl(204 100% 59%)
+		);
+		font-family: Binggrae-Bold;
+		font-size: 1rem;
+		color: white;
+		border: none;
+		border-radius: 12px;
+		width: 270px;
+		height: 35px;
+		transition-duration: 1s;
+		opacity: 0.7;
+		margin-bottom: 10px;
+	}
+	.btn:hover {
+		cursor: pointer;
+		opacity: 1;
+	}
+	input:focus { outline: none; }
 </style>
 </head>
 <body>
 	<div id="mainDiv">
-		<h1 style="text-align: center;">main.jsp</h1>
-		<h2 style="text-align: center;">session에 customerNo를 이용해서 ajax통신해 회원주소를 가져와 default값으로 지정</h2>
+		<!-- <h1 style="text-align: center;">main.jsp</h1>
+		<h2 style="text-align: center;">session에 customerNo를 이용해서 ajax통신해 회원주소를 가져와 default값으로 지정</h2> -->
 		<div id="searchDiv">
-			<h2 style="text-align: center;">주소검색</h2>
-			<input type="hidden" id="sample6_postcode" placeholder="우편번호">
-			<input type="hidden" id="sample6_extraAddress" placeholder="참고항목">
-			<form action="./SearchStore.do" method="post" name="fr">
-				<div id="postDiv">
-						<input type="text" id="sample6_address" placeholder="주소" name="roadAddress" readonly>
-						<input type="button" onclick="sample6_execDaumPostcode()" value="주소변경"> <br>
-						<input type="text" id="sample6_detailAddress" placeholder="상세주소" name="detailAddress">
-						<input type="hidden" id="bname" name="bname">
-				</div>
-				<div style="width: 200px; margin: 20px auto;">
-					<input type="submit" value="배달가능 가게 검색">
-				</div>				
-			</form>
+			<c:if test="${empty sessionScope.customerNo }">
+				<h2 style="text-align: center;">배달 주소 설정</h2>
+				<input type="hidden" id="sample6_postcode" placeholder="우편번호" disabled="disabled">
+				<input type="hidden" id="sample6_extraAddress" placeholder="참고항목" disabled="disabled">
+				<form action="./SearchStore.do" method="post" name="fr">
+					<div id="postDiv">
+							<input class="btn" type="button" onclick="sample6_execDaumPostcode()" value="주소변경" disabled="disabled"> <br>
+							<input class="textBox" type="text" id="sample6_address" placeholder="로그인 이후 이용가능" name="roadAddress" readonly disabled="disabled">
+							<input class="textBox" type="text" id="sample6_detailAddress" name="detailAddress" disabled="disabled">
+							<input type="hidden" id="bname" name="bname" disabled="disabled">
+							<input class="btn" type="submit" value="배달가능 가게 검색" disabled="disabled">
+					</div>			
+				</form>
+			</c:if>
+			<c:if test="${!empty sessionScope.customerNo }">
+				<h2 style="text-align: center;">배달 주소 설정</h2>
+				<input type="hidden" id="sample6_postcode" placeholder="우편번호">
+				<input type="hidden" id="sample6_extraAddress" placeholder="참고항목">
+				<form action="./SearchStore.do" method="post" name="fr">
+					<div id="postDiv">
+							<input class="btn" type="button" onclick="sample6_execDaumPostcode()" value="주소변경"> <br>
+							<input class="textBox" type="text" id="sample6_address" placeholder="주소" name="roadAddress" readonly>
+							<input class="textBox" type="text" id="sample6_detailAddress" placeholder="상세주소" name="detailAddress">
+							<input type="hidden" id="bname" name="bname">
+							<input class="btn" type="submit" value="배달가능 가게 검색">
+					</div>			
+				</form>
+			</c:if>
 		</div>
 		<div id="wrap" style="display:none;border:1px solid;width:500px;height:300px;margin:5px auto;position:absolute;top: 50%; left: 50%; transform: translate(-50%, -50%);">
 			<img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">

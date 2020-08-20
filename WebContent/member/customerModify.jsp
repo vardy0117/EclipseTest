@@ -12,9 +12,61 @@
 	#mainDiv {
 		width: 1000px;
 		min-height: 600px;
-		border: 2px solid green;
 		margin: 0 auto;
 		margin-top: 80px;
+		padding: 70px;
+	}
+	#formDiv {
+		width: 800px;
+		height: 450px;
+		margin: 0 auto;
+		border: 2px solid #c7c7c7;
+		border-radius: 15px;
+		box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+	}
+	.textBox {
+		width: 200px;
+		height: 30px;
+		border-radius: 12px;
+		border: 2px solid gray;
+		padding-left: 15px;
+		font-family: Binggrae-Bold;
+		font-size: 1rem;
+	}
+	
+	input[type=password] {
+		font-family: 'pass', 'Roboto', Helvetica, Arial, sans-serif ;
+	}
+	input[type=password]::placeholder {
+		font-family: Binggrae-Bold;
+	}
+	input:focus { outline: none; }
+	#roadAddress, #detailAddress {
+		width: 256px;
+	}
+	.btn {
+		width: 25px;
+		background: linear-gradient(
+			to right, 
+			hsl(98 100% 62%), 
+			hsl(204 100% 59%)
+		);
+		font-family: Binggrae-Bold;
+		font-size: 1rem;
+		color: white;
+		border: none;
+		border-radius: 12px;
+		width: 270px;
+		height: 35px;
+		transition-duration: 1s;
+		opacity: 0.7;
+	}
+	.btn:hover {
+		cursor: pointer;
+		opacity: 1;
+	}
+	form > table {
+		margin: 0 auto;
 	}
 </style>
 </head>
@@ -56,41 +108,47 @@
 	</script>
 
 	<div id="mainDiv">
-		<form action="./CustomerModifyAction.do" id="modify" method="post" name="fr">
-			<table>
-				<tr>
-					<th>이메일</th>
-					<td><input type="text" value="${ cBean.email }" readonly name="email"></td>
-				</tr>
-				<tr>
-					<th>새 비밀번호</th>
-					<td><input type="text" name="password" placeholder="공백시 변경사항 없음"></td>
-				</tr>
-				<tr>
-					<th>별명</th>
-					<td><input type="text" value="${ cBean.nickname }" name="nickname"></td>
-				</tr>
-				<tr>
-					<th>연락처</th>
-					<td><input type="text" value="${ cBean.phone }" name="phone"></td>
-				</tr>
-				<tr>
-					<th>주소</th>
-					<td><input type="text" id="roadAddress" name="roadAddress" class="roadAddress" size="50" placeholder="주소검색" onclick="execDaumPostcode()" value="${ cBean.roadAddress } "></td>
-				</tr>
-				<tr>
-					<td></td>
-					<td><input type="text" id="detailAddress"  name="detailAddress" class="detailAddress" size="50" placeholder="상세 주소 입력" value="${cBean.detailAddress}"></td>		
-				</tr>
-				<input type="hidden" id="bname" name="bname">
-				<input type="hidden" id="customerNo" name="customerNo" value="${cBean.customerNo }">
-				<input type="hidden" id="oldPass" name="oldPass" value="${cBean.password}">
-				<tr>
-					<td><input type="submit" value="회원정보수정"></td>
-					<td><input type="button" value="회원탈퇴" onclick="delCustomer()"></td>
-				</tr>
-			</table>
-		</form>
+		<div id="formDiv">
+			<h1 style="text-align: center;">회원 정보 수정</h1>
+			<form action="./CustomerModifyAction.do" id="modify" method="post" name="fr">
+				<table>
+					<tr>
+						<th>이메일</th>
+						<td><input class="textBox" type="text" value="${ cBean.email }" readonly name="email"></td>
+					</tr>
+					<tr>
+						<th>새 비밀번호</th>
+						<td><input class="textBox" type="text" name="password" placeholder="공백시 변경사항 없음"></td>
+					</tr>
+					<tr>
+						<th>별명</th>
+						<td><input class="textBox" type="text" value="${ cBean.nickname }" name="nickname"></td>
+					</tr>
+					<tr>
+						<th>연락처</th>
+						<td><input class="textBox" type="text" value="${ cBean.phone }" name="phone"></td>
+					</tr>
+					<tr>
+						<th>주소</th>
+						<td><input class="textBox" type="text" id="roadAddress" name="roadAddress" class="roadAddress" size="50" placeholder="주소검색" onclick="execDaumPostcode()" value="${ cBean.roadAddress } "></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input class="textBox" type="text" id="detailAddress"  name="detailAddress" class="detailAddress" size="50" placeholder="상세 주소 입력" value="${cBean.detailAddress}"></td>		
+					</tr>
+					<input type="hidden" id="bname" name="bname">
+					<input type="hidden" id="customerNo" name="customerNo" value="${cBean.customerNo }">
+					<input type="hidden" id="oldPass" name="oldPass" value="${cBean.password}">
+					<tr>
+						<td colspan="2">
+							<br>
+							<input class="btn" type="submit" value="회원정보수정">
+							<input class="btn" type="button" value="회원탈퇴" onclick="delCustomer()">
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
 	</div>
 	
 	<script type="text/javascript">
