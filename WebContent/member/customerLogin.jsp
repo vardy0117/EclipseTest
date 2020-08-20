@@ -17,7 +17,7 @@
 		margin: 0 auto;
 		margin-top: 80px;
 		position: relative;
-		padding: 100px
+		padding: 100px;
 	}
 	#loginDiv {
 		width: 1000px;

@@ -108,13 +108,15 @@
 	function checkData(){
 		if(document.fr.emailId.value == ""){
 			$("#emailChkMsg").text("email 이름을 입력해 주세요");
+			$("#emailChkMsg").css("color","red");
 	    	document.fr.emailId.focus();
 	    	return false;
 	 	}		
 
 		if(document.fr.emailServer.value == ""){
 			$("#emailChkMsg").text("email 주소를 선택해 주세요");
-	    	document.fr.emailId.focus();
+			$("#emailChkMsg").css("color","red");
+	    	document.fr.emailServer.focus();
 	    	return false;
 	 	}
 		
@@ -130,24 +132,28 @@
 			
 		if(document.fr.nickname.value == ""){
 			$("#nicknameChkMsg").text("닉네임을 입력해 주세요");
+			$("#nicknameChkMsg").css("color","red");
 		   	document.fr.nickname.focus();
 		   	return false;
 		}
 		 	
 		if(document.fr.phone.value == ""){
 			$("#phoneChkMsg").text("연락처를 입력해 주세요");
+			$("#phoneChkMsg").css("color","red");
 		   	document.fr.phone.focus();
 		   	return false;
 		}
 		 	
 		 if(document.fr.roadAddress.value == ""){
 		 	$("#roadAddressChkMsg").text("주소를 입력해주세요");
+		 	$("#roadAddressChkMsg").css("color","red");
 		   	document.fr.roadAddress.focus();
 		   	return false;
 		 }
 		 	
 		 if(document.fr.detailAddress.value == ""){
 		 	$("#detailAddressChkMsg").text('상세주소를 입력하세요 없을 시 \"없음\"이라고 입력해주세요');
+		 	$("#detailAddressChkMsg").css("color","red");
 		   	document.fr.detailAddress.focus();
 		   	return false;
 		 }
@@ -168,6 +174,7 @@
 	var notuseableMsg="이미 가입된 계정입니다!";
 	
 	function emailCheck(){
+		readyEmailCheck();
 		if($("#emailId").val()!="" && $("#emailServer").val()!=""){
 			var email = $("#emailId").val()+"@"+$("#emailServer").val();
 			$.ajax({
@@ -204,6 +211,7 @@
 	function passwordCheck(){
 		if(document.fr.password.value ==""){
 			$("#passwordChkMsg").text("비밀번호를 입력해주세요!");
+			$("#passwordChkMsg").css("color", "red");
 			if(document.fr.password2.value ==""){
 				$("#password2ChkMsg").text("");
 			} else {
@@ -274,7 +282,7 @@
 						<td class="td_right">
 							<input class="textBox" type="text" name="emailId" size="10" placeholder="이메일 주소"> @
 							<input class="textBox" type="text" name="emailServer" onfocusout="emailCheck()"/>
-							<select id="emailServerSelBox" name="emailServerSelBox" onchange="emailAddress_Change()" onfocus="readyEmailCheck()" onfocusout="emailCheck()"> 
+							<select id="emailServerSelBox" name="emailServerSelBox" onchange="emailAddress_Change()" onfocusout="emailCheck()"> 
 								<option value="">직접 입력</option>
 								<option value="naver.com">naver.com</option>
 								<option value="google.com">google.com</option>
@@ -303,7 +311,7 @@
 					<tr>
 						<td class="td_left">닉네임</td>
 						<td class="td_right">
-							<input class="textBox" type="text" id="nickname" name="nickname">
+							<input class="textBox" type="text" id="nickname" name="nickname" onfocusout="if(this.value!=''){document.getElementById('nicknameChkMsg').innerText='';}">
 							<span id=nicknameChkMsg></span>
 						</td>
 					</tr>
@@ -333,7 +341,7 @@
 						<td class="td_right">
 							<span id="guide" style="color:#999;display:none"></span>
 							<input class="textBox" type="text" id="detailAddress"  name="detailAddress" size="50" placeholder="상세 주소 입력">
-							<a id=detailAddressChkMsg></a>
+							<br><span id=detailAddressChkMsg></span>
 						</td>
 					</tr>
 					<tr>
