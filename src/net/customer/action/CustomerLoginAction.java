@@ -78,7 +78,7 @@ public class CustomerLoginAction {
 			
 		}else{
 			
-			 resp.setCharacterEncoding("UTF-8");
+		System.out.println("고갱님 로그인 실패됨");
 			
 			
 		
