@@ -115,9 +115,25 @@ public class FrontController extends HttpServlet {
 		
 		if(command.equals("CustomerLoginAction.do")) {
 			CustomerLoginAction action = new CustomerLoginAction() ;
-		
+			boolean result = false;
 			try {
-				forward = action.execute(request, response);
+				 forward = new ActionForward();
+				 result = action.execute(request, response);
+				 if(result){
+					 forward.setRedirect(true);
+					 forward.setView("index.jsp"); // 사장님 전용페이지가 없어서 일단 여기로 했습니당
+					 System.out.println("사장님 로그인 리다이렉트 작동 " + forward.getView());
+				 } else {
+					 PrintWriter out = response.getWriter();
+					 response.setContentType("text/html;charset=UTF-8"); 
+					 
+					 out.println("<script>"); 
+					 out.println("alert('로그인에 실패하셨습니다. \\n 아이디와 비밀번호 확인 후 다시 로그인해주세요.');"); 
+					 out.println("history.back();"); 
+					 out.println("</script>");
+					System.out.println("로그인 실패 result값 " + result);
+				 }
+
 				forward.execute(request, response);
 				
 			} catch (Exception e) {
@@ -232,17 +248,7 @@ public class FrontController extends HttpServlet {
 		}		
 	
 		
-		if(command.equals("CeoLoginAction.do")) {
-			CeoLoginAction action = new CeoLoginAction() ;
-		
-			try {
-				forward = action.execute(request, response);
-				forward.execute(request, response);
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+
 		
 		if(command.equals("SearchStore.do")) {
 			// 받은 값 : roadAddress / detailAddress / bname 
