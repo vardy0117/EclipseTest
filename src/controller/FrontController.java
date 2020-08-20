@@ -20,6 +20,8 @@ import net.customer.action.CustomerLogoutAction;
 import net.customer.action.CustomerModifyAction;
 import net.customer.db.CustomerBean;
 import net.customer.db.CustomerDAO;
+import net.orderAction.GetStoreInfoAction;
+import net.orderAction.GetStoreMenuAction;
 
 
 @WebServlet("*.do")
@@ -295,7 +297,7 @@ public class FrontController extends HttpServlet {
 			forward.execute(request, response);
 		}
 		
-		if(command.equals("Store.do")) {
+/*		if(command.equals("Store.do")) {
 			String storeNo = request.getParameter("storeNo");
 			// storeNo를 받아서 storeDAO에서 bean(model)을 찾고 request에 넣은뒤 store.jsp로 이동해 사용
 			// 아마도? 리뷰도 여기화면 하단에서 뿌려줄듯
@@ -305,8 +307,29 @@ public class FrontController extends HttpServlet {
 			forward = new ActionForward();
 			forward.setView("index.jsp?center=store/store.jsp");
 			forward.execute(request, response);
-		}
+		}*/
 
+		if(command.equals("Store.do")) {
+			int storeNo = Integer.parseInt(request.getParameter("storeNo"));
+			
+			try {
+				 GetStoreInfoAction action1 = new GetStoreInfoAction();
+				 	action1.getStroeInfo(request, response, storeNo);
+				
+				 GetStoreMenuAction action2 = new GetStoreMenuAction();
+					action2.getStoreMenu(request, response, storeNo);
+				
+					forward = new ActionForward();
+					forward.setRedirect(false);
+					forward.setView("index.jsp?center=store/store.jsp");
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			forward.execute(request, response);
+		}
+		
+		
 		// 회원수정페이지에서 회원탈퇴하기 버튼 클릭했을때 이동됨.
 		if(command.equals("deleteCustomer.do")){
 			forward = new ActionForward();

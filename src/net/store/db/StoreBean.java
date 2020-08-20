@@ -5,14 +5,15 @@ public class StoreBean {
 	private String storeNo;
 	private String ceoNo;
 	private String name;
-	private String address;
+	private String roadAddress;
+	private String detailAddress;
 	private String category;
 	private String phone;
 	private String storeHours;
 	private String message;
 	private String image;
 	private String points;
-	private String orederCount;  
+	private String orderCount;  
 	private String deliveryArea;
 	private String regNo;
 	
@@ -35,11 +36,18 @@ public class StoreBean {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getAddress() {
-		return address;
+
+	public String getRoadAddress() {
+		return roadAddress;
 	}
-	public void setAddress(String address) {
-		this.address = address;
+	public void setRoadAddress(String roadAddress) {
+		this.roadAddress = roadAddress;
+	}
+	public String getDetailAddress() {
+		return detailAddress;
+	}
+	public void setDetailAddress(String detailAddress) {
+		this.detailAddress = detailAddress;
 	}
 	public String getCategory() {
 		return category;
@@ -77,11 +85,11 @@ public class StoreBean {
 	public void setPoints(String points) {
 		this.points = points;
 	}
-	public String getOrederCount() {
-		return orederCount;
+	public String getOrderCount() {
+		return orderCount;
 	}
-	public void setOrederCount(String orederCount) {
-		this.orederCount = orederCount;
+	public void setOrderCount(String orderCount) {
+		this.orderCount = orderCount;
 	}
 	public String getDeliveryArea() {
 		return deliveryArea;
