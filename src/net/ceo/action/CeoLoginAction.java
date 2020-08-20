@@ -19,9 +19,9 @@ public class CeoLoginAction {
 	
 	private final static Logger log = Logger.getGlobal();
 	
-	public ActionForward execute(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+	public boolean execute(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 		
-		log.info("CCEOLoginAction execute()");
+		log.info("CEOLoginAction execute()");
 
 		
 		req.setCharacterEncoding("UTF-8");
@@ -70,15 +70,12 @@ public class CeoLoginAction {
 				session.setAttribute("ceoNo", a.getCeoNo());
 				System.out.println("들어가있는 ceo번호 "+ a.getCeoNo());
 				session.setAttribute("email", email);
-	
+				System.out.println("세션 겟 에트리 뷰트 " + session.getAttribute(a.getCeoNo()));
 				
 				
 				System.out.println("사장님 세션 등록 완료 ");
 				// 페이지 이동 설정 (이동 방식, 경로)
 				
-				forward.setRedirect(true);
-				forward.setView("./ceoIndex.jsp"); // 사장님 전용페이지가 없어서 일단 여기로 했습니당
-				System.out.println("사장님 로그인 리다이렉트 작동 " + forward.getView());
 			
 		}else{
 			
@@ -91,7 +88,7 @@ public class CeoLoginAction {
 			 out.println("history.back();"); 
 			 out.println("</script>");
 			System.out.println("로그인 실패 result값 " + result);
-			return null;
+			
 		
 		}
 		
@@ -101,7 +98,7 @@ public class CeoLoginAction {
 	
 		
 
-		return forward;
+		return result;
 		
 	} // method
 	
