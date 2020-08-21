@@ -186,6 +186,8 @@ public CeoBean CeoInformation (String email) {
 		} catch (Exception e) {
 			System.out.println("����� ���� �Լ����� ������ �߻��ߴ� �޸� " + e);
 			e.printStackTrace();
+		} finally {
+			resourceClose();
 		}
 		 
 		
@@ -234,6 +236,8 @@ public int updateCeo(CeoBean cBean){
 		result = pstmt.executeUpdate();
 	} catch (Exception e) {
 		e.printStackTrace();
+	} finally {
+		resourceClose();
 	}
 	
 	return result;
