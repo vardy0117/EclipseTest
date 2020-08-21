@@ -63,11 +63,7 @@
 	}
 	.btn {
 		width: 245px;
-		background: linear-gradient(
-			to right, 
-			hsl(98 100% 62%), 
-			hsl(204 100% 59%)
-		);
+		background: linear-gradient( to bottom, hsl(0deg 0% 0%), hsl(0deg 0% 57%));
 		font-family: Binggrae-Bold;
 		font-size: 1rem;
 		color: white;
@@ -88,7 +84,7 @@
 	<div id="mainDiv">
 
 		<div id="formDiv">
-			<h1 style="text-align: center;">로그인</h1>
+			<h1 style="text-align: center;">사장님 로그인</h1>
 			<form action="./CeoLoginAction.do" method="post">
 				<table>
 					<tr>

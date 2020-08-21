@@ -14,9 +14,13 @@ import action.ActionForward;
 import action.AjaxAction;
 import net.ceo.action.CeoJoinAction;
 import net.ceo.action.CeoLoginAction;
+
+import net.ceo.action.CeoLogoutAction;
+
 import net.ceo.action.CeoModifyAction;
 import net.ceo.db.CeoBean;
 import net.ceo.db.CeoDAO;
+
 import net.customer.action.CustomerJoinAction;
 import net.customer.action.CustomerLoginAction;
 import net.customer.action.CustomerLogoutAction;
@@ -346,6 +350,47 @@ public class FrontController extends HttpServlet {
 				forward.execute(request, response);
 			}
 		}
+
+		
+		
+		if(command.equals("CeoLogOut.do")) {
+			forward = new ActionForward();
+			forward.setRedirect(true);
+			forward.setView("ceoIndex.jsp");
+			CeoLogoutAction action = new CeoLogoutAction();
+			try {
+				action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			forward.execute(request, response);
+		}
+
+		
+		if(command.equals("addStore.do")) {
+			if(request.getSession().getAttribute("ceoNo") == null) {
+				response.setContentType("text/html;charset=UTF-8"); 
+				PrintWriter out = response.getWriter();
+				out.print("<script>alert('로그인을 해주세요.'); location.href='./CeoLogin.do';</script>");
+				return;
+			}
+			forward = new ActionForward();
+			forward.setView("ceoIndex.jsp?center=ceoStore/addStore.jsp");
+			forward.execute(request, response);
+		}
+		
+		if(command.equals("manageStore.do")) {
+			if(request.getSession().getAttribute("ceoNo") == null) {
+				response.setContentType("text/html;charset=UTF-8"); 
+				PrintWriter out = response.getWriter();
+				out.print("<script>alert('로그인을 해주세요.'); location.href='./CeoLogin.do';</script>");
+				return;
+			}
+			forward = new ActionForward();
+			forward.setView("ceoIndex.jsp?center=ceoStore/manageStore.jsp");
+			forward.execute(request, response);
+		}
+
 		if(command.equals("CeoModifyIntro.do")){
 			String password = request.getParameter("password");
 			String ceoNo = (String)request.getSession().getAttribute("ceoNo");

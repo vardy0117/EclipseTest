@@ -7,9 +7,8 @@
 <title>Insert title here</title>
 <style>
 	#topDiv{
-		width:1000px;
-		height: 50px;
-		background-color: black;
+		width:100%;
+		height: 80px;
 		color: white;
 		margin: 0 auto;
 		position: fixed;
@@ -17,11 +16,11 @@
 		left: 0;
 		right: 0;
 		z-index: 1000;
+		background: linear-gradient( to bottom, hsl(0deg 0% 0%), hsl(0deg 0% 57%));
 	}
 	
 	#topDiv #logo {
-		text-align: center;
-		margin: 10px 0;
+		margin: 10px 10px;
 	}
 	#topDiv a {
 		text-decoration: none;
@@ -45,28 +44,25 @@
 </head>
 <body>
 	<div id="topDiv">
-		<h2 id="logo"><a href="">Delivengers 사장님 페이지</a></h2>
+		<h2 id="logo"><a href="./ceoIndex.jsp">Delivengers 사장님 페이지</a></h2>
 		
-			<div id="topDiv">
-		<h2 id="logo"><a href="./">Delivengers</a></h2>
 		<c:choose>
 			<c:when test="${empty sessionScope.ceoNo}">
 				<div id="loginAndJoin">
 				
 					<a href="./CeoLogin.do">로그인</a> | 
-					<a href="./CeoJoin.do">회원가입</a> |
+					<a href="./CeoJoin.do">회원가입</a>
 				</div>
 			</c:when>
 			<c:when test="${!empty sessionScope.email}">
 				<div id="loginAndJoin">
-					${sessionScope.email} 사장님 어서 오세요!
+					${sessionScope.email} 사장님 어서 오세요!(${sessionScope.ceoNo })
 					<a href="#"></a> | 
-					<a href="./LogOut.do">logout</a> |	
+					<a href="./CeoLogOut.do">logout</a> |	
 					<a href="./CeoModifyIntro.do">사장님 정보수정</a>
 				</div>
 			</c:when>
 		</c:choose>	
-	</div>
 	
 	</div>
 	
