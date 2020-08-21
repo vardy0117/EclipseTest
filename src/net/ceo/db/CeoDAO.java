@@ -50,6 +50,7 @@ public class CeoDAO {
 		
 	}
 
+	
 		public String joinCheckEmail(String email) {
 		String result="";
 		try {
@@ -191,5 +192,52 @@ public CeoBean CeoInformation (String email) {
 		return cb;
 		
 	}
+
+	/*****************************************************************************/
+public CeoBean getCeo(String ceoNo){
+	CeoBean cBean = new CeoBean();
+	try {
+		con=getConnection();
+		sql="select * from ceo where ceoNo=?";
+		pstmt=con.prepareStatement(sql);
+		pstmt.setString(1, ceoNo);
+		rs = pstmt.executeQuery();
+		if(rs.next()){
+			cBean.setCeoNo(rs.getString(1));
+			cBean.setEmail(rs.getString(2));
+			cBean.setPassword(rs.getString(3));
+			cBean.setName(rs.getString(4));
+			cBean.setPhone(rs.getString(5));
+			cBean.setPermission(rs.getString(6));
+		}
+		
+	} catch (Exception e) {
+		e.printStackTrace();
+	} finally {
+		resourceClose();
+	}
+	return cBean;
+}
+/*****************************************************************************/
+public int updateCeo(CeoBean cBean){
+	int result = 0;
+	
+	try {
+		con =getConnection();
+		sql = "update ceo set email=?,password=?,name=?,phone=? where ceoNo=?";
+		pstmt = con.prepareStatement(sql);
+		pstmt.setString(1, cBean.getEmail());
+		pstmt.setString(2, cBean.getPassword());
+		pstmt.setString(3, cBean.getName());
+		pstmt.setString(4, cBean.getPhone());
+		pstmt.setString(5, cBean.getCeoNo());
+		result = pstmt.executeUpdate();
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+	
+	return result;
+}
+
 	
 }	
