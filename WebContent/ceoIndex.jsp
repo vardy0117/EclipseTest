@@ -31,7 +31,7 @@
 <body>
 	<c:set  var="center" value="${param.center}"/>
 	<c:if test="${center==null}">
-		<c:set var="center" value="/main/main.jsp" />
+		<c:set var="center" value="/main/ceoMain.jsp" />
 	</c:if>
 	<jsp:include page="/inc/ceoTop.jsp"/>
 	<jsp:include page="${center }"/>

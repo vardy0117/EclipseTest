@@ -69,7 +69,7 @@ public class CustomerLoginAction {
 				// session.setAttribute("nickname", a.getNickname());
 				session.setAttribute("nickname", a.getNickname());
 				session.setAttribute("customerNo", a.getCustomerNo());
-				session.setAttribute("email", email);
+				//session.setAttribute("email", email);
 	
 				
 				

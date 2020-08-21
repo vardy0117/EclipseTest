@@ -27,7 +27,9 @@ public class CustomerLogoutAction implements Action {
 		
 		HttpSession session=req.getSession();
 			
-		session.invalidate();
+		//session.invalidate();
+		session.removeAttribute("nickname");
+		session.removeAttribute("customerNo");
 
 		System.out.println("로그아웃 처리 함수 호출");
 

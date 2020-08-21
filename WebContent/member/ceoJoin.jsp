@@ -18,7 +18,7 @@
   
 	#formDiv {
 		width: 800px;
-		height: 550px;
+		height: 450px;
 		margin: 0 auto;
 		border: 2px solid #c7c7c7;
 		border-radius: 15px;
@@ -60,11 +60,7 @@
 	}
 	.btn {
 		width: 25px;
-		background: linear-gradient(
-			to right, 
-			hsl(98 100% 62%), 
-			hsl(204 100% 59%)
-		);
+		background: linear-gradient( to bottom, hsl(0deg 0% 0%), hsl(0deg 0% 57%));
 		font-family: Binggrae-Bold;
 		font-size: 1rem;
 		color: white;
