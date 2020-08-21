@@ -399,7 +399,7 @@ public class FrontController extends HttpServlet {
 			
 			// 비밀번호가 공백이 아니고 DB와 일치하는 경우
 			if(password != null && password.equals(cBean.getPassword())){
-				System.out.println("비밀번호 일치");
+				//System.out.println("비밀번호 일치");
 				forward = new ActionForward();
 				forward.setView("./CeoModify.do");
 				forward.execute(request, response);

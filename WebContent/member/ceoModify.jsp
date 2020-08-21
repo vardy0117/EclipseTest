@@ -5,33 +5,100 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<style>
+	div {
+		box-sizing: border-box;
+	}
+	#mainDiv {
+		width: 1000px;
+		min-height: 600px;
+		margin: 0 auto;
+		margin-top: 80px;
+		padding: 120px;
+	}
+	#formDiv {
+		width: 600px;
+		height: 350px;
+		margin: 0 auto;
+		border: 2px solid #c7c7c7;
+		border-radius: 15px;
+		box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+	}
+	.textBox {
+		width: 200px;
+		height: 30px;
+		border-radius: 12px;
+		border: 2px solid gray;
+		padding-left: 15px;
+		font-family: Binggrae-Bold;
+		font-size: 1rem;
+	}
+	
+	input[type=password] {
+		font-family: 'pass', 'Roboto', Helvetica, Arial, sans-serif ;
+	}
+	input[type=password]::placeholder {
+		font-family: Binggrae-Bold;
+	}
+	input:focus { outline: none; }
+	#roadAddress, #detailAddress {
+		width: 256px;
+	}
+	.btn {
+		width: 25px;
+		background: linear-gradient( to bottom, hsl(0deg 0% 0%), hsl(0deg 0% 57%));
+		font-family: Binggrae-Bold;
+		font-size: 1rem;
+		color: white;
+		border: none;
+		border-radius: 12px;
+		width: 270px;
+		height: 35px;
+		transition-duration: 1s;
+		opacity: 0.7;
+	}
+	.btn:hover {
+		cursor: pointer;
+		opacity: 1;
+	}
+	form > table {
+		margin: 0 auto;
+	}
+</style>
 </head>
 <body>
-	<form action="./CeoModifyAction.do" method="post">
-		<table>
-			<tr>
-				<th>email</th>
-				<td><input type="text" value="${cBean.email }" name="email"></td>
-			</tr>
-			<tr>
-				<th>new password</th>
-				<td><input type="password" placeholder="공백시 기존값" name="password"></td>
-			</tr>
-			<tr>
-				<th>name</th>
-				<td><input type="text" value="${cBean.name }" name="name"></td>
-			</tr>
-			<tr>
-				<th>phone</th>
-				<td><input type="text" value="${cBean.phone }" name="phone"></td>
-			</tr>
-			<tr>
-				<td></td>
-				<td><input type="submit" value="수정하기"></td>
-			</tr>
-			<input type="hidden" value="${cBean.ceoNo }" name="ceoNo">
-			<input type="hidden" value="${cBean.password }" name="oldPass">
-		</table>
-	</form>
+	<div id="mainDiv">
+		<div id="formDiv">
+			<h1 style="text-align: center;">사장님 정보 수정</h1>
+			<form action="./CeoModifyAction.do" method="post">
+				<table>
+					<tr>
+						<th>이메일</th>
+						<td><input class="textBox" type="text" value="${cBean.email }" name="email"></td>
+					</tr>
+					<tr>
+						<th>새 비밀번호</th>
+						<td><input class="textBox" type="password" placeholder="공백시 기존값" name="password"></td>
+					</tr>
+					<tr>
+						<th>이름</th>
+						<td><input class="textBox" type="text" value="${cBean.name }" name="name"></td>
+					</tr>
+					<tr>
+						<th>연락처</th>
+						<td><input class="textBox" type="text" value="${cBean.phone }" name="phone"></td>
+					</tr>
+					<tr>
+						<th colspan="2">
+							<br>
+							<input class="btn" type="submit" value="수정하기">
+						</th>
+					</tr>
+					<input type="hidden" value="${cBean.ceoNo }" name="ceoNo">
+					<input type="hidden" value="${cBean.password }" name="oldPass">
+				</table>
+			</form>
+		</div>
+	</div>
 </body>
 </html>
