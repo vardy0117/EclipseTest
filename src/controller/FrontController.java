@@ -14,6 +14,9 @@ import action.ActionForward;
 import action.AjaxAction;
 import net.ceo.action.CeoJoinAction;
 import net.ceo.action.CeoLoginAction;
+import net.ceo.action.CeoModifyAction;
+import net.ceo.db.CeoBean;
+import net.ceo.db.CeoDAO;
 import net.customer.action.CustomerJoinAction;
 import net.customer.action.CustomerLoginAction;
 import net.customer.action.CustomerLogoutAction;
@@ -343,8 +346,61 @@ public class FrontController extends HttpServlet {
 				forward.execute(request, response);
 			}
 		}
-
-
+		if(command.equals("CeoModifyIntro.do")){
+			String password = request.getParameter("password");
+			String ceoNo = (String)request.getSession().getAttribute("ceoNo");
+			CeoDAO cDAO = new CeoDAO();
+			CeoBean cBean = cDAO.getCeo(ceoNo);
+			
+			// 비밀번호가 공백이 아니고 DB와 일치하는 경우
+			if(password != null && password.equals(cBean.getPassword())){
+				System.out.println("비밀번호 일치");
+				forward = new ActionForward();
+				forward.setView("./CeoModify.do");
+				forward.execute(request, response);
+			}else if(password != null && !password.equals(cBean.getPassword())){
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = response.getWriter();
+				out.println("<script>alert('비밀번호가 다릅니다.'); location.href='./CeoModifyIntro.do';</script>");
+				out.flush();
+				
+			// ceoNo가 존재할때 즉 로그인을 하고 회원수정버튼을 클릭했을때
+			}else if(ceoNo != null){
+				forward = new ActionForward();
+				forward.setView("index.jsp?center=member/ceoModifyIntro.jsp");
+				forward.execute(request, response);
+			}
+		}
+		  
+		if(command.equals("CeoModify.do")){
+			String ceoNo = (String)request.getSession().getAttribute("ceoNo");
+			if(ceoNo!=null){
+				forward=new ActionForward();
+				
+				CeoDAO cDAO= new CeoDAO();
+				CeoBean cBean = cDAO.getCeo(ceoNo);
+				request.setAttribute("cBean", cBean);
+				forward.setView("member/ceoModify.jsp");
+				forward.execute(request, response);
+			}
+		}
+		if(command.equals("CeoModifyAction.do")){
+			CeoModifyAction action = new CeoModifyAction();
+			try {
+				int result = action.execute(request, response);
+				if(result==1){
+					request.getSession().setAttribute("email", request.getParameter("email"));
+					response.setContentType("text/html; charset=UTF-8");
+					PrintWriter out = response.getWriter();
+					out.print("<script>alert('수정완료'); location.href='./ceoIndex.jsp';</script>");
+				}else{
+					System.out.println("수정실패");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
 		
 	}
 
