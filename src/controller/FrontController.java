@@ -412,7 +412,7 @@ public class FrontController extends HttpServlet {
 			// ceoNo가 존재할때 즉 로그인을 하고 회원수정버튼을 클릭했을때
 			}else if(ceoNo != null){
 				forward = new ActionForward();
-				forward.setView("index.jsp?center=member/ceoModifyIntro.jsp");
+				forward.setView("ceoIndex.jsp?center=member/ceoModifyIntro.jsp");
 				forward.execute(request, response);
 			}
 		}
@@ -425,7 +425,7 @@ public class FrontController extends HttpServlet {
 				CeoDAO cDAO= new CeoDAO();
 				CeoBean cBean = cDAO.getCeo(ceoNo);
 				request.setAttribute("cBean", cBean);
-				forward.setView("member/ceoModify.jsp");
+				forward.setView("ceoIndex.jsp?center=member/ceoModify.jsp");
 				forward.execute(request, response);
 			}
 		}
