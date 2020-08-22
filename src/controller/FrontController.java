@@ -445,7 +445,18 @@ public class FrontController extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-		
+		if(command.equals("deleteCeo.do")){
+			forward = new ActionForward();
+			// DB에서 delete 작업을 수행할때 필요한 customerNo을 가지고 옴
+			String ceoNo = (String)request.getSession().getAttribute("ceoNo");
+			CeoDAO cDAO = new CeoDAO();
+			int result = cDAO.deleteCeo(ceoNo);
+			if(result==1){
+				request.getSession().invalidate();	//세션 초기화
+				forward.setView("./");
+				forward.execute(request, response);
+			}
+		}
 		
 	}
 
