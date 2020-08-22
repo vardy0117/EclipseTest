@@ -45,14 +45,13 @@
 		width: 256px;
 	}
 	.btn {
-		width: 25px;
 		background: linear-gradient( to bottom, hsl(0deg 0% 0%), hsl(0deg 0% 57%));
 		font-family: Binggrae-Bold;
 		font-size: 1rem;
 		color: white;
 		border: none;
 		border-radius: 12px;
-		width: 270px;
+		width: 150px;
 		height: 35px;
 		transition-duration: 1s;
 		opacity: 0.7;
@@ -92,6 +91,7 @@
 						<th colspan="2">
 							<br>
 							<input class="btn" type="submit" value="수정하기">
+							<input class="btn" type="button" value="탈퇴하기" onclick="deleteCeo()">
 						</th>
 					</tr>
 					<input type="hidden" value="${cBean.ceoNo }" name="ceoNo">
@@ -100,5 +100,18 @@
 			</form>
 		</div>
 	</div>
+	
+	<script type="text/javascript">
+		function deleteCeo() {
+			var inputString = prompt('"탈퇴하기"를 입력해주세요',""); 
+			if(inputString == "탈퇴하기"){
+				alert("탈퇴가 완료되었습니다.");
+				location.href="./deleteCeo.do";
+			}else{
+				alert("잘못입력하셨습니다.");
+			}
+		}
+	</script>
+	
 </body>
 </html>

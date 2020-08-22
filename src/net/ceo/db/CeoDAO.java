@@ -243,5 +243,21 @@ public int updateCeo(CeoBean cBean){
 	return result;
 }
 
+
+public int deleteCeo(String ceoNo){
+	int result = 0;
+	try {
+		con = getConnection();
+		sql = "delete from ceo where ceoNo=?";
+		pstmt = con.prepareStatement(sql);
+		pstmt.setString(1, ceoNo);
+		result = pstmt.executeUpdate();
+	} catch (Exception e) {
+		e.printStackTrace();
+	} finally {
+		resourceClose();
+	}
+	return result;
+}
 	
 }	
