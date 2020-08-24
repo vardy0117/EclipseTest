@@ -70,7 +70,7 @@ public class CustomerLoginAction {
 				session.setAttribute("nickname", a.getNickname());
 				session.setAttribute("customerNo", a.getCustomerNo());
 				//session.setAttribute("email", email);
-	
+				session.setAttribute("sido", a.getSido());
 				
 				
 				System.out.println("세션 등록 완료 ");

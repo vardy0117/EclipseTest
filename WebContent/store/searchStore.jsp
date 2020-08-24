@@ -26,6 +26,7 @@
 		<h3>sessionScope.orderRoadAddress : ${sessionScope.orderRoadAddress } (session에 저장해두고 주문시 사용하고 해당세션 비워줌)</h3>
 		<h3>sessionScope.orderDetailAddress : ${sessionScope.orderDetailAddress } (session에 저장해두고 주문시 사용하고 해당세션 비워줌)</h3>
 		<h3>sessionScope.orderBname : ${sessionScope.orderBname } (store 리스트를 검색할때 deliveryArea컬럼 문자열에 해당 bname이 포함되어 있어야함.)</h3>
+		<h3>sessionScope.orderSido : ${sessionScope.orderSido }</h3>
 		<h1>위의 데이터로 리스트 보여주기</h1>
 		
 		<a href="./Store.do?storeNo=1"> 경로=./Store.do?storeNo=1 -> 1번가게로 이동</a>

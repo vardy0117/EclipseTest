@@ -297,6 +297,7 @@ public class FrontController extends HttpServlet {
 			request.getSession().setAttribute("orderRoadAddress", request.getParameter("roadAddress"));
 			request.getSession().setAttribute("orderDetailAddress", request.getParameter("detailAddress"));
 			request.getSession().setAttribute("orderBname", request.getParameter("bname"));
+			request.getSession().setAttribute("orderSido", request.getParameter("sido"));
 			
 			forward = new ActionForward();
 			forward.setView("index.jsp?center=store/searchStore.jsp");
