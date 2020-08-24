@@ -136,7 +136,7 @@ public class StoreDAO {
 	
 	/***********************************************************************/
 	public List<StoreBean> GetStore(String sido){ // 스토어 정보 가져오기
-		List<StoreBean> list = new ArrayList<StoreBean>();
+		List<StoreBean> storelist = new ArrayList<StoreBean>();
 		
 		try {
 			 con = getConnection();
@@ -158,9 +158,10 @@ public class StoreDAO {
 					 mBean.setRoadAddress(rs.getString("roadAddress"));
 					 mBean.setCategory(rs.getString("category"));
 					 mBean.setSido(rs.getString("sido"));
+					 mBean.setImage(rs.getString("image"));
 					 System.out.println("***스토어 쿼리 완료***");
 					 // 나머지는 다음에 가져오는 걸로 ^^;;;;;;;;;;;;;;;;;;;;;;;;;
-					 list.add(mBean);
+					 storelist.add(mBean);
 			 }
 			
 		} catch (Exception e) {
@@ -171,7 +172,7 @@ public class StoreDAO {
 		
 		
 		
-		return list;
+		return storelist;
 		
 	}
 	/***********************************************************************/
