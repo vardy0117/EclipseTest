@@ -247,8 +247,12 @@
                 // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
                 var roadAddr = data.roadAddress; // 도로명 주소 변수
                 var extraRoadAddr = ''; // 참고 항목 변수
-                var bname = data.bname
-
+                var bname = data.bname;
+                
+                
+                //var cutaddress2 =  address.substring(0,3);
+                //alert("자른 주소2  : " +cutaddress2);
+                
                 // 법정동명이 있을 경우 추가한다. (법정리는 제외)
                 // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
                 if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
@@ -266,6 +270,8 @@
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
                 document.getElementById('roadAddress').value = roadAddr;
                 document.getElementById('bname').value = bname;
+                document.fr.sido.value = data.sido;
+            
             }
         }).open();
     } 
@@ -359,6 +365,7 @@
 					
 				</table>
 				<input type="hidden" id="bname" name="bname" class="bname" size="30" placeholder="배달희망지역 ex) 장전동">
+				<input type="hidden" name="sido"> <!-- 시, 도 -->
 			</form>
 		</div>
 	</div>
