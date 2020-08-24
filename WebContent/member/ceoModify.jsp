@@ -96,7 +96,7 @@
 					</tr>
 					<input type="hidden" value="${cBean.ceoNo }" name="ceoNo">
 					<input type="hidden" value="${cBean.password }" name="oldPass">
-				</table>
+ 				</table>
 			</form>
 		</div>
 	</div>
