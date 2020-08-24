@@ -9,6 +9,12 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import org.apache.catalina.Store;
+
+import com.sun.javafx.fxml.BeanAdapter;
+
+import net.ceo.db.CeoBean;
+
 
 public class StoreDAO {
 	Connection con = null;
@@ -61,6 +67,7 @@ public class StoreDAO {
 				storeInfo.setOrderCount(rs.getString("orderCount"));
 				storeInfo.setDeliveryArea(rs.getString("deliveryArea"));
 				storeInfo.setRegNo(rs.getString("regNo"));
+				storeInfo.setSido(rs.getString("sido"));
 			 }
 			
 		} catch (Exception e) {
@@ -73,4 +80,55 @@ public class StoreDAO {
 		return storeInfo;
 	}
 
+	//insertStore 메서드 
+	
+	public int insertStore(StoreBean sbean) {
+	
+		int result = 0;
+		
+		try {
+			 getConnection();
+
+			 sql="insert into store(ceoNo, name, roadAddress, detailAddress, category, phone, "
+			 		+ "storeHours, message, image, deliveryArea, regNo, sido) "
+			 			     + "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			 
+			 pstmt = con.prepareStatement(sql);
+			 
+			 pstmt.setString(1, sbean.getCeoNo());
+			 pstmt.setString(2, sbean.getName());
+			 pstmt.setString(3, sbean.getRoadAddress());
+			 pstmt.setString(4, sbean.getDetailAddress());
+			 pstmt.setString(5, sbean.getCategory());
+			 pstmt.setString(6, sbean.getPhone());
+			 pstmt.setString(7, sbean.getStoreHours());
+			 pstmt.setString(8, sbean.getMessage());
+			 pstmt.setString(9, sbean.getImage());
+			 pstmt.setString(10,sbean.getDeliveryArea());
+			 pstmt.setString(11, sbean.getRegNo());
+			 pstmt.setString(12, sbean.getSido());
+			 pstmt.executeUpdate();
+			 
+			 rs = pstmt.getGeneratedKeys();
+			 
+			 if(rs.next()) {
+				 result = rs.getInt(1);
+			 }
+			 
+			
+		} catch (Exception e){
+			System.out.println("insertStore inner Error : " + e);
+		} finally {
+			resourceClose();
+		}
+		
+		
+		return result;
+		
+		
+	} // method
+	
+	
+	
+	
 }

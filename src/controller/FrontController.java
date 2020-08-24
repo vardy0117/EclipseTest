@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+
 import action.ActionForward;
 import action.AjaxAction;
 import net.ceo.action.CeoJoinAction;
@@ -27,8 +30,11 @@ import net.customer.action.CustomerLogoutAction;
 import net.customer.action.CustomerModifyAction;
 import net.customer.db.CustomerBean;
 import net.customer.db.CustomerDAO;
+import net.menu.action.MenuAction;
 import net.orderAction.GetStoreInfoAction;
 import net.orderAction.GetStoreMenuAction;
+import net.store.action.StoreAction;
+import net.store.db.StoreDAO;
 
 
 @WebServlet("*.do")
@@ -249,7 +255,7 @@ public class FrontController extends HttpServlet {
 			
 			forward = new ActionForward();
 			forward.setRedirect(true);
-			forward.setView("index.jsp?center=member/ceoLogin.jsp");	
+			forward.setView("ceoIndex.jsp?center=member/ceoLogin.jsp");	
 			forward.execute(request, response);
 		}
 				
@@ -457,6 +463,30 @@ public class FrontController extends HttpServlet {
 				forward.execute(request, response);
 			}
 		}
+		
+		//Storeinsert
+		if(command.equals("insertStoreAction.do")){
+			forward = new ActionForward();
+			
+			request.setCharacterEncoding("utf-8");
+			String realFolder = getServletContext().getRealPath("/upload/store");
+			
+			int max = 1000 * 1024 * 1024;
+			
+			MultipartRequest multi = new MultipartRequest(request, realFolder, max, "utf-8", new DefaultFileRenamePolicy());
+			
+			StoreAction storeAction = new StoreAction();
+			int storeNo = storeAction.insertStore(request, response, multi);
+			
+			MenuAction menuAction = new MenuAction();
+			
+			
+			//int result =sDAO.insertStore(sbean);
+			
+			
+		}
+		
+		
 		
 	}
 
