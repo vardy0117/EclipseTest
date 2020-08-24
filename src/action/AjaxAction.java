@@ -55,6 +55,7 @@ public class AjaxAction {
 		jsonObj.put("phone", cbean.getPhone());
 		jsonObj.put("grade", cbean.getGrad());
 		jsonObj.put("agreeAD", cbean.getAgreeAD());
+		jsonObj.put("sido", cbean.getSido());
 				
 		return jsonObj.toJSONString();
 	}
