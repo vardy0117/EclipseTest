@@ -157,8 +157,10 @@ public class StoreDAO {
 					 mBean.setName(rs.getString("name"));
 					 mBean.setRoadAddress(rs.getString("roadAddress"));
 					 mBean.setCategory(rs.getString("category"));
+					 mBean.setStoreHours(rs.getString("storeHours"));
 					 mBean.setSido(rs.getString("sido"));
 					 mBean.setImage(rs.getString("image"));
+					 mBean.setMessage(rs.getString("message"));
 					 System.out.println("***스토어 쿼리 완료***");
 					 // 나머지는 다음에 가져오는 걸로 ^^;;;;;;;;;;;;;;;;;;;;;;;;;
 					 storelist.add(mBean);

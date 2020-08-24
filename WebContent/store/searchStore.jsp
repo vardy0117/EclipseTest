@@ -37,13 +37,14 @@
 		<br>
 
 		<c:forEach var="bean" items="${storelist}">
-			<font size="10">가져온 데이터</font> <br>
+			<font size="10">---가져온 스토어 데이터---</font> <br>
 			<c:out value="스토어 번호 : ${bean.storeNo}" /><br>
-   			<c:out value="시도 : ${bean.sido}" /> <br>
-    		<c:out value="도로명 주소 : ${bean.roadAddress}" /> <br>
-			<c:out value="운영시간 : ${bean.storeHours}" /><br>
+   	<font color="red" size="5">시도 :		<c:out value=" ${bean.sido}" /> </font> <br>
+    <font color="orange" size="5">		<c:out value="도로명 주소 : ${bean.roadAddress}" /> </font> <br>
+	 <font color="green" size="5">		<c:out value="운영시간 : ${bean.storeHours}" /> </font> <br>
 			<c:out value="사진 : ${bean.image}" /><br>
 			<c:out value="카테고리 : ${bean.category}" /><br>
+			<c:out value="사장님 한마디 : ${bean.message}" /><br>
 		</c:forEach>
 
 
