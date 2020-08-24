@@ -3,7 +3,11 @@ package net.store.db;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -13,7 +17,9 @@ import org.apache.catalina.Store;
 
 import com.sun.javafx.fxml.BeanAdapter;
 
+
 import net.ceo.db.CeoBean;
+import net.menu.db.MenuBean;
 
 
 public class StoreDAO {
@@ -39,7 +45,7 @@ public class StoreDAO {
 			System.out.println("resourceClose! : " + e);
 		}
 	} // resourceClose()
-	
+	/***********************************************************************/
 	public StoreBean getStoreInfo(int storeNo) {
 		StoreBean storeInfo = new StoreBean();
 		
@@ -79,7 +85,7 @@ public class StoreDAO {
 		
 		return storeInfo;
 	}
-
+	/***********************************************************************/
 	//insertStore 메서드 
 	
 	public int insertStore(StoreBean sbean) {
@@ -128,7 +134,46 @@ public class StoreDAO {
 		
 	} // method
 	
-	
-	
+	/***********************************************************************/
+	public List<StoreBean> GetStore(String sido){ // 스토어 정보 가져오기
+		List<StoreBean> list = new ArrayList<StoreBean>();
+		
+		try {
+			 con = getConnection();
+			 
+			 sql = "select * from store where sido=?";
+			 
+			 pstmt = con.prepareStatement(sql);
+			 
+			 pstmt.setString(1, sido);
+			 System.out.println("입려받은 Store DAO (sido) : " + sido);
+			 
+			 rs = pstmt.executeQuery();
+			 
+			 while(rs.next()){
+				 StoreBean mBean = new StoreBean();
+					 mBean.setStoreNo(rs.getString("storeNo"));
+					 mBean.setCeoNo(rs.getString("ceoNo"));
+					 mBean.setName(rs.getString("name"));
+					 mBean.setRoadAddress(rs.getString("roadAddress"));
+					 mBean.setCategory(rs.getString("category"));
+					 mBean.setSido(rs.getString("sido"));
+					 System.out.println("***스토어 쿼리 완료***");
+					 // 나머지는 다음에 가져오는 걸로 ^^;;;;;;;;;;;;;;;;;;;;;;;;;
+					 list.add(mBean);
+			 }
+			
+		} catch (Exception e) {
+			System.out.println("스토어 정보가져오기에서 오류 발생 : "+e);
+		} finally {
+			resourceClose();
+		}
+		
+		
+		
+		return list;
+		
+	}
+	/***********************************************************************/
 	
 }

@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -34,6 +35,7 @@ import net.menu.action.MenuAction;
 import net.orderAction.GetStoreInfoAction;
 import net.orderAction.GetStoreMenuAction;
 import net.store.action.StoreAction;
+import net.store.db.StoreBean;
 import net.store.db.StoreDAO;
 
 
@@ -297,6 +299,8 @@ public class FrontController extends HttpServlet {
 
 		
 		if(command.equals("SearchStore.do")) {
+			StoreDAO store = new StoreDAO();
+			StoreBean bean = new StoreBean();
 			// 받은 값 : roadAddress / detailAddress / bname 
 			request.setCharacterEncoding("utf-8");
 			
@@ -305,9 +309,16 @@ public class FrontController extends HttpServlet {
 			request.getSession().setAttribute("orderBname", request.getParameter("bname"));
 			request.getSession().setAttribute("orderSido", request.getParameter("sido"));
 			
+			List<StoreBean> test = store.GetStore((String) request.getSession().getAttribute("orderSido"));
+			
+			
+			// store.GetStore((String) request.getSession().getAttribute("orderSido"));
+			System.out.println("SearchStore 프론트 컨트롤러 -> 값가져오기 테스트 " + test.toString());
+			
 			forward = new ActionForward();
 			forward.setView("index.jsp?center=store/searchStore.jsp");
 			forward.execute(request, response);
+		
 		}
 		
 /*		if(command.equals("Store.do")) {
