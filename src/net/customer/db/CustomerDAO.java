@@ -245,7 +245,7 @@ public class CustomerDAO {
 		int result = 0;
 		try {
 			con = getConnection();
-			sql="update customer set password=?,nickname=?,phone=?,roadAddress=?,detailAddress=?,sido=? "
+			sql="update customer set password=?,nickname=?,phone=?,roadAddress=?,detailAddress=?,bname=?,sido=? "
 					+ "where customerNo=?";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setString(1, cBean.getPassword());
@@ -253,8 +253,9 @@ public class CustomerDAO {
 			pstmt.setString(3, cBean.getPhone());
 			pstmt.setString(4, cBean.getRoadAddress());
 			pstmt.setString(5, cBean.getDetailAddress());
-			pstmt.setString(6, cBean.getSido());
-			pstmt.setString(7, cBean.getCustomerNo());
+			pstmt.setString(6, cBean.getBname());
+			pstmt.setString(7, cBean.getSido());
+			pstmt.setString(8, cBean.getCustomerNo());
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
