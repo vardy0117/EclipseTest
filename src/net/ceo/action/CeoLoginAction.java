@@ -59,16 +59,12 @@ public class CeoLoginAction {
 				System.out.println("-----------------------------------------");
 				
 				System.out.println("파라미터로 가져온 이메일 값 : " + email);
-				
-				
 
-				// session.setAttribute("nickname", a.getNickname());
-				// session.setAttribute("nickname", a.getNickname());
 				session.setAttribute("ceoNo", a.getCeoNo());
 				System.out.println("들어가있는 ceo번호 "+ a.getCeoNo());
 				session.setAttribute("email", email);
-				System.out.println("세션 겟 에트리 뷰트 " + session.getAttribute(a.getCeoNo()));
-				
+				System.out.println("세션 겟 에트리 뷰트 ceo번호 : " + session.getAttribute("email"));
+				System.out.println("세션 겟 에트리 뷰트 ceo email : " + session.getAttribute("email"));
 				
 				System.out.println("사장님 세션 등록 완료 ");
 				// 페이지 이동 설정 (이동 방식, 경로)
