@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,13 +17,10 @@ import action.ActionForward;
 import action.AjaxAction;
 import net.ceo.action.CeoJoinAction;
 import net.ceo.action.CeoLoginAction;
-
 import net.ceo.action.CeoLogoutAction;
-
 import net.ceo.action.CeoModifyAction;
 import net.ceo.db.CeoBean;
 import net.ceo.db.CeoDAO;
-
 import net.customer.action.CustomerJoinAction;
 import net.customer.action.CustomerLoginAction;
 import net.customer.action.CustomerLogoutAction;
@@ -300,7 +296,7 @@ public class FrontController extends HttpServlet {
 		
 		if(command.equals("SearchStore.do")) {
 			StoreDAO store = new StoreDAO();
-			StoreBean bean = new StoreBean();
+
 			// 받은 값 : roadAddress / detailAddress / bname 
 			request.setCharacterEncoding("utf-8");
 			
@@ -309,11 +305,13 @@ public class FrontController extends HttpServlet {
 			request.getSession().setAttribute("orderBname", request.getParameter("bname"));
 			request.getSession().setAttribute("orderSido", request.getParameter("sido"));
 			
-			List<StoreBean> test = store.GetStore((String) request.getSession().getAttribute("orderSido"));
+			List<StoreBean> storelist = store.GetStore((String) request.getSession().getAttribute("orderSido"));
 			
 			
+			request.setAttribute("storelist", storelist);
+
 			// store.GetStore((String) request.getSession().getAttribute("orderSido"));
-			System.out.println("SearchStore 프론트 컨트롤러 -> 값가져오기 테스트 " + test.toString());
+			System.out.println("SearchStore 프론트 컨트롤러 -> 값가져오기 테스트 " + storelist.toString());
 			
 			forward = new ActionForward();
 			forward.setView("index.jsp?center=store/searchStore.jsp");
