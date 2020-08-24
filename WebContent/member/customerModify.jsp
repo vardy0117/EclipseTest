@@ -137,7 +137,7 @@
 						<td></td>
 						<td><input class="textBox" type="text" id="detailAddress"  name="detailAddress" class="detailAddress" size="50" placeholder="상세 주소 입력" value="${cBean.detailAddress}"></td>		
 					</tr>
-					<input type="hidden" id="bname" name="bname">
+					<input type="hidden" id="bname" name="bname" value="${cBean.bname }">
 					<input type="hidden" id="customerNo" name="customerNo" value="${cBean.customerNo }">
 					<input type="hidden" id="oldPass" name="oldPass" value="${cBean.password}">
 					<input type="hidden" id="sido" name="sido" value="${cBean.sido }">

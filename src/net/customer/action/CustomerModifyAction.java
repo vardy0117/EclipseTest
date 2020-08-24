@@ -32,7 +32,9 @@ public class CustomerModifyAction {
 		cBean.setPhone(request.getParameter("phone"));
 		cBean.setRoadAddress(request.getParameter("roadAddress"));
 		cBean.setDetailAddress(request.getParameter("detailAddress"));
+		cBean.setBname(request.getParameter("bname"));
 		cBean.setSido(request.getParameter("sido"));
+		System.out.println(cBean.getBname()+"!#@@!#!#!@# 액션비네임");
 		CustomerDAO cDAO = new CustomerDAO();
 		int result = cDAO.updateMember(cBean);
 
