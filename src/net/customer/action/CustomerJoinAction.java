@@ -29,6 +29,9 @@ public class CustomerJoinAction{
 		cb.setDetailAddress(req.getParameter("detailAddress"));
 		cb.setBname(req.getParameter("bname"));
 		cb.setPhone(req.getParameter("phoneFront")+req.getParameter("phone"));
+		cb.setSido(req.getParameter("sido"));
+		
+		
 		if(req.getParameter("agreeAD") == null) {
 			cb.setAgreeAD("F");
 		} else { 

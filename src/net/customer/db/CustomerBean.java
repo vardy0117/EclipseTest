@@ -17,10 +17,17 @@ public class CustomerBean {
 	private String phone;
 	private String grad;
 	private String agreeAD;
+	private String sido; 
 	
 	
 	
 	
+	public String getSido() {
+		return sido;
+	}
+	public void setSido(String sido) {
+		this.sido = sido;
+	}
 	public String getRoadAddress() {
 		return roadAddress;
 	}
