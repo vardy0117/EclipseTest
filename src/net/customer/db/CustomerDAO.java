@@ -228,6 +228,7 @@ public class CustomerDAO {
 				cBean.setPhone(rs.getString(8));
 				cBean.setGrad(rs.getString(9));
 				cBean.setAgreeAD(rs.getString(10));
+				cBean.setSido(rs.getString(11));
 			}
 			
 		} catch (Exception e) {
@@ -242,10 +243,9 @@ public class CustomerDAO {
 	// update Customer
 	public int updateMember(CustomerBean cBean){
 		int result = 0;
-		System.out.println("DAO濡� �대��");
 		try {
 			con = getConnection();
-			sql="update customer set password=?,nickname=?,phone=?,roadAddress=?,detailAddress=? "
+			sql="update customer set password=?,nickname=?,phone=?,roadAddress=?,detailAddress=?,sido=? "
 					+ "where customerNo=?";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setString(1, cBean.getPassword());
@@ -253,7 +253,8 @@ public class CustomerDAO {
 			pstmt.setString(3, cBean.getPhone());
 			pstmt.setString(4, cBean.getRoadAddress());
 			pstmt.setString(5, cBean.getDetailAddress());
-			pstmt.setString(6, cBean.getCustomerNo());
+			pstmt.setString(6, cBean.getSido());
+			pstmt.setString(7, cBean.getCustomerNo());
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();

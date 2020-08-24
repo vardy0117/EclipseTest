@@ -169,7 +169,6 @@ public class FrontController extends HttpServlet {
 			String customerNo = (String)request.getSession().getAttribute("customerNo");
 			CustomerDAO cDAO = new CustomerDAO();
 			CustomerBean cBean = cDAO.getCustomer(customerNo);
-			
 			if(password != null && cBean.getPassword().equals(password)){
 				forward = new ActionForward();
 				forward.setView("./CustomerModify.do");
