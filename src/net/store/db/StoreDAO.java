@@ -150,7 +150,7 @@ public class StoreDAO {
 			 pstmt = con.prepareStatement(sql);
 			 
 			 pstmt.setString(1, sido);
-			 System.out.println("���ㅻ��� Store DAO (sido) : " + sido);
+			 System.out.println("시도 스토어 받은값 : DAO (sido) : " + sido);
 			 
 			 rs = pstmt.executeQuery();
 			 
@@ -165,7 +165,7 @@ public class StoreDAO {
 					 mBean.setSido(rs.getString("sido"));
 					 mBean.setImage(rs.getString("image"));
 					 mBean.setMessage(rs.getString("message"));
-					 System.out.println("***�ㅽ���� 荑쇰━ ��猷�***");
+					 System.out.println("Get 스토어 호출");
 					 // ��癒몄��� �ㅼ���� 媛��몄�ㅻ�� 嫄몃� ^^;;;;;;;;;;;;;;;;;;;;;;;;;
 					 storelist.add(mBean);
 			 }
