@@ -7,7 +7,6 @@ public class MenuBean {
 	private String name;
 	private int price;
 	private String image;
-	private String level;
 
 	//getter,setter
 	public String getStoreNo() {
@@ -33,12 +32,6 @@ public class MenuBean {
 	}
 	public void setImage(String image) {
 		this.image = image;
-	}
-	public String getLevel() {
-		return level;
-	}
-	public void setLevel(String level) {
-		this.level = level;
 	}
 	public String getCategory() {
 		return category;
