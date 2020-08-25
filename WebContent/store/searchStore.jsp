@@ -1,3 +1,4 @@
+<%@page import="net.store.db.StoreBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -54,7 +55,11 @@
    			<font color="red" size="5">시도 :		<c:out value=" ${bean.sido}" /> </font> <br>
    			 <font color="orange" size="5">		<c:out value="도로명 주소 : ${bean.roadAddress}" /> </font> <br>
 			 <font color="green" size="5">		<c:out value="운영시간 : ${bean.storeHours}" /> </font> <br>
-			<c:out value="사진 : ${bean.image}" /><br>
+			
+			<c:out value="<업체 소개 사진> "/> <br>
+			 <img src="upload/store/${bean.image}" alt="스토어 음식사진" width="200" height="200"> <br>
+<%-- 			${pageContext.request.contextPath} --%>
+			<c:out value="사진주소 : upload/store/${bean.image}"/><br>
 			<c:out value="카테고리 : ${bean.category}" /><br>
 			<c:out value="사장님 한마디 : ${bean.message}" /><br>
 			
