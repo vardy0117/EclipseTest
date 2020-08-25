@@ -304,6 +304,7 @@ public class FrontController extends HttpServlet {
 			request.getSession().setAttribute("orderDetailAddress", request.getParameter("detailAddress"));
 			request.getSession().setAttribute("orderBname", request.getParameter("bname"));
 			request.getSession().setAttribute("orderSido", request.getParameter("sido"));
+		
 			
 			List<StoreBean> storelist = store.GetStore((String) request.getSession().getAttribute("orderSido"));
 			
@@ -312,7 +313,7 @@ public class FrontController extends HttpServlet {
 
 			// store.GetStore((String) request.getSession().getAttribute("orderSido"));
 			System.out.println("SearchStore 프론트 컨트롤러 -> 값가져오기 테스트 " + storelist.toString());
-			
+			System.out.println("주소 변경 : " + request.getSession().getAttribute("orderSido"));
 			forward = new ActionForward();
 			forward.setView("index.jsp?center=store/searchStore.jsp");
 			forward.execute(request, response);

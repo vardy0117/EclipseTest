@@ -1,3 +1,4 @@
+
 package net.menu.db;
 
 import java.sql.Connection;
@@ -124,3 +125,4 @@ public class MenuDAO {
 	}
 
 }
+
