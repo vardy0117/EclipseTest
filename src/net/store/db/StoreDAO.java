@@ -91,8 +91,7 @@ public class StoreDAO {
 	
 	public int insertStore(StoreBean sbean) {
 	
-		Integer numero=0;
-		int result = 0;
+		int storeNo = 0;
 		
 		try {
 			 getConnection();
@@ -101,7 +100,7 @@ public class StoreDAO {
 			 		+ "storeHours, message, image, deliveryArea, regNo, sido) "
 			 			     + "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			 
-			 pstmt = con.prepareStatement(sql);
+			 pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			 
 			 pstmt.setString(1, sbean.getCeoNo());
 			 pstmt.setString(2, sbean.getName());
@@ -117,12 +116,13 @@ public class StoreDAO {
 			 pstmt.setString(12, sbean.getSido());
 			 
 			
-			 numero= pstmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+			 pstmt.executeUpdate();
 			 
 			 rs = pstmt.getGeneratedKeys();
 			 
+			 
 			 if(rs.next()) {
-				 result = rs.getInt(1);
+				 storeNo = rs.getInt(1);
 			 }
 			 
 			
@@ -132,8 +132,7 @@ public class StoreDAO {
 			resourceClose();
 		}
 		
-		
-		return result;
+		return storeNo;
 		
 		
 	} // method

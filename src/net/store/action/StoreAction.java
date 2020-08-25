@@ -1,6 +1,7 @@
 package net.store.action;
 
 import java.util.Enumeration;
+import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,7 +14,7 @@ import net.store.db.StoreDAO;
 public class StoreAction {
 	public int insertStore(HttpServletRequest request, HttpServletResponse response, MultipartRequest multi) {
 		
-		int result = 0;
+		int storeNo = 0;
 		
 		String name = multi.getParameter("name");
 		String roadAddress = multi.getParameter("roadAddress");
@@ -32,12 +33,20 @@ public class StoreAction {
 		
 		
 		
-		
 		Enumeration e = multi.getFileNames();
+		
 		while(e.hasMoreElements()) {
-			String filename = (String)e.nextElement();
-			image = multi.getFilesystemName(filename);
+			
+			String image_name = (String)e.nextElement();
+			if( image_name.equals("image")) {
+				String filename = image_name;
+				image = multi.getFilesystemName(filename);
+				break;
+			}
 		}
+		
+		
+		
 		
 		StoreBean storeBean = new StoreBean();
 		storeBean.setName(name);
@@ -47,14 +56,16 @@ public class StoreAction {
 		storeBean.setCategory(category);
 		storeBean.setPhone(phone);
 		storeBean.setStoreHours(storeHours);
+		storeBean.setDeliveryArea(deliveryArea);
 		storeBean.setMessage(message);
 		storeBean.setImage(image);
 		storeBean.setRegNo(regNo);
 		storeBean.setSido(sido);
-		
+		System.out.println("ff"+storeBean);
+		System.out.println("ff"+storeBean.toString());
 		
 		StoreDAO storeDAO = new StoreDAO();
-		result = storeDAO.insertStore(storeBean);
+		storeNo = storeDAO.insertStore(storeBean);
 		
 		
 		
@@ -66,6 +77,6 @@ public class StoreAction {
 		
 		
 		
-		return result;
+		return storeNo;
 	}
 }

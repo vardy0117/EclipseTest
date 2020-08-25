@@ -1,6 +1,8 @@
 package net.menu.action;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,10 +22,22 @@ public class MenuAction {
 		
 		List<MenuBean> menuList = new ArrayList();
 		
+		
+		
 		for(int i=1; i<=menuCnt; i++) {
 			MenuBean menuBean = new MenuBean();
 			
-			String menu_image = multi.getParameter("menu_image" + i);
+			String menu_image = "";
+			
+			Enumeration e = multi.getFileNames();
+			while(e.hasMoreElements()) {
+				String image_name = (String)e.nextElement();
+				if( image_name.equals("menu_image"+i)) {
+					String filename = image_name;
+					menu_image = multi.getFilesystemName(filename);
+					break;
+				}
+			}
 			String menu_category = multi.getParameter("menu_category" + i);
 			String menu_name = multi.getParameter("menu_name" + i);
 			int menu_price = Integer.parseInt(multi.getParameter("menu_price" + i));
@@ -32,8 +46,9 @@ public class MenuAction {
 			menuBean.setCategory(menu_category);
 			menuBean.setName(menu_name);
 			menuBean.setPrice(menu_price);
-			//
 			menuBean.setStoreNo(Integer.toString(storeNo));
+			
+			
 			menuList.add(menuBean);
 		}
 	
