@@ -505,7 +505,7 @@ public class FrontController extends HttpServlet {
 			int storeNo = storeAction.insertStore(request, response, multi);
 			
 			MenuAction menuAction = new MenuAction();
-			
+			menuAction.insertStore(request, response, multi, storeNo);
 			
 			//int result =sDAO.insertStore(sbean);
 			
