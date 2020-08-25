@@ -39,9 +39,14 @@
 	귀하의 현재 계정기준 요청주소는 :  <font color="blue" size="5">	
 	<c:out value="${orderSido}" />
 	 </font> 입니다 <br>
+
 	 <p>----------------------------------------------------------------------------------------</p>
 	
+			
 		<c:forEach var="bean" items="${storelist}">
+
+				
+			
 			<font size="10">---가져온 스토어 데이터---</font> <br>
 			
 			<font color="purple" size="5">가게 이름 :		<c:out value=" ${bean.name}" /> </font> <br>
@@ -55,7 +60,13 @@
 		</c:forEach>
 
 
-
+		
+			<c:set var="area" value="${bean.storeNo}" />
+ 		 	area값 (스토어 번호): <c:out value="${bean.storeNo}"/>
+				<c:if test="${area == null}">
+					<font size="6" color="orange"> <p>귀하의 지역에 맞는 가게가 없습니다</p> </font>
+				</c:if>
+				
 
 	</div>
 	
