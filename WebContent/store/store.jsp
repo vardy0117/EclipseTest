@@ -70,10 +70,54 @@
 			 element.parentNode.querySelector(".qty").value--;
 		 }
 	 }
+ 	 
+ 	function modifyMenuOnCartQty(element, qty){
+ 		var item = new Array();
+ 		var cart = null;
+ 		
+ 		var name=$(element).parents("li").find(".name").html();
+		var basePrice=parseInt($(element).parents("li").find(".price").html())/
+					  parseInt($(element).parents("li").find(".qty").val());
+		if(qty == 1) {
+			 element.parentNode.querySelector(".qty").value++;
+		 } else if (element.parentNode.querySelector(".qty").value > 0 && qty ==-1) {
+			 element.parentNode.querySelector(".qty").value--;
+		 }
+		
+		var quantity=parseInt(element.parentNode.querySelector(".qty").value);
+		var price = basePrice*quantity
+ 		
+		var orderMenu = {
+				 name:name,
+				 basePrice:basePrice,
+				 quantity:quantity,
+				 price:price
+				}
+		
+		var json = JSON.stringify(orderMenu);
+		
+		var itemList=JSON.parse(sessionStorage.getItem("cart"));
+		
+		for(var j=0; j<itemList.length; j++){
+			if (name == JSON.parse(itemList[j])["name"]){		
+				
+				json = JSON.stringify(orderMenu);
+					
+				item.splice(j, 1, json);
+				cart = JSON.stringify(item);
+				sessionStorage.setItem("cart",cart);
+				
+				break;
+			} 
+		}	
+			
+		getCart();	
+ 	}
+ 	 
  	
 	var item = new Array();
 	var cart = null;
-	localStorage.setItem("cart",cart);
+	sessionStorage.setItem("cart",cart);
 	
 	function addToCartStorage(element){
 		var name=element.parentNode.querySelector(".name").value;
@@ -90,7 +134,7 @@
 		
 		var json = JSON.stringify(orderMenu);
 		
-		var itemList=JSON.parse(localStorage.getItem("cart"));
+		var itemList=JSON.parse(sessionStorage.getItem("cart"));
 		
 		if(itemList==null){
 			item.push(json);
@@ -118,16 +162,16 @@
 		}
 			
 		cart = JSON.stringify(item);
-		localStorage.setItem("cart",cart);	
+		sessionStorage.setItem("cart",cart);	
 		
-		itemList=JSON.parse(localStorage.getItem("cart"));
+		itemList=JSON.parse(sessionStorage.getItem("cart"));
 		if(itemList!=null){
 			getCart();
 		}	
 	} 
 	
 	function getCart(){
-		var itemList=JSON.parse(localStorage.getItem("cart"));
+		var itemList=JSON.parse(sessionStorage.getItem("cart"));
 		var tag = "";
 		var totalPrice = 0;
 		
@@ -145,9 +189,9 @@
 							'</span>'+
 						'</div>'+
 						'<div class="right">'+
-							'<a onclick=" modifyQty(this, 1)" style="cursor:pointer" >+</a>'+
-							'<span class="orderQuantity"><input type="number" class="qty" value='+JSON.parse(item[i])["quantity"]+'> </span>'+
-							'<a onclick=" modifyQty(this, -1)" style="cursor:pointer">-</a>'+	
+							'<a onclick=" modifyMenuOnCartQty(this, 1)" style="cursor:pointer" >+</a>'+
+							'<span class="orderQuantity"><input type="number" class="qty" value='+JSON.parse(item[i])["quantity"]+' readOnly> </span>'+
+							'<a onclick=" modifyMenuOnCartQty(this, -1)" style="cursor:pointer">-</a>'+	
 						'</div>'+
 					'</div>'+
 				'</li>';
@@ -166,9 +210,9 @@
 		var cartList = new Array();
 		
 		for(i=0; i<cnt; i++){
-			var name = $("#food"+i).querySelector(".name").value;		
-			var quantity = $("#food"+i).querySelector(".qty").value;
-			var price =  $("#food"+i).querySelector(".price").value;
+			var name = $("#food"+i).children(".name").value;		
+			var quantity = $("#food"+i).children(".qty").value;
+			var price =  $("#food"+i).children(".price").value;
 		
 			var menu = {
 					 name:name,
@@ -187,7 +231,7 @@
 		$.ajax({
 				type : "post",
 				async : false,
-				url : "./order.do?storeNo="+storNo,
+				url : "./order.do?storeNo="+storeNo,
 				data : {"cart":cart},
 				dataType : "text",
 				success : function(result,textStatus){
