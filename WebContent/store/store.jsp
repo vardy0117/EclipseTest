@@ -73,13 +73,16 @@
  
 	var cnt=0;
 	var item = new Array();
+	var cart = null;
+	localStorage.setItem("cart",cart);
 	
-	function addToCart(element){
+	
+	function addToCartStorage(element){
 		cnt ++;
 		var name=element.parentNode.querySelector(".name").value;
-		var basePrice=element.parentNode.querySelector(".price").value;
-		var quantity=element.parentNode.querySelector(".qty").value;
-		var price = price*quantity;
+		var basePrice=parseInt(element.parentNode.querySelector(".price").value);
+		var quantity=parseInt(element.parentNode.querySelector(".qty").value);
+		var price = basePrice*quantity;
 		
 		var orderMenu = {
 			 name:name,
@@ -88,46 +91,116 @@
 			 price:price
 			}
 		
-		var json = JSON.stringify(orderMenu)
-		item.push(json);
+		var json = JSON.stringify(orderMenu);
 		
-		localStorage.setItem('item',item);
+		var itemList=JSON.parse(localStorage.getItem("cart"));
+
+		if(itemList==null){
+			item.push(json);
+		} else {
+			var i = null;
+			for(j=0; j<itemList.length; j++){
+				if (name == JSON.parse(itemList[j])["name"]){	
+					i=j;
+				}	
+			}
+			if(i!=null){	
+				quantity+=parseInt(JSON.parse(item[i])["quantity"]);
+				price=basePrice*quantity;			
+					
+				orderMenu["quantity"]=quantity;
+				orderMenu["price"]=price;
+				
+				json = JSON.stringify(orderMenu);
+					
+				item.splice(i, 1, json);
+			} else {
+				item.push(json);
+			}
+			
+		}
+			
+		cart = JSON.stringify(item);
+		localStorage.setItem("cart",cart);	
 		
-		existingEntries.push(cnt);
+		itemList=JSON.parse(localStorage.getItem("cart"));
+		if(itemList!=null){
+			getCart();
+		}	
 	} 
+	
+	function getCart(){
+		var itemList=JSON.parse(localStorage.getItem("cart"));
+		var tag = "";
+		var totalPrice = 0;
+		for(i=0; i<itemList.length; i++){
+			tag += 
+				'<li class="cartItem">'+
+					'<div class="row">'+
+						'<div class="menuName">'+
+						JSON.parse(item[i])["name"]+
+						'</div>'+
+						'<div class="left">'+
+							'<a class="btn del-menu">삭제</a>'+
+							'<span class="orderPrice">'+
+							JSON.parse(item[i])["price"]+
+							'</span>'+
+						'</div>'+
+						'<div class="right">'+
+							'<a onclick=" modifyQty(this, 1)" style="cursor:pointer" >+</a>'+
+							'<span class="orderQuantity"><input type="number" class="qty" value='+JSON.parse(item[i])["quantity"]+'> </span>'+
+							'<a onclick=" modifyQty(this, -1)" style="cursor:pointer">-</a>'+	
+						'</div>'+
+					'</div>'+
+				'</li>';
+				
+			totalPrice += JSON.parse(item[i])["price"];
+		}
+		
+		
+		$("#cartListUl").html(tag);
+		$("#total").html("총 합계 : "+totalPrice+ " 원");
+	}
+	
+	function paymentForOrder(){
+			
+		
+
+			$.ajax({
+				type : "post",
+				async : false,
+				url : "./paymentForOrder.do",
+				data : {},
+				dataType : "text",
+				success : function(result,textStatus){
+					if(result == 1){ // 결제페이지로 넘어감!
+						location.href="";
+					} else {
+						location.href="";
+					}
+				}, 
+				error:function(data,textStatus){
+					console.log(data);
+					alert("에러가 발생했슈");
+				}
+			}); // $ajax()
+		
+	}	
+
+	
 </script>
 <body>
 	<!-- 플로팅 배너 -->
-	<div class="cart"> 
+	<!-- <div class="cart">  --> 
 		<h1>장바구니</h1>
-		<form action="order.do" method="post" name="fr">
 			<div id = "cartDiv">
-			<ul class="cartList">
-				<li class="cartItem">
-					<div class="row">
-						<div class="menuName">
-						</div>
-						<div class="left">
-							<a class="btn del-menu">삭제</a>
-							<span class="orderPrice"></span>
-						</div>
-						<div class="right">
-							<a onclick=" modifyQty(this, 1)" style="cursor:pointer" >+</a>
-							<span class="orderQuantity"><input type="number"> </span>
-							<a onclick=" modifyQty(this, -1)" style="cursor:pointer">-</a>	
-						</div>
-						
-					</div>
-				</li>
-			</ul>
+				<ul id="cartListUl" class="cartList">
+				</ul>
 			</div>
 			<hr>
-	    	<h1>총 수량 : 원</a></h1>
-	    	<h1>총 금액 : 원</a></h1>
-	    <input type="submit" value="주문하기">
-	    </form>
-	</div>
-
+	    	<h1 id="total"></h1>
+	    <input type="button" value="주문하기" onclick="paymentForOrder();">
+	<!-- </div> -->
 
 	<div id="mainDiv">
 		<h1>store.jsp</h1>
@@ -173,9 +246,9 @@
 									<input type="hidden" class="name" value="${menu.name}">
 									<input type="hidden" class="price" value="${menu.price}">
 									<a onclick=" modifyQty(this, 1)" style="cursor:pointer" >+</a>
-									<input type="number" id="quantity" name="quantity" class="qty" min="0" value="0" type="text">
+									<input type="number" id="quantity" name="quantity" class="qty" min="0" value="1" type="text">
 									<a onclick=" modifyQty(this, -1)" style="cursor:pointer">-</a>
-									<input type="button" type="button" id="tbtn" value="주문표에 추가" onclick="addToCart(this)"></button>
+									<input type="button" type="button" id="tbtn" value="주문표에 추가" onclick="addToCartStorage(this)"></button>
 							</td>
 						</c:if>
 					</c:forEach>
