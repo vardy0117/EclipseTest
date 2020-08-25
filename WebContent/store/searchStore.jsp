@@ -32,7 +32,7 @@
 		<h3>sessionScope.orderSido : ${sessionScope.orderSido }</h3>
 		<h1>위의 데이터로 리스트 보여주기</h1>
 		
-		<a href="./Store.do?storeNo=1"> 경로=./Store.do?storeNo=1 -> 1번가게로 이동</a>
+		<a href="./Store.do?storeNo=100"> 경로=./Store.do?storeNo=100 -> 100번가게로 이동</a>
 
 		<br>
 	<p>----------------------------------------------------------------------------------------</p>

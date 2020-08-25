@@ -50,14 +50,16 @@
 		width: 40px;
 	}
 	
+	.cartList li {
+		list-style-type : none;
+	}
+	
 </style>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>
 <script>
 	  
 	 function toggle(category_menu){
-		  
-			// $("#tbtn").attr(alt)=="show")
 			 $("#"+category_menu).css("display","block");
 	 }
 	 
@@ -70,24 +72,28 @@
 	 }
  
 	var cnt=0;
-	function addToCart(){
+	var item = new Array();
+	
+	function addToCart(element){
 		cnt ++;
-		name=document.getElementById("name").value;
-		price=document.getElementById("price").value;
-		quantity=document.getElementById("quantity").value;
-		orderPrice = price*quantity;
+		var name=element.parentNode.querySelector(".name").value;
+		var basePrice=element.parentNode.querySelector(".price").value;
+		var quantity=element.parentNode.querySelector(".qty").value;
+		var price = price*quantity;
 		
 		var orderMenu = {
 			 name:name,
-			 price:price,
+			 basePrice:basePrice,
 			 quantity:quantity,
-			 total:total
+			 price:price
 			}
 		
 		var json = JSON.stringify(orderMenu)
+		item.push(json);
 		
-		localStorage.setItem('orderMenu',json);
-		$("#cartDiv").apeen()
+		localStorage.setItem('item',item);
+		
+		existingEntries.push(cnt);
 	} 
 </script>
 <body>
@@ -96,16 +102,18 @@
 		<h1>장바구니</h1>
 		<form action="order.do" method="post" name="fr">
 			<div id = "cartDiv">
-			<ul class="cartlIST">
+			<ul class="cartList">
 				<li class="cartItem">
 					<div class="row">
 						<div class="menuName">
-							
 						</div>
 						<div class="left">
 							<a class="btn del-menu">삭제</a>
-							<a onclick=" modifyQty(this, 1)" style="cursor:pointer" >+</a>
 							<span class="orderPrice"></span>
+						</div>
+						<div class="right">
+							<a onclick=" modifyQty(this, 1)" style="cursor:pointer" >+</a>
+							<span class="orderQuantity"><input type="number"> </span>
 							<a onclick=" modifyQty(this, -1)" style="cursor:pointer">-</a>	
 						</div>
 						
@@ -155,16 +163,19 @@
 					<%-- <fmt:parseNumber var="num" value="${menu.level div 10}" type="number" integerOnly="true"/> --%>
 						<c:if test="${menu.category==category_}">
 				 		<tr id="${category_}" style="display:none;" name="${category_}">
-							<td> ${menu.image} | ${menu.name} </td>
+							<td>	
+								<span> ${menu.image} </span> |
+								<span class="name"> ${menu.name} </span>
+							</td class="basePrice">	
 							<td> ${menu.price} </td>
 							<td>
 									<%-- <input type="hidden" name="level" value="${menu.level}"> --%>
-									<input type="hidden" id="name" name="name" value="${menu.name}">
-									<input type="hidden" id="price" name="price" value="${menu.price}">
+									<input type="hidden" class="name" value="${menu.name}">
+									<input type="hidden" class="price" value="${menu.price}">
 									<a onclick=" modifyQty(this, 1)" style="cursor:pointer" >+</a>
 									<input type="number" id="quantity" name="quantity" class="qty" min="0" value="0" type="text">
 									<a onclick=" modifyQty(this, -1)" style="cursor:pointer">-</a>
-									<input type="button" type="button" id="tbtn" value="주문표에 추가" onclick="addToCart()"></button>
+									<input type="button" type="button" id="tbtn" value="주문표에 추가" onclick="addToCart(this)"></button>
 							</td>
 						</c:if>
 					</c:forEach>
