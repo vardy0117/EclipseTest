@@ -313,7 +313,7 @@ public class FrontController extends HttpServlet {
 
 			// store.GetStore((String) request.getSession().getAttribute("orderSido"));
 			System.out.println("SearchStore 프론트 컨트롤러 -> 값가져오기 테스트 " + storelist.toString());
-			System.out.println("주소 변경 : " + request.getSession().getAttribute("orderSido"));
+			System.out.println("주소 시도  : " + request.getSession().getAttribute("orderSido"));
 			forward = new ActionForward();
 			forward.setView("index.jsp?center=store/searchStore.jsp");
 			forward.execute(request, response);

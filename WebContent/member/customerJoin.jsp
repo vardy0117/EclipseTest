@@ -107,14 +107,14 @@
 	
 	function checkData(){
 		if(document.fr.emailId.value == ""){
-			$("#emailChkMsg").text("email 이름을 입력해 주세요");
+			$("#emailChkMsg").text("email �대��� ���ν�� 二쇱�몄��");
 			$("#emailChkMsg").css("color","red");
 	    	document.fr.emailId.focus();
 	    	return false;
 	 	}		
 
 		if(document.fr.emailServer.value == ""){
-			$("#emailChkMsg").text("email 주소를 선택해 주세요");
+			$("#emailChkMsg").text("email 二쇱��瑜� ������ 二쇱�몄��");
 			$("#emailChkMsg").css("color","red");
 	    	document.fr.emailServer.focus();
 	    	return false;
@@ -131,28 +131,28 @@
 		}	
 			
 		if(document.fr.nickname.value == ""){
-			$("#nicknameChkMsg").text("닉네임을 입력해 주세요");
+			$("#nicknameChkMsg").text("���ㅼ���� ���ν�� 二쇱�몄��");
 			$("#nicknameChkMsg").css("color","red");
 		   	document.fr.nickname.focus();
 		   	return false;
 		}
 		 	
 		if(document.fr.phone.value == ""){
-			$("#phoneChkMsg").text("연락처를 입력해 주세요");
+			$("#phoneChkMsg").text("�곕�쎌�瑜� ���ν�� 二쇱�몄��");
 			$("#phoneChkMsg").css("color","red");
 		   	document.fr.phone.focus();
 		   	return false;
 		}
 		 	
 		 if(document.fr.roadAddress.value == ""){
-		 	$("#roadAddressChkMsg").text("주소를 입력해주세요");
+		 	$("#roadAddressChkMsg").text("二쇱��瑜� ���ν�댁＜�몄��");
 		 	$("#roadAddressChkMsg").css("color","red");
 		   	document.fr.roadAddress.focus();
 		   	return false;
 		 }
 		 	
 		 if(document.fr.detailAddress.value == ""){
-		 	$("#detailAddressChkMsg").text('상세주소를 입력하세요 없을 시 \"없음\"이라고 입력해주세요');
+		 	$("#detailAddressChkMsg").text('���몄＜��瑜� ���ν���몄�� ���� �� \"����\"�대�쇨� ���ν�댁＜�몄��');
 		 	$("#detailAddressChkMsg").css("color","red");
 		   	document.fr.detailAddress.focus();
 		   	return false;
@@ -170,8 +170,8 @@
 		}
 	}
 
-	var usableMsg="사용 가능한 계정입니다!";
-	var notuseableMsg="이미 가입된 계정입니다!";
+	var usableMsg="�ъ�� 媛��ν�� 怨���������!";
+	var notuseableMsg="�대�� 媛����� 怨���������!";
 	
 	function emailCheck(){
 		readyEmailCheck();
@@ -196,7 +196,7 @@
 				}, 
 				error:function(data,textStatus){
 					console.log(data);
-					alert("에러가 발생했슈");
+					alert("���ш� 諛�������");
 				}
 			}); // $ajax()
 		} // if
@@ -206,11 +206,11 @@
 		$("#emailChkMsg").html("<img src='./images/loading.gif' width='20' height='20' stye='display: block; margin: 0px auto;'>")
 	} 
 		
-	var pwChkSuccessMsg="비밀 번호 확인 완료!";
+	var pwChkSuccessMsg="鍮�諛� 踰��� ���� ��猷�!";
 	
 	function passwordCheck(){
 		if(document.fr.password.value ==""){
-			$("#passwordChkMsg").text("비밀번호를 입력해주세요!");
+			$("#passwordChkMsg").text("鍮�諛�踰��몃�� ���ν�댁＜�몄��!");
 			$("#passwordChkMsg").css("color", "red");
 			if(document.fr.password2.value ==""){
 				$("#password2ChkMsg").text("");
@@ -223,10 +223,10 @@
 		} else if(document.fr.password.value !=""){
 			$("#passwordChkMsg").text("");
 			if(document.fr.password2.value ==""){
-				$("#password2ChkMsg").text("비밀번호를 한 번 더 입력해주세요!");
+				$("#password2ChkMsg").text("鍮�諛�踰��몃�� �� 踰� �� ���ν�댁＜�몄��!");
 				$("#password2ChkMsg").css("color", "red");
 			} else if(document.fr.password.value != document.fr.password2.value){
-		 		$("#password2ChkMsg").text("비밀번호가 다릅니다.");
+		 		$("#password2ChkMsg").text("鍮�諛�踰��멸� �ㅻ�����.");
 		 		$("#password2ChkMsg").css("color", "red");
 			} else if (document.fr.password.value == document.fr.password2.value) {
 				$("#password2ChkMsg").text(pwChkSuccessMsg);
@@ -241,37 +241,37 @@
     function execDaumPostcode() {
         new daum.Postcode({
             oncomplete: function(data) {
-                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+                // �������� 寃���寃곌낵 ��紐⑹�� �대┃������ �ㅽ���� 肄���瑜� ���깊���� 遺�遺�.
 
-                // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
-                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-                var roadAddr = data.roadAddress; // 도로명 주소 변수
-                var extraRoadAddr = ''; // 참고 항목 변수
+                // ��濡�紐� 二쇱���� �몄� 洹�移��� �곕�� 二쇱��瑜� ��������.
+                // �대�ㅼ�ㅻ�� 蹂���媛� 媛��� ���� 寃쎌�곗�� 怨듬갚('')媛��� 媛�吏�誘�濡�, �대�� 李멸����� 遺�湲� ����.
+                var roadAddr = data.roadAddress; // ��濡�紐� 二쇱�� 蹂���
+                var extraRoadAddr = ''; // 李멸� ��紐� 蹂���
                 var bname = data.bname;              
          
                 //var cutaddress2 =  address.substring(0,3);
-                //alert("자른 주소2  : " +cutaddress2);
+                //alert("��瑜� 二쇱��2  : " +cutaddress2);
 
-               // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+               // 踰�����紐��� ���� 寃쎌�� 異�媛�����. (踰���由щ�� ����)
+                // 踰������� 寃쎌�� 留�吏�留� 臾몄��媛� "��/濡�/媛�"濡� ������.
+                if(data.bname !== '' && /[��|濡�|媛�]$/g.test(data.bname)){
                     extraRoadAddr += data.bname;
                 }
                 
-                if(data.sigungu !== '' && /[동|로|가]$/g.test(data.bname)){
+                if(data.sigungu !== '' && /[��|濡�|媛�]$/g.test(data.bname)){
                     extraRoadAddr += data.bname;
                 }
  
-                // 건물명이 있고, 공동주택일 경우 추가한다.
+                // 嫄대Ъ紐��� ��怨�, 怨듬��二쇳���� 寃쎌�� 異�媛�����.
                 if(data.buildingName !== '' && data.apartment === 'Y'){
                    extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
                 }
-                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                // ������ 李멸���紐⑹�� ���� 寃쎌��, 愿��멸�吏� 異�媛��� 理�醫� 臾몄���댁�� 留�����.
                 if(extraRoadAddr !== ''){
                     extraRoadAddr = ' (' + extraRoadAddr + ')';
                 }
 
-                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                // �고�몃��몄�� 二쇱�� ��蹂대�� �대�� ������ �ｋ����.
                 document.getElementById('roadAddress').value = roadAddr;
                 document.getElementById('bname').value = bname;
                 document.fr.sido.value = data.sido;
@@ -284,16 +284,16 @@
 
 	<div id="mainDiv"> 
 		<div id="formDiv">
-			<h1 style="text-align: center;">일반 회원 가입</h1>
+			<h1 style="text-align: center;">�쇰� ���� 媛���</h1>
 			<form action="./CustomerJoinAction.do" id="join" method="post" name="fr">
 				<table>
 					<tr>
-						<td class="td_left">이메일</td>
+						<td class="td_left">�대���</td>
 						<td class="td_right">
-							<input class="textBox" type="text" name="emailId" size="10" placeholder="이메일 주소"> @
+							<input class="textBox" type="text" name="emailId" size="10" placeholder="�대��� 二쇱��"> @
 							<input class="textBox" type="text" name="emailServer" onfocusout="emailCheck()"/>
 							<select id="emailServerSelBox" name="emailServerSelBox" onchange="emailAddress_Change()" onfocusout="emailCheck()"> 
-								<option value="">직접 입력</option>
+								<option value="">吏��� ����</option>
 								<option value="naver.com">naver.com</option>
 								<option value="google.com">google.com</option>
 								<option value="hanmail.net">hanmail.net</option>
@@ -302,31 +302,31 @@
 					</tr>
 					<tr>
 						<td class="td_left"></td>
-						<td class="td_right"><span id=emailChkMsg>　</span></td>
+						<td class="td_right"><span id=emailChkMsg>��</span></td>
 					</tr>
 					<tr>
-						<td class="td_left">비밀번호</td>
+						<td class="td_left">鍮�諛�踰���</td>
 						<td class="td_right">
 							<input class="textBox" type="password" id="password" name="password" onfocusout="passwordCheck()">
 							<span id=passwordChkMsg></span>
 						</td>
 					</tr>
 					<tr>
-						<td class="td_left">비밀번호 확인</td>
+						<td class="td_left">鍮�諛�踰��� ����</td>
 						<td class="td_right">
 							<input class="textBox" type="password" id="password2" name="password2" class="password2" onfocusout="passwordCheck()">
 							<span id=password2ChkMsg></span>
 						</td>
 					</tr>
 					<tr>
-						<td class="td_left">닉네임</td>
+						<td class="td_left">���ㅼ��</td>
 						<td class="td_right">
 							<input class="textBox" type="text" id="nickname" name="nickname" onfocusout="if(this.value!=''){document.getElementById('nicknameChkMsg').innerText='';}">
 							<span id=nicknameChkMsg></span>
 						</td>
 					</tr>
 					<tr>
-						<td class="td_left">연락처</td>
+						<td class="td_left">�곕�쎌�</td>
 						<td class="td_right">
 							<select id="phoneFront" name="phoneFront"> 
 								<option value="010">010</option>
@@ -335,14 +335,14 @@
 								<option value="017">017</option>
 								<option value="019">019</option>
 							</select>
-							<input class="textBox" type="text" id="phone" name="phone" placeholder="숫자만 입력하세요." numberOnly>
+							<input class="textBox" type="text" id="phone" name="phone" placeholder="�レ��留� ���ν���몄��." numberOnly>
 							<span id=phoneChkMsg></span>
 						</td>
 					</tr>
 					<tr>
-						<td class="td_left">주소</td>
+						<td class="td_left">二쇱��</td>
 						<td class="td_right">
-							<input class="textBox" type="text" id="roadAddress" name="roadAddress" size="50" placeholder="클릭하여 주소검색" onclick="execDaumPostcode()" readOnly> 
+							<input class="textBox" type="text" id="roadAddress" name="roadAddress" size="50" placeholder="�대┃���� 二쇱��寃���" onclick="execDaumPostcode()" readOnly> 
 							<span id=roadAddressChkMsg></span>
 						</td>
 					</tr>
@@ -350,26 +350,26 @@
 						<td class="td_left"></td>
 						<td class="td_right">
 							<span id="guide" style="color:#999;display:none"></span>
-							<input class="textBox" type="text" id="detailAddress"  name="detailAddress" size="50" placeholder="상세 주소 입력">
+							<input class="textBox" type="text" id="detailAddress"  name="detailAddress" size="50" placeholder="���� 二쇱�� ����">
 							<br><span id=detailAddressChkMsg></span>
 						</td>
 					</tr>
 					<tr>
 						<td colspan="2" style="text-align: center;">
-							<input type="checkbox"  id="agreeAD" name="agreeAD" class="agree" value="T"> 이메일로 광고 수신 여부
+							<input type="checkbox"  id="agreeAD" name="agreeAD" class="agree" value="T"> �대��쇰� 愿�怨� ���� �щ�
 						</td>
 					</tr>
 					<tr>
 						<td colspan="2" style="text-align:center;">
 							<br>
-							<input class="btn" type="submit" id="sbtn" value="회원가입" class="submit">
-							<input class="btn" type="reset" id="rbtn" value="다시입력" class="cancel">
+							<input class="btn" type="submit" id="sbtn" value="����媛���" class="submit">
+							<input class="btn" type="reset" id="rbtn" value="�ㅼ������" class="cancel">
 						</td>
 					</tr>
 					
 				</table>
-				<input type="hidden" id="bname" name="bname" class="bname" size="30" placeholder="배달희망지역 ex) 장전동">
-				<input type="hidden" name="sido"> <!-- 시, 도 -->
+				<input type="hidden" id="bname" name="bname" class="bname" size="30" placeholder="諛곕�ы�щ�吏��� ex) �μ����">
+				<input type="hidden" name="sido"> <!-- ��, �� -->
 			</form>
 		</div>
 	</div>
