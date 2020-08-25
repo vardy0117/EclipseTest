@@ -43,8 +43,9 @@
 
 	 <p>----------------------------------------------------------------------------------------</p>
 	
-			
 		<c:forEach var="bean" items="${storelist}">
+		<a onclick="location.href='Store.do?storeNo=${bean.storeNo}'">	
+		
 
 				
 			
@@ -65,8 +66,8 @@
 			
 				
 				
+		</a>
 		</c:forEach>
-
 
 				<c:set var="area" value="${storelist}" /> 
 				<c:if test="${area eq '[]' }">
