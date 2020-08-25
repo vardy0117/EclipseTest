@@ -15,6 +15,21 @@
 		margin: 0 auto;
 		margin-top: 80px;
 		position: relative;
+		padding: 50px;
+	}
+	
+	#formDiv {
+		width: 650px;
+	    height: 600px;
+	    margin: 0 auto;
+	    border: 2px solid #c7c7c7;
+	    border-radius: 15px;
+	    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24); 
+	}
+	
+	#formDiv table {
+		width: 560px;
+		margin: 0 auto;
 	}
 </style>
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
@@ -80,197 +95,200 @@
 </head>
 <body>
 	<div id="mainDiv">
-		./ceoStore/addStore.jsp
 		
-		<form action="insertStoreAction.do"  method="post" enctype="multipart/form-data" name="fr">
-			<table>
-				<tr>
-					<td>가게명</td>
-					<td>
-						<input type="text" name="name">
-					</td>
-				</tr>
-				<tr>
-					<td>대표이미지</td>
-					<td>
-						<input type="file" name="image"> 
-					</td>
-				</tr>
-				<tr>
-					<td>주소</td>
-					<td>
-						<input type="hidden" id="sample6_postcode" placeholder="우편번호">
-						<input type="text" id="sample6_address" placeholder="주소" name="roadAddress">
-						<input type="hidden" id="sample6_extraAddress" placeholder="참고항목" >
-						<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
-					</td>
-				</tr>
-				<tr>
-					<td></td>
-					<td>
-					<input type="text" id="sample6_detailAddress" placeholder="상세주소" name="detailAddress">
-					</td>
-				</tr>
-				<tr>
-					<td>카테고리 </td>
-					<td>
-						<select name="category" >
-							<option value="한식">한식</option>
-							<option value="중식">중식</option>
-							<option value="일식">일식</option>
-						</select>	  
-					</td>
-				</tr>
-				<tr>
-					<td>전화번호</td>
-					<td>
-						<select name="phone0">
-							<option value="직접입력">직접입력</option>
-							<option value="02">02</option>
-							<option value="051">051</option>
-							<option value="052">052</option>
-							<option value="053">053</option>
-							<option value="054">054</option>
-							<option value="055">055</option>
-							<option value="031">031</option>
-							<option value="032">032</option>
-							<option value="033">033</option>
-							<option value="041">041</option>
-							<option value="042">042</option>
-							<option value="043">043</option>
-							<option value="044">044</option>
-							<option value="061">061</option>
-							<option value="062">062</option>
-							<option value="063">063</option>
-							<option value="064">064</option>
-						</select>	  
-						<input type="text" name="phone1">
-						<input type="text" name="phone2">
+		<div id="formDiv">
+			<h1 style="text-align:center;">업체 등록</h1>
+			<form action="insertStoreAction.do"  method="post" enctype="multipart/form-data" name="fr">
+				<table>
+					<tr>
+						<td>가게명</td>
+						<td>
+							<input type="text" name="name">
+						</td>
+					</tr>
+					<tr>
+						<td>대표이미지</td>
+						<td>
+							<input type="file" name="image"> 
+						</td>
+					</tr>
+					<tr>
+						<td>주소</td>
+						<td>
+							<input type="hidden" id="sample6_postcode" placeholder="우편번호">
+							<input type="text" id="sample6_address" placeholder="주소" name="roadAddress">
+							<input type="hidden" id="sample6_extraAddress" placeholder="참고항목" >
+							<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
+						</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>
+						<input type="text" id="sample6_detailAddress" placeholder="상세주소" name="detailAddress">
+						</td>
+					</tr>
+					<tr>
+						<td>카테고리 </td>
+						<td>
+							<select name="category" >
+								<option value="한식">한식</option>
+								<option value="중식">중식</option>
+								<option value="일식">일식</option>
+							</select>	  
+						</td>
+					</tr>
+					<tr>
+						<td>전화번호</td>
+						<td>
+							<select name="phone0">
+								<option value="직접입력">직접입력</option>
+								<option value="02">02</option>
+								<option value="051">051</option>
+								<option value="052">052</option>
+								<option value="053">053</option>
+								<option value="054">054</option>
+								<option value="055">055</option>
+								<option value="031">031</option>
+								<option value="032">032</option>
+								<option value="033">033</option>
+								<option value="041">041</option>
+								<option value="042">042</option>
+								<option value="043">043</option>
+								<option value="044">044</option>
+								<option value="061">061</option>
+								<option value="062">062</option>
+								<option value="063">063</option>
+								<option value="064">064</option>
+							</select>	  
+							<input type="text" name="phone1">
+							<input type="text" name="phone2">
+						
+						</td>
+						
+					</tr>
+					<tr>
+						<td>영업시간</td>
+						<td>
+							<select name="opentime">
+								<option value="00시 ">00시</option>
+								<option value="01시 ">01시</option>
+								<option value="02시 ">02시</option>
+								<option value="03시 ">03시</option>
+								<option value="04시 ">04시</option>
+								<option value="05시 ">05시</option>
+								<option value="06시 ">06시</option>
+								<option value="07시 ">07시</option>
+								<option value="08시 ">08시</option>
+								<option value="09시 ">09시</option>
+								<option value="10시 ">10시</option>
+								<option value="11시 ">11시</option>
+								<option value="12시 ">12시</option>
+								<option value="13시 ">13시</option>
+								<option value="14시 ">14시</option>
+								<option value="15시 ">15시</option>
+								<option value="16시 ">16시</option>
+								<option value="17시 ">17시</option>
+								<option value="18시 ">18시</option>
+								<option value="19시 ">19시</option>
+								<option value="20시 ">20시</option>
+								<option value="21시 ">21시</option>
+								<option value="22시 ">22시</option>
+								<option value="23시 ">23시</option>
+							</select>~
+							<select name="closetime">
+								<option value="00시 ">00시</option>
+								<option value="01시 ">01시</option>
+								<option value="02시 ">02시</option>
+								<option value="03시 ">03시</option>
+								<option value="04시 ">04시</option>
+								<option value="05시 ">05시</option>
+								<option value="06시 ">06시</option>
+								<option value="07시 ">07시</option>
+								<option value="08시 ">08시</option>
+								<option value="09시 ">09시</option>
+								<option value="10시 ">10시</option>
+								<option value="11시 ">11시</option>
+								<option value="12시 ">12시</option>
+								<option value="13시 ">13시</option>
+								<option value="14시 ">14시</option>
+								<option value="15시 ">15시</option>
+								<option value="16시 ">16시</option>
+								<option value="17시 ">17시</option>
+								<option value="18시 ">18시</option>
+								<option value="19시 ">19시</option>
+								<option value="20시 ">20시</option>
+								<option value="21시 ">21시</option>
+								<option value="22시 ">22시</option>
+								<option value="23시 ">23시</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>배달가능지역</td>
+						<td>
+							<input type="text" name="areaTyping">
+							<button type="button" name="areaAddBtn">추가하기</button>
+							<input type="text" name="deliveryArea" readonly>
+						</td>
+					</tr>
+					<tr>
+						<td>가게한마디</td>
+						<td><textarea name="message"></textarea></td>
+					</tr>
+					<tr>
+						<td>사업자등록번호</td>
+						<td>
+							<input type="text" name="regNo">
+						</td>
+					</tr>
+				</table>
+				<hr>
+				<table id="menuTable">
+					<tr>
+						<th colspan=2">메뉴 추가하기<br>　</th>
+						<input type="hidden" value="1" id="menuCnt" name="menuCnt">
+					</tr>
 					
-					</td>
 					
-				</tr>
-				<tr>
-					<td>영업시간</td>
-					<td>
-						<select name="opentime">
-							<option value="00시 ">00시</option>
-							<option value="01시 ">01시</option>
-							<option value="02시 ">02시</option>
-							<option value="03시 ">03시</option>
-							<option value="04시 ">04시</option>
-							<option value="05시 ">05시</option>
-							<option value="06시 ">06시</option>
-							<option value="07시 ">07시</option>
-							<option value="08시 ">08시</option>
-							<option value="09시 ">09시</option>
-							<option value="10시 ">10시</option>
-							<option value="11시 ">11시</option>
-							<option value="12시 ">12시</option>
-							<option value="13시 ">13시</option>
-							<option value="14시 ">14시</option>
-							<option value="15시 ">15시</option>
-							<option value="16시 ">16시</option>
-							<option value="17시 ">17시</option>
-							<option value="18시 ">18시</option>
-							<option value="19시 ">19시</option>
-							<option value="20시 ">20시</option>
-							<option value="21시 ">21시</option>
-							<option value="22시 ">22시</option>
-							<option value="23시 ">23시</option>
-						</select>~
-						<select name="closetime">
-							<option value="00시 ">00시</option>
-							<option value="01시 ">01시</option>
-							<option value="02시 ">02시</option>
-							<option value="03시 ">03시</option>
-							<option value="04시 ">04시</option>
-							<option value="05시 ">05시</option>
-							<option value="06시 ">06시</option>
-							<option value="07시 ">07시</option>
-							<option value="08시 ">08시</option>
-							<option value="09시 ">09시</option>
-							<option value="10시 ">10시</option>
-							<option value="11시 ">11시</option>
-							<option value="12시 ">12시</option>
-							<option value="13시 ">13시</option>
-							<option value="14시 ">14시</option>
-							<option value="15시 ">15시</option>
-							<option value="16시 ">16시</option>
-							<option value="17시 ">17시</option>
-							<option value="18시 ">18시</option>
-							<option value="19시 ">19시</option>
-							<option value="20시 ">20시</option>
-							<option value="21시 ">21시</option>
-							<option value="22시 ">22시</option>
-							<option value="23시 ">23시</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td>배달가능지역</td>
-					<td>
-						<input type="text" name="areaTyping">
-						<button type="button" name="areaAddBtn">추가하기</button>
-						<input type="text" name="deliveryArea" readonly>
-					</td>
-				</tr>
-				<tr>
-					<td>가게한마디</td>
-					<td><textarea name="message"></textarea></td>
-				</tr>
-				<tr>
-					<td>사업자등록번호</td>
-					<td>
-						<input type="text" name="regNo">
-					</td>
-				</tr>
-			</table>
-			<hr>
-			<table id="menuTable">
-				<tr>
-					<th colspan=2">메뉴 추가하기</th>
-					<input type="hidden" value="1" id="menuCnt" name="menuCnt">
-				</tr>
-				
-				<tr>
-					<td>메뉴사진</td>
-					<td><input type="file" name="menu_image1"></td>
-				</tr>
-				<tr>
-					<td>카테고리</td>
-					<td>
-						<select name="menu_category1">
-							<option value="세트 메뉴">세트 메뉴</option>
-							<option value="주 메뉴">주 메뉴</option>
-							<option value="사이드 메뉴">사이드 메뉴</option>
-							<option value="음료/주류">음료/주류</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td>메뉴이름</td>
-					<td>
-						<input type="text" name="menu_name1">
-					</td>
-				</tr>
-				<tr>
-					<td>가격</td>
-					<td>
-						<input type="text" name="menu_price1">원
-					</td>
-				</tr>
-				<tr id="btn_tr">
-					<th colspan="2">
-						<button type="button" onclick="addMenuFnc()">메뉴 추가하기</button>
-					</th>
-				</tr>
-			</table>
-				
-				<input type="hidden" name="sido"  id="sido">  
-			    
-				<input type="submit" value="가게등록하기">
-		</form>
+					<tr>
+						<td>메뉴사진</td>
+						<td><input type="file" name="menu_image1"></td>
+					</tr>
+					<tr>
+						<td>카테고리</td>
+						<td>
+							<select name="menu_category1">
+								<option value="세트 메뉴">세트 메뉴</option>
+								<option value="주 메뉴">주 메뉴</option>
+								<option value="사이드 메뉴">사이드 메뉴</option>
+								<option value="음료/주류">음료/주류</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>메뉴이름</td>
+						<td>
+							<input type="text" name="menu_name1">
+						</td>
+					</tr>
+					<tr>
+						<td>가격</td>
+						<td>
+							<input type="text" name="menu_price1">원
+						</td>
+					</tr>
+					<tr id="btn_tr">
+						<th colspan="2">
+							<button type="button" onclick="addMenuFnc()">메뉴 추가하기</button>
+						</th>
+					</tr>
+				</table>
+					
+					<input type="hidden" name="sido"  id="sido">  
+				    
+					<input type="submit" value="가게등록하기">
+			</form>
+		</div>
 	</div>
 </body>
 
