@@ -4,4 +4,5 @@ encoding//src/net/ceo/action/CeoLoginAction.java=UTF-8
 encoding//src/net/customer/action/CustomerJoinAction.java=UTF-8
 encoding//src/net/customer/action/CustomerLoginAction.java=UTF-8
 encoding//src/net/customer/action/CustomerLogoutAction.java=UTF-8
+encoding//src/net/customer/db/CustomerDAO.java=UTF-8
 encoding/<project>=UTF-8

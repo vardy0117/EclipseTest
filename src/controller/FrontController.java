@@ -2,35 +2,37 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+
 import action.ActionForward;
 import action.AjaxAction;
 import net.ceo.action.CeoJoinAction;
 import net.ceo.action.CeoLoginAction;
-
 import net.ceo.action.CeoLogoutAction;
-
 import net.ceo.action.CeoModifyAction;
 import net.ceo.db.CeoBean;
 import net.ceo.db.CeoDAO;
-
 import net.customer.action.CustomerJoinAction;
 import net.customer.action.CustomerLoginAction;
 import net.customer.action.CustomerLogoutAction;
 import net.customer.action.CustomerModifyAction;
 import net.customer.db.CustomerBean;
 import net.customer.db.CustomerDAO;
-import net.order.action.GetStoreInfoAction;
-import net.order.action.GetStoreMenuAction;
-import net.order.action.OrderAction;
-
+import net.menu.action.MenuAction;
+import net.orderAction.GetStoreInfoAction;
+import net.orderAction.GetStoreMenuAction;
+import net.store.action.StoreAction;
+import net.store.db.StoreBean;
+import net.store.db.StoreDAO;
 
 @WebServlet("*.do")
 public class FrontController extends HttpServlet {
@@ -170,7 +172,6 @@ public class FrontController extends HttpServlet {
 			String customerNo = (String)request.getSession().getAttribute("customerNo");
 			CustomerDAO cDAO = new CustomerDAO();
 			CustomerBean cBean = cDAO.getCustomer(customerNo);
-			
 			if(password != null && cBean.getPassword().equals(password)){
 				forward = new ActionForward();
 				forward.setView("./CustomerModify.do");
@@ -250,7 +251,7 @@ public class FrontController extends HttpServlet {
 			
 			forward = new ActionForward();
 			forward.setRedirect(true);
-			forward.setView("index.jsp?center=member/ceoLogin.jsp");	
+			forward.setView("ceoIndex.jsp?center=member/ceoLogin.jsp");	
 			forward.execute(request, response);
 		}
 				
@@ -293,16 +294,28 @@ public class FrontController extends HttpServlet {
 
 		
 		if(command.equals("SearchStore.do")) {
+			StoreDAO store = new StoreDAO();
+
 			// 받은 값 : roadAddress / detailAddress / bname 
 			request.setCharacterEncoding("utf-8");
 			
 			request.getSession().setAttribute("orderRoadAddress", request.getParameter("roadAddress"));
 			request.getSession().setAttribute("orderDetailAddress", request.getParameter("detailAddress"));
 			request.getSession().setAttribute("orderBname", request.getParameter("bname"));
+			request.getSession().setAttribute("orderSido", request.getParameter("sido"));
+			
+			List<StoreBean> storelist = store.GetStore((String) request.getSession().getAttribute("orderSido"));
+			
+			
+			request.setAttribute("storelist", storelist);
+
+			// store.GetStore((String) request.getSession().getAttribute("orderSido"));
+			System.out.println("SearchStore 프론트 컨트롤러 -> 값가져오기 테스트 " + storelist.toString());
 			
 			forward = new ActionForward();
 			forward.setView("index.jsp?center=store/searchStore.jsp");
 			forward.execute(request, response);
+		
 		}
 		
 /*		if(command.equals("Store.do")) {
@@ -475,6 +488,30 @@ public class FrontController extends HttpServlet {
 				forward.execute(request, response);
 			}
 		}
+		
+		//Storeinsert
+		if(command.equals("insertStoreAction.do")){
+			forward = new ActionForward();
+			
+			request.setCharacterEncoding("utf-8");
+			String realFolder = getServletContext().getRealPath("/upload/store");
+			
+			int max = 1000 * 1024 * 1024;
+			
+			MultipartRequest multi = new MultipartRequest(request, realFolder, max, "utf-8", new DefaultFileRenamePolicy());
+			
+			StoreAction storeAction = new StoreAction();
+			int storeNo = storeAction.insertStore(request, response, multi);
+			
+			MenuAction menuAction = new MenuAction();
+			
+			
+			//int result =sDAO.insertStore(sbean);
+			
+			
+		}
+		
+		
 		
 	}
 

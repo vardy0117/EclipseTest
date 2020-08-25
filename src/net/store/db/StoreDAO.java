@@ -3,11 +3,23 @@ package net.store.db;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
+
+import org.apache.catalina.Store;
+
+import com.sun.javafx.fxml.BeanAdapter;
+
+
+import net.ceo.db.CeoBean;
+import net.menu.db.MenuBean;
 
 
 public class StoreDAO {
@@ -33,7 +45,7 @@ public class StoreDAO {
 			System.out.println("resourceClose! : " + e);
 		}
 	} // resourceClose()
-	
+	/***********************************************************************/
 	public StoreBean getStoreInfo(int storeNo) {
 		StoreBean storeInfo = new StoreBean();
 		
@@ -61,6 +73,7 @@ public class StoreDAO {
 				storeInfo.setOrderCount(rs.getString("orderCount"));
 				storeInfo.setDeliveryArea(rs.getString("deliveryArea"));
 				storeInfo.setRegNo(rs.getString("regNo"));
+				storeInfo.setSido(rs.getString("sido"));
 			 }
 			
 		} catch (Exception e) {
@@ -72,5 +85,98 @@ public class StoreDAO {
 		
 		return storeInfo;
 	}
+	/***********************************************************************/
+	//insertStore 메서드 
+	
+	public int insertStore(StoreBean sbean) {
+	
+		int result = 0;
+		
+		try {
+			 getConnection();
 
+			 sql="insert into store(ceoNo, name, roadAddress, detailAddress, category, phone, "
+			 		+ "storeHours, message, image, deliveryArea, regNo, sido) "
+			 			     + "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			 
+			 pstmt = con.prepareStatement(sql);
+			 
+			 pstmt.setString(1, sbean.getCeoNo());
+			 pstmt.setString(2, sbean.getName());
+			 pstmt.setString(3, sbean.getRoadAddress());
+			 pstmt.setString(4, sbean.getDetailAddress());
+			 pstmt.setString(5, sbean.getCategory());
+			 pstmt.setString(6, sbean.getPhone());
+			 pstmt.setString(7, sbean.getStoreHours());
+			 pstmt.setString(8, sbean.getMessage());
+			 pstmt.setString(9, sbean.getImage());
+			 pstmt.setString(10,sbean.getDeliveryArea());
+			 pstmt.setString(11, sbean.getRegNo());
+			 pstmt.setString(12, sbean.getSido());
+			 pstmt.executeUpdate();
+			 
+			 rs = pstmt.getGeneratedKeys();
+			 
+			 if(rs.next()) {
+				 result = rs.getInt(1);
+			 }
+			 
+			
+		} catch (Exception e){
+			System.out.println("insertStore inner Error : " + e);
+		} finally {
+			resourceClose();
+		}
+		
+		
+		return result;
+		
+		
+	} // method
+	
+	/***********************************************************************/
+	public List<StoreBean> GetStore(String sido){ // 스토어 정보 가져오기
+		List<StoreBean> storelist = new ArrayList<StoreBean>();
+		
+		try {
+			 con = getConnection();
+			 
+			 sql = "select * from store where sido=?";
+			 
+			 pstmt = con.prepareStatement(sql);
+			 
+			 pstmt.setString(1, sido);
+			 System.out.println("입려받은 Store DAO (sido) : " + sido);
+			 
+			 rs = pstmt.executeQuery();
+			 
+			 while(rs.next()){
+				 StoreBean mBean = new StoreBean();
+					 mBean.setStoreNo(rs.getString("storeNo"));
+					 mBean.setCeoNo(rs.getString("ceoNo"));
+					 mBean.setName(rs.getString("name"));
+					 mBean.setRoadAddress(rs.getString("roadAddress"));
+					 mBean.setCategory(rs.getString("category"));
+					 mBean.setStoreHours(rs.getString("storeHours"));
+					 mBean.setSido(rs.getString("sido"));
+					 mBean.setImage(rs.getString("image"));
+					 mBean.setMessage(rs.getString("message"));
+					 System.out.println("***스토어 쿼리 완료***");
+					 // 나머지는 다음에 가져오는 걸로 ^^;;;;;;;;;;;;;;;;;;;;;;;;;
+					 storelist.add(mBean);
+			 }
+			
+		} catch (Exception e) {
+			System.out.println("스토어 정보가져오기에서 오류 발생 : "+e);
+		} finally {
+			resourceClose();
+		}
+		
+		
+		
+		return storelist;
+		
+	}
+	/***********************************************************************/
+	
 }

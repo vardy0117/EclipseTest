@@ -83,7 +83,7 @@
                 var roadAddr = data.roadAddress; // 도로명 주소 변수
                 var extraRoadAddr = ''; // 참고 항목 변수
                 var bname = data.bname
-
+				var sido = data.sido
                 // 법정동명이 있을 경우 추가한다. (법정리는 제외)
                 // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
                 if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
@@ -101,6 +101,7 @@
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
                 document.getElementById('roadAddress').value = roadAddr;
                 document.getElementById('bname').value = bname;
+                document.getElementById('sido').value = sido;
             }
         }).open();
     } 
@@ -136,9 +137,10 @@
 						<td></td>
 						<td><input class="textBox" type="text" id="detailAddress"  name="detailAddress" class="detailAddress" size="50" placeholder="상세 주소 입력" value="${cBean.detailAddress}"></td>		
 					</tr>
-					<input type="hidden" id="bname" name="bname">
+					<input type="hidden" id="bname" name="bname" value="${cBean.bname }">
 					<input type="hidden" id="customerNo" name="customerNo" value="${cBean.customerNo }">
 					<input type="hidden" id="oldPass" name="oldPass" value="${cBean.password}">
+					<input type="hidden" id="sido" name="sido" value="${cBean.sido }">
 					<tr>
 						<td colspan="2">
 							<br>

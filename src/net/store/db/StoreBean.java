@@ -16,6 +16,7 @@ public class StoreBean {
 	private String orderCount;  
 	private String deliveryArea;
 	private String regNo;
+	private String sido;
 	
 	
 	public String getStoreNo() {
@@ -103,6 +104,21 @@ public class StoreBean {
 	public void setRegNo(String regNo) {
 		this.regNo = regNo;
 	}
+	public String getSido() {
+		return sido;
+	}
+	public void setSido(String sido) {
+		this.sido = sido;
+	}
+	@Override
+	public String toString() {
+		return "StoreBean [storeNo=" + storeNo + ", ceoNo=" + ceoNo + ", name=" + name + ", roadAddress=" + roadAddress
+				+ ", detailAddress=" + detailAddress + ", category=" + category + ", phone=" + phone + ", storeHours="
+				+ storeHours + ", message=" + message + ", image=" + image + ", points=" + points + ", orderCount="
+				+ orderCount + ", deliveryArea=" + deliveryArea + ", regNo=" + regNo + ", sido=" + sido + "]";
+	}
+	
+	
 	
 	
 	

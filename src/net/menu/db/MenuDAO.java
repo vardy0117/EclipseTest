@@ -97,5 +97,8 @@ public class MenuDAO {
 	}
 
 
+	public void insertMenus(List<MenuBean> mList) {
+		
+	}
 
 }

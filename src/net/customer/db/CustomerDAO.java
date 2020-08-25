@@ -29,7 +29,7 @@ public class CustomerDAO {
 			if(pstmt!=null) pstmt.close();
 			if(con!=null) con.close();
 		} catch (Exception e) {
-			System.out.println("�ڿ� ���� ����! : " + e);
+			System.out.println("占쌘울옙 占쏙옙占쏙옙 占쏙옙占쏙옙! : " + e);
 		}
 	} // resourceClose()
 
@@ -51,7 +51,7 @@ public class CustomerDAO {
 				 result = "useable";			 				
 			 }
 		} catch (Exception e) {
-			System.out.println("joinCheckEmail�޼ҵ� ���ο��� ���� �߻� : " + e);
+			System.out.println("joinCheckEmail占쌨소듸옙 占쏙옙占싸울옙占쏙옙 占쏙옙占쏙옙 占쌩삼옙 : " + e);
 		} finally {
 			resourceClose();
 		}
@@ -76,7 +76,7 @@ public class CustomerDAO {
 				 result = "useable";			 				
 			 }
 		} catch (Exception e) {
-			System.out.println("joinCheckPhone�޼ҵ� ���ο��� ���� �߻� : " + e);
+			System.out.println("joinCheckPhone占쌨소듸옙 占쏙옙占싸울옙占쏙옙 占쏙옙占쏙옙 占쌩삼옙 : " + e);
 		} finally {
 			resourceClose();
 		}
@@ -90,10 +90,10 @@ public class CustomerDAO {
 		try {
 			 getConnection();
 
-			 sql="insert into customer(email, password, nickname, roadAddress, detailAddress, bname, phone, agreeAD) "
-			 			     + "values(?, ?, ?, ?, ?, ?, ?,?)";
+			 sql="insert into customer(email, password, nickname, roadAddress, detailAddress, bname, phone, agreeAD, sido) "
+			 			     + "values(?, ?, ?, ?, ?, ?, ?,?,?)";
 
-/*********��ȣ ��� ����**************/			 
+/*********占쏙옙호 占쏙옙占� 占쏙옙占쏙옙**************/			 
 /* sql="insert into customer(customerNo, email, password, nickname, address, bname, phone, agreeAD) "
 	 			     + "values(null, ?, hex(aes_encrypt(?,?)), ?, ?, ?, ?, ?)";
 */
@@ -110,8 +110,9 @@ public class CustomerDAO {
 			 pstmt.setString(6, cb.getBname());
 			 pstmt.setString(7, cb.getPhone());
 			 pstmt.setString(8, cb.getAgreeAD());
+			 pstmt.setString(9, cb.getSido());
 			 
-			/*// ��ȣȭ ����
+			/*// 占쏙옙호화 占쏙옙占쏙옙
 			 pstmt.setString(1, cb.getEmail());
 			 pstmt.setString(2, cb.getEmail());
 			 pstmt.setString(3, cb.getPassword());
@@ -128,7 +129,7 @@ public class CustomerDAO {
 			 }
 			
 		} catch (Exception e){
-			System.out.println("insertCustomer�޼ҵ� ���ο��� ���� �߻� : " + e);
+			System.out.println("insertCustomer 오류 발생: " + e);
 		} finally {
 			resourceClose();
 		}
@@ -136,7 +137,7 @@ public class CustomerDAO {
 		return false;
 	} // method
 /***********************************************************************************************/
-	public boolean CheckCustomer(CustomerBean cb) { // �α��� �˻� 
+	public boolean CheckCustomer(CustomerBean cb) { // 占싸깍옙占쏙옙 占싯삼옙 
 	
 		boolean result = false;
 		
@@ -158,7 +159,7 @@ public class CustomerDAO {
 			 rs = pstmt.executeQuery();		 
 
 			if (rs.next()) {
-				System.out.println("�α��� ����");
+				System.out.println("占싸깍옙占쏙옙 占쏙옙占쏙옙");
 				result = true;
 
 			}
@@ -167,7 +168,7 @@ public class CustomerDAO {
 
 			
 		} catch (Exception e){
-			System.out.println("CheckCustomer�޼ҵ� ���ο��� ���� �߻� : " + e);
+			System.out.println("CheckCustomer占쌨소듸옙 占쏙옙占싸울옙占쏙옙 占쏙옙占쏙옙 占쌩삼옙 : " + e);
 		} finally {
 			resourceClose();
 		}
@@ -183,7 +184,7 @@ public class CustomerDAO {
 			String sql2 = "select * from customer where email=?";
 			pstmt = con.prepareStatement(sql2);
 			pstmt.setString(1, email);
-			System.out.println("sql2 CustomerInformation ���� ����");
+			System.out.println("sql2 CustomerInformation 占쏙옙占쏙옙 占쏙옙占쏙옙");
 			rs = pstmt.executeQuery();
 			rs.next();
 			/************************************************************************************/
@@ -192,10 +193,10 @@ public class CustomerDAO {
 			cb.setCustomerNo(rs.getString("customerNo"));
 
 			/************************************************************************************/
-			// �α��ν� ���� select �ؼ� ��������
+			// 占싸깍옙占싸쏙옙 占쏙옙占쏙옙 select 占쌔쇽옙 占쏙옙占쏙옙占쏙옙占쏙옙
 			System.out.println("-----------------------CustomerInformation ------------------------------------");
-			System.out.println("customer dao���� ������ �г��� :  " + cb.getNickname());
-			System.out.println("customer dao���� ������ customerNo :  " + cb.getCustomerNo());
+			System.out.println("customer dao占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 占싻놂옙占쏙옙 :  " + cb.getNickname());
+			System.out.println("customer dao占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 customerNo :  " + cb.getCustomerNo());
 			
 			
 		} catch (Exception e) {
@@ -227,6 +228,7 @@ public class CustomerDAO {
 				cBean.setPhone(rs.getString(8));
 				cBean.setGrad(rs.getString(9));
 				cBean.setAgreeAD(rs.getString(10));
+				cBean.setSido(rs.getString(11));
 			}
 			
 		} catch (Exception e) {
@@ -241,10 +243,9 @@ public class CustomerDAO {
 	// update Customer
 	public int updateMember(CustomerBean cBean){
 		int result = 0;
-		System.out.println("DAO로 이동");
 		try {
 			con = getConnection();
-			sql="update customer set password=?,nickname=?,phone=?,roadAddress=?,detailAddress=? "
+			sql="update customer set password=?,nickname=?,phone=?,roadAddress=?,detailAddress=?,bname=?,sido=? "
 					+ "where customerNo=?";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setString(1, cBean.getPassword());
@@ -252,7 +253,9 @@ public class CustomerDAO {
 			pstmt.setString(3, cBean.getPhone());
 			pstmt.setString(4, cBean.getRoadAddress());
 			pstmt.setString(5, cBean.getDetailAddress());
-			pstmt.setString(6, cBean.getCustomerNo());
+			pstmt.setString(6, cBean.getBname());
+			pstmt.setString(7, cBean.getSido());
+			pstmt.setString(8, cBean.getCustomerNo());
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
