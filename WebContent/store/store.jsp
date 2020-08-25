@@ -70,15 +70,12 @@
 			 element.parentNode.querySelector(".qty").value--;
 		 }
 	 }
- 
-	var cnt=0;
+ 	
 	var item = new Array();
 	var cart = null;
 	localStorage.setItem("cart",cart);
 	
-	
 	function addToCartStorage(element){
-		cnt ++;
 		var name=element.parentNode.querySelector(".name").value;
 		var basePrice=parseInt(element.parentNode.querySelector(".price").value);
 		var quantity=parseInt(element.parentNode.querySelector(".qty").value);
@@ -94,7 +91,7 @@
 		var json = JSON.stringify(orderMenu);
 		
 		var itemList=JSON.parse(localStorage.getItem("cart"));
-
+		
 		if(itemList==null){
 			item.push(json);
 		} else {
@@ -133,16 +130,17 @@
 		var itemList=JSON.parse(localStorage.getItem("cart"));
 		var tag = "";
 		var totalPrice = 0;
+		
 		for(i=0; i<itemList.length; i++){
 			tag += 
-				'<li class="cartItem">'+
+				'<li class="cartListLi" id=food'+i+'>'+
 					'<div class="row">'+
-						'<div class="menuName">'+
+						'<div class="name">'+
 						JSON.parse(item[i])["name"]+
 						'</div>'+
 						'<div class="left">'+
 							'<a class="btn del-menu">삭제</a>'+
-							'<span class="orderPrice">'+
+							'<span class="price">'+
 							JSON.parse(item[i])["price"]+
 							'</span>'+
 						'</div>'+
@@ -157,20 +155,40 @@
 			totalPrice += JSON.parse(item[i])["price"];
 		}
 		
-		
 		$("#cartListUl").html(tag);
 		$("#total").html("총 합계 : "+totalPrice+ " 원");
 	}
 	
-	function paymentForOrder(){
-			
+	
+	function order(){
+		var cnt = $(".cartListLi").length;
+		console.log(cnt)
+		var cartList = new Array();
 		
-
-			$.ajax({
+		for(i=0; i<cnt; i++){
+			var name = $("#food"+i).querySelector(".name").value;		
+			var quantity = $("#food"+i).querySelector(".qty").value;
+			var price =  $("#food"+i).querySelector(".price").value;
+		
+			var menu = {
+					 name:name,
+					 quantity:quantity,
+					 price:price
+					}
+			
+			var json = JSON.stringify(menu);
+			
+			cartList.push(json);
+		}
+		
+		cart = JSON.stringify(cartList);
+		var storeNo="${storeNo}";
+			
+		$.ajax({
 				type : "post",
 				async : false,
-				url : "./paymentForOrder.do",
-				data : {},
+				url : "./order.do?storeNo="+storNo,
+				data : {"cart":cart},
 				dataType : "text",
 				success : function(result,textStatus){
 					if(result == 1){ // 결제페이지로 넘어감!
@@ -199,7 +217,7 @@
 			</div>
 			<hr>
 	    	<h1 id="total"></h1>
-	    <input type="button" value="주문하기" onclick="paymentForOrder();">
+	    <input type="button" value="주문하기" onclick="order();">
 	<!-- </div> -->
 
 	<div id="mainDiv">

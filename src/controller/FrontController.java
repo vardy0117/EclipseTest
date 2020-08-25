@@ -508,11 +508,18 @@ public class FrontController extends HttpServlet {
 			MenuAction menuAction = new MenuAction();
 			menuAction.insertStore(request, response, multi, storeNo);
 			
-			//int result =sDAO.insertStore(sbean);
-			
+			//int result =sDAO.insertStore(sbean);	
 			
 		}
 		
+		// insertOrderAction > payment.jsp
+		if(command.equals("order.do")){
+			request.setCharacterEncoding("utf-8");
+			
+			OrderAction action = new OrderAction();
+			
+			action.insertOrderList(request, response);
+		}
 		
 		
 	}
