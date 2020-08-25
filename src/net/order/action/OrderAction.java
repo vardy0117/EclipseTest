@@ -1,4 +1,4 @@
-package net.orderAction;
+package net.order.action;
 
 public class OrderAction {
 

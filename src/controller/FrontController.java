@@ -34,7 +34,6 @@ import net.store.action.StoreAction;
 import net.store.db.StoreBean;
 import net.store.db.StoreDAO;
 
-
 @WebServlet("*.do")
 public class FrontController extends HttpServlet {
        
@@ -334,6 +333,7 @@ public class FrontController extends HttpServlet {
 		if(command.equals("Store.do")) {
 			int storeNo = Integer.parseInt(request.getParameter("storeNo"));
 			
+			
 			try {
 				GetStoreInfoAction action1 = new GetStoreInfoAction();
 					action1.getStroeInfo(request, response, storeNo);
@@ -350,6 +350,22 @@ public class FrontController extends HttpServlet {
 			}
 			forward.execute(request, response);
 		}
+		
+		if(command.equals("Order.do")){
+			int storeNo = Integer.parseInt(request.getParameter("stroeNo"));
+			int customerNo= Integer.parseInt((String) request.getSession().getAttribute("customerNo"));
+			
+			try{
+				OrderAction action = new OrderAction();
+				//action.Order(request, response, storeNo, customerNo);
+				
+			} catch (Exception e){
+				e.printStackTrace();
+			}
+			forward.execute(request, response);
+		}
+		
+		
 		
 		
 		// 회원수정페이지에서 회원탈퇴하기 버튼 클릭했을때 이동됨.

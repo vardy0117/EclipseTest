@@ -1,4 +1,4 @@
-package net.orderAction;
+package net.order.action;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,7 +9,7 @@ import net.store.db.StoreDAO;
 
 public class GetStoreInfoAction {
 
-	public StoreBean getStroeInfo(HttpServletRequest req, HttpServletResponse resp, int storeNo) {
+	public void getStroeInfo(HttpServletRequest req, HttpServletResponse resp, int storeNo) {
 		StoreBean sbean = null;
 		
 		StoreDAO sdao = new StoreDAO();
@@ -18,7 +18,6 @@ public class GetStoreInfoAction {
 			
 		req.setAttribute("storeInfo", sbean);
 	
-		return sbean;
 	}
 
 }

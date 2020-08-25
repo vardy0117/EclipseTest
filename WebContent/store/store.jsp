@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -24,22 +25,102 @@
      -webkit-appearance: none;
 	}
 	
+	button#qtyUp{
+		background: url("./images/btn_count_up.gif") no-reapt;
+	}
+	
+	button#qtyDown{
+		background: url("./images/btn_count_down.gif") no-reapt;
+	}
+	
+	.cart { 
+	position: fixed; 
+	right: 50%; 
+	top: 180px; 
+	margin-right: -720px; 
+	text-align:center; 
+	width: 120px; 
+	}
+	
+	.cart a{
+		text-decoration: none;
+		color: black;
+	}
+	.cart input{
+		width: 40px;
+	}
+	
 </style>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>
 <script>
- function modifyQty(id, qty){
-	 	var q = parseInt($("#"+id).val());
-         if(qty==1){
-      		q ++;
-      		$("#"+id).val(q);
-         } else if(qty==-1 && parseInt($("#"+id).val()) !=0){
-        	q --;
-        	$("#"+id).val(q);
-         }
- }
+	  
+	 function toggle(category_menu){
+		  
+			// $("#tbtn").attr(alt)=="show")
+			 $("#"+category_menu).css("display","block");
+	 }
+	 
+ 	 function modifyQty(element, qty) {
+		 if(qty == 1) {
+			 element.parentNode.querySelector(".qty").value++;
+		 } else if (element.parentNode.querySelector(".qty").value > 0 && qty ==-1) {
+			 element.parentNode.querySelector(".qty").value--;
+		 }
+	 }
+ 
+	var cnt=0;
+	function addToCart(){
+		cnt ++;
+		name=document.getElementById("name").value;
+		price=document.getElementById("price").value;
+		quantity=document.getElementById("quantity").value;
+		orderPrice = price*quantity;
+		
+		var orderMenu = {
+			 name:name,
+			 price:price,
+			 quantity:quantity,
+			 total:total
+			}
+		
+		var json = JSON.stringify(orderMenu)
+		
+		localStorage.setItem('orderMenu',json);
+		$("#cartDiv").apeen()
+	} 
 </script>
 <body>
+	<!-- 플로팅 배너 -->
+	<div class="cart"> 
+		<h1>장바구니</h1>
+		<form action="order.do" method="post" name="fr">
+			<div id = "cartDiv">
+			<ul class="cartlIST">
+				<li class="cartItem">
+					<div class="row">
+						<div class="menuName">
+							
+						</div>
+						<div class="left">
+							<a class="btn del-menu">삭제</a>
+							<a onclick=" modifyQty(this, 1)" style="cursor:pointer" >+</a>
+							<span class="orderPrice"></span>
+							<a onclick=" modifyQty(this, -1)" style="cursor:pointer">-</a>	
+						</div>
+						
+					</div>
+				</li>
+			</ul>
+			</div>
+			<hr>
+	    	<h1>총 수량 : 원</a></h1>
+	    	<h1>총 금액 : 원</a></h1>
+	    <input type="submit" value="주문하기">
+	    </form>
+	</div>
+
+
 	<div id="mainDiv">
 		<h1>store.jsp</h1>
 		<br>
@@ -61,28 +142,34 @@
 		별점?: ${info.points} <br>
 		누적주문수 : ${info.orderCount} <br>
 		사업자 등록 번호 : ${info.regNo} <br>
-		
-		<form action="#" method="post">
+			
 			<table border="1">
+				<c:forEach var="category_" items="${requestScope.categoryList}">
 					<tr>
-						<td>구분</td>
-						<td>메뉴</td>
-						<td>가격</td>
-						<td>수량</td>
+						<td colspan ="3" align="center">
+							${category_} | 
+							<button type="button" id="tbtn" onclick="toggle('${category_}');"><img src="images/btn_count_down.gif"></button>
+						</td>
 					</tr>
-				<c:forEach var="menu" items="${requestScope.menuList}">
-					<tr>
-						<td> ${menu.category} </td>
-						<td> ${menu.image} |    ${menu.name} </td>
-						<td> ${menu.price} </td>
-						<td>
-							<input type="number" id="${menu.name}" name="${menu.price}" class="qty" min="0" value="0" type="text">
-							<a href="#" onclick="modifyQty('${menu.name}', 1)"><img src="images/btn_count_up.gif" alt="수량증가" class="qtyUp" usemap="#map_name_quantity"></a>	   
-							<a href="#" onclick="modifyQty('${menu.name}', -1)"><img src="images/btn_count_down.gif" alt="수량감소" class="qtyDown" usemap="#map_name_quantity"></a>	 
+						<c:forEach var="menu" items="${requestScope.menuList}">
+					<%-- <fmt:parseNumber var="num" value="${menu.level div 10}" type="number" integerOnly="true"/> --%>
+						<c:if test="${menu.category==category_}">
+				 		<tr id="${category_}" style="display:none;" name="${category_}">
+							<td> ${menu.image} | ${menu.name} </td>
+							<td> ${menu.price} </td>
+							<td>
+									<%-- <input type="hidden" name="level" value="${menu.level}"> --%>
+									<input type="hidden" id="name" name="name" value="${menu.name}">
+									<input type="hidden" id="price" name="price" value="${menu.price}">
+									<a onclick=" modifyQty(this, 1)" style="cursor:pointer" >+</a>
+									<input type="number" id="quantity" name="quantity" class="qty" min="0" value="0" type="text">
+									<a onclick=" modifyQty(this, -1)" style="cursor:pointer">-</a>
+									<input type="button" type="button" id="tbtn" value="주문표에 추가" onclick="addToCart()"></button>
+							</td>
+						</c:if>
+					</c:forEach>
 				</c:forEach>
-			</table>
-		</form>
-		
+			</table> 
 	</div>
 </body>
 </html>
