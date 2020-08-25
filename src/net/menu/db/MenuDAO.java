@@ -55,7 +55,6 @@ public class MenuDAO {
 					 mBean.setName(rs.getString("name"));
 					 mBean.setPrice(rs.getInt("price"));
 					 mBean.setImage(rs.getString("image"));
-					 mBean.setLevel(rs.getString("level"));
 					 mBean.setCategory(rs.getString("category"));
 					 menuList.add(mBean);
 			 }
@@ -75,7 +74,7 @@ public class MenuDAO {
 		try {
 			 con = getConnection();
 			 
-			 sql = "select category from menu where storeNo=? and level%10=1";
+			 sql = "select distinct category from menu where storeNo=?";
 			 
 			 pstmt = con.prepareStatement(sql);
 			 
@@ -98,47 +97,29 @@ public class MenuDAO {
 
 
 	public void insertMenus(List<MenuBean> mList) {
-		
-		
-			int result = 0;
-		
 		try {
-			 getConnection();
-			
+			 con = getConnection();
 			 
-			 sql="insert into menu(name, price, image, level, category,storeNo) values(?, ?, ?, ?, ? ,?)";
+			 sql="insert into menu(name, price, image, category, storeNo) values(?, ?, ?, ? ,?)";
 			 
 			 pstmt = con.prepareStatement(sql);
 			 
+			 for(MenuBean mbean : mList){
 			 
-			 for(MenuBean  mbean:mList){
-			 
-			 pstmt.setString(1,mbean.getName());
-			 pstmt.setInt(2,mbean.getPrice());
-			 pstmt.setString(3, mbean.getImage());
-			 pstmt.setInt(4,  Integer.parseInt(mbean.getLevel()));
-			 pstmt.setString(5,mbean.getCategory());
-			 pstmt.setInt(6, Integer.parseInt(mbean.getStoreNo()));
-			
-			 pstmt.executeUpdate();
+				 pstmt.setString(1,mbean.getName());
+				 pstmt.setInt(2,mbean.getPrice());
+				 pstmt.setString(3, mbean.getImage());
+				 pstmt.setString(4,mbean.getCategory());
+				 pstmt.setString(5, mbean.getStoreNo());
+				
+				 pstmt.executeUpdate();
 			 } 
-			 
-			 
-			 
 			
 		} catch (Exception e){
 			System.out.println("menu insert inner Error : " + e);
 		} finally {
 			resourceClose();
 		}
-		
-		
-		
-		
-		
-		
-		
-		
 		
 	}
 
