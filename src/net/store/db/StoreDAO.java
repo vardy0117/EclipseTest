@@ -86,7 +86,7 @@ public class StoreDAO {
 		return storeInfo;
 	}
 	/***********************************************************************/
-	//insertStore 메서드 
+	//insertStore 硫����� 
 	
 	public int insertStore(StoreBean sbean) {
 	
@@ -135,7 +135,7 @@ public class StoreDAO {
 	} // method
 	
 	/***********************************************************************/
-	public List<StoreBean> GetStore(String sido){ // 스토어 정보 가져오기
+	public List<StoreBean> GetStore(String sido){ // �ㅽ���� ��蹂� 媛��몄�ㅺ린
 		List<StoreBean> storelist = new ArrayList<StoreBean>();
 		
 		try {
@@ -146,7 +146,7 @@ public class StoreDAO {
 			 pstmt = con.prepareStatement(sql);
 			 
 			 pstmt.setString(1, sido);
-			 System.out.println("입려받은 Store DAO (sido) : " + sido);
+			 System.out.println("���ㅻ��� Store DAO (sido) : " + sido);
 			 
 			 rs = pstmt.executeQuery();
 			 
@@ -161,13 +161,13 @@ public class StoreDAO {
 					 mBean.setSido(rs.getString("sido"));
 					 mBean.setImage(rs.getString("image"));
 					 mBean.setMessage(rs.getString("message"));
-					 System.out.println("***스토어 쿼리 완료***");
-					 // 나머지는 다음에 가져오는 걸로 ^^;;;;;;;;;;;;;;;;;;;;;;;;;
+					 System.out.println("***�ㅽ���� 荑쇰━ ��猷�***");
+					 // ��癒몄��� �ㅼ���� 媛��몄�ㅻ�� 嫄몃� ^^;;;;;;;;;;;;;;;;;;;;;;;;;
 					 storelist.add(mBean);
 			 }
 			
 		} catch (Exception e) {
-			System.out.println("스토어 정보가져오기에서 오류 발생 : "+e);
+			System.out.println("List<StoreBean> GetStore Error : "+e);
 		} finally {
 			resourceClose();
 		}
