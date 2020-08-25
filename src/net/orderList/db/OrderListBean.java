@@ -7,8 +7,9 @@ public class OrderListBean {
 	
 	private String orderNo;
 	private String customerNo;
-	private String ceoNo;
-	private String address;
+	private String storeNo;
+	private String roadAddress;
+	private String detailAddress;
 	private String phone;
 	private String payment;
 	private String request;
@@ -31,17 +32,23 @@ public class OrderListBean {
 	public void setCustomerNo(String customerNo) {
 		this.customerNo = customerNo;
 	}
-	public String getCeoNo() {
-		return ceoNo;
+	public String getStoreNo() {
+		return storeNo;
 	}
-	public void setCeoNo(String ceoNo) {
-		this.ceoNo = ceoNo;
+	public void setStoreNo(String storeNo) {
+		this.storeNo = storeNo;
 	}
-	public String getAddress() {
-		return address;
+	public String getRoadAddress() {
+		return roadAddress;
 	}
-	public void setAddress(String address) {
-		this.address = address;
+	public void setRoadAddress(String roadAddress) {
+		this.roadAddress = roadAddress;
+	}
+	public String getDetailAddress() {
+		return detailAddress;
+	}
+	public void setDetailAddress(String detailAddress) {
+		this.detailAddress = detailAddress;
 	}
 	public String getPhone() {
 		return phone;

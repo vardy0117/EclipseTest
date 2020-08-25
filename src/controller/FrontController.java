@@ -31,6 +31,7 @@ import net.menu.action.MenuAction;
 import net.order.action.GetStoreInfoAction;
 import net.order.action.GetStoreMenuAction;
 import net.order.action.OrderAction;
+import net.orderList.db.OrderListBean;
 import net.store.action.StoreAction;
 import net.store.db.StoreBean;
 import net.store.db.StoreDAO;
@@ -516,9 +517,12 @@ public class FrontController extends HttpServlet {
 		if(command.equals("order.do")){
 			request.setCharacterEncoding("utf-8");
 			
-			OrderAction action = new OrderAction();
+			OrderAction action = new OrderAction();			
+			int orderNo = action.insertOrderList(request, response);
 			
-			action.insertOrderList(request, response);
+			action.insertOrderMenu(request, response, orderNo);
+			
+			
 		}
 		
 		
