@@ -182,6 +182,7 @@
                 document.getElementById("sample6_address").value = addr;
                 // 커서를 상세주소 필드로 이동한다.
                 document.getElementById("sample6_detailAddress").focus();
+                document.getElementById("sido").value = data.sido;
             }
         }).open();
     }
