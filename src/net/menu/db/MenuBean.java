@@ -39,6 +39,7 @@ public class MenuBean {
 	public void setCategory(String category) {
 		this.category = category;
 	}
+}
 	
 	
 
