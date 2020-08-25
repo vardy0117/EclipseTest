@@ -69,6 +69,33 @@ public class MenuDAO {
 		return menuList;
 	}
 
+	public List<String> getMenuCategoryNum(int storeNo) {
+		List<String> categoryList = new ArrayList<String>();
+		
+		try {
+			 con = getConnection();
+			 
+			 sql = "select category from menu where storeNo=? and level%10=1";
+			 
+			 pstmt = con.prepareStatement(sql);
+			 
+			 pstmt.setInt(1, storeNo);
+			 
+			 rs = pstmt.executeQuery();
+			 
+			 while(rs.next()){
+				 categoryList.add(rs.getString("category"));
+			 }
+			
+		} catch (Exception e) {
+			System.out.println("getStoreMenu Inner Error : "+e);
+		} finally {
+			resourceClose();
+		}
+		
+		return categoryList;
+	}
+
 
 
 }

@@ -247,13 +247,20 @@
                 // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
                 var roadAddr = data.roadAddress; // 도로명 주소 변수
                 var extraRoadAddr = ''; // 참고 항목 변수
-                var bname = data.bname
+                var bname = data.bname;
+                var bname = data.bname1;
+                var sigungu = data.sigungu;
 
                 // 법정동명이 있을 경우 추가한다. (법정리는 제외)
                 // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
                 if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
                     extraRoadAddr += data.bname;
                 }
+                
+                if(data.sigungu !== '' && /[동|로|가]$/g.test(data.bname)){
+                    extraRoadAddr += data.bname;
+                }
+ 
                 // 건물명이 있고, 공동주택일 경우 추가한다.
                 if(data.buildingName !== '' && data.apartment === 'Y'){
                    extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
@@ -358,7 +365,9 @@
 					</tr>
 					
 				</table>
-				<input type="hidden" id="bname" name="bname" class="bname" size="30" placeholder="배달희망지역 ex) 장전동">
+				<input type="hidden" id="sigungu" name="sigungu" class="sigungu" size="30" placeholder="배달희망지역 ex) 장전동">
+				<input type="hidden" id="bname1" name="bname1" class="bname1" size="30" placeholder="배달희망읍면리 ex) 장전동">
+				<input type="hidden" id="bname" name="bname" class="bname" size="30" placeholder="배달희망지역 ()ex) 장전동">
 			</form>
 		</div>
 	</div>

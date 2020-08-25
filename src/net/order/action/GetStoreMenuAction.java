@@ -1,4 +1,4 @@
-package net.orderAction;
+package net.order.action;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,12 +19,19 @@ public class GetStoreMenuAction {
 
 	public void getStoreMenu(HttpServletRequest req, HttpServletResponse res, int storeNo) throws Exception {
 		List<MenuBean> menuList = new ArrayList<MenuBean>();
-
+		List<String> categoryList = new ArrayList<String>();
+		
+		int categoryNum = 0;
+		
 			MenuDAO mdao = new MenuDAO();
 
 			menuList = mdao.getStoreMenu(storeNo);
-					
-			req.setAttribute("menuList", menuList);			
+			
+			categoryList = mdao.getMenuCategoryNum(storeNo);
+							
+			req.setAttribute("menuList", menuList);	
+			req.setAttribute("categoryList", categoryList);
+			
 	}
 
 }
