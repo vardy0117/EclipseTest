@@ -57,16 +57,17 @@
 			<c:out value="사진 : ${bean.image}" /><br>
 			<c:out value="카테고리 : ${bean.category}" /><br>
 			<c:out value="사장님 한마디 : ${bean.message}" /><br>
+			
+				
+				
 		</c:forEach>
 
 
-		
-			<c:set var="area" value="${bean.storeNo}" />
- 		 	area값 (스토어 번호): <c:out value="${bean.storeNo}"/>
-				<c:if test="${area == null}">
+				<c:set var="area" value="${storelist}" /> 
+				<c:if test="${area eq '[]' }">
 					<font size="6" color="orange"> <p>귀하의 지역에 맞는 가게가 없습니다</p> </font>
 				</c:if>
-				
+		
 
 	</div>
 	
