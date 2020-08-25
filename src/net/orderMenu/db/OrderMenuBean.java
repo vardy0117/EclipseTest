@@ -19,7 +19,7 @@ public class OrderMenuBean {
 	public String getName() {
 		return name;
 	}
-	public void setMenu(String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 	public String getPrice() {
