@@ -29,6 +29,10 @@ public class StoreAction {
 		String regNo = multi.getParameter("regNo");
 		String image = "";
 		
+		
+		
+		
+		
 		Enumeration e = multi.getFileNames();
 		while(e.hasMoreElements()) {
 			String filename = (String)e.nextElement();

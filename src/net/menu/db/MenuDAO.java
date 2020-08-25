@@ -99,6 +99,47 @@ public class MenuDAO {
 
 	public void insertMenus(List<MenuBean> mList) {
 		
+		
+			int result = 0;
+		
+		try {
+			 getConnection();
+			
+			 
+			 sql="insert into menu(name, price, image, level, category,storeNo) values(?, ?, ?, ?, ? ,?)";
+			 
+			 pstmt = con.prepareStatement(sql);
+			 
+			 
+			 for(MenuBean  mbean:mList){
+			 
+			 pstmt.setString(1,mbean.getName());
+			 pstmt.setInt(2,mbean.getPrice());
+			 pstmt.setString(3, mbean.getImage());
+			 pstmt.setInt(4,  Integer.parseInt(mbean.getLevel()));
+			 pstmt.setString(5,mbean.getCategory());
+			 pstmt.setInt(6, Integer.parseInt(mbean.getStoreNo()));
+			
+			 pstmt.executeUpdate();
+			 } 
+			 
+			 
+			 
+			
+		} catch (Exception e){
+			System.out.println("menu insert inner Error : " + e);
+		} finally {
+			resourceClose();
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 
 }

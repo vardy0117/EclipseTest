@@ -13,7 +13,7 @@ import net.menu.db.MenuDAO;
 
 public class MenuAction {
 
-	public void insertStore(HttpServletRequest request, HttpServletResponse response, MultipartRequest multi) {
+	public void insertStore(HttpServletRequest request, HttpServletResponse response, MultipartRequest multi,int storeNo) {
 		
 		int menuCnt = Integer.parseInt(multi.getParameter("menuCnt"));
 		
@@ -32,12 +32,33 @@ public class MenuAction {
 			menuBean.setCategory(menu_category);
 			menuBean.setName(menu_name);
 			menuBean.setPrice(menu_price);
-			
+			//
+			menuBean.setStoreNo(Integer.toString(storeNo));
 			menuList.add(menuBean);
 		}
+	
+		
 		
 		MenuDAO menuDAO = new MenuDAO();
 		menuDAO.insertMenus(menuList);
 		
+		
+		
+		
+		
 	}
-}
+
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	}

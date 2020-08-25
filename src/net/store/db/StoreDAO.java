@@ -3,6 +3,7 @@ package net.store.db;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -90,6 +91,7 @@ public class StoreDAO {
 	
 	public int insertStore(StoreBean sbean) {
 	
+		Integer numero=0;
 		int result = 0;
 		
 		try {
@@ -113,7 +115,9 @@ public class StoreDAO {
 			 pstmt.setString(10,sbean.getDeliveryArea());
 			 pstmt.setString(11, sbean.getRegNo());
 			 pstmt.setString(12, sbean.getSido());
-			 pstmt.executeUpdate();
+			 
+			
+			 numero= pstmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 			 
 			 rs = pstmt.getGeneratedKeys();
 			 
@@ -178,5 +182,12 @@ public class StoreDAO {
 		
 	}
 	/***********************************************************************/
+
+	
+	
+	
+	
+	
+	
 	
 }
