@@ -54,6 +54,46 @@
 		list-style-type : none;
 	}
 	
+
+/*메뉴 디자인*/
+/*******************************************************************/
+#topMenu {
+	height: 30px;
+	width: 850px;
+	margin: 0 auto;
+	margin-top: 80px;
+	position: relative;
+	padding: 100px;
+}
+
+#topMenu ul li {
+	list-style: none;
+	color: white;
+	background-color: #2d2d2d;
+	float: left;
+	line-height: 30px;
+	vertical-align: middle;
+	text-align: center;
+}
+
+#topMenu .menuLink {
+	text-decoration: none;
+	color: white;
+	display: block;
+	background: linear-gradient(to right, hsl(98 100% 62%),
+		hsl(204 100% 59%));
+	width: 150px;
+	font-size: 12px;
+	font-weight: bold;
+	font-family: "Trebuchet MS";
+}
+
+#topMenu .menuLink:hover {
+	color: red;
+	background-color: #4d4d4d;
+}
+		
+	
 </style>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>
@@ -256,6 +296,9 @@
 	    <input type="button" value="주문" onclick="order();">
 	</div>
 
+
+
+
 	<div id="mainDiv">
 		<h1>store.jsp</h1>
 		<br>
@@ -277,37 +320,29 @@
 		별점?: ${info.points} <br>
 		누적주문수 : ${info.orderCount} <br>
 		사업자 등록 번호 : ${info.regNo} <br>
-			
-			<table border="1">
-				<c:forEach var="category_" items="${requestScope.categoryList}">
-					<tr>
-						<td colspan ="3" align="center">
-							${category_} | 
-							<button type="button" id="tbtn" onclick="toggle('${category_}');"><img src="images/btn_count_down.gif"></button>
-						</td>
-					</tr>
-						<c:forEach var="menu" items="${requestScope.menuList}">
-					<%-- <fmt:parseNumber var="num" value="${menu.level div 10}" type="number" integerOnly="true"/> --%>
-						<c:if test="${menu.category==category_}">
-				 		<tr id="${category_}" style="display:none;" name="${category_}">
-							<td>	
-								<span> ${menu.image} </span> |
-								<span class="name"> ${menu.name} </span>
-							</td class="basePrice">	
-							<td> ${menu.price} </td>
-							<td>
-									<%-- <input type="hidden" name="level" value="${menu.level}"> --%>
-									<input type="hidden" class="name" value="${menu.name}">
-									<input type="hidden" class="price" value="${menu.price}">
-									<a onclick=" modifyQty(this, 1)" style="cursor:pointer" >+</a>
-									<input type="number" id="quantity" name="quantity" class="qty" min="0" value="1" type="text">
-									<a onclick=" modifyQty(this, -1)" style="cursor:pointer">-</a>
-									<input type="button" type="button" id="tbtn" value="주문표에 추가" onclick="addToCartStorage(this)"></button>
-							</td>
-						</c:if>
-					</c:forEach>
-				</c:forEach>
-			</table> 
+
+		<nav id="topMenu">
+		<ul>
+			<li><a class="menuLink" href="Menu.do">메뉴</a></li>
+			<li>|</li>
+			<li><a class="menuLink" href="Review.do">리뷰</a></li>
+			<li>|</li>
+			<li><a class="menuLink" href="StoreInformation.do">정보</a></li>
+			<li>|</li>
+
+		</ul>
+		</nav>
+
+
+
+		<c:set var="storeCenter" value="${param.storeCenter}" />
+		<c:if test="${storeCenter==null}">
+			<c:set var="center" value="/store/menu.jsp" />
+		</c:if>
+
+		<jsp:include page="${storeCenter }" />
+		
+
 	</div>
 </body>
 </html>
