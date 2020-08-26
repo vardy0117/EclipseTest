@@ -23,7 +23,7 @@ public class OrderAction {
 		oBean.setCustomerNo((String) request.getSession().getAttribute("customerNo"));
 		oBean.setRoadAddress((String) request.getSession().getAttribute("roadAddress")); 
 		oBean.setDetailAddress((String) request.getSession().getAttribute("detailAddress")); 
-		// oBean.setPhone((String) request.getSession().getAttribute("phone"));
+		oBean.setPhone((String) request.getSession().getAttribute("phone"));
 		
 		OrderListDAO odao = new OrderListDAO();
 		int orderNo = odao.insertOrderList(oBean);

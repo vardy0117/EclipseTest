@@ -27,10 +27,6 @@
 		font-family: 'Binggrae-Bold';
 	}
 </style>
-<script>
-	var cart = null;
-	sessionStorage.setItem("cart",cart);
-</script>
 </head>
 <body>
 	<c:set  var="center" value="${param.center}"/>
