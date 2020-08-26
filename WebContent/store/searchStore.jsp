@@ -1,3 +1,4 @@
+<%@page import="net.store.db.StoreBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -20,6 +21,9 @@
 		margin-top: 50px;
 		position: relative;
 	}
+	.storeDetail:HOVER{
+		background-color: silver;
+	}
 </style>
 </head>
 <body>
@@ -39,23 +43,35 @@
 	귀하의 현재 계정기준 요청주소는 :  <font color="blue" size="5">	
 	<c:out value="${orderSido}" />
 	 </font> 입니다 <br>
+
 	 <p>----------------------------------------------------------------------------------------</p>
 	
 		<c:forEach var="bean" items="${storelist}">
-			<font size="10">---가져온 스토어 데이터---</font> <br>
-			
-			<font color="purple" size="5">가게 이름 :		<c:out value=" ${bean.name}" /> </font> <br>
-			<c:out value="스토어 번호 : ${bean.storeNo}" /><br>
-   			<font color="red" size="5">시도 :		<c:out value=" ${bean.sido}" /> </font> <br>
-   			 <font color="orange" size="5">		<c:out value="도로명 주소 : ${bean.roadAddress}" /> </font> <br>
-			 <font color="green" size="5">		<c:out value="운영시간 : ${bean.storeHours}" /> </font> <br>
-			<c:out value="사진 : ${bean.image}" /><br>
-			<c:out value="카테고리 : ${bean.category}" /><br>
-			<c:out value="사장님 한마디 : ${bean.message}" /><br>
+			<a onclick="location.href='Store.do?storeNo=${bean.storeNo}'">	
+				<div class="storeDetail">
+					<font size="10">---가져온 스토어 데이터---</font> <br>
+					
+					<font color="purple" size="5">가게 이름 :		<c:out value=" ${bean.name}" /> </font> <br>
+					<c:out value="스토어 번호 : ${bean.storeNo}" /><br>
+		   			<font color="red" size="5">시도 :		<c:out value=" ${bean.sido}" /> </font> <br>
+		   			 <font color="orange" size="5">		<c:out value="도로명 주소 : ${bean.roadAddress}" /> </font> <br>
+					 <font color="green" size="5">		<c:out value="운영시간 : ${bean.storeHours}" /> </font> <br>
+					
+					<c:out value="<업체 소개 사진> "/> <br>
+					 <img src="upload/store/${bean.image}" alt="스토어 음식사진" width="200" height="200"> <br>
+		<%-- 			${pageContext.request.contextPath} --%>
+					<c:out value="사진주소 : upload/store/${bean.image}"/><br>
+					<c:out value="카테고리 : ${bean.category}" /><br>
+					<c:out value="사장님 한마디 : ${bean.message}" /><br>
+				</div>
+			</a>
 		</c:forEach>
 
-
-
+				<c:set var="area" value="${storelist}" /> 
+				<c:if test="${area eq '[]' }">
+					<font size="6" color="orange"> <p>귀하의 지역에 맞는 가게가 없습니다</p> </font>
+				</c:if>
+		
 
 	</div>
 	
