@@ -346,7 +346,8 @@ public class FrontController extends HttpServlet {
 				
 				forward = new ActionForward();
 				forward.setRedirect(false);
-				forward.setView("store/store.jsp");
+				forward.setView("store/store.jsp?storeCenter=storemenulist.jsp");
+				// store/store.jsp?storeCenter=storeinformation.jsp
 				
 			} catch (Exception e) {
 				e.printStackTrace();
