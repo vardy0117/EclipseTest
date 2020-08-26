@@ -535,29 +535,7 @@ public class FrontController extends HttpServlet {
 			
 			
 		}
-		
-		
-		if(command.equals("StoreInformation.do")) {
-			int storeNo = Integer.parseInt(request.getParameter("storeNo"));
-			
-			
-			try {
-				GetStoreInfoAction action1 = new GetStoreInfoAction();
-					action1.getStroeInfo(request, response, storeNo);
-				
-				GetStoreMenuAction action2 = new GetStoreMenuAction();
-					action2.getStoreMenu(request, response, storeNo);
-				
-				forward = new ActionForward();
-				forward.setRedirect(false);
-				forward.setView("store/store.jsp?storeCenter=storeinformation.jsp");
-				System.out.println("storeinformation.do 호출");
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			forward.execute(request, response);
-		}
+	
 		
 		
 	}
