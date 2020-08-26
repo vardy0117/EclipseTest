@@ -30,6 +30,7 @@ import net.customer.db.CustomerDAO;
 import net.menu.action.MenuAction;
 import net.order.action.GetStoreInfoAction;
 import net.order.action.GetStoreMenuAction;
+import net.order.action.GetStoreReviewAction;
 import net.order.action.OrderAction;
 import net.orderList.db.OrderListBean;
 import net.store.action.StoreAction;
@@ -343,10 +344,13 @@ public class FrontController extends HttpServlet {
 				
 				GetStoreMenuAction action2 = new GetStoreMenuAction();
 					action2.getStoreMenu(request, response, storeNo);
+					
+				GetStoreReviewAction action3 = new GetStoreReviewAction();
+					action3.getStoreReview(request, response, storeNo);
 				
 				forward = new ActionForward();
 				forward.setRedirect(false);
-				forward.setView("store/store.jsp");
+				forward.setView("index.jsp?center=store/store.jsp");
 				
 			} catch (Exception e) {
 				e.printStackTrace();

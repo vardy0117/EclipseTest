@@ -21,17 +21,32 @@ public class GetStoreMenuAction {
 		List<MenuBean> menuList = new ArrayList<MenuBean>();
 		List<String> categoryList = new ArrayList<String>();
 		
-		int categoryNum = 0;
-		
 			MenuDAO mdao = new MenuDAO();
 
 			menuList = mdao.getStoreMenu(storeNo);
 			
-			categoryList = mdao.getMenuCategoryNum(storeNo);
-							
-			req.setAttribute("menuList", menuList);	
-			req.setAttribute("categoryList", categoryList);
+			categoryList = mdao.getMenuCategory(storeNo);
 			
+			List<String> reArrList = new ArrayList<String>();
+			
+			for (String category:categoryList){
+				switch (category){
+					case "세트메뉴" : reArrList.add(category);
+					break;
+					
+					case "주 메뉴" : reArrList.add(category);
+					break;
+					
+					case "사이드 메뉴" : reArrList.add(category);
+					break;
+					
+					case "음료/주류" : reArrList.add(category);
+					break;
+				} 
+			}
+			
+			req.setAttribute("menuList", menuList);	
+			req.setAttribute("categoryList", reArrList);		
 	}
 
 }
