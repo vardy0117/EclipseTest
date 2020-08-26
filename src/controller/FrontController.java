@@ -321,6 +321,34 @@ public class FrontController extends HttpServlet {
 		
 		}
 		
+		
+		if(command.equals("StoreInformation.do")) {
+			StoreDAO store = new StoreDAO();
+
+			// 받은 값 : roadAddress / detailAddress / bname 
+			request.setCharacterEncoding("utf-8");
+			
+			request.getSession().setAttribute("orderRoadAddress", request.getParameter("roadAddress"));
+			request.getSession().setAttribute("orderDetailAddress", request.getParameter("detailAddress"));
+			request.getSession().setAttribute("orderBname", request.getParameter("bname"));
+			request.getSession().setAttribute("orderSido", request.getParameter("sido"));
+		
+			
+			List<StoreBean> storelist = store.GetStore((String) request.getSession().getAttribute("orderSido"));
+			
+			
+			request.setAttribute("storelist", storelist);
+
+			// store.GetStore((String) request.getSession().getAttribute("orderSido"));
+			System.out.println("SearchStore 프론트 컨트롤러 -> 값가져오기 테스트 " + storelist.toString());
+			System.out.println("주소 시도  : " + request.getSession().getAttribute("orderSido"));
+			forward = new ActionForward();
+			forward.setView("index.jsp?center=store/StorInformation.jsp");
+			forward.execute(request, response);
+		
+		}
+		
+		
 /*		if(command.equals("Store.do")) {
 			String storeNo = request.getParameter("storeNo");
 			// storeNo를 받아서 storeDAO에서 bean(model)을 찾고 request에 넣은뒤 store.jsp로 이동해 사용
@@ -524,6 +552,7 @@ public class FrontController extends HttpServlet {
 			
 			
 		}
+		
 		
 		
 	}

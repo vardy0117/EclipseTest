@@ -54,6 +54,9 @@
 		list-style-type : none;
 	}
 	
+	
+	
+	
 </style>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>
@@ -252,6 +255,9 @@
 	
 </script>
 <body>
+
+
+		
 	<!-- 플로팅 배너 -->
 	<!-- <div class="cart">  --> 
 		<h1>장바구니</h1>
@@ -264,6 +270,15 @@
 	    <input type="button" value="주문하기" onclick="order();">
 	<!-- </div> -->
 
+
+	<c:set  var="storeCenter" value="${param.storeCenter}"/>
+	<c:if test="${storeCenter==null}">
+		<c:set var="storeCenter" value="/test/StorInformation.jsp" />
+	</c:if>
+	
+	<jsp:include page="${storeCenter }"/>
+		
+	
 	<div id="mainDiv">
 		<h1>store.jsp</h1>
 		<br>
@@ -285,37 +300,10 @@
 		별점?: ${info.points} <br>
 		누적주문수 : ${info.orderCount} <br>
 		사업자 등록 번호 : ${info.regNo} <br>
-			
-			<table border="1">
-				<c:forEach var="category_" items="${requestScope.categoryList}">
-					<tr>
-						<td colspan ="3" align="center">
-							${category_} | 
-							<button type="button" id="tbtn" onclick="toggle('${category_}');"><img src="images/btn_count_down.gif"></button>
-						</td>
-					</tr>
-						<c:forEach var="menu" items="${requestScope.menuList}">
-					<%-- <fmt:parseNumber var="num" value="${menu.level div 10}" type="number" integerOnly="true"/> --%>
-						<c:if test="${menu.category==category_}">
-				 		<tr id="${category_}" style="display:none;" name="${category_}">
-							<td>	
-								<span> ${menu.image} </span> |
-								<span class="name"> ${menu.name} </span>
-							</td class="basePrice">	
-							<td> ${menu.price} </td>
-							<td>
-									<%-- <input type="hidden" name="level" value="${menu.level}"> --%>
-									<input type="hidden" class="name" value="${menu.name}">
-									<input type="hidden" class="price" value="${menu.price}">
-									<a onclick=" modifyQty(this, 1)" style="cursor:pointer" >+</a>
-									<input type="number" id="quantity" name="quantity" class="qty" min="0" value="1" type="text">
-									<a onclick=" modifyQty(this, -1)" style="cursor:pointer">-</a>
-									<input type="button" type="button" id="tbtn" value="주문표에 추가" onclick="addToCartStorage(this)"></button>
-							</td>
-						</c:if>
-					</c:forEach>
-				</c:forEach>
-			</table> 
-	</div>
+
+	
+
+
+	
 </body>
 </html>

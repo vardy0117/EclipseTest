@@ -29,7 +29,7 @@ public class CustomerDAO {
 			if(pstmt!=null) pstmt.close();
 			if(con!=null) con.close();
 		} catch (Exception e) {
-			System.out.println("占쌘울옙 占쏙옙占쏙옙 占쏙옙占쏙옙! : " + e);
+			System.out.println("자원해제 실패: " + e);
 		}
 	} // resourceClose()
 
@@ -51,7 +51,7 @@ public class CustomerDAO {
 				 result = "useable";			 				
 			 }
 		} catch (Exception e) {
-			System.out.println("joinCheckEmail占쌨소듸옙 占쏙옙占싸울옙占쏙옙 占쏙옙占쏙옙 占쌩삼옙 : " + e);
+			System.out.println("joinCheckEmail에서 알 수 없는 오류가 발생했다 : " + e);
 		} finally {
 			resourceClose();
 		}
@@ -76,7 +76,7 @@ public class CustomerDAO {
 				 result = "useable";			 				
 			 }
 		} catch (Exception e) {
-			System.out.println("joinCheckPhone占쌨소듸옙 占쏙옙占싸울옙占쏙옙 占쏙옙占쏙옙 占쌩삼옙 : " + e);
+			System.out.println("joinCheckPhone에서 알 수 없는 오류가 발생했다 휴먼 : " + e);
 		} finally {
 			resourceClose();
 		}
@@ -137,7 +137,7 @@ public class CustomerDAO {
 		return false;
 	} // method
 /***********************************************************************************************/
-	public boolean CheckCustomer(CustomerBean cb) { // 占싸깍옙占쏙옙 占싯삼옙 
+	public boolean CheckCustomer(CustomerBean cb) { // 고객 정보 확인
 	
 		boolean result = false;
 		
@@ -159,7 +159,7 @@ public class CustomerDAO {
 			 rs = pstmt.executeQuery();		 
 
 			if (rs.next()) {
-				System.out.println("占싸깍옙占쏙옙 占쏙옙占쏙옙");
+				System.out.println("로그인 완료!");
 				result = true;
 
 			}
@@ -168,7 +168,7 @@ public class CustomerDAO {
 
 			
 		} catch (Exception e){
-			System.out.println("CheckCustomer占쌨소듸옙 占쏙옙占싸울옙占쏙옙 占쏙옙占쏙옙 占쌩삼옙 : " + e);
+			System.out.println("CheckCustomer에서 오류가 발생했다 : " + e);
 		} finally {
 			resourceClose();
 		}
@@ -193,7 +193,7 @@ public class CustomerDAO {
 			cb.setCustomerNo(rs.getString("customerNo"));
 			cb.setPhone(rs.getString("phone"));
 			/************************************************************************************/
-			// 占싸깍옙占싸쏙옙 占쏙옙占쏙옙 select 占쌔쇽옙 占쏙옙占쏙옙占쏙옙占쏙옙
+
 			System.out.println("-----------------------CustomerInformation ------------------------------------");
 			System.out.println("customer dao 닉네임 값  :  " + cb.getNickname());
 			System.out.println("customer dao 고객번호 값 customerNo :  " + cb.getCustomerNo());
