@@ -3,6 +3,7 @@ package net.orderList.db;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -33,7 +34,36 @@ public class OrderListDAO {
 	} // resourceClose()
 	
 	public int insertOrderList(OrderListBean oBean) {
+int storeNo = 0;
 		
+		try {
+			 getConnection();
+
+			 sql="insert into orderList( , name, roadAddress, detailAddress, category, phone, "
+			 		+ "storeHours, message, image, deliveryArea, regNo, sido) "
+			 			     + "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			 
+			 pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+			 
+			
+			 pstmt.executeUpdate();
+			 
+			 rs = pstmt.getGeneratedKeys();
+			 
+			 
+			 if(rs.next()) {
+				 storeNo = rs.getInt(1);
+			 }
+			 
+			
+		} catch (Exception e){
+			System.out.println("insertStore inner Error : " + e);
+		} finally {
+			resourceClose();
+		}
+		
+		return storeNo;
 		
 	}
 
