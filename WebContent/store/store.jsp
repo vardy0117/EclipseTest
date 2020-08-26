@@ -260,16 +260,6 @@
 		</nav>
 
 
-<div id="mainDiv">
-		<h1>메뉴리스트</h1>
-		<br>
-	
-		카테고리 : ${info.category} <br>
-		폰 : ${info.phone} <br>
-		가게 사진: ${info.image} <br>
-		별점?: ${info.points} <br>
-		누적주문수 : ${info.orderCount} <br>
-		</div>
 		
 	<c:set  var="storeCenter" value="${param.storeCenter}"/>
 	<c:if test="${storeCenter==null}">
