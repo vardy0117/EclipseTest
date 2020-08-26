@@ -265,7 +265,7 @@
 			<li>|</li>
 			<li><a class="menuLink" href="Review.do">리뷰</a></li>
 			<li>|</li>
-			<li><a class="menuLink" href="StoreInformation.do">정보</a></li>
+			<li><a class="menuLink" href="StoreInformation.do?storeNo=${info.storeNo}">정보</a></li>
 			<li>|</li>
 
 		</ul>
