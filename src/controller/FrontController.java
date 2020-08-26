@@ -350,7 +350,9 @@ public class FrontController extends HttpServlet {
 				
 				forward = new ActionForward();
 				forward.setRedirect(false);
+
 				forward.setView("index.jsp?center=store/store.jsp");
+
 				
 			} catch (Exception e) {
 				e.printStackTrace();

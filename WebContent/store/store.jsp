@@ -324,7 +324,7 @@
 	</div>
 <c:set var="info" value="${requestScope.storeInfo}"/>
 	
-
+		
 		<nav id="topMenu">
 		<ul>
 			<li><a class="menuLink">메뉴</a></li>
@@ -336,6 +336,7 @@
 
 		</ul>
 		</nav>
+
 		
 		<div id="menuDiv" class="display-on">
 			<jsp:include page="/store/menu.jsp"></jsp:include>
