@@ -413,12 +413,17 @@ public class FrontController extends HttpServlet {
 		}
 		
 		if(command.equals("manageStore.do")) {
-			if(request.getSession().getAttribute("ceoNo") == null) {
-				response.setContentType("text/html;charset=UTF-8"); 
-				PrintWriter out = response.getWriter();
-				out.print("<script>alert('로그인을 해주세요.'); location.href='./CeoLogin.do';</script>");
-				return;
-			}
+//			if(request.getSession().getAttribute("ceoNo") == null) {
+//				response.setContentType("text/html;charset=UTF-8"); 
+//				PrintWriter out = response.getWriter();
+//				out.print("<script>alert('로그인을 해주세요.'); location.href='./CeoLogin.do';</script>");
+//				return;
+//		}
+			String ceoNo = (String)request.getSession().getAttribute("ceoNo");
+			StoreAction action = new  StoreAction();
+			action.getCeoStore(request,response, ceoNo);
+			
+			
 			forward = new ActionForward();
 			forward.setView("ceoIndex.jsp?center=ceoStore/manageStore.jsp");
 			forward.execute(request, response);

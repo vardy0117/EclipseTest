@@ -4,6 +4,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+ 
+ <%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c" %>
+ 
 <title>Insert title here</title>
 <style>
 	div {
@@ -20,7 +23,26 @@
 </head>
 <body>
 	<div id="mainDiv">
-		./ceoStore/manageStore.jsp
+		<h1 style="text-align:center;">업체 관리  </h1>
+
+	
+	<c:forEach var="bean" items="${ceoStorelist}">
+			
+			<a href='Store.do?storeNo=${bean.storeNo}'>	
+				
+				<div class="storeDetail">
+					<font size="10">---가져온 스토어 데이터---</font> <br>
+					
+					<font color="purple" size="5">가게 이름 :	<c:out value=" ${bean.name}" /> </font> <br>
+					<
+					<c:out value="<업체 소개 사진> "/> <br>
+					 <img src="upload/store/${bean.image}" alt="스토어 음식사진" width="200" height="200"> <br>
+					 <input type="button" value=" 수정하기 "> 
+					 <input type="button" value=" 삭제하기 "> 
+				</div>
+			</a>
+		</c:forEach>
+		
+					
 	</div>
 </body>
-</html>
