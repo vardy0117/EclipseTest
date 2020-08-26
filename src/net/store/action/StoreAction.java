@@ -2,6 +2,7 @@ package net.store.action;
 
 import java.util.Enumeration;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -68,15 +69,15 @@ public class StoreAction {
 		storeNo = storeDAO.insertStore(storeBean);
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		return storeNo;
+	}
+
+	//업체관리 
+	public void getCeoStore(HttpServletRequest request, HttpServletResponse response, String ceoNo) {
+		StoreDAO s = new StoreDAO();
+		List<StoreBean> list = s.getCeoStore(ceoNo);
+	
+		request.setAttribute("ceoStorelist",list );
+		
 	}
 }

@@ -182,6 +182,49 @@ public class StoreDAO {
 	}
 	/***********************************************************************/
 
+	public List<StoreBean>  getCeoStore(String ceoNo) {
+		
+		List<StoreBean> list = new ArrayList();
+		
+		try {
+			con =getConnection();
+			
+			sql= "select storeNo, name , image from store  where ceoNo = ? ";
+			
+			pstmt = con.prepareStatement(sql);
+			 
+			 pstmt.setString(1, ceoNo);
+			 
+			 rs = pstmt.executeQuery();
+			 
+			 while(rs.next()){
+				 StoreBean mBean = new StoreBean();
+					 mBean.setStoreNo(rs.getString("storeNo"));
+//					 mBean.setCeoNo(rs.getString("ceoNo"));
+					 mBean.setName(rs.getString("name"));
+//					 mBean.setRoadAddress(rs.getString("roadAddress"));
+//					 mBean.setCategory(rs.getString("category"));
+//					 mBean.setStoreHours(rs.getString("storeHours"));
+//					 mBean.setSido(rs.getString("sido"));
+					 mBean.setImage(rs.getString("image"));
+//					 mBean.setMessage(rs.getString("message"));
+				
+					 
+					list.add(mBean);
+			 }
+			
+		} catch (Exception e) {
+			System.out.println("getCeoStore inner error"+e);
+			
+		}finally {
+			resourceClose();
+		}
+		
+	
+		
+		return list;
+	}
+
 	
 	
 	
