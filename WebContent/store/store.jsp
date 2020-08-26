@@ -249,7 +249,7 @@
 
 		<nav id="topMenu">
 		<ul>
-			<li><a class="menuLink" href="Menu.do">메뉴</a></li>
+			<li><a class="menuLink" href="Store.do?storeNo=${info.storeNo}">메뉴</a></li>
 			<li>|</li>
 			<li><a class="menuLink" href="Review.do">리뷰</a></li>
 			<li>|</li>
