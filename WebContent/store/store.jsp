@@ -76,7 +76,7 @@
 	text-align: center;
 }
 
-#topMenu .menuLink {
+#topMenu .menuLink, #topMenu .reviewLink, #topMenu .infoLink {
 	text-decoration: none;
 	color: white;
 	display: block;
@@ -92,25 +92,31 @@
 	color: red;
 	background-color: #4d4d4d;
 }
+
+.display-on {
+	display: block;
+}
+.display-off {
+	display: none;
+}
 		
 	
 </style>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>
-<script>
-	  
-	 function toggle(category_menu){
-			 $("#"+category_menu).css("display","block");
-	 }
-	 
- 	 function modifyQty(element, qty) {
-		 if(qty == 1) {
-			 element.parentNode.querySelector(".qty").value++;
-		 } else if (element.parentNode.querySelector(".qty").value > 0 && qty ==-1) {
-			 element.parentNode.querySelector(".qty").value--;
-		 }
-	 }
- 	 
+<script> 	 
+	function toggle(categoryName){
+		 $("#"+categoryName).css("display","block");
+	}  
+	
+	function modifyQty(element, qty) {
+	if(qty == 1) {
+		 element.parentNode.querySelector(".qty").value++;
+	} else if (element.parentNode.querySelector(".qty").value > 0 && qty ==-1) {
+		 element.parentNode.querySelector(".qty").value--;
+	}
+	}
+
  	function modifyMenuOnCartQty(element, qty){
  		var cartItem = JSON.parse(sessionStorage.getItem("cart"));
  		
@@ -149,6 +155,59 @@
 		getCart();	
  	}
  	 
+ 	function addToCartStorage(element){		
+		var name=element.parentNode.querySelector(".name").value;
+		var basePrice=parseInt(element.parentNode.querySelector(".price").value);
+		var quantity=parseInt(element.parentNode.querySelector(".qty").value);
+		var price = basePrice*quantity;
+		
+		var orderItem = {
+			 name:name,
+			 basePrice:basePrice,
+			 quantity:quantity,
+			 price:price
+			}
+		
+		var json = JSON.stringify(orderItem);
+		
+		var cartItem=JSON.parse(sessionStorage.getItem("cart"));
+		
+		if(cartItem==null){
+			cartItem=new Array();
+			cartItem.push(json);
+		} else {
+			var i = null;
+			for(j=0; j<cartItem.length; j++){
+				if (name == JSON.parse(cartItem[j])["name"]){	
+					i=j;
+				}	
+			}
+			
+			if(i!=null){	
+				quantity+=parseInt(JSON.parse(cartItem[i])["quantity"]);
+				price=basePrice*quantity;			
+					
+				orderItem["quantity"]=quantity;
+				orderItem["price"]=price;
+				
+				json = JSON.stringify(orderItem);
+					
+				cartItem.splice(i, 1, json);
+			} else {
+				cartItem.push(json);
+			}
+			
+		}
+			
+		cart = JSON.stringify(cartItem);
+		sessionStorage.setItem("cart",cart);	
+		
+		if(cart!=null){
+			getCart();
+		}	
+	} 
+ 	
+ 	
 	function getCart(){
 		var cart=JSON.parse(sessionStorage.getItem("cart"));
 		var tag = "";
@@ -227,6 +286,25 @@
 			}); // $ajax()
 		
 	}	
+	
+	
+	window.onload = function() {
+		document.querySelector(".menuLink").addEventListener("click", function() {
+			document.getElementById("menuDiv").setAttribute("class", "display-on");
+			document.getElementById("reviewDiv").setAttribute("class", "display-off");
+			document.getElementById("infoDiv").setAttribute("class", "display-off");
+		});
+		document.querySelector(".reviewLink").addEventListener("click", function() {
+			document.getElementById("menuDiv").setAttribute("class", "display-off");
+			document.getElementById("reviewDiv").setAttribute("class", "display-on");
+			document.getElementById("infoDiv").setAttribute("class", "display-off");
+		});
+		document.querySelector(".infoLink").addEventListener("click", function() {
+			document.getElementById("menuDiv").setAttribute("class", "display-off");
+			document.getElementById("reviewDiv").setAttribute("class", "display-off");
+			document.getElementById("infoDiv").setAttribute("class", "display-on");
+		});
+	}
 
 	
 </script>
@@ -249,24 +327,25 @@
 		
 		<nav id="topMenu">
 		<ul>
-			<li><a class="menuLink" href="Store.do?storeNo=${info.storeNo}">메뉴</a></li>
+			<li><a class="menuLink">메뉴</a></li>
 			<li>|</li>
-			<li><a class="menuLink" href="Review.do">리뷰</a></li>
+			<li><a class="reviewLink">리뷰</a></li>
 			<li>|</li>
-			<li><a class="menuLink" href="StoreInformation.do?storeNo=${info.storeNo}">정보</a></li>
+			<li><a class="infoLink">정보</a></li>
 			<li>|</li>
 
 		</ul>
 		</nav>
 
-
 		
-	<c:set  var="storeCenter" value="${param.storeCenter}"/>
-	<c:if test="${storeCenter==null}">
-		<c:set var="storeCenter" value="/store/menu.jsp" />
-	</c:if>
-	<jsp:include page="${storeCenter}"/>
-
-	<jsp:include page="/inc/bottom.jsp"/>
+		<div id="menuDiv" class="display-on">
+			<jsp:include page="/store/menu.jsp"></jsp:include>
+		</div>
+		<div id="reviewDiv" class="display-off">
+			<jsp:include page="/store/review.jsp"></jsp:include>
+		</div>
+		<div id="infoDiv" class="display-off">
+			<jsp:include page="/store/info.jsp"></jsp:include>
+		</div>
 </body>
 </html>

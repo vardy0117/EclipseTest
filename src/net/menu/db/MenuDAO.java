@@ -69,7 +69,7 @@ public class MenuDAO {
 		return menuList;
 	}
 
-	public List<String> getMenuCategoryNum(int storeNo) {
+	public List<String> getMenuCategory(int storeNo) {
 		List<String> categoryList = new ArrayList<String>();
 		
 		try {

@@ -59,9 +59,9 @@
 </head>
 <script>
 	  
-	 function toggle(category_menu){
-			 $("#"+category_menu).css("display","block");
-	 }
+  	 function toggle(categoryName){
+			 $("#"+categoryName).css("display","block");
+	 }  
 	 
  	 function modifyQty(element, qty) {
 		 if(qty == 1) {
@@ -205,50 +205,39 @@
 	
 </script>
 <body>
-<!-- 플로팅 배너 -->
-<!-- 	
-	<div class="cart">  
-		<h2>장바구니</h2>
-			<div id = "cartDiv">
-				<ul id="cartUl" class="cartUl">
-				</ul>
-			</div>
-			<hr>
-	    	<h1 id="total"></h1>
-	    <input type="button" value="주문" onclick="order();">
-	</div>
- -->
-	<div id="mainMenuDiv">
-			<table border="1">
-				<c:forEach var="category_" items="${requestScope.categoryList}">
-					<tr>
-						<td colspan ="3" align="center">
-							${category_} | 
-							<button type="button" id="tbtn" onclick="toggle('${category_}');"><img src="images/btn_count_down.gif"></button>
+	<h1>menu.jsp 진영</h1>
+	<table border="1">
+		<c:forEach var="category_" items="${requestScope.categoryList}">
+
+			<tr>
+				<td colspan="3" align="center">${category_} |
+					<button type="button" id="tbtn" onclick="toggle(this);">
+						<img src="images/btn_count_down.gif">
+					</button>
+				</td>
+			</tr>
+			<c:forEach var="menu" items="${requestScope.menuList}">
+				<%-- <fmt:parseNumber var="num" value="${menu.level div 10}" type="number" integerOnly="true"/> --%>
+				<c:if test="${menu.category==category_}">
+					<!-- style="display:none;" -->
+					<tr id="${category_}" name="${category_}">
+						<td><span> ${menu.image} </span> | <span class="name">
+								${menu.name} </span></td class="basePrice">
+						<td>${menu.price}</td>
+						<td>
+							<%-- <input type="hidden" name="level" value="${menu.level}"> --%>
+							<input type="hidden" class="name" value="${menu.name}"> <input
+							type="hidden" class="price" value="${menu.price}"> <a
+							onclick=" modifyQty(this, 1)" style="cursor: pointer">+</a> <input
+							type="number" id="quantity" name="quantity" class="qty" min="0"
+							value="1" type="text"> <a onclick=" modifyQty(this, -1)"
+							style="cursor: pointer">-</a> <input type="button" type="button"
+							id="tbtn" value="주문표에 추가" onclick="addToCartStorage(this)">
+						</button>
 						</td>
-					</tr>
-						<c:forEach var="menu" items="${requestScope.menuList}">
-					<%-- <fmt:parseNumber var="num" value="${menu.level div 10}" type="number" integerOnly="true"/> --%>
-						<c:if test="${menu.category==category_}">
-				 		<tr id="${category_}" style="display:none;" name="${category_}">
-							<td>	
-								<span> ${menu.image} </span> |
-								<span class="name"> ${menu.name} </span>
-							</td class="basePrice">	
-							<td> ${menu.price} </td>
-							<td>
-									<%-- <input type="hidden" name="level" value="${menu.level}"> --%>
-									<input type="hidden" class="name" value="${menu.name}">
-									<input type="hidden" class="price" value="${menu.price}">
-									<a onclick=" modifyQty(this, 1)" style="cursor:pointer" >+</a>
-									<input type="number" id="quantity" name="quantity" class="qty" min="0" value="1" type="text">
-									<a onclick=" modifyQty(this, -1)" style="cursor:pointer">-</a>
-									<input type="button" type="button" id="tbtn" value="주문표에 추가" onclick="addToCartStorage(this)"></button>
-							</td>
-						</c:if>
-					</c:forEach>
-				</c:forEach>
-			</table> 
-	</div>
+				</c:if>
+			</c:forEach>
+		</c:forEach>
+	</table>
 </body>
 </html>

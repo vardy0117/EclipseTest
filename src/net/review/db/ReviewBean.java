@@ -4,7 +4,13 @@ import java.sql.Timestamp;
 
 public class ReviewBean {
 
-	
+	private String orderNo;
+	public String getOrderNo() {
+		return orderNo;
+	}
+	public void setOrderNo(String orderNo) {
+		this.orderNo = orderNo;
+	}
 	private String  reviewNo;
 	private String customerNo;
 	private String storeNo;
