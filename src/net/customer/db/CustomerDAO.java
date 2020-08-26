@@ -184,19 +184,20 @@ public class CustomerDAO {
 			String sql2 = "select * from customer where email=?";
 			pstmt = con.prepareStatement(sql2);
 			pstmt.setString(1, email);
-			System.out.println("sql2 CustomerInformation 占쏙옙占쏙옙 占쏙옙占쏙옙");
+			System.out.println("sql2 CustomerInformation 완료");
 			rs = pstmt.executeQuery();
 			rs.next();
 			/************************************************************************************/
 			
 			cb.setNickname(rs.getString("nickname"));
 			cb.setCustomerNo(rs.getString("customerNo"));
-
+			cb.setPhone(rs.getString("phone"));
 			/************************************************************************************/
 			// 占싸깍옙占싸쏙옙 占쏙옙占쏙옙 select 占쌔쇽옙 占쏙옙占쏙옙占쏙옙占쏙옙
 			System.out.println("-----------------------CustomerInformation ------------------------------------");
-			System.out.println("customer dao占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 占싻놂옙占쏙옙 :  " + cb.getNickname());
-			System.out.println("customer dao占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 customerNo :  " + cb.getCustomerNo());
+			System.out.println("customer dao 닉네임 값  :  " + cb.getNickname());
+			System.out.println("customer dao 고객번호 값 customerNo :  " + cb.getCustomerNo());
+			System.out.println("customer dao 폰번호 값 customerNo :  " + cb.getPhone());
 			
 			
 		} catch (Exception e) {
