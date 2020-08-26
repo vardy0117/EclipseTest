@@ -27,6 +27,7 @@ import net.customer.action.CustomerLogoutAction;
 import net.customer.action.CustomerModifyAction;
 import net.customer.db.CustomerBean;
 import net.customer.db.CustomerDAO;
+import net.manage.action.updateAction;
 import net.menu.action.MenuAction;
 import net.order.action.GetStoreInfoAction;
 import net.order.action.GetStoreMenuAction;
@@ -420,12 +421,13 @@ public class FrontController extends HttpServlet {
 		}
 		
 		if(command.equals("manageStore.do")) {
-//			if(request.getSession().getAttribute("ceoNo") == null) {
-//				response.setContentType("text/html;charset=UTF-8"); 
-//				PrintWriter out = response.getWriter();
-//				out.print("<script>alert('로그인을 해주세요.'); location.href='./CeoLogin.do';</script>");
-//				return;
-//		}
+			if(request.getSession().getAttribute("ceoNo") == null) {
+				response.setContentType("text/html;charset=UTF-8"); 
+				PrintWriter out = response.getWriter();
+				out.print("<script>alert('로그인을 해주세요.'); location.href='./CeoLogin.do';</script>");
+				return;
+			}
+			
 			String ceoNo = (String)request.getSession().getAttribute("ceoNo");
 			StoreAction action = new  StoreAction();
 			action.getCeoStore(request,response, ceoNo);
@@ -524,20 +526,48 @@ public class FrontController extends HttpServlet {
 			
 		}
 		
-		// insertOrderAction > payment.jsp
-		if(command.equals("order.do")){
+
+		if(command.equals("updateStore.do")){
+			 
+			int storeNo = Integer.parseInt(request.getParameter("storeNo"));
+			
+			forward = new ActionForward();
 			request.setCharacterEncoding("utf-8");
 			
-			OrderAction action = new OrderAction();			
-			int orderNo = action.insertOrderList(request, response);
+			StoreDAO storeDAO = new StoreDAO();
+			StoreBean storeBean = storeDAO.getStoreInfo(storeNo);
 			
-			action.insertOrderMenu(request, response, orderNo);
+			request.setAttribute("storeBean", storeBean);
+
+	
+		
+			forward.setView("ceoIndex.jsp?center=ceoStore/updateStore.jsp");
+			forward.execute(request, response);
 			
 			
 		}
-	
 		
+		if(command.equals("updateStoreAction.do")) {
+			request.setCharacterEncoding("utf-8");
+			String realFolder = getServletContext().getRealPath("/upload/store");
+			int max = 1000 * 1024 * 1024;
+			
+			MultipartRequest multi = new MultipartRequest(request, realFolder, max, "utf-8", new DefaultFileRenamePolicy());
+			StoreAction storeAction =new StoreAction();
+			storeAction.updateStore(request,response,multi);
+			
+		}
 		
+
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
