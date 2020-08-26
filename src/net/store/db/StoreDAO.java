@@ -17,7 +17,7 @@ import javax.sql.DataSource;
 import org.apache.catalina.Store;
 
 import com.sun.javafx.fxml.BeanAdapter;
-
+import com.sun.org.apache.xml.internal.security.keys.storage.StorageResolverException;
 
 import net.ceo.db.CeoBean;
 import net.menu.db.MenuBean;
@@ -226,6 +226,41 @@ public class StoreDAO {
 	}
 
 	
+	
+	///
+public void updateStore(StoreBean bean) {
+		try {
+			con = getConnection();
+
+			sql = "update store set name=?, roadAddress=?, detailAddress=?, category=?, phone=?, storeHours=?, message=?, image=?, deliveryArea=?, regNo=?, sido=? " +
+					"where storeNo=?";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setString(1, bean.getName());
+			pstmt.setString(2, bean.getRoadAddress());
+			pstmt.setString(3, bean.getDetailAddress());
+			pstmt.setString(4, bean.getCategory());
+			pstmt.setString(5, bean.getPhone());
+			pstmt.setString(6, bean.getStoreHours());
+			pstmt.setString(7, bean.getMessage());
+			pstmt.setString(8, bean.getImage());
+			pstmt.setString(9, bean.getDeliveryArea());
+			pstmt.setString(10, bean.getRegNo());
+			pstmt.setString(11, bean.getSido());
+			pstmt.setString(12, bean.getStoreNo());
+			 
+			pstmt.executeUpdate();
+			 
+			 
+			
+		} catch (Exception e) {
+			System.out.println("updateStore inner error"+e);
+			
+		}finally {
+			resourceClose();
+		}
+	}
 	
 	
 	

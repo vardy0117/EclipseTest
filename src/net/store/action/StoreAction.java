@@ -80,4 +80,43 @@ public class StoreAction {
 		request.setAttribute("ceoStorelist",list );
 		
 	}
+
+	public void updateStore(HttpServletRequest request, HttpServletResponse response, MultipartRequest multi) {
+		
+		StoreBean sbean = new StoreBean();
+		StoreDAO s = new StoreDAO();
+		
+		String storeNo = multi.getParameter("storeNo");
+		
+		sbean.setStoreNo(storeNo);
+		sbean.setName(multi.getParameter("name"));
+		sbean.setRoadAddress(multi.getParameter("roadAddress"));
+		sbean.setDetailAddress(multi.getParameter("detailAddress"));
+		sbean.setCategory(multi.getParameter("category"));
+		sbean.setPhone(multi.getParameter("phone"));
+		sbean.setStoreHours(multi.getParameter("opentime") + "~" + multi.getParameter("closetime"));
+		sbean.setMessage(multi.getParameter("message"));
+		sbean.setDeliveryArea(multi.getParameter("deliveryArea"));
+		sbean.setRegNo(multi.getParameter("regNo"));
+		sbean.setSido(multi.getParameter("sido"));
+		
+		if(multi.getParameter("fileFlag").equals("true")) {
+			Enumeration e = multi.getFileNames();
+			String image_name = (String)e.nextElement();
+			String filename = image_name;
+			sbean.setImage(multi.getFilesystemName(filename));
+		} else {
+			sbean.setImage( s.getStoreInfo(Integer.parseInt(storeNo)).getImage() );
+		}
+		
+		
+		s.updateStore(sbean);
+		
+		
+		System.out.println(sbean);
+		
+		
+		
+		
+	}
 }
