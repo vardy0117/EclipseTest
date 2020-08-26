@@ -50,7 +50,7 @@
 		width: 40px;
 	}
 	
-	.cartList li {
+	.cartUl li {
 		list-style-type : none;
 	}
 	
@@ -72,8 +72,7 @@
 	 }
  	 
  	function modifyMenuOnCartQty(element, qty){
- 		var item = new Array();
- 		var cart = null;
+ 		var cartItem = JSON.parse(sessionStorage.getItem("cart"));
  		
  		var name=$(element).parents("li").find(".name").html();
 		var basePrice=parseInt($(element).parents("li").find(".price").html())/
@@ -87,125 +86,118 @@
 		var quantity=parseInt(element.parentNode.querySelector(".qty").value);
 		var price = basePrice*quantity
  		
-		var orderMenu = {
+		var orderItem = {
 				 name:name,
 				 basePrice:basePrice,
 				 quantity:quantity,
 				 price:price
 				}
 		
-		var json = JSON.stringify(orderMenu);
-		
-		var itemList=JSON.parse(sessionStorage.getItem("cart"));
-		
-		for(var j=0; j<itemList.length; j++){
-			if (name == JSON.parse(itemList[j])["name"]){		
+		for(var j=0; j<cartItem.length; j++){
+			if (name == JSON.parse(cartItem[j])["name"]){		
 				
-				json = JSON.stringify(orderMenu);
+				var json = JSON.stringify(orderItem);
 					
-				item.splice(j, 1, json);
-				cart = JSON.stringify(item);
-				sessionStorage.setItem("cart",cart);
-				
+				cartItem.splice(j, 1, json);
 				break;
 			} 
 		}	
 			
+		var cart = JSON.stringify(cartItem);
+		sessionStorage.setItem("cart",cart);	
+			
 		getCart();	
  	}
  	 
- 	
-	var item = new Array();
-	var cart = null;
-	sessionStorage.setItem("cart",cart);
-	
-	function addToCartStorage(element){
+
+	function addToCartStorage(element){		
 		var name=element.parentNode.querySelector(".name").value;
 		var basePrice=parseInt(element.parentNode.querySelector(".price").value);
 		var quantity=parseInt(element.parentNode.querySelector(".qty").value);
 		var price = basePrice*quantity;
 		
-		var orderMenu = {
+		var orderItem = {
 			 name:name,
 			 basePrice:basePrice,
 			 quantity:quantity,
 			 price:price
 			}
 		
-		var json = JSON.stringify(orderMenu);
+		var json = JSON.stringify(orderItem);
 		
-		var itemList=JSON.parse(sessionStorage.getItem("cart"));
+		var cartItem=JSON.parse(sessionStorage.getItem("cart"));
 		
-		if(itemList==null){
-			item.push(json);
+		if(cartItem==null){
+			cartItem=new Array();
+			cartItem.push(json);
 		} else {
 			var i = null;
-			for(j=0; j<itemList.length; j++){
-				if (name == JSON.parse(itemList[j])["name"]){	
+			for(j=0; j<cartItem.length; j++){
+				if (name == JSON.parse(cartItem[j])["name"]){	
 					i=j;
 				}	
 			}
+			
 			if(i!=null){	
-				quantity+=parseInt(JSON.parse(item[i])["quantity"]);
+				quantity+=parseInt(JSON.parse(cartItem[i])["quantity"]);
 				price=basePrice*quantity;			
 					
-				orderMenu["quantity"]=quantity;
-				orderMenu["price"]=price;
+				orderItem["quantity"]=quantity;
+				orderItem["price"]=price;
 				
-				json = JSON.stringify(orderMenu);
+				json = JSON.stringify(orderItem);
 					
-				item.splice(i, 1, json);
+				cartItem.splice(i, 1, json);
 			} else {
-				item.push(json);
+				cartItem.push(json);
 			}
 			
 		}
 			
-		cart = JSON.stringify(item);
+		cart = JSON.stringify(cartItem);
 		sessionStorage.setItem("cart",cart);	
 		
-		itemList=JSON.parse(sessionStorage.getItem("cart"));
-		if(itemList!=null){
+		if(cart!=null){
 			getCart();
 		}	
 	} 
 	
 	function getCart(){
-		var itemList=JSON.parse(sessionStorage.getItem("cart"));
+		var cart=JSON.parse(sessionStorage.getItem("cart"));
 		var tag = "";
 		var totalPrice = 0;
 		
-		for(i=0; i<itemList.length; i++){
+		for(i=0; i<cart.length; i++){
 			tag += 
-				'<li class="cartListLi" id=food'+i+'>'+
+				'<li class="cartLi" id=food'+i+'>'+
 					'<div class="row">'+
 						'<div class="name">'+
-						JSON.parse(item[i])["name"]+
+						JSON.parse(cart[i])["name"]+
 						'</div>'+
 						'<div class="left">'+
 							'<a class="btn del-menu">삭제</a>'+
 							'<span class="price">'+
-							JSON.parse(item[i])["price"]+
+							JSON.parse(cart[i])["price"]+
 							'</span>'+
 						'</div>'+
 						'<div class="right">'+
 							'<a onclick=" modifyMenuOnCartQty(this, 1)" style="cursor:pointer" >+</a>'+
-							'<span class="orderQuantity"><input type="number" class="qty" value='+JSON.parse(item[i])["quantity"]+' readOnly> </span>'+
+							'<span class="orderQuantity"><input type="number" class="qty" value='+JSON.parse(cart[i])["quantity"]+' readOnly> </span>'+
 							'<a onclick=" modifyMenuOnCartQty(this, -1)" style="cursor:pointer">-</a>'+	
 						'</div>'+
 					'</div>'+
 				'</li>';
 				
-			totalPrice += JSON.parse(item[i])["price"];
+			totalPrice += JSON.parse(cart[i])["price"];
 		}
 		
-		$("#cartListUl").html(tag);
+		$("#cartUl").html(tag);
 		$("#total").html("총 합계 : "+totalPrice+ " 원");
 	}
 	
 	
 	function order(){
-		var cnt = $(".cartListLi").length;
+		var cnt = $(".cartLi").length;
 		console.log(cnt)
 		var cartList = new Array();
 		
@@ -253,16 +245,16 @@
 </script>
 <body>
 	<!-- 플로팅 배너 -->
-	<!-- <div class="cart">  --> 
-		<h1>장바구니</h1>
+	<div class="cart">  
+		<h2>장바구니</h2>
 			<div id = "cartDiv">
-				<ul id="cartListUl" class="cartList">
+				<ul id="cartUl" class="cartUl">
 				</ul>
 			</div>
 			<hr>
 	    	<h1 id="total"></h1>
-	    <input type="button" value="주문하기" onclick="order();">
-	<!-- </div> -->
+	    <input type="button" value="주문" onclick="order();">
+	</div>
 
 	<div id="mainDiv">
 		<h1>store.jsp</h1>
