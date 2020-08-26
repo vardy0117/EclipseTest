@@ -31,7 +31,9 @@ import net.manage.action.updateAction;
 import net.menu.action.MenuAction;
 import net.order.action.GetStoreInfoAction;
 import net.order.action.GetStoreMenuAction;
+import net.order.action.GetStoreReviewAction;
 import net.order.action.OrderAction;
+import net.orderList.db.OrderListBean;
 import net.store.action.StoreAction;
 import net.store.db.StoreBean;
 import net.store.db.StoreDAO;
@@ -314,7 +316,7 @@ public class FrontController extends HttpServlet {
 
 			// store.GetStore((String) request.getSession().getAttribute("orderSido"));
 			System.out.println("SearchStore 프론트 컨트롤러 -> 값가져오기 테스트 " + storelist.toString());
-			System.out.println("주소 변경 : " + request.getSession().getAttribute("orderSido"));
+			System.out.println("주소 시도  : " + request.getSession().getAttribute("orderSido"));
 			forward = new ActionForward();
 			forward.setView("index.jsp?center=store/searchStore.jsp");
 			forward.execute(request, response);
@@ -343,10 +345,15 @@ public class FrontController extends HttpServlet {
 				
 				GetStoreMenuAction action2 = new GetStoreMenuAction();
 					action2.getStoreMenu(request, response, storeNo);
+					
+				GetStoreReviewAction action3 = new GetStoreReviewAction();
+					action3.getStoreReview(request, response, storeNo);
 				
 				forward = new ActionForward();
 				forward.setRedirect(false);
+
 				forward.setView("index.jsp?center=store/store.jsp");
+
 				
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -515,11 +522,11 @@ public class FrontController extends HttpServlet {
 			MenuAction menuAction = new MenuAction();
 			menuAction.insertStore(request, response, multi, storeNo);
 			
-			//int result =sDAO.insertStore(sbean);
-			
+			//int result =sDAO.insertStore(sbean);	
 			
 		}
 		
+
 		if(command.equals("updateStore.do")){
 			 
 			int storeNo = Integer.parseInt(request.getParameter("storeNo"));
@@ -531,6 +538,8 @@ public class FrontController extends HttpServlet {
 			StoreBean storeBean = storeDAO.getStoreInfo(storeNo);
 			
 			request.setAttribute("storeBean", storeBean);
+
+	
 		
 			forward.setView("ceoIndex.jsp?center=ceoStore/updateStore.jsp");
 			forward.execute(request, response);

@@ -54,6 +54,12 @@
 	}
 </style>
 </head>
+<script>
+	function createCart(){
+		var cart = null;
+		sessionStorage.setItem("cart",cart);
+	}
+</script>
 <body>
 	<div id="topDiv">
 		<div id="logoBody">
@@ -63,7 +69,7 @@
 			<c:when test="${empty sessionScope.customerNo}">
 				<div id="loginAndJoin">
 				
-					<a href="./CustomerLogin.do">로그인</a> | 
+					<a href="./CustomerLogin.do" onclik="createCart();">로그인</a> | 
 					<a href="./CustomerJoin.do">회원가입</a>
 				</div>
 			</c:when>

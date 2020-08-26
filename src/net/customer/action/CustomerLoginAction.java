@@ -69,7 +69,8 @@ public class CustomerLoginAction {
 				// session.setAttribute("nickname", a.getNickname());
 				session.setAttribute("nickname", a.getNickname());
 				session.setAttribute("customerNo", a.getCustomerNo());
-				//session.setAttribute("email", email);
+				session.setAttribute("phone", a.getPhone());
+				System.out.println("세션 폰번호 값 " + session.getAttribute("phone"));
 				session.setAttribute("sido", a.getSido());
 				
 				

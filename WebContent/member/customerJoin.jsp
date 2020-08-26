@@ -107,14 +107,14 @@
 	
 	function checkData(){
 		if(document.fr.emailId.value == ""){
-			$("#emailChkMsg").text("email ì´ë¦„ì„ ì…ë ¥í•´ ì£¼ì„¸ìš”");
+			$("#emailChkMsg").text("email ÀÌ¸§À» ÀÔ·ÂÇØ ÁÖ¼¼¿ä");
 			$("#emailChkMsg").css("color","red");
 	    	document.fr.emailId.focus();
 	    	return false;
 	 	}		
 
 		if(document.fr.emailServer.value == ""){
-			$("#emailChkMsg").text("email ì£¼ì†Œë¥¼ ì„ íƒí•´ ì£¼ì„¸ìš”");
+			$("#emailChkMsg").text("email ÁÖ¼Ò¸¦ ¼±ÅÃÇØ ÁÖ¼¼¿ä");
 			$("#emailChkMsg").css("color","red");
 	    	document.fr.emailServer.focus();
 	    	return false;
@@ -131,28 +131,28 @@
 		}	
 			
 		if(document.fr.nickname.value == ""){
-			$("#nicknameChkMsg").text("ë‹‰ë„¤ì„ì„ ì…ë ¥í•´ ì£¼ì„¸ìš”");
+			$("#nicknameChkMsg").text("´Ğ³×ÀÓÀ» ÀÔ·ÂÇØ ÁÖ¼¼¿ä");
 			$("#nicknameChkMsg").css("color","red");
 		   	document.fr.nickname.focus();
 		   	return false;
 		}
 		 	
 		if(document.fr.phone.value == ""){
-			$("#phoneChkMsg").text("ì—°ë½ì²˜ë¥¼ ì…ë ¥í•´ ì£¼ì„¸ìš”");
+			$("#phoneChkMsg").text("¿¬¶ôÃ³¸¦ ÀÔ·ÂÇØ ÁÖ¼¼¿ä");
 			$("#phoneChkMsg").css("color","red");
 		   	document.fr.phone.focus();
 		   	return false;
 		}
 		 	
 		 if(document.fr.roadAddress.value == ""){
-		 	$("#roadAddressChkMsg").text("ì£¼ì†Œë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”");
+		 	$("#roadAddressChkMsg").text("ÁÖ¼Ò¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä");
 		 	$("#roadAddressChkMsg").css("color","red");
 		   	document.fr.roadAddress.focus();
 		   	return false;
 		 }
 		 	
 		 if(document.fr.detailAddress.value == ""){
-		 	$("#detailAddressChkMsg").text('ìƒì„¸ì£¼ì†Œë¥¼ ì…ë ¥í•˜ì„¸ìš” ì—†ì„ ì‹œ \"ì—†ìŒ\"ì´ë¼ê³  ì…ë ¥í•´ì£¼ì„¸ìš”');
+		 	$("#detailAddressChkMsg").text('»ó¼¼ÁÖ¼Ò¸¦ ÀÔ·ÂÇÏ¼¼¿ä ¾øÀ» ½Ã \"¾øÀ½\"ÀÌ¶ó°í ÀÔ·ÂÇØÁÖ¼¼¿ä');
 		 	$("#detailAddressChkMsg").css("color","red");
 		   	document.fr.detailAddress.focus();
 		   	return false;
@@ -170,8 +170,8 @@
 		}
 	}
 
-	var usableMsg="ì‚¬ìš© ê°€ëŠ¥í•œ ê³„ì •ì…ë‹ˆë‹¤!";
-	var notuseableMsg="ì´ë¯¸ ê°€ì…ëœ ê³„ì •ì…ë‹ˆë‹¤!";
+	var usableMsg="»ç¿ë °¡´ÉÇÑ °èÁ¤ÀÔ´Ï´Ù!";
+	var notuseableMsg="ÀÌ¹Ì °¡ÀÔµÈ °èÁ¤ÀÔ´Ï´Ù!";
 	
 	function emailCheck(){
 		readyEmailCheck();
@@ -196,7 +196,7 @@
 				}, 
 				error:function(data,textStatus){
 					console.log(data);
-					alert("ì—ëŸ¬ê°€ ë°œìƒí–ˆìŠˆ");
+					alert("¿¡·¯°¡ ¹ß»ıÇß½´");
 				}
 			}); // $ajax()
 		} // if
@@ -206,11 +206,11 @@
 		$("#emailChkMsg").html("<img src='./images/loading.gif' width='20' height='20' stye='display: block; margin: 0px auto;'>")
 	} 
 		
-	var pwChkSuccessMsg="ë¹„ë°€ ë²ˆí˜¸ í™•ì¸ ì™„ë£Œ!";
+	var pwChkSuccessMsg="ºñ¹Ğ ¹øÈ£ È®ÀÎ ¿Ï·á!";
 	
 	function passwordCheck(){
 		if(document.fr.password.value ==""){
-			$("#passwordChkMsg").text("ë¹„ë°€ë²ˆí˜¸ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”!");
+			$("#passwordChkMsg").text("ºñ¹Ğ¹øÈ£¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä!");
 			$("#passwordChkMsg").css("color", "red");
 			if(document.fr.password2.value ==""){
 				$("#password2ChkMsg").text("");
@@ -223,10 +223,10 @@
 		} else if(document.fr.password.value !=""){
 			$("#passwordChkMsg").text("");
 			if(document.fr.password2.value ==""){
-				$("#password2ChkMsg").text("ë¹„ë°€ë²ˆí˜¸ë¥¼ í•œ ë²ˆ ë” ì…ë ¥í•´ì£¼ì„¸ìš”!");
+				$("#password2ChkMsg").text("ºñ¹Ğ¹øÈ£¸¦ ÇÑ ¹ø ´õ ÀÔ·ÂÇØÁÖ¼¼¿ä!");
 				$("#password2ChkMsg").css("color", "red");
 			} else if(document.fr.password.value != document.fr.password2.value){
-		 		$("#password2ChkMsg").text("ë¹„ë°€ë²ˆí˜¸ê°€ ë‹¤ë¦…ë‹ˆë‹¤.");
+		 		$("#password2ChkMsg").text("ºñ¹Ğ¹øÈ£°¡ ´Ù¸¨´Ï´Ù.");
 		 		$("#password2ChkMsg").css("color", "red");
 			} else if (document.fr.password.value == document.fr.password2.value) {
 				$("#password2ChkMsg").text(pwChkSuccessMsg);
@@ -241,37 +241,33 @@
     function execDaumPostcode() {
         new daum.Postcode({
             oncomplete: function(data) {
-                // íŒì—…ì—ì„œ ê²€ìƒ‰ê²°ê³¼ í•­ëª©ì„ í´ë¦­í–ˆì„ë•Œ ì‹¤í–‰í•  ì½”ë“œë¥¼ ì‘ì„±í•˜ëŠ” ë¶€ë¶„.
+                // ÆË¾÷¿¡¼­ °Ë»ö°á°ú Ç×¸ñÀ» Å¬¸¯ÇßÀ»¶§ ½ÇÇàÇÒ ÄÚµå¸¦ ÀÛ¼ºÇÏ´Â ºÎºĞ.
 
-                // ë„ë¡œëª… ì£¼ì†Œì˜ ë…¸ì¶œ ê·œì¹™ì— ë”°ë¼ ì£¼ì†Œë¥¼ í‘œì‹œí•œë‹¤.
-                // ë‚´ë ¤ì˜¤ëŠ” ë³€ìˆ˜ê°€ ê°’ì´ ì—†ëŠ” ê²½ìš°ì—” ê³µë°±('')ê°’ì„ ê°€ì§€ë¯€ë¡œ, ì´ë¥¼ ì°¸ê³ í•˜ì—¬ ë¶„ê¸° í•œë‹¤.
-                var roadAddr = data.roadAddress; // ë„ë¡œëª… ì£¼ì†Œ ë³€ìˆ˜
-                var extraRoadAddr = ''; // ì°¸ê³  í•­ëª© ë³€ìˆ˜
-                var bname = data.bname;              
-         
-                //var cutaddress2 =  address.substring(0,3);
-                //alert("ìë¥¸ ì£¼ì†Œ2  : " +cutaddress2);
-
-               // ë²•ì •ë™ëª…ì´ ìˆì„ ê²½ìš° ì¶”ê°€í•œë‹¤. (ë²•ì •ë¦¬ëŠ” ì œì™¸)
-                // ë²•ì •ë™ì˜ ê²½ìš° ë§ˆì§€ë§‰ ë¬¸ìê°€ "ë™/ë¡œ/ê°€"ë¡œ ëë‚œë‹¤.
-                if(data.bname !== '' && /[ë™|ë¡œ|ê°€]$/g.test(data.bname)){
-                    extraRoadAddr += data.bname;
-                }
+                // µµ·Î¸í ÁÖ¼ÒÀÇ ³ëÃâ ±ÔÄ¢¿¡ µû¶ó ÁÖ¼Ò¸¦ Ç¥½ÃÇÑ´Ù.
+                // ³»·Á¿À´Â º¯¼ö°¡ °ªÀÌ ¾ø´Â °æ¿ì¿£ °ø¹é('')°ªÀ» °¡Áö¹Ç·Î, ÀÌ¸¦ Âü°íÇÏ¿© ºĞ±â ÇÑ´Ù.
+                var roadAddr = data.roadAddress; // µµ·Î¸í ÁÖ¼Ò º¯¼ö
+                var extraRoadAddr = ''; // Âü°í Ç×¸ñ º¯¼ö
+                var bname = data.bname;
                 
-                if(data.sigungu !== '' && /[ë™|ë¡œ|ê°€]$/g.test(data.bname)){
+                
+                //var cutaddress2 =  address.substring(0,3);
+                //alert("ÀÚ¸¥ ÁÖ¼Ò2  : " +cutaddress2);
+                
+                // ¹ıÁ¤µ¿¸íÀÌ ÀÖÀ» °æ¿ì Ãß°¡ÇÑ´Ù. (¹ıÁ¤¸®´Â Á¦¿Ü)
+                // ¹ıÁ¤µ¿ÀÇ °æ¿ì ¸¶Áö¸· ¹®ÀÚ°¡ "µ¿/·Î/°¡"·Î ³¡³­´Ù.
+                if(data.bname !== '' && /[µ¿|·Î|°¡]$/g.test(data.bname)){
                     extraRoadAddr += data.bname;
                 }
- 
-                // ê±´ë¬¼ëª…ì´ ìˆê³ , ê³µë™ì£¼íƒì¼ ê²½ìš° ì¶”ê°€í•œë‹¤.
+                // °Ç¹°¸íÀÌ ÀÖ°í, °øµ¿ÁÖÅÃÀÏ °æ¿ì Ãß°¡ÇÑ´Ù.
                 if(data.buildingName !== '' && data.apartment === 'Y'){
                    extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
                 }
-                // í‘œì‹œí•  ì°¸ê³ í•­ëª©ì´ ìˆì„ ê²½ìš°, ê´„í˜¸ê¹Œì§€ ì¶”ê°€í•œ ìµœì¢… ë¬¸ìì—´ì„ ë§Œë“ ë‹¤.
+                // Ç¥½ÃÇÒ Âü°íÇ×¸ñÀÌ ÀÖÀ» °æ¿ì, °ıÈ£±îÁö Ãß°¡ÇÑ ÃÖÁ¾ ¹®ÀÚ¿­À» ¸¸µç´Ù.
                 if(extraRoadAddr !== ''){
                     extraRoadAddr = ' (' + extraRoadAddr + ')';
                 }
 
-                // ìš°í¸ë²ˆí˜¸ì™€ ì£¼ì†Œ ì •ë³´ë¥¼ í•´ë‹¹ í•„ë“œì— ë„£ëŠ”ë‹¤.
+                // ¿ìÆí¹øÈ£¿Í ÁÖ¼Ò Á¤º¸¸¦ ÇØ´ç ÇÊµå¿¡ ³Ö´Â´Ù.
                 document.getElementById('roadAddress').value = roadAddr;
                 document.getElementById('bname').value = bname;
                 document.fr.sido.value = data.sido;
@@ -284,16 +280,16 @@
 
 	<div id="mainDiv"> 
 		<div id="formDiv">
-			<h1 style="text-align: center;">ì¼ë°˜ íšŒì› ê°€ì…</h1>
+			<h1 style="text-align: center;">ÀÏ¹İ È¸¿ø °¡ÀÔ</h1>
 			<form action="./CustomerJoinAction.do" id="join" method="post" name="fr">
 				<table>
 					<tr>
-						<td class="td_left">ì´ë©”ì¼</td>
+						<td class="td_left">ÀÌ¸ŞÀÏ</td>
 						<td class="td_right">
-							<input class="textBox" type="text" name="emailId" size="10" placeholder="ì´ë©”ì¼ ì£¼ì†Œ"> @
+							<input class="textBox" type="text" name="emailId" size="10" placeholder="ÀÌ¸ŞÀÏ ÁÖ¼Ò"> @
 							<input class="textBox" type="text" name="emailServer" onfocusout="emailCheck()"/>
 							<select id="emailServerSelBox" name="emailServerSelBox" onchange="emailAddress_Change()" onfocusout="emailCheck()"> 
-								<option value="">ì§ì ‘ ì…ë ¥</option>
+								<option value="">Á÷Á¢ ÀÔ·Â</option>
 								<option value="naver.com">naver.com</option>
 								<option value="google.com">google.com</option>
 								<option value="hanmail.net">hanmail.net</option>
@@ -302,31 +298,31 @@
 					</tr>
 					<tr>
 						<td class="td_left"></td>
-						<td class="td_right"><span id=emailChkMsg>ã€€</span></td>
+						<td class="td_right"><span id=emailChkMsg>¡¡</span></td>
 					</tr>
 					<tr>
-						<td class="td_left">ë¹„ë°€ë²ˆí˜¸</td>
+						<td class="td_left">ºñ¹Ğ¹øÈ£</td>
 						<td class="td_right">
 							<input class="textBox" type="password" id="password" name="password" onfocusout="passwordCheck()">
 							<span id=passwordChkMsg></span>
 						</td>
 					</tr>
 					<tr>
-						<td class="td_left">ë¹„ë°€ë²ˆí˜¸ í™•ì¸</td>
+						<td class="td_left">ºñ¹Ğ¹øÈ£ È®ÀÎ</td>
 						<td class="td_right">
 							<input class="textBox" type="password" id="password2" name="password2" class="password2" onfocusout="passwordCheck()">
 							<span id=password2ChkMsg></span>
 						</td>
 					</tr>
 					<tr>
-						<td class="td_left">ë‹‰ë„¤ì„</td>
+						<td class="td_left">´Ğ³×ÀÓ</td>
 						<td class="td_right">
 							<input class="textBox" type="text" id="nickname" name="nickname" onfocusout="if(this.value!=''){document.getElementById('nicknameChkMsg').innerText='';}">
 							<span id=nicknameChkMsg></span>
 						</td>
 					</tr>
 					<tr>
-						<td class="td_left">ì—°ë½ì²˜</td>
+						<td class="td_left">¿¬¶ôÃ³</td>
 						<td class="td_right">
 							<select id="phoneFront" name="phoneFront"> 
 								<option value="010">010</option>
@@ -335,14 +331,14 @@
 								<option value="017">017</option>
 								<option value="019">019</option>
 							</select>
-							<input class="textBox" type="text" id="phone" name="phone" placeholder="ìˆ«ìë§Œ ì…ë ¥í•˜ì„¸ìš”." numberOnly>
+							<input class="textBox" type="text" id="phone" name="phone" placeholder="¼ıÀÚ¸¸ ÀÔ·ÂÇÏ¼¼¿ä." numberOnly>
 							<span id=phoneChkMsg></span>
 						</td>
 					</tr>
 					<tr>
-						<td class="td_left">ì£¼ì†Œ</td>
+						<td class="td_left">ÁÖ¼Ò</td>
 						<td class="td_right">
-							<input class="textBox" type="text" id="roadAddress" name="roadAddress" size="50" placeholder="í´ë¦­í•˜ì—¬ ì£¼ì†Œê²€ìƒ‰" onclick="execDaumPostcode()" readOnly> 
+							<input class="textBox" type="text" id="roadAddress" name="roadAddress" size="50" placeholder="Å¬¸¯ÇÏ¿© ÁÖ¼Ò°Ë»ö" onclick="execDaumPostcode()" readOnly> 
 							<span id=roadAddressChkMsg></span>
 						</td>
 					</tr>
@@ -350,26 +346,26 @@
 						<td class="td_left"></td>
 						<td class="td_right">
 							<span id="guide" style="color:#999;display:none"></span>
-							<input class="textBox" type="text" id="detailAddress"  name="detailAddress" size="50" placeholder="ìƒì„¸ ì£¼ì†Œ ì…ë ¥">
+							<input class="textBox" type="text" id="detailAddress"  name="detailAddress" size="50" placeholder="»ó¼¼ ÁÖ¼Ò ÀÔ·Â">
 							<br><span id=detailAddressChkMsg></span>
 						</td>
 					</tr>
 					<tr>
 						<td colspan="2" style="text-align: center;">
-							<input type="checkbox"  id="agreeAD" name="agreeAD" class="agree" value="T"> ì´ë©”ì¼ë¡œ ê´‘ê³  ìˆ˜ì‹  ì—¬ë¶€
+							<input type="checkbox"  id="agreeAD" name="agreeAD" class="agree" value="T"> ÀÌ¸ŞÀÏ·Î ±¤°í ¼ö½Å ¿©ºÎ
 						</td>
 					</tr>
 					<tr>
 						<td colspan="2" style="text-align:center;">
 							<br>
-							<input class="btn" type="submit" id="sbtn" value="íšŒì›ê°€ì…" class="submit">
-							<input class="btn" type="reset" id="rbtn" value="ë‹¤ì‹œì…ë ¥" class="cancel">
+							<input class="btn" type="submit" id="sbtn" value="È¸¿ø°¡ÀÔ" class="submit">
+							<input class="btn" type="reset" id="rbtn" value="´Ù½ÃÀÔ·Â" class="cancel">
 						</td>
 					</tr>
 					
 				</table>
-				<input type="hidden" id="bname" name="bname" class="bname" size="30" placeholder="ë°°ë‹¬í¬ë§ì§€ì—­ ex) ì¥ì „ë™">
-				<input type="hidden" name="sido"> <!-- ì‹œ, ë„ -->
+				<input type="hidden" id="bname" name="bname" class="bname" size="30" placeholder="¹è´ŞÈñ¸ÁÁö¿ª ex) ÀåÀüµ¿">
+				<input type="hidden" name="sido"> <!-- ½Ã, µµ -->
 			</form>
 		</div>
 	</div>
