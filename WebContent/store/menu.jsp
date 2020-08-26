@@ -70,45 +70,6 @@
 			 element.parentNode.querySelector(".qty").value--;
 		 }
 	 }
- 	 
- 	function modifyMenuOnCartQty(element, qty){
- 		var cartItem = JSON.parse(sessionStorage.getItem("cart"));
- 		
- 		var name=$(element).parents("li").find(".name").html();
-		var basePrice=parseInt($(element).parents("li").find(".price").html())/
-					  parseInt($(element).parents("li").find(".qty").val());
-		if(qty == 1) {
-			 element.parentNode.querySelector(".qty").value++;
-		 } else if (element.parentNode.querySelector(".qty").value > 0 && qty ==-1) {
-			 element.parentNode.querySelector(".qty").value--;
-		 }
-		
-		var quantity=parseInt(element.parentNode.querySelector(".qty").value);
-		var price = basePrice*quantity
- 		
-		var orderItem = {
-				 name:name,
-				 basePrice:basePrice,
-				 quantity:quantity,
-				 price:price
-				}
-		
-		for(var j=0; j<cartItem.length; j++){
-			if (name == JSON.parse(cartItem[j])["name"]){		
-				
-				var json = JSON.stringify(orderItem);
-					
-				cartItem.splice(j, 1, json);
-				break;
-			} 
-		}	
-			
-		var cart = JSON.stringify(cartItem);
-		sessionStorage.setItem("cart",cart);	
-			
-		getCart();	
- 	}
- 	 
 
 	function addToCartStorage(element){		
 		var name=element.parentNode.querySelector(".name").value;
@@ -244,7 +205,8 @@
 	
 </script>
 <body>
-	<!-- 플로팅 배너 -->
+<!-- 플로팅 배너 -->
+<!-- 	
 	<div class="cart">  
 		<h2>장바구니</h2>
 			<div id = "cartDiv">
@@ -255,29 +217,8 @@
 	    	<h1 id="total"></h1>
 	    <input type="button" value="주문" onclick="order();">
 	</div>
-
-	<div id="mainDiv">
-		<h1>store.jsp</h1>
-		<br>
-		<h2>storeNo : ${storeNo}</h2>
-		<h2>현재는 우선 storeNo만 들고옴 컨트롤러에서 storeNo를 이용해 storeBean을 들고와야함!!</h2>
-		<h2>그리고 storeNo로 menu / review도 들고와야함</h2>
-		<h3>여기서 메뉴선택 및 수량지정 할 수 있는 로직을 구현 해야함.</h3>
-		<c:set var="info" value="${requestScope.storeInfo}"/>
-		스토어 넘버 : ${info.storeNo} <br>
-		사장님 넘버 : ${info.ceoNo} <br>
-		스토어 이름 : ${info.name} <br>
-		도로명 : ${info.roadAddress} <br>
-		상세주소 : ${info.detailAddress} <br>
-		카테고리 : ${info.category} <br>
-		폰 : ${info.phone} <br>
-		가게이름 : ${info.storeHours} <br>
-		사장님 한마디 : ${info.message} <br>
-		가게 사진: ${info.image} <br>
-		별점?: ${info.points} <br>
-		누적주문수 : ${info.orderCount} <br>
-		사업자 등록 번호 : ${info.regNo} <br>
-			
+ -->
+	<div id="mainMenuDiv">
 			<table border="1">
 				<c:forEach var="category_" items="${requestScope.categoryList}">
 					<tr>

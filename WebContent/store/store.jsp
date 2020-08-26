@@ -149,59 +149,6 @@
 		getCart();	
  	}
  	 
-
-	function addToCartStorage(element){		
-		var name=element.parentNode.querySelector(".name").value;
-		var basePrice=parseInt(element.parentNode.querySelector(".price").value);
-		var quantity=parseInt(element.parentNode.querySelector(".qty").value);
-		var price = basePrice*quantity;
-		
-		var orderItem = {
-			 name:name,
-			 basePrice:basePrice,
-			 quantity:quantity,
-			 price:price
-			}
-		
-		var json = JSON.stringify(orderItem);
-		
-		var cartItem=JSON.parse(sessionStorage.getItem("cart"));
-		
-		if(cartItem==null){
-			cartItem=new Array();
-			cartItem.push(json);
-		} else {
-			var i = null;
-			for(j=0; j<cartItem.length; j++){
-				if (name == JSON.parse(cartItem[j])["name"]){	
-					i=j;
-				}	
-			}
-			
-			if(i!=null){	
-				quantity+=parseInt(JSON.parse(cartItem[i])["quantity"]);
-				price=basePrice*quantity;			
-					
-				orderItem["quantity"]=quantity;
-				orderItem["price"]=price;
-				
-				json = JSON.stringify(orderItem);
-					
-				cartItem.splice(i, 1, json);
-			} else {
-				cartItem.push(json);
-			}
-			
-		}
-			
-		cart = JSON.stringify(cartItem);
-		sessionStorage.setItem("cart",cart);	
-		
-		if(cart!=null){
-			getCart();
-		}	
-	} 
-	
 	function getCart(){
 		var cart=JSON.parse(sessionStorage.getItem("cart"));
 		var tag = "";
@@ -284,6 +231,8 @@
 	
 </script>
 <body>
+	<jsp:include page="/inc/top.jsp"/>
+	
 	<!-- 플로팅 배너 -->
 	<div class="cart">  
 		<h2>장바구니</h2>
@@ -296,9 +245,6 @@
 	    <input type="button" value="주문" onclick="order();">
 	</div>
 
-
-
-
 	<div id="mainDiv">
 		<h1>store.jsp</h1>
 		<br>
@@ -307,19 +253,11 @@
 		<h2>그리고 storeNo로 menu / review도 들고와야함</h2>
 		<h3>여기서 메뉴선택 및 수량지정 할 수 있는 로직을 구현 해야함.</h3>
 		<c:set var="info" value="${requestScope.storeInfo}"/>
-		스토어 넘버 : ${info.storeNo} <br>
-		사장님 넘버 : ${info.ceoNo} <br>
 		스토어 이름 : ${info.name} <br>
-		도로명 : ${info.roadAddress} <br>
-		상세주소 : ${info.detailAddress} <br>
-		카테고리 : ${info.category} <br>
-		폰 : ${info.phone} <br>
 		가게이름 : ${info.storeHours} <br>
 		사장님 한마디 : ${info.message} <br>
 		가게 사진: ${info.image} <br>
 		별점?: ${info.points} <br>
-		누적주문수 : ${info.orderCount} <br>
-		사업자 등록 번호 : ${info.regNo} <br>
 
 		<nav id="topMenu">
 		<ul>
@@ -333,16 +271,13 @@
 		</ul>
 		</nav>
 
-
-
-		<c:set var="storeCenter" value="${param.storeCenter}" />
-		<c:if test="${storeCenter==null}">
-			<c:set var="center" value="/store/menu.jsp" />
-		</c:if>
-
-		<jsp:include page="${storeCenter }" />
-		
-
+	<c:set  var="storeCenter" value="${param.storeCenter}"/>
+	<c:if test="${storeCenter==null}">
+		<c:set var="storeCenter" value="/store/menu.jsp" />
+	</c:if>
+	<jsp:include page="${storeCenter}"/>
 	</div>
+	
+	<jsp:include page="/inc/bottom.jsp"/>
 </body>
 </html>
