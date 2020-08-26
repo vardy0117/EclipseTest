@@ -14,11 +14,8 @@
 </head>
 <body>
 
-	<h1>
-	스토어 정보 가져오기
-	</h1>
 	<div id="mainDiv">
-		<h1>store.jsp</h1>
+		<h1>storeinformation.jsp</h1>
 		<br>
 		<h2>storeNo : ${storeNo}</h2>
 		<h2>현재는 우선 storeNo만 들고옴 컨트롤러에서 storeNo를 이용해 storeBean을 들고와야함!!</h2>

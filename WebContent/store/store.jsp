@@ -244,20 +244,8 @@
 	    	<h1 id="total"></h1>
 	    <input type="button" value="주문" onclick="order();">
 	</div>
-
-	<div id="mainDiv">
-		<h1>store.jsp</h1>
-		<br>
-		<h2>storeNo : ${storeNo}</h2>
-		<h2>현재는 우선 storeNo만 들고옴 컨트롤러에서 storeNo를 이용해 storeBean을 들고와야함!!</h2>
-		<h2>그리고 storeNo로 menu / review도 들고와야함</h2>
-		<h3>여기서 메뉴선택 및 수량지정 할 수 있는 로직을 구현 해야함.</h3>
-		<c:set var="info" value="${requestScope.storeInfo}"/>
-		스토어 이름 : ${info.name} <br>
-		가게이름 : ${info.storeHours} <br>
-		사장님 한마디 : ${info.message} <br>
-		가게 사진: ${info.image} <br>
-		별점?: ${info.points} <br>
+<c:set var="info" value="${requestScope.storeInfo}"/>
+	
 
 		<nav id="topMenu">
 		<ul>
@@ -276,8 +264,7 @@
 		<c:set var="storeCenter" value="/store/menu.jsp" />
 	</c:if>
 	<jsp:include page="${storeCenter}"/>
-	</div>
-	
+
 	<jsp:include page="/inc/bottom.jsp"/>
 </body>
 </html>
