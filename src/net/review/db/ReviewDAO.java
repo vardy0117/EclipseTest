@@ -38,15 +38,16 @@ public class ReviewDAO {
    /******************************************************************************************/
    public ArrayList<ReviewBean> getReview(String storeNo){
       ArrayList<ReviewBean> list = new ArrayList<ReviewBean>();
-      ReviewBean rBean = new ReviewBean();
+      ReviewBean rBean;
       
       try {
          con = getConnection();
-         sql = "select * from review where storeNo=?";
+         sql = "select * from review where storeNo=? order by date desc";
          pstmt=con.prepareStatement(sql);
          pstmt.setString(1, storeNo);
          rs = pstmt.executeQuery();
          while(rs.next()){
+        	rBean = new ReviewBean();
             rBean.setReviewNo(rs.getString(1));
             rBean.setOrderNo(rs.getString(2));
             rBean.setCustomerNo(rs.getString(3));
