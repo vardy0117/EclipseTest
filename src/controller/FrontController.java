@@ -362,14 +362,16 @@ public class FrontController extends HttpServlet {
 			forward.execute(request, response);
 		}
 		
-		if(command.equals("order.do")){
-			int storeNo = Integer.parseInt(request.getParameter("stroeNo"));
-			int customerNo= Integer.parseInt((String) request.getSession().getAttribute("customerNo"));
+		if(command.equals("Order.do")){
+		//	int storeNo = Integer.parseInt(request.getParameter("stroeNo"));
+		//	int customerNo= Integer.parseInt((String) request.getSession().getAttribute("customerNo"));
 			
 			try{
 				OrderAction action = new OrderAction();
-				//action.Order(request, response, storeNo, customerNo);
-				
+			int orderNo = action.insertOrderList(request, response);
+			
+				action.insertOrderMenu(request, response, orderNo);
+			
 			} catch (Exception e){
 				e.printStackTrace();
 			}
