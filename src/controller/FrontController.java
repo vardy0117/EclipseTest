@@ -338,7 +338,6 @@ public class FrontController extends HttpServlet {
 		if(command.equals("Store.do")) {
 			int storeNo = Integer.parseInt(request.getParameter("storeNo"));
 			
-			
 			try {
 				GetStoreInfoAction action1 = new GetStoreInfoAction();
 					action1.getStroeInfo(request, response, storeNo);

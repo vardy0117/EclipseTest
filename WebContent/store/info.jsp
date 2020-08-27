@@ -13,12 +13,14 @@
 
 
 		<c:set var="info" value="${requestScope.storeInfo}"/>
+		<c:set var="star" value="${requestScope.storereview}"/>
+		
 		<div id="mainDiv">
 		<h1>storeinformation.jsp</h1>
 		<br>
 		<h2>storeNo : ${info.storeNo}</h2>
 
-	<img src="../images/house.jpg" height="1" width="1" alt="업체정보"> <font size="6">업체정보 </font>
+	<img src="${pageContext.request.contextPath }/images/house.jpg" height="50" width="50" alt="업체정보"> <font size="6">업체정보 </font>
 	<hr>
 		스토어 넘버 : ${info.storeNo} <br>
 		사장님 넘버 : ${info.ceoNo} <br>
@@ -28,7 +30,7 @@
 		상세주소 : ${info.detailAddress} <br>
 		
 		스토어 이름 : ${info.name} <br>
-	<img src="../images/house.jpg" height="1" width="1" alt="사업자정보"> <font size="6">사업자정보 </font>
+	<img src="${pageContext.request.contextPath }/images/house.jpg" height="50" width="50" alt="사업자정보"> <font size="6">사업자정보 </font>
 	<hr>
 		카테고리 : ${info.category} <br>
 		가게이름 : ${info.storeHours} <br>
@@ -38,12 +40,22 @@
 
 		사업자 등록 번호 : ${info.regNo}
 
-		<br> <img src="../images/house.jpg" height="1" width="1" alt="기타"> <font size="6">기타 </font>
+		<br> <img src="${pageContext.request.contextPath }/images/house.jpg" height="50" width="50" alt="기타"> <font size="6">기타 </font>
+		<br>
 	<hr>	
+	<c:set var="po" value="${star.points}" /> <!-- 포인트 전용 변수 -->
 		
 		사장님 한마디 : ${info.message} <br>
 		가게 사진: ${info.image} <br>
-		별점?: ${info.points} <br>
+		
+		<c:if test="${po != null }">
+		평균별점: ${star.points} <br>
+		</c:if>
+		
+		<c:if test="${ po eq null}">
+			평균별점 : 등록된 평균 별점이 없네요 <br>
+		</c:if>
+
 		누적주문수 : ${info.orderCount} <br>
 		
 		</div>
