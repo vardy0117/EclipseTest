@@ -15,6 +15,7 @@
 		font-style: normal;
 	}
 	@font-face {
+	
     	font-family: 'Binggrae-Bold';
 		src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Binggrae-Bold.woff') format('woff');
 		font-weight: normal;

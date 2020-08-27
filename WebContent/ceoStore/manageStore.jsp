@@ -87,18 +87,26 @@
 							</td>
 							<td width="100">
 								<button id="updateBtn" onclick="location.href='updateStore.do?storeNo=${bean.storeNo}'"></button>
-								<button id="deleteBtn" onclick="location.href='deletemanage.do?storeNo=${bean.storeNo}'"></button>
+								<button id="deleteBtn" onclick="deleteStore(${bean.storeNo});"></button>
 							</td>
 						</tr>
-					</table>			
-					<%-- <font color="purple" size="5">가게 이름 :	<c:out value=" ${bean.name}" /> </font> <br>
-					<c:out value="<업체 소개 사진> "/> <br>
-					 <img src="upload/store/${bean.image}" alt="스토어 음식사진" width="200" height="200"> <br>
-					 <input type="button" value=" 수정하기 " onclick="location.href='updateStore.do?storeNo=${bean.storeNo}'" > 
-					 <input type="button" value=" 삭제하기 " onclick="location.href='deletemanage.do?storeNo=${bean.storeNo}'">  --%>
+					</table>
 			</c:forEach>
 		</div>
 		
 					
 	</div>
+	
+	
+	
+	<script type="text/javascript">
+
+ function deleteStore(storeNo) {
+  if(confirm(" 가게 삭제 하시겠습니까? ")==true){
+	  location.href='deletemanage.do?storeNo='+storeNo;
+  }
+}
+</script>
+	
+
 </body>

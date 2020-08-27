@@ -29,6 +29,8 @@ import net.customer.db.CustomerBean;
 import net.customer.db.CustomerDAO;
 import net.manage.action.updateAction;
 import net.menu.action.MenuAction;
+import net.menu.db.MenuBean;
+import net.menu.db.MenuDAO;
 import net.order.action.GetStoreInfoAction;
 import net.order.action.GetStoreMenuAction;
 import net.order.action.GetStoreReviewAction;
@@ -431,6 +433,14 @@ public class FrontController extends HttpServlet {
 			StoreAction action = new  StoreAction();
 			action.getCeoStore(request,response, ceoNo);
 			
+			StoreDAO storeDAO = new StoreDAO();
+			if(storeDAO.getCeoStore(ceoNo).size() == 0) {
+				response.setContentType("text/html;charset=UTF-8"); 
+				PrintWriter out = response.getWriter();
+				out.print("<script>alert('관리할 가게가 존재 하지 않습니다.'); location.href='./ceoIndex.jsp';</script>");
+				return;
+			}
+			
 			
 			forward = new ActionForward();
 			forward.setView("ceoIndex.jsp?center=ceoStore/manageStore.jsp");
@@ -507,6 +517,7 @@ public class FrontController extends HttpServlet {
 		//Storeinsert
 		if(command.equals("insertStoreAction.do")){
 			forward = new ActionForward();
+			String ceoNo = (String)request.getSession().getAttribute("ceoNo");
 			
 			request.setCharacterEncoding("utf-8");
 			String realFolder = getServletContext().getRealPath("/upload/store");
@@ -521,6 +532,10 @@ public class FrontController extends HttpServlet {
 			MenuAction menuAction = new MenuAction();
 			menuAction.insertStore(request, response, multi, storeNo);
 			
+			forward.setRedirect(true);
+			forward.setView("manageStore.do");
+			
+			forward.execute(request, response);
 			//int result =sDAO.insertStore(sbean);	
 			
 		}
@@ -547,6 +562,7 @@ public class FrontController extends HttpServlet {
 		}
 		
 		if(command.equals("updateStoreAction.do")) {
+			String ceoNo = (String)request.getSession().getAttribute("ceoNo");
 			request.setCharacterEncoding("utf-8");
 			String realFolder = getServletContext().getRealPath("/upload/store");
 			int max = 1000 * 1024 * 1024;
@@ -554,6 +570,10 @@ public class FrontController extends HttpServlet {
 			MultipartRequest multi = new MultipartRequest(request, realFolder, max, "utf-8", new DefaultFileRenamePolicy());
 			StoreAction storeAction =new StoreAction();
 			storeAction.updateStore(request,response,multi);
+			
+			forward = new ActionForward();
+			forward.setView("manageStore.do");
+			forward.execute(request, response);
 			
 		}
 		
@@ -566,7 +586,12 @@ public class FrontController extends HttpServlet {
 			StoreDAO storeDAO = new StoreDAO();
 			StoreBean storeBean = storeDAO.getStoreInfo(storeNo);
 			
+			MenuDAO menuDAO = new MenuDAO();
+			List<MenuBean> menuList = menuDAO.getStoreMenu(storeNo);
+					
+			
 			request.setAttribute("storeBean", storeBean);
+			request.setAttribute("menuList", menuList);
 			
 			forward.setView("ceoIndex.jsp?center=ceoStore/ceoStore.jsp");
 			forward.execute(request, response);
@@ -577,16 +602,21 @@ public class FrontController extends HttpServlet {
 		if(command.equals("deletemanage.do")){
 			
 			request.setCharacterEncoding("utf-8");
-			
+			String ceoNo = (String)request.getSession().getAttribute("ceoNo");
 			String storeNo = request.getParameter("storeNo");
 			
 			StoreDAO sdao= new StoreDAO();
 			sdao.deleteStore(storeNo);
+			
+			forward = new ActionForward();
+						
+			forward.setView("manageStore.do");
+			forward.setRedirect(true);
+			forward.execute(request, response);
+			
 		}
 		
-		
-		
-		
+	
 		
 		
 		

@@ -295,10 +295,40 @@ public void deleteStore(String storeNo) {
 	
 	
 }
+
+public int getStoreCount(String ceoNo) {
+	
+	int storeCount = 0;
+	
+	try {
+		con =	getConnection();
+		sql="select  count(storeNo) as storecount from store where ceoNo=? ";
+	
+		pstmt =  con.prepareStatement(sql);
+		pstmt.setString(1,ceoNo);
+		
+		rs=	pstmt.executeQuery();
+	
+		if(rs.next()){
+			storeCount = rs.getInt("storecount");
+			System.out.println(storeCount+"랄랄라");
+		}
+		
+	
+	
+	} catch (Exception e) {
+		System.out.println(" getStoreCount inner error" +e );
+		e.printStackTrace();
+	}finally {
+		resourceClose();
+	}
+
+	
+	return storeCount;
 	
 	
 	
-	
+}
 	
 	
 }
