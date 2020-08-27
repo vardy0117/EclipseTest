@@ -60,7 +60,9 @@ try {
 			// 자리수 변환
 		
 		 regNo = storebean.getRegNo();
-		
+			
+			// 유효성 체크여부 아님 
+		/*****************************************************/
 		  if (regNo.contains("-")){ // 사업자 등록번호에 이미 -가 포함되어있으면
 			  System.out.println("하이픈 발견 기존 출력문에 사업자 번호 그대로  사용함 변환 안함 : " + regNo);
 			  regNoChange = regNo;
@@ -72,15 +74,15 @@ try {
 	      System.out.println("숫자만 된 사업자 등록번호 : " + regNo);
 	      System.out.println("변환된 번호 : " + regNoChange);
 	      }
-	    
+			/*****************************************************/
 
 }catch(Exception e) {
 			System.out.println("스토어 정보가 널임 " + e);
-			
+			regNoChange = null;
 	}
 %>
 		
-사업자 등록번호 : <%=(regNoChange!=null) ? regNoChange : "사업자번호 자릿수가 잘못되었습니다 자릿수를 확인해주세요 000-00-00000 순입니다  DB에는 숫자만 넣어주세요 "  %>
+사업자 등록번호 : <%=(regNoChange!=null) ? regNoChange : "사업자번호 자릿수가 잘못되었습니다 자릿수를 확인해주세요 000-00-00000 순입니다"  %>
 <c:if test="${ info.regNo eq null}">
 그딴 정보가 없습니다
 		<script>
