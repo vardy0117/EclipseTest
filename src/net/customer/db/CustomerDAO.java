@@ -4,6 +4,8 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -284,6 +286,29 @@ public class CustomerDAO {
 		
 		return result;
 	}
+
+	// store.jsp 리뷰란에서 고객번호로 글 구분짓는거 말고 고객닉네임으로 구분 짓다가 잠시 보류 - 이태우- 
+public String getNickName(String customerNo) {
+	
+	List<String> list = new ArrayList<String>();
+	String nickName="";
+	try {
+		con = getConnection();
+		sql = "select nickname from customer where customerNo=?";
+		pstmt=con.prepareStatement(sql);
+		pstmt.setString(1, customerNo);
+		rs = pstmt.executeQuery();
+		while(rs.next()){
+			nickName = rs.getString("nickname");
+			list.add(nickName);
+		}
+	} catch (Exception e) {
+		e.printStackTrace();
+	} finally {
+		resourceClose();
+	}
+	return nickName;
+}
 
 	
 	
