@@ -70,4 +70,41 @@ public class ReviewDAO {
       return list;
    }
    
+   public ReviewBean AvgReview (int storeNo) { // 업체에 대한 별점 평균 
+	   ReviewBean review = new ReviewBean();
+	  
+	   
+	      try {
+	         con = getConnection();
+	         sql = "select TRUNCATE(avg(points),0) as points from review  where StoreNo = ?";
+	         /*반올림 없애기 0자리수 까지*/ ;
+	         pstmt = con.prepareStatement(sql);
+	         pstmt.setInt(1, storeNo);
+	         rs = pstmt.executeQuery();
+	         System.out.println("들어간 스토어 번호값 : " + storeNo);
+	
+	       
+	         if(rs.next()) {
+	  
+	        	  String point= rs.getString("points");
+	        	  review.setPoints(rs.getString("points"));
+		         System.out.println(storeNo + "번 사업장에서 받은 리뷰 평균 : " + review.getPoints());
+		       
+	        	  System.out.println(storeNo + "번 avgReview함수 호출 : " + review.getPoints());
+	        	 System.out.println("리뷰 포인트 값 " + point);
+	        	 
+	         }else{
+	        	  System.out.println("avgReview함수 호출할게 음서용 : " + review.getPoints());
+	         }
+	         
+	      } catch (Exception e) {
+	          System.out.println("AvgReview() 내에서 예외 발생 : " + e);
+	          e.printStackTrace();
+	       } finally {
+	          resourceClose();
+	       }
+	return review;
+	   
+   }
+   
 }

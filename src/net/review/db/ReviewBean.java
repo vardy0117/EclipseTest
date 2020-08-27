@@ -69,6 +69,13 @@ public class ReviewBean {
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
+	@Override
+	public String toString() {
+		return "ReviewBean [orderNo=" + orderNo + ", reviewNo=" + reviewNo + ", customerNo=" + customerNo + ", storeNo="
+				+ storeNo + ", contents=" + contents + ", points=" + points + ", image=" + image + ", date=" + date
+				+ ", comment=" + comment + "]";
+	}
+	
 	
 	
 }
