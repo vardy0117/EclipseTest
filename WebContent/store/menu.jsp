@@ -54,13 +54,7 @@
 		list-style-type : none;
 	}
 	
-	.display-on {
-	display: block;
-	}
 	
-	.display-off {
-	display: none;
-	}
 		
 </style>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -195,33 +189,34 @@
 		var cart=JSON.parse(sessionStorage.getItem("cart"));
 		var tag = "";
 		var totalPrice = 0;
-		
-		for(i=0; i<cart.length; i++){
-			tag += 
-				'<li class="cartLi" id=food'+i+'>'+
-					'<div class="row">'+
-						'<div class="name">'+
-						JSON.parse(cart[i])["name"]+
+		if(cart!=null){
+			for(i=0; i<cart.length; i++){
+				tag += 
+					'<li class="cartLi" id=food'+i+'>'+
+						'<div class="row">'+
+							'<div class="name">'+
+							JSON.parse(cart[i])["name"]+
+							'</div>'+
+							'<div class="left">'+
+								'<a class="btn del-menu" onclick="delOrderItem(this)" style="cursor:pointer" >삭제</a>'+
+								'<span class="price">'+
+								JSON.parse(cart[i])["price"]+
+								'</span>'+
+							'</div>'+
+							'<div class="right">'+
+								'<a onclick=" modifyMenuOnCartQty(this, 1)" style="cursor:pointer" >+</a>'+
+								'<span class="orderQuantity"><input type="number" class="qty" value='+JSON.parse(cart[i])["quantity"]+' readOnly> </span>'+
+								'<a onclick=" modifyMenuOnCartQty(this, -1)" style="cursor:pointer">-</a>'+	
+							'</div>'+
 						'</div>'+
-						'<div class="left">'+
-							'<a class="btn del-menu" onclick="delOrderItem(this)" style="cursor:pointer" >삭제</a>'+
-							'<span class="price">'+
-							JSON.parse(cart[i])["price"]+
-							'</span>'+
-						'</div>'+
-						'<div class="right">'+
-							'<a onclick=" modifyMenuOnCartQty(this, 1)" style="cursor:pointer" >+</a>'+
-							'<span class="orderQuantity"><input type="number" class="qty" value='+JSON.parse(cart[i])["quantity"]+' readOnly> </span>'+
-							'<a onclick=" modifyMenuOnCartQty(this, -1)" style="cursor:pointer">-</a>'+	
-						'</div>'+
-					'</div>'+
-				'</li>';
-				
-			totalPrice += JSON.parse(cart[i])["price"];
+					'</li>';
+					
+				totalPrice += JSON.parse(cart[i])["price"];
+			}
+			
+			$("#cartUl").html(tag);
+			$("#total").html("총 합계 : "+totalPrice+ " 원");
 		}
-		
-		$("#cartUl").html(tag);
-		$("#total").html("총 합계 : "+totalPrice+ " 원");
 	}
 	
 
