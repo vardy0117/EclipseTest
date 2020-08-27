@@ -16,7 +16,7 @@
 	}
 	#formDiv {
 		width: 650px;
-	    height: 600px;
+	    height: 660px;
 	    margin: 0 auto;
 	    border: 2px solid #c7c7c7;
 	    border-radius: 15px;
@@ -27,11 +27,57 @@
 		width: 560px;
 		margin: 0 auto;
 	}
+	
+	.textBox {
+		width: 200px;
+		height: 30px;
+		border-radius: 12px;
+		border: 2px solid gray;
+		padding-left: 15px;
+		font-family: Binggrae-Bold;
+		font-size: 1rem;
+	}
+	.textArea {
+		border: 2px gray solid;
+	    border-radius: 12px;
+	    width: 300px;
+	    height: 80px;
+	    padding-left: 15px;
+		font-family: Binggrae-Bold;
+		font-size: 0.8rem;
+	}
+	.select {
+		border: 2px solid gray;
+	    border-radius: 12px;
+	    width: 80px;
+	    height: 30px;
+	    font-family: 'Binggrae-Bold';
+	    padding-left: 15px;
+	    font-size: 1rem;
+	}
+	.select:foucs { outline:none; }
+	.textArea:focus {outline: none;}
+	input:focus { outline: none; }
+	.btn {
+		background: linear-gradient( to bottom, hsl(0deg 0% 0%), hsl(0deg 0% 57%));
+		font-family: Binggrae-Bold;
+		font-size: 1rem;
+		color: white;
+		border: none;
+		border-radius: 12px;
+		width: 150px;
+		height: 35px;
+		transition-duration: 1s;
+		opacity: 0.7;
+	}
+	.btn:hover {
+		cursor: pointer;
+		opacity: 1;
+	}
 </style>
 </head>
 <body>
 	<div id="mainDiv">
-		<h1>updateStore.jsp</h1>
 		
 		<div id="formDiv">
 			<h1 style="text-align:center;">업체 수정</h1>
@@ -41,35 +87,36 @@
 					<tr>
 						<td>가게명</td>
 						<td>
-							<input type="text" name="name" value="${storeBean.name }">
+							<input class="textBox" type="text" name="name" value="${storeBean.name }">
 						</td>
 					</tr>
 					<tr>
 						<td>대표이미지</td>
 						<td>
-							<input type="file" name="image" onchange="document.fr.fileFlag.value = 'true';">
+							<input type="file" name="image" onchange="document.fr.fileFlag.value = 'true';" style="width:221px;">
 							<input type="hidden" name="fileFlag" value="false"> 
+							<span style="color:red; font-size: 0.7rem;">※변경안할시 원본상태 유지됩니다.</span>
 						</td>
 					</tr>
 					<tr>
 						<td>주소</td>
 						<td>
 							<input type="hidden" id="sample6_postcode" placeholder="우편번호">
-							<input type="text" id="sample6_address" placeholder="주소" name="roadAddress" value="${storeBean.roadAddress }">
+							<input class="textBox" type="text" id="sample6_address" placeholder="주소" name="roadAddress" value="${storeBean.roadAddress }">
 							<input type="hidden" id="sample6_extraAddress" placeholder="참고항목" >
-							<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
+							<input class="btn" type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
 						</td>
 					</tr>
 					<tr>
 						<td></td>
 						<td>
-						<input type="text" id="sample6_detailAddress" placeholder="상세주소" name="detailAddress" value="${storeBean.detailAddress }">
+						<input class="textBox" type="text" id="sample6_detailAddress" placeholder="상세주소" name="detailAddress" value="${storeBean.detailAddress }">
 						</td>
 					</tr>
 					<tr>
 						<td>카테고리 </td>
 						<td>
-							<select name="category">
+							<select class="select" name="category">
 								<option value="한식">한식</option>
 								<option value="중식">중식</option>
 								<option value="일식">일식</option>
@@ -79,7 +126,7 @@
 					<tr>
 						<td>전화번호</td>
 						<td>
-							<input type="text" name="phone" value="${storeBean.phone }">
+							<input class="textBox" type="text" name="phone" value="${storeBean.phone }">
 						
 						</td>
 						
@@ -87,7 +134,7 @@
 					<tr>
 						<td>영업시간</td>
 						<td>
-							<select name="opentime">
+							<select class="select" name="opentime">
 								<option value="00시">00시</option>
 								<option value="01시">01시</option>
 								<option value="02시">02시</option>
@@ -113,7 +160,7 @@
 								<option value="22시">22시</option>
 								<option value="23시">23시</option>
 							</select>~
-							<select name="closetime">
+							<select class="select" name="closetime">
 								<option value="00시 ">00시</option>
 								<option value="01시">01시</option>
 								<option value="02시">02시</option>
@@ -144,25 +191,31 @@
 					<tr>
 						<td>배달가능지역</td>
 						<td>
-							<input type="text" name="areaTyping">
-							<button type="button" name="areaAddBtn">추가하기</button>
-							<input type="text" name="deliveryArea" readonly value="${storeBean.deliveryArea }">
-							<button type="button" onclick="document.fr.deliveryArea.value = ''; areaFlag = false;">초기화</button>
+							<input class="textBox" type="text" name="areaTyping">
+							<button class="btn" type="button" name="areaAddBtn">추가하기</button>
+						</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>
+							<input class="textBox" type="text" name="deliveryArea" readonly value="${storeBean.deliveryArea }">
+							<button class="btn" type="button" onclick="document.fr.deliveryArea.value = ''; areaFlag = false;">초기화</button>
 						</td>
 					</tr>
 					<tr>
 						<td>가게한마디</td>
-						<td><textarea name="message">${storeBean.message }</textarea></td>
+						<td><textarea class="textArea" name="message">${storeBean.message }</textarea></td>
 					</tr>
 					<tr>
 						<td>사업자등록번호</td>
 						<td>
-							<input type="text" name="regNo" value="${storeBean.regNo }">
+							<input class="textBox" type="text" name="regNo" value="${storeBean.regNo }">
 						</td>
 					</tr>
 					<tr>
 						<th colspan="2">
-							<input type="submit" value="수정하기">
+							<br>
+							<input class="btn" type="submit" value="수정하기">
 						</th>
 					</tr>
 				</table>

@@ -29,6 +29,8 @@ import net.customer.db.CustomerBean;
 import net.customer.db.CustomerDAO;
 import net.manage.action.updateAction;
 import net.menu.action.MenuAction;
+import net.menu.db.MenuBean;
+import net.menu.db.MenuDAO;
 import net.order.action.GetStoreInfoAction;
 import net.order.action.GetStoreMenuAction;
 import net.order.action.GetStoreReviewAction;
@@ -530,6 +532,7 @@ public class FrontController extends HttpServlet {
 			MenuAction menuAction = new MenuAction();
 			menuAction.insertStore(request, response, multi, storeNo);
 			
+			forward.setRedirect(true);
 			forward.setView("manageStore.do");
 			
 			forward.execute(request, response);
@@ -572,6 +575,26 @@ public class FrontController extends HttpServlet {
 			forward.setView("manageStore.do");
 			forward.execute(request, response);
 			
+		}
+		
+		if(command.equals("ceoStore.do")) {
+			request.setCharacterEncoding("utf-8");
+			int storeNo = Integer.parseInt(request.getParameter("storeNo"));
+			
+			forward = new ActionForward();
+			
+			StoreDAO storeDAO = new StoreDAO();
+			StoreBean storeBean = storeDAO.getStoreInfo(storeNo);
+			
+			MenuDAO menuDAO = new MenuDAO();
+			List<MenuBean> menuList = menuDAO.getStoreMenu(storeNo);
+					
+			
+			request.setAttribute("storeBean", storeBean);
+			request.setAttribute("menuList", menuList);
+			
+			forward.setView("ceoIndex.jsp?center=ceoStore/ceoStore.jsp");
+			forward.execute(request, response);
 		}
 		
 

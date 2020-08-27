@@ -57,6 +57,7 @@ public class MenuDAO {
 					 mBean.setPrice(rs.getInt("price"));
 					 mBean.setImage(rs.getString("image"));
 					 mBean.setCategory(rs.getString("category"));
+					 mBean.setMenuNo(rs.getString("menuNo"));
 					 menuList.add(mBean);
 			 }
 			
