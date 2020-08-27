@@ -38,6 +38,36 @@
 	<h1>review.jsp 태우</h1>
 	
 	
+<!-- ---------------------------------	평균 별점  --------------------------------------------->
+	<c:set var="info" value="${requestScope.storeInfo}"/>
+	<c:set var="star" value="${requestScope.storereview}"/> <br>
+			업체명 : ${info.name } <br>
+			평균별점: ${star.points} : 
+			<c:if test="${star.points eq 0 }">
+							<i id="star">☆☆☆☆☆</i>
+						</c:if>
+						<c:if test="${star.points eq 1 }">
+							<i id="star">★☆☆☆☆</i>
+						</c:if>
+						<c:if test="${star.points eq 2 }">
+							<i id="star">★★☆☆☆</i>
+						</c:if>
+						<c:if test="${star.points eq 3 }">
+							<i id="star">★★★☆☆</i>
+						</c:if>
+						<c:if test="${star.points eq 4 }">
+							<i id="star">★★★★☆</i>
+						</c:if>
+						<c:if test="${star.points eq 5 }">
+							<i id="star">★★★★★</i>
+						</c:if>
+						<br><br><br>
+		<c:if test="${ star.points eq null}">
+			평균별점 : 등록된 평균 별점이 없네요 <br>
+		</c:if>
+	<br><br>
+<!-- ---------------------------------	평균 별점  --------------------------------------------->
+
 	<!-- 등록된 리뷰가 없을때 -->
 	<c:if test="${requestScope.reviewList eq '[]' }">
 		<div>
@@ -52,7 +82,7 @@
 	
 	<!-- 등록된 리뷰가 존재할때 -->
 	<c:forEach items="${requestScope.reviewList}" var="rBean" varStatus="status">
-		<c:out value="${rBean }"/>
+
 		<c:set var="i" value="${status.index }"/>
 		
 		<div>
