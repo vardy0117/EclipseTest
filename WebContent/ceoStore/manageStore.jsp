@@ -39,7 +39,7 @@
 					<c:out value="<업체 소개 사진> "/> <br>
 					 <img src="upload/store/${bean.image}" alt="스토어 음식사진" width="200" height="200"> <br>
 					 <input type="button" value=" 수정하기 " onclick="location.href='updateStore.do?storeNo=${bean.storeNo}'" > 
-					 <input type="button" value=" 삭제하기 " onclick="location.href='deletemanage.do?storeNo=${bean.storeNo}'"> 
+					 <input type="button" value=" 삭제하기 " onclick="deleteStore('${bean.storeNo}')"> 
 				</div>
 		
 		
@@ -58,7 +58,7 @@
 
  function deleteStore(storeNo) {
   if(confirm(" 가게 삭제 하시겠습니까? ")==true){
-	  location.href='deletemanage.do?storeNo=${bean.storeNo}'
+	  location.href='deletemanage.do?storeNo='+storeNo;
   }
 }
 </script>

@@ -432,6 +432,14 @@ public class FrontController extends HttpServlet {
 			StoreAction action = new  StoreAction();
 			action.getCeoStore(request,response, ceoNo);
 			
+			StoreDAO storeDAO = new StoreDAO();
+			if(storeDAO.getCeoStore(ceoNo).size() == 0) {
+				response.setContentType("text/html;charset=UTF-8"); 
+				PrintWriter out = response.getWriter();
+				out.print("<script>alert('관리할 가게가 존재 하지 않습니다.'); location.href='./ceoIndex.jsp';</script>");
+				return;
+			}
+			
 			
 			forward = new ActionForward();
 			forward.setView("ceoIndex.jsp?center=ceoStore/manageStore.jsp");
@@ -508,6 +516,7 @@ public class FrontController extends HttpServlet {
 		//Storeinsert
 		if(command.equals("insertStoreAction.do")){
 			forward = new ActionForward();
+			String ceoNo = (String)request.getSession().getAttribute("ceoNo");
 			
 			request.setCharacterEncoding("utf-8");
 			String realFolder = getServletContext().getRealPath("/upload/store");
@@ -522,6 +531,9 @@ public class FrontController extends HttpServlet {
 			MenuAction menuAction = new MenuAction();
 			menuAction.insertStore(request, response, multi, storeNo);
 			
+			forward.setView("manageStore.do");
+			
+			forward.execute(request, response);
 			//int result =sDAO.insertStore(sbean);	
 			
 		}
@@ -548,6 +560,7 @@ public class FrontController extends HttpServlet {
 		}
 		
 		if(command.equals("updateStoreAction.do")) {
+			String ceoNo = (String)request.getSession().getAttribute("ceoNo");
 			request.setCharacterEncoding("utf-8");
 			String realFolder = getServletContext().getRealPath("/upload/store");
 			int max = 1000 * 1024 * 1024;
@@ -556,6 +569,10 @@ public class FrontController extends HttpServlet {
 			StoreAction storeAction =new StoreAction();
 			storeAction.updateStore(request,response,multi);
 			
+			forward = new ActionForward();
+			forward.setView("manageStore.do");
+			forward.execute(request, response);
+			
 		}
 		
 
@@ -563,16 +580,21 @@ public class FrontController extends HttpServlet {
 		if(command.equals("deletemanage.do")){
 			
 			request.setCharacterEncoding("utf-8");
-			
+			String ceoNo = (String)request.getSession().getAttribute("ceoNo");
 			String storeNo = request.getParameter("storeNo");
 			
 			StoreDAO sdao= new StoreDAO();
 			sdao.deleteStore(storeNo);
+			
+			forward = new ActionForward();
+						
+			forward.setView("manageStore.do");
+			forward.setRedirect(true);
+			forward.execute(request, response);
+			
 		}
 		
-		
-		
-		
+	
 		
 		
 		
