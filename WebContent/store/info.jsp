@@ -47,7 +47,7 @@
 		StoreDAO storedao = new StoreDAO();
 		StoreBean storebean = new StoreBean();
 		
-		String regNo,high,middle,end,regNoChange = null;
+		String regNo,high,middle,end,regNoChange = "";
 	
 try {
 		int storeNo = Integer.parseInt(request.getParameter("storeNo"));
@@ -58,18 +58,29 @@ try {
 		System.out.printf("스크립 틀딱 기호로 가져온 사업자 등록번호값  : " + storebean.getRegNo() + "\n");
 		
 			// 자리수 변환
+		
 		 regNo = storebean.getRegNo();
-		 high = regNo.substring(0,3) + "-"; // 0~3자리면 
+		
+		  if (regNo.contains("-")){ // 사업자 등록번호에 이미 -가 포함되어있으면
+			  System.out.println("하이픈 발견 기존 출력문에 사업자 번호 그대로  사용함 변환 안함 : " + regNo);
+			  regNoChange = regNo;
+	      }else{
+	  	high = regNo.substring(0,3) + "-"; // 0~3자리면 
 	     middle = regNo.substring(3,5) + "-"; // 3~5자리면 
 	     end = regNo.substring(5,10);  // 5~10자리면, 이건 왜했지? 
 	      regNoChange = high + middle + end;
+	      System.out.println("숫자만 된 사업자 등록번호 : " + regNo);
+	      System.out.println("변환된 번호 : " + regNoChange);
+	      }
+	    
 
 }catch(Exception e) {
-			System.out.println("스토어 정보가 널임");
+			System.out.println("스토어 정보가 널임 " + e);
+			
 	}
 %>
 		
-사업자 등록번호 : <%=(regNoChange!=null) ? regNoChange : "사업정보확인불가 "  %>
+사업자 등록번호 : <%=(regNoChange!=null) ? regNoChange : "사업자번호 자릿수가 잘못되었습니다 자릿수를 확인해주세요 000-00-00000 순입니다  DB에는 숫자만 넣어주세요 "  %>
 <c:if test="${ info.regNo eq null}">
 그딴 정보가 없습니다
 		<script>
