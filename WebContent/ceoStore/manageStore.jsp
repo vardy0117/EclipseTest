@@ -18,29 +18,86 @@
 		margin: 0 auto;
 		margin-top: 80px;
 		position: relative;
+		padding: 50px;
+	}
+	#storeListDiv {
+		margin: 0 auto;
+		width: 600px;
+		border: 2px solid #c7c7c7;
+		border-radius: 15px;
+		box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+		padding-bottom: 50px;
+	}
+	#storeListDiv table {
+		margin: 10px auto;
+		width: 500px;
+		border-bottom: 2px gray solid;
+	}
+	#storeListDiv img {
+		border-radius: 15px;
+		width: 100px;
+	}
+	#storeListDiv a {
+		text-decoration: none;
+		color: black;
+		cursor: pointer;
+	}
+	#storeListDiv a:hover {
+		text-decoration: underline;
+		color: gray;
+	}
+	#updateBtn {
+		background: url("images/setting_black.svg") no-repeat;
+		background-size: 32px;
+		width: 35px;
+		height: 35px;
+		cursor: pointer;
+		border: none;
+	}
+	#updateBtn:hover {
+		background: url("images/setting_gray.svg") no-repeat;
+		background-size: 32px;
+	}
+	#deleteBtn {
+		background: url("images/delete_black.svg") no-repeat;
+		background-size: 32px;
+		width: 35px;
+		height: 35px;
+		cursor: pointer;
+		border: none;
+	}
+	#deleteBtn:hover {
+		background: url("images/delete_gray.svg") no-repeat;
+		background-size: 32px;
 	}
 </style>
 </head>
 <body>
 	<div id="mainDiv">
-		<h1 style="text-align:center;">업체 관리  </h1>
-
-	
-	<c:forEach var="bean" items="${ceoStorelist}">
-			
-		<!--  <a href='Store.do?storeNo=${bean.storeNo}'>	-->
-				
-				<div class="storeDetail">
-					<font size="10">---가져온 스토어 데이터---</font> <br>
-					
-					<font color="purple" size="5">가게 이름 :	<c:out value=" ${bean.name}" /> </font> <br>
+		<div id="storeListDiv">
+			<h1 style="text-align:center;">업체 관리</h1>
+			<c:forEach var="bean" items="${ceoStorelist}">
+					<table>
+						<tr>
+							<td width="100" height="100">
+								<img src="upload/store/${bean.image}" alt="가게사진">
+							</td>
+							<td width="300">
+								<h2 style="padding-left: 20px;"><a href="./ceoStore.do?storeNo=${bean.storeNo }">${bean.name }</a></h2>
+							</td>
+							<td width="100">
+								<button id="updateBtn" onclick="location.href='updateStore.do?storeNo=${bean.storeNo}'"></button>
+								<button id="deleteBtn" onclick="location.href='deletemanage.do?storeNo=${bean.storeNo}'"></button>
+							</td>
+						</tr>
+					</table>			
+					<%-- <font color="purple" size="5">가게 이름 :	<c:out value=" ${bean.name}" /> </font> <br>
 					<c:out value="<업체 소개 사진> "/> <br>
 					 <img src="upload/store/${bean.image}" alt="스토어 음식사진" width="200" height="200"> <br>
 					 <input type="button" value=" 수정하기 " onclick="location.href='updateStore.do?storeNo=${bean.storeNo}'" > 
-					 <input type="button" value=" 삭제하기 " onclick="location.href='deletemanage.do?storeNo=${bean.storeNo}'"> 
-				</div>
-			
-		</c:forEach>
+					 <input type="button" value=" 삭제하기 " onclick="location.href='deletemanage.do?storeNo=${bean.storeNo}'">  --%>
+			</c:forEach>
+		</div>
 		
 					
 	</div>
