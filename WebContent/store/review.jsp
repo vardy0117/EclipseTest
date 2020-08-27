@@ -50,8 +50,6 @@
 	</c:if>
 	
 	
-	
-	
 	<!-- 등록된 리뷰가 존재할때 -->
 	<c:forEach items="${requestScope.reviewList}" var="rBean" varStatus="status">
 		<c:out value="${rBean }"/>
