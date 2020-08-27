@@ -54,14 +54,9 @@
 					sessionStorage.setItem("cart",cart);
 					setStoreInStorage(storeNo);
 					location.href="Store.do?storeNo="+storeNo;
-				} else {
-					sotreNo=store["storeNo"];
-					location.href="Store.do?storeNo="+storeNo;
-				}	
+				} 
 			} 
 		}
-	
-		
 	}
 </script>	
 <body>

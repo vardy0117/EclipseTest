@@ -72,6 +72,9 @@
 <script>
 	window.onload = function(){
 		getCart();
+		$("tbody:first").children().css("display","block");
+		$(".toggleImg:first").attr("src","images/btn_count_up.gif");
+		
 	}
 	  
   	 function toggleMenuTr(element,category){
@@ -216,7 +219,7 @@
 							'<div class="left">'+
 								'<a class="btn del-menu" onclick="delOrderItem(this)" style="cursor:pointer" >삭제</a>'+
 								'<span class="price">'+
-								JSON.parse(cart[i])["price"]+
+								JSON.parse(cart[i])["price"]+" 원"
 								'</span>'+
 							'</div>'+
 							'<div class="right">'+
@@ -238,11 +241,11 @@
 
 	
 	function order(){
-		var cart=JSON.parse(sessionStorage.getItem("cart"));
+		var storageCart=JSON.parse(sessionStorage.getItem("cart"));
 		var cartList = new Array();
 		if (cart == null){
 			alert("장바구니가 비어있습니다");
-		} else {
+		} /* else {
 			var cnt = $(".cartLi").length;			
 			for(i=0; i<cnt; i++){
 				var name = $("#food"+i+" .name").text();		
@@ -258,16 +261,15 @@
 				var json = JSON.stringify(menu);
 				
 				cartList.push(json);
-		}
-			cart = JSON.stringify(cartList);
+		} */
+			cart = JSON.stringify(storageCart);
 			var storeNo="${storeNo}";
-				
 			$.ajax({
 					type : "post",
 					async : false,
-					url : "./order.do?storeNo="+storeNo,
+					url : "Order.do?storeNo="+storeNo,
 					data : {"cart":cart},
-					dataType : "text",
+					dataType : "json",
 					success : function(result,textStatus){
 						if(result == 1){ // 결제페이지로 넘어감!
 							location.href="";
@@ -305,31 +307,39 @@
 					<c:set var="category" value="drink"/>
 				</c:when>
 			</c:choose>
+			<thead>
 			<tr>
 				<td colspan="3" align="center">${categorys} |
 					<button type="button" class="tbtn" onclick="toggleMenuTr(this,'${category}');">
 						<img src="images/btn_count_down.gif" class="toggleImg"/>
 					</button>	
 				</td>
-			</tr>		
+			</tr>	
+			</thead>
+			
+			<tbody>	
 			<c:forEach var="menu" items="${requestScope.menuList}">
-				<%-- <fmt:parseNumber var="num" value="${menu.level div 10}" type="number" integerOnly="true"/> --%>
-				<c:if test="${menu.category==categorys}">
-					<tr class="${category}" style="display:none;">
-						<td><span> ${menu.image} </span> | <span class="name">
-								${menu.name} </span></td class="basePrice">
-						<td>${menu.price}</td>
-						<td>
-							<%-- <input type="hidden" name="level" value="${menu.level}"> --%>
-							<input type="hidden" class="name" value="${menu.name}"> 
-							<input type="hidden" class="price" value="${menu.price}"> 
-							<a onclick=" modifyQty(this, 1)" style="cursor: pointer">+</a> 
-								<input type="number" id="quantity" name="quantity" class="qty" min="0" value="1" type="text"> 
-							<a onclick=" modifyQty(this, -1)" style="cursor: pointer">-</a> 
-							<input type="button" type="button" id="tbtn" value="주문표에 추가" onclick="addToCartStorage(this)">
-						</td>
-				</c:if>
+			<%-- <fmt:parseNumber var="num" value="${menu.level div 10}" type="number" integerOnly="true"/> --%>
+			<c:if test="${menu.category==categorys}">
+			
+			<tr class="${category}" style="display:none;">
+				<td>
+					<span><img src="images/${menu.image}"></span> | 
+					<span class="name">${menu.name}</span>
+				</td>
+				<td  class="basePrice">${menu.price}</td>
+				<td>
+					<%-- <input type="hidden" name="level" value="${menu.level}"> --%>
+					<input type="hidden" class="name" value="${menu.name}"> 
+					<input type="hidden" class="price" value="${menu.price}"> 
+					<a onclick=" modifyQty(this, 1)" style="cursor: pointer">+</a> 
+						<input type="number" id="quantity" name="quantity" class="qty" min="0" value="1" width="50px"> 
+					<a onclick=" modifyQty(this, -1)" style="cursor: pointer">-</a> 
+						<input type="button" type="button" id="tbtn" value="주문표에 추가" onclick="addToCartStorage(this)">
+				</td>
+			</c:if>
 			</c:forEach>
+			</tbody>
 		</c:forEach>
 	</table>
 </body>

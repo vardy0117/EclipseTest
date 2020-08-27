@@ -39,9 +39,7 @@ public class OrderAction {
 			OrderMenuDAO odao = new OrderMenuDAO();
 			odao.insertOrderMenu(cart, orderNo);
 			
-			
-			
-			
+			System.out.println("성공!");
 		} catch (JSONException e) {
 			
 			e.printStackTrace();
