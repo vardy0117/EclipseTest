@@ -557,6 +557,21 @@ public class FrontController extends HttpServlet {
 			
 		}
 		
+		if(command.equals("ceoStore.do")) {
+			request.setCharacterEncoding("utf-8");
+			int storeNo = Integer.parseInt(request.getParameter("storeNo"));
+			
+			forward = new ActionForward();
+			
+			StoreDAO storeDAO = new StoreDAO();
+			StoreBean storeBean = storeDAO.getStoreInfo(storeNo);
+			
+			request.setAttribute("storeBean", storeBean);
+			
+			forward.setView("ceoIndex.jsp?center=ceoStore/ceoStore.jsp");
+			forward.execute(request, response);
+		}
+		
 
 		
 		if(command.equals("deletemanage.do")){
