@@ -54,13 +54,25 @@
 		list-style-type : none;
 	}
 	
+	.display-on {
+	display: block;
+	}
+	
+	.display-off {
+	display: none;
+	}
+		
 </style>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>
 <script>
+	window.onload = function(){
+		getCart();
+	}
 	  
-  	 function toggle(categoryName){
-			 $("#"+categoryName).css("display","block");
+  	 function toggle(category){
+  		 if($("."+category))
+			 $("."+category).css("display","block");
 	 }  
 	 
  	 function modifyQty(element, qty) {
@@ -70,6 +82,44 @@
 			 element.parentNode.querySelector(".qty").value--;
 		 }
 	 }
+ 	 
+ 	function modifyMenuOnCartQty(element, qty){
+ 		var cartItem = JSON.parse(sessionStorage.getItem("cart"));
+ 		
+ 		var name=$(element).parents("li").find(".name").html();
+		var basePrice=parseInt($(element).parents("li").find(".price").html())/
+					  parseInt($(element).parents("li").find(".qty").val());
+		if(qty == 1) {
+			 element.parentNode.querySelector(".qty").value++;
+		 } else if (element.parentNode.querySelector(".qty").value > 0 && qty ==-1) {
+			 element.parentNode.querySelector(".qty").value--;
+		 }
+		
+		var quantity=parseInt(element.parentNode.querySelector(".qty").value);
+		var price = basePrice*quantity
+		
+		var orderItem = {
+				 name:name,
+				 basePrice:basePrice,
+				 quantity:quantity,
+				 price:price
+				}
+		
+		for(var j=0; j<cartItem.length; j++){
+			if (name == JSON.parse(cartItem[j])["name"]){		
+				
+				var json = JSON.stringify(orderItem);
+					
+				cartItem.splice(j, 1, json);
+				break;
+			} 
+		}	
+			
+		var cart = JSON.stringify(cartItem);
+		sessionStorage.setItem("cart",cart);	
+			
+		getCart();	
+ 	}
 
 	function addToCartStorage(element){		
 		var name=element.parentNode.querySelector(".name").value;
@@ -123,6 +173,24 @@
 		}	
 	} 
 	
+	function delOrderItem(element){
+	var cartItem = JSON.parse(sessionStorage.getItem("cart"));
+ 		
+ 		var name=$(element).parents("li").find(".name").html();
+
+		for(var j=0; j<cartItem.length; j++){
+			if (name == JSON.parse(cartItem[j])["name"]){		
+				cartItem.splice(j, 1);
+				break;
+			} 
+		}	
+			
+		var cart = JSON.stringify(cartItem);
+		sessionStorage.setItem("cart",cart);	
+			
+		getCart();		
+	}
+	
 	function getCart(){
 		var cart=JSON.parse(sessionStorage.getItem("cart"));
 		var tag = "";
@@ -136,7 +204,7 @@
 						JSON.parse(cart[i])["name"]+
 						'</div>'+
 						'<div class="left">'+
-							'<a class="btn del-menu">삭제</a>'+
+							'<a class="btn del-menu" onclick="delOrderItem(this)" style="cursor:pointer" >삭제</a>'+
 							'<span class="price">'+
 							JSON.parse(cart[i])["price"]+
 							'</span>'+
@@ -156,6 +224,7 @@
 		$("#total").html("총 합계 : "+totalPrice+ " 원");
 	}
 	
+
 	
 	function order(){
 		var cnt = $(".cartLi").length;
@@ -207,32 +276,43 @@
 <body>
 	<h1>menu.jsp 진영</h1>
 	<table border="1">
-		<c:forEach var="category_" items="${requestScope.categoryList}">
-
+		<c:forEach var="categorys" items="${requestScope.categoryList}">
+			<c:choose>
+				<c:when test="${categorys eq '세트 메뉴'}">
+					<c:set var="category" value="setMenu"/>
+				</c:when>
+				<c:when test="${categorys eq '주 메뉴'}">
+					<c:set var="category" value="mainMenu"/>
+				</c:when>
+				<c:when test="${categorys eq '사이드 메뉴'}">
+					<c:set var="category" value="sideMenu"/>
+				</c:when>
+				<c:when test="${categorys eq '음료/주류'}">
+					<c:set var="category" value="drink"/>
+				</c:when>
+			</c:choose>
 			<tr>
-				<td colspan="3" align="center">${category_} |
-					<button type="button" id="tbtn" onclick="toggle(this);">
+				<td colspan="3" align="center">${categorys} |
+					<button type="button" id="tbtn" onclick="toggle('${category}');">
 						<img src="images/btn_count_down.gif">
 					</button>
 				</td>
 			</tr>
 			<c:forEach var="menu" items="${requestScope.menuList}">
 				<%-- <fmt:parseNumber var="num" value="${menu.level div 10}" type="number" integerOnly="true"/> --%>
-				<c:if test="${menu.category==category_}">
-					<!-- style="display:none;" -->
-					<tr id="${category_}" name="${category_}">
+				<c:if test="${menu.category==categorys}">
+					<tr class="${category}" style="display:none;">
 						<td><span> ${menu.image} </span> | <span class="name">
 								${menu.name} </span></td class="basePrice">
 						<td>${menu.price}</td>
 						<td>
 							<%-- <input type="hidden" name="level" value="${menu.level}"> --%>
-							<input type="hidden" class="name" value="${menu.name}"> <input
-							type="hidden" class="price" value="${menu.price}"> <a
-							onclick=" modifyQty(this, 1)" style="cursor: pointer">+</a> <input
-							type="number" id="quantity" name="quantity" class="qty" min="0"
-							value="1" type="text"> <a onclick=" modifyQty(this, -1)"
-							style="cursor: pointer">-</a> <input type="button" type="button"
-							id="tbtn" value="주문표에 추가" onclick="addToCartStorage(this)">
+							<input type="hidden" class="name" value="${menu.name}"> 
+							<input type="hidden" class="price" value="${menu.price}"> 
+							<a onclick=" modifyQty(this, 1)" style="cursor: pointer">+</a> 
+								<input type="number" id="quantity" name="quantity" class="qty" min="0" value="1" type="text"> 
+							<a onclick=" modifyQty(this, -1)" style="cursor: pointer">-</a> 
+							<input type="button" type="button" id="tbtn" value="주문표에 추가" onclick="addToCartStorage(this)">
 						</button>
 						</td>
 				</c:if>
