@@ -116,6 +116,17 @@ public class StoreAction {
 		System.out.println(sbean);
 		
 		
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		
 	}

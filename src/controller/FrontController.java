@@ -338,7 +338,6 @@ public class FrontController extends HttpServlet {
 		if(command.equals("Store.do")) {
 			int storeNo = Integer.parseInt(request.getParameter("storeNo"));
 			
-			
 			try {
 				GetStoreInfoAction action1 = new GetStoreInfoAction();
 					action1.getStroeInfo(request, response, storeNo);
@@ -361,7 +360,7 @@ public class FrontController extends HttpServlet {
 			forward.execute(request, response);
 		}
 		
-		if(command.equals("Order.do")){
+		if(command.equals("order.do")){
 			int storeNo = Integer.parseInt(request.getParameter("stroeNo"));
 			int customerNo= Integer.parseInt((String) request.getSession().getAttribute("customerNo"));
 			
@@ -574,15 +573,25 @@ public class FrontController extends HttpServlet {
 		}
 		
 
+		
+		if(command.equals("deletemanage.do")){
+			
+			request.setCharacterEncoding("utf-8");
+			
+			String storeNo = request.getParameter("storeNo");
+			
+			StoreDAO sdao= new StoreDAO();
+			sdao.deleteStore(storeNo);
+		}
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
 	
 }
