@@ -361,7 +361,7 @@ public class FrontController extends HttpServlet {
 			forward.execute(request, response);
 		}
 		
-		if(command.equals("Order.do")){
+		if(command.equals("order.do")){
 			int storeNo = Integer.parseInt(request.getParameter("stroeNo"));
 			int customerNo= Integer.parseInt((String) request.getSession().getAttribute("customerNo"));
 			
