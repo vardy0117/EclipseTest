@@ -25,12 +25,23 @@
      -webkit-appearance: none;
 	}
 	
+	table#menuTable{
+		margin: 0 auto;
+		width : 600px;
+	}
 	button#qtyUp{
 		background: url("./images/btn_count_up.gif") no-reapt;
 	}
 	
 	button#qtyDown{
 		background: url("./images/btn_count_down.gif") no-reapt;
+	}
+	
+	button.tbtn{
+		cursor : pointer;
+		background-color: white;
+		border : 0;
+		outline: 0;
 	}
 	
 	.cart { 
@@ -58,15 +69,20 @@
 		
 </style>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-</head>
 <script>
 	window.onload = function(){
 		getCart();
 	}
 	  
-  	 function toggle(category){
-  		 if($("."+category))
-			 $("."+category).css("display","block");
+  	 function toggleMenuTr(element,category){
+		if(element.querySelector(".toggleImg").getAttribute("src")=="images/btn_count_down.gif"){
+  			$("."+category).css("display","block");
+  			element.querySelector(".toggleImg").setAttribute("src","images/btn_count_up.gif");
+		} else {
+			$("."+category).css("display","none");
+			element.querySelector(".toggleImg").setAttribute("src","images/btn_count_down.gif");
+		}
+		
 	 }  
 	 
  	 function modifyQty(element, qty) {
@@ -222,55 +238,58 @@
 
 	
 	function order(){
-		var cnt = $(".cartLi").length;
-		console.log(cnt)
+		var cart=JSON.parse(sessionStorage.getItem("cart"));
 		var cartList = new Array();
-		
-		for(i=0; i<cnt; i++){
-			var name = $("#food"+i).children(".name").value;		
-			var quantity = $("#food"+i).children(".qty").value;
-			var price =  $("#food"+i).children(".price").value;
-		
-			var menu = {
-					 name:name,
-					 quantity:quantity,
-					 price:price
-					}
+		if (cart == null){
+			alert("장바구니가 비어있습니다");
+		} else {
+			var cnt = $(".cartLi").length;			
+			for(i=0; i<cnt; i++){
+				var name = $("#food"+i+" .name").text();		
+				var quantity = $("#food"+i+" .qty").val();
+				var price =  $("#food"+i+" .price").text();
+				
+				var menu = {
+						 name:name,
+						 quantity:quantity,
+						 price:price
+						}
 			
-			var json = JSON.stringify(menu);
-			
-			cartList.push(json);
+				var json = JSON.stringify(menu);
+				
+				cartList.push(json);
 		}
-		
-		cart = JSON.stringify(cartList);
-		var storeNo="${storeNo}";
-			
-		$.ajax({
-				type : "post",
-				async : false,
-				url : "./order.do?storeNo="+storeNo,
-				data : {"cart":cart},
-				dataType : "text",
-				success : function(result,textStatus){
-					if(result == 1){ // 결제페이지로 넘어감!
-						location.href="";
-					} else {
-						location.href="";
+			cart = JSON.stringify(cartList);
+			var storeNo="${storeNo}";
+				
+			$.ajax({
+					type : "post",
+					async : false,
+					url : "./order.do?storeNo="+storeNo,
+					data : {"cart":cart},
+					dataType : "text",
+					success : function(result,textStatus){
+						if(result == 1){ // 결제페이지로 넘어감!
+							location.href="";
+						} else {
+							location.href="";
+						}
+					}, 
+					error:function(data,textStatus){
+						console.log(data);
+						alert("에러가 발생했슈");
 					}
-				}, 
-				error:function(data,textStatus){
-					console.log(data);
-					alert("에러가 발생했슈");
-				}
-			}); // $ajax()
+				}); // $ajax()
 		
+		}
 	}	
 
 	
 </script>
+</head>
 <body>
 	<h1>menu.jsp 진영</h1>
-	<table border="1">
+	<table border="1" id="menuTable">	
 		<c:forEach var="categorys" items="${requestScope.categoryList}">
 			<c:choose>
 				<c:when test="${categorys eq '세트 메뉴'}">
@@ -288,11 +307,11 @@
 			</c:choose>
 			<tr>
 				<td colspan="3" align="center">${categorys} |
-					<button type="button" id="tbtn" onclick="toggle('${category}');">
-						<img src="images/btn_count_down.gif">
-					</button>
+					<button type="button" class="tbtn" onclick="toggleMenuTr(this,'${category}');">
+						<img src="images/btn_count_down.gif" class="toggleImg"/>
+					</button>	
 				</td>
-			</tr>
+			</tr>		
 			<c:forEach var="menu" items="${requestScope.menuList}">
 				<%-- <fmt:parseNumber var="num" value="${menu.level div 10}" type="number" integerOnly="true"/> --%>
 				<c:if test="${menu.category==categorys}">
@@ -308,7 +327,6 @@
 								<input type="number" id="quantity" name="quantity" class="qty" min="0" value="1" type="text"> 
 							<a onclick=" modifyQty(this, -1)" style="cursor: pointer">-</a> 
 							<input type="button" type="button" id="tbtn" value="주문표에 추가" onclick="addToCartStorage(this)">
-						</button>
 						</td>
 				</c:if>
 			</c:forEach>
