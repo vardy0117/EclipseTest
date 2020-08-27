@@ -58,10 +58,12 @@
 	function createCart(){
 		var cart = null;
 		sessionStorage.setItem("cart",cart);
-		var store = null
-		sessionStorage.setItem("store",store);
 	}
 	
+	function logOut(){
+		sessionStorage.clear();
+		location.href = "./LogOut.do"; 
+	}
 </script>
 <body>
 	<div id="topDiv">
@@ -80,7 +82,7 @@
 				<div id="loginAndJoin">
 					${sessionScope.nickname} 회원님 어서 오세요!
 					<a href="#"></a> | 
-					<a href="./LogOut.do">logout</a> |	
+					<a onclick = "logOut()">logout</a> |	
 					<a href="./CustomerModifyIntro.do">회원수정</a>
 				</div>
 			</c:when>

@@ -26,6 +26,44 @@
 	}
 </style>
 </head>
+<script>
+	function setStoreInStorage(storeNo){
+		var store = {
+			storeNo : storeNo	
+		};
+			
+		var json = JSON.stringify(store);
+		
+		sessionStorage.setItem("store",json);	
+		
+		location.href = "Store.do?storeNo="+storeNo;
+	}
+
+
+	function addStoreNoToStorage(storeNo){
+		var cartItem=JSON.parse(sessionStorage.getItem("cart"));
+		if(cartItem==null){
+		setStoreInStorage(storeNo);
+		} else { // 카트가 이미 저장된 메뉴가 있으면 (이미 storeNo는 저장된 상태 )
+			var store = JSON.parse(sessionStorage.getItem("store"));
+			if (storeNo == store["storeNo"]) {
+				location.href="Store.do?storeNo="+storeNo;	
+			} else {	
+				if(confirm("카트를 비우고 다른 가게를 가시겠어요?") == true){
+					var cart = null;
+					sessionStorage.setItem("cart",cart);
+					setStoreInStorage(storeNo);
+					location.href="Store.do?storeNo="+storeNo;
+				} else {
+					sotreNo=store["storeNo"];
+					location.href="Store.do?storeNo="+storeNo;
+				}	
+			} 
+		}
+	
+		
+	}
+</script>	
 <body>
 	<div id="mainDiv">
 		<h1>storeList.jsp</h1>
@@ -47,7 +85,7 @@
 	 <p>----------------------------------------------------------------------------------------</p>
 	
 		<c:forEach var="bean" items="${storelist}">
-			<a onclick="location.href='Store.do?storeNo=${bean.storeNo}'">	
+			<a onclick="addStoreNoToStorage('${bean.storeNo}')">	
 				<div class="storeDetail">
 					<font size="10">---가져온 스토어 데이터---</font> <br>
 					
