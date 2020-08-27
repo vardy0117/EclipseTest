@@ -39,7 +39,7 @@ public class OrderMenuDAO {
 	
    public void insertOrderMenu(JSONArray cart, int orderNo) {     
 	   try {
-
+		   
 		   con = getConnection();
 		    
 		   sql = "insert into orderMenu(orderNo, name, quantity, price) values(?, ? ,? ,?)";
@@ -47,8 +47,8 @@ public class OrderMenuDAO {
 		   pstmt = con.prepareStatement(sql);
 		    
 		   int i = 0;
-		   for (i=0; i<cart.length(); i++){
-			   JSONObject order = cart.getJSONObject(i);
+		   for (i=1; i<cart.length(); i++){
+			   JSONObject order = (JSONObject) cart.get(i);
 			   
 			    pstmt.setInt(1, orderNo);
 			    pstmt.setString(2, order.getString("name"));
@@ -59,7 +59,7 @@ public class OrderMenuDAO {
 		    }
 		    
 	   } catch (Exception e) {
- 
+		   	e.printStackTrace();
 	   } finally {
 		   resourceClose();
 	   }

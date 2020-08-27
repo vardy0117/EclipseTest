@@ -243,10 +243,10 @@
 	function order(){
 		var storageCart=JSON.parse(sessionStorage.getItem("cart"));
 		var cartList = new Array();
-		if (cart == null){
+		if (storageCart == null){
 			alert("장바구니가 비어있습니다");
-		} /* else {
-			var cnt = $(".cartLi").length;			
+		} else {
+			/* var cnt = $(".cartLi").length;			
 			for(i=0; i<cnt; i++){
 				var name = $("#food"+i+" .name").text();		
 				var quantity = $("#food"+i+" .qty").val();
@@ -260,9 +260,10 @@
 			
 				var json = JSON.stringify(menu);
 				
-				cartList.push(json);
-		} */
-			cart = JSON.stringify(storageCart);
+				cartList.push(json); */
+				
+			cart = sessionStorage.getItem("cart");
+		 
 			var storeNo="${storeNo}";
 			$.ajax({
 					type : "post",
@@ -282,9 +283,9 @@
 						alert("에러가 발생했슈");
 					}
 				}); // $ajax()
-		
 		}
-	}	
+	}
+		
 
 	
 </script>
