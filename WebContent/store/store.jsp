@@ -123,7 +123,6 @@
 		});
 	}
 
-	
 </script>
 <body>
 	<jsp:include page="/inc/top.jsp"/>
