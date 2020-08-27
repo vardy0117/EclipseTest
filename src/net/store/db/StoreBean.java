@@ -102,20 +102,8 @@ public class StoreBean {
 		return regNo;
 	}
     public void setRegNo(String regNo) {
-    	
-    	try {
-			
-	
-    System.out.println("store bean 사업자 등록 bean 호출 : " + regNo);
-    String high = regNo.substring(0,3) + "-";
-    String middle = regNo.substring(3,5) + "-";
-    String end = regNo.substring(5,10);
-    this.regNo = high+middle+end;
-    
-    	} catch (Exception e) {
-		System.out.println("사업자 등록번호 자릿수 오류" + regNo);
-		this.regNo = "사업자 등록번호 자릿수 오류가 발생하였습니다 : 000-00-00000 자리 수로 해주세요";
-    	}
+
+    this.regNo = regNo;
 
 }
 	public String getSido() {
