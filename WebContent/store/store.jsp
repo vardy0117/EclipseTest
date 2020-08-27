@@ -157,10 +157,10 @@
 		<div id="menuDiv" class="display-on">
 			<jsp:include page="/store/menu.jsp"></jsp:include>
 		</div>
-		<div id="reviewDiv" class="display-off">
+		<div id="reviewDiv" class="display-on">
 			<jsp:include page="/store/review.jsp"></jsp:include>
 		</div>
-		<div id="infoDiv" class="display-off">
+		<div id="infoDiv" class="display-on">
 			<jsp:include page="/store/info.jsp"></jsp:include>
 		</div>
 </body>
