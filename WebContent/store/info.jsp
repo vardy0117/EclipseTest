@@ -11,12 +11,7 @@
 <body>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
-<script type="text/javascript">
-var txt1="test";
-var txt2 = txt1.slice(0, 3) + "-" + txt1.slice(3);
-// alert(txt2);
-</script>
-분기확인
+
 		<c:set var="info" value="${requestScope.storeInfo}"/>
 		<div id="mainDiv">
 		<h1>storeinformation.jsp</h1>
