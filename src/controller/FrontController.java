@@ -559,15 +559,25 @@ public class FrontController extends HttpServlet {
 		}
 		
 
+		
+		if(command.equals("deletemanage.do")){
+			
+			request.setCharacterEncoding("utf-8");
+			
+			String storeNo = request.getParameter("storeNo");
+			
+			StoreDAO sdao= new StoreDAO();
+			sdao.deleteStore(storeNo);
+		}
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
 	
 }
