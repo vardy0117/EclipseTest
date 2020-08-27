@@ -10,6 +10,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import javafx.beans.binding.StringExpression;
 import net.orderList.db.OrderListBean;
 import net.orderList.db.OrderListDAO;
 import net.orderMenu.db.OrderMenuBean;
@@ -38,8 +39,9 @@ public class OrderAction {
 
 
 	public void insertOrderMenu(HttpServletRequest req, HttpServletResponse resp, int orderNo) throws ParseException, JSONException{
-		//String jsonFormattedString = new JSONTokener(req.getParameter("cart")).nextValue().toString();
+		String jsonString = req.getParameter("cart");
 		
+		String escaptedJson = StringE
 		//JSONArray cart = new JSONArray(req.getParameter("cart"));
 		JSONArray cart = new JSONArray("[{'name':'food1','basePrice':10000,'quantity':1,'price':10000}','{'name':'food2','basePrice':12000,'quantity':1,'price':12000}']");
 		//cart = JSONArray.fromObject()
