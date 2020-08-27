@@ -26,27 +26,9 @@ public class GetStoreMenuAction {
 			menuList = mdao.getStoreMenu(storeNo);
 			
 			categoryList = mdao.getMenuCategory(storeNo);
-			
-			List<String> reArrList = new ArrayList<String>();
-			
-			for (String category:categoryList){
-				switch (category){
-					case "세트메뉴" : reArrList.add(category);
-					break;
-					
-					case "주 메뉴" : reArrList.add(category);
-					break;
-					
-					case "사이드 메뉴" : reArrList.add(category);
-					break;
-					
-					case "음료/주류" : reArrList.add(category);
-					break;
-				} 
-			}
-			
+			req.setAttribute("storeNo", storeNo);						
 			req.setAttribute("menuList", menuList);	
-			req.setAttribute("categoryList", reArrList);		
+			req.setAttribute("categoryList", categoryList);		
 	}
 
 }
