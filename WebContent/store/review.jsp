@@ -9,10 +9,10 @@
 <title>Insert title here</title>
 </head>
 <body>
- 	<h1>해당 가게의 리뷰 중에서 모든 닉네임   ${requestScope.nickNameList}</h1>
- 	<c:forEach items="${requestScope.nickNameList}" var="nick">
- 		${nick}님의 글
- 	</c:forEach>
+<%--  	<h1>해당 가게의 리뷰 중에서 모든 닉네임   ${requestScope.nickNameList}</h1> --%>
+<%--  	<c:forEach items="${requestScope.nickNameList}" var="nick"> --%>
+<%--  		${nick}님의 글 --%>
+<%--  	</c:forEach> --%>
  	
 	<h1>review.jsp 태우</h1>
 	
