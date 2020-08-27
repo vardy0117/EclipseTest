@@ -261,6 +261,40 @@ public void updateStore(StoreBean bean) {
 			resourceClose();
 		}
 	}
+
+//delete 
+
+
+public void deleteStore(String storeNo) {
+	
+	 try {
+		con = getConnection();
+		
+		sql= "delete from store where storeNo=?";
+		
+		pstmt =  con.prepareStatement(sql);
+		pstmt.setString(1, storeNo);
+		
+		pstmt.executeUpdate();
+		
+		
+		
+		
+	} catch (Exception e) {
+		System.out.println("deleteStore inner error" +e );
+		e.printStackTrace();
+	}finally {
+		resourceClose();
+	}
+
+	
+	
+	
+	
+	
+	
+	
+}
 	
 	
 	
