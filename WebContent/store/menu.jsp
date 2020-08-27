@@ -278,7 +278,7 @@
 					error:function(data,textStatus){
 						console.log(data);
 						alert("에러가 발생했슈");
-					 }
+					}
 				}); // $ajax()
 		
 		}
