@@ -37,7 +37,24 @@
 	<!-- 주문한 메뉴 review.jsp로 가져오기는 일단 보류 - 이태우 - --> 	
 	<h1>review.jsp 태우</h1>
 	
+	
+	<!-- 등록된 리뷰가 없을때 -->
+	<c:if test="${requestScope.reviewList eq '[]' }">
+		<div>
+			<table id="reviewT" align="center">
+				<tr rowspan="3">
+					<td>주문후 첫번째 리뷰를 남겨보세요.</td>
+				</tr>			
+			</table>
+		</div>
+	</c:if>
+	
+	
+	
+	
+	<!-- 등록된 리뷰가 존재할때 -->
 	<c:forEach items="${requestScope.reviewList}" var="rBean" varStatus="status">
+		<c:out value="${rBean }"/>
 		<c:set var="i" value="${status.index }"/>
 		
 		<div>
