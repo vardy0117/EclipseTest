@@ -166,7 +166,7 @@ public class FrontController extends HttpServlet {
 			CustomerLogoutAction action = new CustomerLogoutAction() ;
 			try {
 				forward = action.execute(request, response);
-				forward.execute(request, response);
+				//forward.execute(request, response);
 				
 			} catch (Exception e) {
 				e.printStackTrace();

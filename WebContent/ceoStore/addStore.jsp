@@ -20,7 +20,7 @@
 	
 	#formDiv {
 		width: 650px;
-	    height: 600px;
+	    min-height: 600px;
 	    margin: 0 auto;
 	    border: 2px solid #c7c7c7;
 	    border-radius: 15px;
@@ -31,6 +31,84 @@
 		width: 560px;
 		margin: 0 auto;
 	}
+	.textBox {
+		width: 200px;
+		height: 30px;
+		border-radius: 12px;
+		border: 2px solid gray;
+		padding-left: 15px;
+		font-family: Binggrae-Bold;
+		font-size: 1rem;
+	}
+	.textArea {
+		border: 2px gray solid;
+	    border-radius: 12px;
+	    width: 300px;
+	    height: 80px;
+	    padding-left: 15px;
+		font-family: Binggrae-Bold;
+		font-size: 0.8rem;
+	}
+	.select {
+		border: 2px solid gray;
+	    border-radius: 12px;
+	    width: 80px;
+	    height: 30px;
+	    font-family: 'Binggrae-Bold';
+	    padding-left: 10px;
+	    font-size: 1rem;
+	}
+	select:foucs { outline:none; }
+	textarea:focus {outline: none;}
+	input:focus { outline: none; }
+	.btn {
+		background: linear-gradient( to bottom, hsl(0deg 0% 0%), hsl(0deg 0% 57%));
+		font-family: Binggrae-Bold;
+		font-size: 1rem;
+		color: white;
+		border: none;
+		border-radius: 12px;
+		width: 150px;
+		height: 35px;
+		transition-duration: 1s;
+		opacity: 0.7;
+	}
+	.btn:hover {
+		cursor: pointer;
+		opacity: 1;
+	}
+	#menuAddBtn {
+		background: url('images/addBtn.svg') no-repeat;
+		background-size: 32px;
+		width: 35px;
+		height: 35px;
+		cursor: pointer;
+		border: none;
+	}
+	
+	/* input[type="file"] {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip:rect(0,0,0,0);
+		border: 0;
+	}
+	label {
+		display: inline-block;
+		padding: .5em .75em;
+		color: white;
+		font-size: inherit;
+		line-height: normal;
+		vertical-align: middle;
+		background: linear-gradient( to bottom, hsl(0deg 0% 0%), hsl(0deg 0% 57%));
+		cursor: pointer;
+		border: 1px solid #ebebeb;
+		border-bottom-color: #e2e2e2;
+		border-radius: 12px;
+	} */
 </style>
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <script>
@@ -50,6 +128,19 @@
 				event.preventDefault();
 			}
 		});
+		
+		
+		/* var fileTarget = $('#storeImage');
+		
+		fileTarget.on('change', function() {
+			if(window.FileReader) {
+				var filename = $(this)[0].files[0].name;
+			} else {
+				var filename = $(this).val().split('/').pop().split('\\').pop();
+			}
+			
+			$('.store-name').val(filename);
+		}); */
 	}
 	
 	function phone0Change() {
@@ -82,10 +173,10 @@
 		var cnt = document.getElementById("menuCnt").value; 
 		
 		var elements = '<tr><td></td><td>　</td></tr><tr><td>메뉴사진</td><td><input type="file" name="menu_image' + cnt + '"></td></tr>' + 
-						'<tr><td>카테고리</td><td><select name="menu_category' + cnt + '"><option value="세트 메뉴">세트 메뉴</option><option value="주 메뉴">주 메뉴</option><option value="사이드 메뉴">사이드 메뉴</option><option value="음료/주류">음료/주류</option></select></td></tr>' + 
-						'<tr><td>메뉴이름</td><td><input type="text" name="menu_name' + cnt + '"></td></tr>' + 
-						'<tr><td>가격</td><td><input type="text" name="menu_price' + cnt + '">원</td></tr>' + 
-						'<tr id="btn_tr"><th colspan="2"><button type="button" onclick="addMenuFnc()">메뉴 추가하기</button></th></tr>';
+						'<tr><td>카테고리</td><td><select class="select" style="width:130px;" name="menu_category' + cnt + '"><option value="세트 메뉴">세트 메뉴</option><option value="주 메뉴">주 메뉴</option><option value="사이드 메뉴">사이드 메뉴</option><option value="음료/주류">음료/주류</option></select></td></tr>' + 
+						'<tr><td>메뉴이름</td><td><input class="textBox" type="text" name="menu_name' + cnt + '"></td></tr>' + 
+						'<tr><td>가격</td><td><input class="textBox" type="text" name="menu_price' + cnt + '">원</td></tr>' + 
+						'<tr id="btn_tr"><th colspan="2"><button id="menuAddBtn" type="button" onclick="addMenuFnc()"></button></th></tr>';
 		
 		
 		$("#menuTable").append(elements);
@@ -103,34 +194,36 @@
 					<tr>
 						<td>가게명</td>
 						<td>
-							<input type="text" name="name">
+							<input class="textBox" type="text" name="name">
 						</td>
 					</tr>
 					<tr>
 						<td>대표이미지</td>
 						<td>
-							<input type="file" name="image"> 
+							<!-- <input class="store-name textBox" value="파일선택" disabled="disabled">
+							<label for="storeImage">업로드</label> -->
+							<input id="storeImage" type="file" name="image"> 
 						</td>
 					</tr>
 					<tr>
 						<td>주소</td>
 						<td>
 							<input type="hidden" id="sample6_postcode" placeholder="우편번호">
-							<input type="text" id="sample6_address" placeholder="주소" name="roadAddress">
+							<input class="textBox" type="text" id="sample6_address" placeholder="주소" name="roadAddress">
 							<input type="hidden" id="sample6_extraAddress" placeholder="참고항목" >
-							<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
+							<input class="btn" type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
 						</td>
 					</tr>
 					<tr>
 						<td></td>
 						<td>
-						<input type="text" id="sample6_detailAddress" placeholder="상세주소" name="detailAddress">
+						<input class="textBox" type="text" id="sample6_detailAddress" placeholder="상세주소" name="detailAddress">
 						</td>
 					</tr>
 					<tr>
 						<td>카테고리 </td>
 						<td>
-							<select name="category" >
+							<select class="select" name="category" >
 								<option value="한식">한식</option>
 								<option value="중식">중식</option>
 								<option value="일식">일식</option>
@@ -140,7 +233,7 @@
 					<tr>
 						<td>전화번호</td>
 						<td>
-							<select name="phone0">
+							<select class="select" style="width:100px;" name="phone0">
 								<option value="직접입력">직접입력</option>
 								<option value="02">02</option>
 								<option value="051">051</option>
@@ -160,8 +253,8 @@
 								<option value="063">063</option>
 								<option value="064">064</option>
 							</select>	  
-							<input type="text" name="phone1">
-							<input type="text" name="phone2">
+							<input class="textBox" style="width:50px;" type="text" name="phone1">
+							<input class="textBox" style="width:100px;" type="text" name="phone2">
 						
 						</td>
 						
@@ -169,7 +262,7 @@
 					<tr>
 						<td>영업시간</td>
 						<td>
-							<select name="opentime">
+							<select class="select" name="opentime">
 								<option value="00시 ">00시</option>
 								<option value="01시 ">01시</option>
 								<option value="02시 ">02시</option>
@@ -195,7 +288,7 @@
 								<option value="22시 ">22시</option>
 								<option value="23시 ">23시</option>
 							</select>~
-							<select name="closetime">
+							<select class="select" name="closetime">
 								<option value="00시 ">00시</option>
 								<option value="01시 ">01시</option>
 								<option value="02시 ">02시</option>
@@ -226,19 +319,25 @@
 					<tr>
 						<td>배달가능지역</td>
 						<td>
-							<input type="text" name="areaTyping">
-							<button type="button" name="areaAddBtn">추가하기</button>
-							<input type="text" name="deliveryArea" readonly>
+							<input class="textBox" type="text" name="areaTyping">
+							<button class="btn" type="button" name="areaAddBtn">추가하기</button>
+						</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>
+							<input class="textBox" type="text" name="deliveryArea" readonly>
+							<button class="btn" type="button" onclick="document.fr.deliveryArea.value = ''; areaFlag = false;">초기화</button>
 						</td>
 					</tr>
 					<tr>
 						<td>가게한마디</td>
-						<td><textarea name="message"></textarea></td>
+						<td><textarea class="textArea" name="message"></textarea></td>
 					</tr>
 					<tr>
 						<td>사업자등록번호</td>
 						<td>
-							<input type="text" name="regNo">
+							<input class="textBox" type="text" name="regNo">
 						</td>
 					</tr>
 				</table>
@@ -252,12 +351,14 @@
 					
 					<tr>
 						<td>메뉴사진</td>
-						<td><input type="file" name="menu_image1"></td>
+						<td>
+							<input type="file" name="menu_image1">
+						</td>
 					</tr>
 					<tr>
 						<td>카테고리</td>
 						<td>
-							<select name="menu_category1">
+							<select class="select" style="width:130px;" name="menu_category1">
 								<option value="세트 메뉴">세트 메뉴</option>
 								<option value="주 메뉴">주 메뉴</option>
 								<option value="사이드 메뉴">사이드 메뉴</option>
@@ -268,25 +369,34 @@
 					<tr>
 						<td>메뉴이름</td>
 						<td>
-							<input type="text" name="menu_name1">
+							<input class="textBox" type="text" name="menu_name1">
 						</td>
 					</tr>
 					<tr>
 						<td>가격</td>
 						<td>
-							<input type="text" name="menu_price1">원
+							<input class="textBox" type="text" name="menu_price1">원
 						</td>
 					</tr>
 					<tr id="btn_tr">
 						<th colspan="2">
-							<button type="button" onclick="addMenuFnc()">메뉴 추가하기</button>
+							<button id="menuAddBtn" type="button" onclick="addMenuFnc()"></button>
 						</th>
 					</tr>
 				</table>
 					
 					<input type="hidden" name="sido"  id="sido">  
+			    <table>
+			    	<tr>
+			    		<th>
+			    			<br>
+			    			<br>
+			    			<input class="btn" type="submit" value="가게등록하기">
+			    		</th>
+			    	</tr>
+			    </table>
 				    
-					<input type="submit" value="가게등록하기">
+					
 			</form>
 		</div>
 	</div>
