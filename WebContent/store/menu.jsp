@@ -121,8 +121,7 @@
 		for(var j=0; j<cartItem.length; j++){
 			if (name == JSON.parse(cartItem[j])["name"]){		
 				
-				var json = JSON.stringify(orderItem);
-					
+				var json = orderItem;			
 				cartItem.splice(j, 1, json);
 				break;
 			} 
@@ -147,7 +146,7 @@
 			 price:price
 			}
 		
-		var json = JSON.stringify(orderItem);
+		var json = orderItem;
 		
 		var cartItem=JSON.parse(sessionStorage.getItem("cart"));
 		
@@ -157,19 +156,19 @@
 		} else {
 			var i = null;
 			for(j=0; j<cartItem.length; j++){
-				if (name == JSON.parse(cartItem[j])["name"]){	
+				if (name == cartItem[j]["name"]){	
 					i=j;
 				}	
 			}
 			
 			if(i!=null){	
-				quantity+=parseInt(JSON.parse(cartItem[i])["quantity"]);
+				quantity+=parseInt(cartItem[i]["quantity"]);
 				price=basePrice*quantity;			
 					
 				orderItem["quantity"]=quantity;
 				orderItem["price"]=price;
 				
-				json = JSON.stringify(orderItem);
+				json = orderItem;
 					
 				cartItem.splice(i, 1, json);
 			} else {
@@ -208,29 +207,34 @@
 		var cart=JSON.parse(sessionStorage.getItem("cart"));
 		var tag = "";
 		var totalPrice = 0;
-		if(cart!=null){
+		if(cart==null){
+			$("#cartDiv").text("주문표에 담긴 메뉴가 없습니다.");
+		}else {
+			$(".cartTitle").append('<img src="images/ICON/trash_bin_remove_delete_icon_133483.ico" width="20" height="20">');
 			for(i=0; i<cart.length; i++){
 				tag += 
 					'<li class="cartLi" id=food'+i+'>'+
 						'<div class="row">'+
 							'<div class="name">'+
-							JSON.parse(cart[i])["name"]+
+								cart[i]["name"]+
 							'</div>'+
 							'<div class="left">'+
-								'<a class="btn del-menu" onclick="delOrderItem(this)" style="cursor:pointer" >삭제</a>'+
+								'<a class="btn del-menu" onclick="delOrderItem(this)" style="cursor:pointer">삭제</a>'+
 								'<span class="price">'+
-								JSON.parse(cart[i])["price"]+" 원"
+									cart[i]["price"]+" 원"+
 								'</span>'+
 							'</div>'+
 							'<div class="right">'+
 								'<a onclick=" modifyMenuOnCartQty(this, 1)" style="cursor:pointer" >+</a>'+
-								'<span class="orderQuantity"><input type="number" class="qty" value='+JSON.parse(cart[i])["quantity"]+' readOnly> </span>'+
+								'<span class="orderQuantity">'+
+									cart[i]["quantity"]+ 
+								'</span>'+
 								'<a onclick=" modifyMenuOnCartQty(this, -1)" style="cursor:pointer">-</a>'+	
 							'</div>'+
 						'</div>'+
 					'</li>';
 					
-				totalPrice += JSON.parse(cart[i])["price"];
+				totalPrice += cart[i]["price"];
 			}
 			
 			$("#cartUl").html(tag);
@@ -291,7 +295,6 @@
 </script>
 </head>
 <body>
-	<h1>menu.jsp 진영</h1>
 	<table border="1" id="menuTable">	
 		<c:forEach var="categorys" items="${requestScope.categoryList}">
 			<c:choose>

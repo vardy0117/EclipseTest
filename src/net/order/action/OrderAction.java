@@ -25,10 +25,10 @@ public class OrderAction {
 		
 		oBean.setStoreNo(request.getParameter("storeNo"));
 		oBean.setCustomerNo((String) request.getSession().getAttribute("customerNo"));
-		//oBean.setRoadAddress((String) request.getSession().getAttribute("roadAddress")); 
-		//oBean.setDetailAddress((String) request.getSession().getAttribute("detailAddress")); 
-		oBean.setRoadAddress("나나");
-		oBean.setDetailAddress("나나");
+		oBean.setRoadAddress((String) request.getSession().getAttribute("roadAddress")); 
+		oBean.setDetailAddress((String) request.getSession().getAttribute("detailAddress")); 
+		//oBean.setRoadAddress("나나");
+		//oBean.setDetailAddress("나나");
 		oBean.setPhone((String) request.getSession().getAttribute("phone"));
 		
 		OrderListDAO odao = new OrderListDAO();
@@ -39,19 +39,8 @@ public class OrderAction {
 
 
 	public void insertOrderMenu(HttpServletRequest req, HttpServletResponse resp, int orderNo) throws ParseException, JSONException{
-		String jsonString = req.getParameter("cart");
-		
-		String escaptedJson = StringE
-		//JSONArray cart = new JSONArray(req.getParameter("cart"));
-		JSONArray cart = new JSONArray("[{'name':'food1','basePrice':10000,'quantity':1,'price':10000}','{'name':'food2','basePrice':12000,'quantity':1,'price':12000}']");
-		//cart = JSONArray.fromObject()
-		
-		
-		//JSONParser parser = new JSONParser();
-		//cart = (JSONArray) parser.parse(req.getParameter("cart"));
-		System.out.println(cart);
-		
-		
+		JSONArray cart = new JSONArray(req.getParameter("cart"));
+
 		OrderMenuDAO odao = new OrderMenuDAO();
 		odao.insertOrderMenu(cart, orderNo);
 		

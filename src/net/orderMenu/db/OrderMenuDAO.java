@@ -47,8 +47,8 @@ public class OrderMenuDAO {
 		   pstmt = con.prepareStatement(sql);
 		    
 		   int i = 0;
-		   for (i=1; i<cart.length(); i++){
-			   JSONObject order = (JSONObject) cart.get(i);
+		   for (i=0; i<cart.length(); i++){
+			   JSONObject order = cart.getJSONObject(i);
 			   
 			    pstmt.setInt(1, orderNo);
 			    pstmt.setString(2, order.getString("name"));
