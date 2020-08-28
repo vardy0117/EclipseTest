@@ -100,14 +100,14 @@
 				<h2 style="text-align: center;">배달 주소 설정</h2>
 				<input type="hidden" id="sample6_postcode" placeholder="우편번호" disabled="disabled">
 				<input type="hidden" id="sample6_extraAddress" placeholder="참고항목" disabled="disabled">
-				<form action="./SearchStore.do" method="post" name="fr">
+				<form action="./CustomerLogin.do" method="post" name="fr">
 					<div id="postDiv">
-							<input class="btn" type="button" onclick="sample6_execDaumPostcode()" value="주소변경" disabled="disabled"> <br>
-							<input class="textBox" type="text" id="sample6_address" placeholder="로그인 이후 이용가능" name="roadAddress" readonly disabled="disabled">
-							<input class="textBox" type="text" id="sample6_detailAddress" name="detailAddress" disabled="disabled">
+							<input class="btn" type="button" onclick="location.href='CustomerLogin.do'" value="주소변경"> <br>
+							<input class="textBox" type="text" id="sample6_address" placeholder="로그인 이후 이용가능" name="roadAddress" readonly onclick="location.href='CustomerLogin.do'" >
+							<input class="textBox" type="text" id="sample6_detailAddress" name="detailAddress">
 							<input type="hidden" id="bname" name="bname" disabled="disabled">
 							<input type="hidden" id="sido" name="sido">
-							<input class="btn" type="submit" value="배달가능 가게 검색" disabled="disabled">
+							<input class="btn" type="submit" value="배달가능 가게 검색" >
 					</div>			
 				</form>
 			</c:if>
