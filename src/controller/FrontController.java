@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.bind.ParseConversionEvent;
 
 import org.apache.catalina.tribes.group.Response;
 
@@ -610,7 +611,25 @@ public class FrontController extends HttpServlet {
 			
 		}
 		
-	
+		if(command.equals("updateMenu.do")){
+			
+			request.setCharacterEncoding("utf-8");
+			String ceoNo = (String)request.getSession().getAttribute("ceoNo");
+			String storeNo = request.getParameter("storeNo");
+			String menuNo = request.getParameter("menuNo");
+			
+			MenuDAO mdao = new MenuDAO();
+			request.setAttribute("menuBean",mdao.getMenu(Integer.parseInt(menuNo)));
+			
+			forward = new ActionForward();
+			forward.setView("/ceoStore/updateMenu.jsp");
+			forward.execute(request, response);
+			
+			
+			
+			
+			
+		}
 		
 		
 		

@@ -37,6 +37,7 @@ public class MenuDAO {
 	} // resourceClose()
 
 	public List<MenuBean> getStoreMenu(int storeNo) {
+		
 		List<MenuBean> menuList = new ArrayList<MenuBean>();
 		
 		try {
@@ -125,5 +126,41 @@ public class MenuDAO {
 		
 	}
 
+	
+	public MenuBean getMenu(int menuNo) {
+		MenuBean mBean = new MenuBean();
+		
+		try {
+			 con = getConnection();
+			 
+			 sql = "select * from menu where menuNo=?";
+			 
+			 pstmt = con.prepareStatement(sql);
+			 
+			 pstmt.setInt(1, menuNo);
+			 
+			 rs = pstmt.executeQuery();
+			 
+			 if(rs.next()){
+				 mBean.setStoreNo(rs.getString("storeNo"));
+				 mBean.setName(rs.getString("name"));
+				 mBean.setPrice(rs.getInt("price"));
+				 mBean.setImage(rs.getString("image"));
+				 mBean.setCategory(rs.getString("category"));
+				 mBean.setMenuNo(rs.getString("menuNo"));
+			 }
+			
+		} catch (Exception e) {
+			System.out.println("getMenu Inner Error : "+e);
+		} finally {
+			resourceClose();
+		}
+		
+		return mBean;
+	}
+	
+	
+	
+	
 }
 
