@@ -60,7 +60,10 @@
 	}
 </script>	
 <body>
+
 	<div id="mainDiv">
+	
+
 		<h1>storeList.jsp</h1>
 		<br>
 		<h3>sessionScope.orderRoadAddress : ${sessionScope.orderRoadAddress } (session에 저장해두고 주문시 사용하고 해당세션 비워줌)</h3>
@@ -72,11 +75,19 @@
 		<a href="./Store.do?storeNo=100"> 경로=./Store.do?storeNo=100 -> 100번가게로 이동</a>
 
 		<br>
+		
+<%-- 		<c:set var="good" value="${customerNo}" /> <!-- 로그인 세션중 customerNo가져옴 --> --%>
+		커스터머 번호 : ${customerNo } <br>
+		
+
+	
+		
+		<c:if test="${customerNo ne null }">
 	<p>----------------------------------------------------------------------------------------</p>
 	귀하의 현재 계정기준 요청주소는 :  <font color="blue" size="5">	
 	<c:out value="${orderSido}" />
 	 </font> 입니다 <br>
-
+	
 	 <p>----------------------------------------------------------------------------------------</p>
 	
 		<c:forEach var="bean" items="${storelist}">
@@ -105,9 +116,11 @@
 					<font size="6" color="orange"> <p>귀하의 지역에 맞는 가게가 없습니다</p> </font>
 				</c:if>
 		
-
+</c:if> <!-- 로그인 확인여부 if문 -->
 	</div>
 	
 	
+		
+		
 </body>
 </html>
