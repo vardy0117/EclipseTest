@@ -352,6 +352,16 @@ public class FrontController extends HttpServlet {
 			forward.execute(request, response);
 		}
 		
+		if(command.equals("OrderCheck.do")){
+			forward = new ActionForward();
+			
+			forward.setRedirect(true);
+			forward.setView("index.jsp?center=store/orderCheck.jsp");
+			
+			forward.execute(request, response);
+		}
+		
+		
 		if(command.equals("Order.do")){
 			int orderNo=0;
 			try{
@@ -363,14 +373,12 @@ public class FrontController extends HttpServlet {
 			} catch (Exception e){
 				e.printStackTrace();
 			}
+			
 			PrintWriter out = response.getWriter();
 			out.print(orderNo);
 		}
 		
-		if(command.equals("OrderCheck.do")){
-			String orderNo = request.getParameter("orderNo");
-			System.out.println("내 주문 번호는dd :" + orderNo);
-		}
+	
 		
 		
 		
