@@ -13,9 +13,8 @@
 	#mainDiv {
 		width: 1000px;
 		min-height: 600px;
-		border: 2px solid green;
 		margin: 0 auto;
-		margin-top: 50px;
+		margin-top: 80px;
 		position: relative;
 	}
 	
@@ -55,55 +54,192 @@
 	}
 	
 
-/*메뉴 디자인*/
-/*******************************************************************/
-#topMenu {
-	height: 30px;
-	width: 850px;
-	margin: 0 auto;
-	margin-top: 80px;
-	position: relative;
-	padding: 100px;
-}
+	/*메뉴 디자인*/
+	/*******************************************************************/
+	/* #topMenu {
+		height: 30px;
+		width: 850px;
+		margin: 0 auto;
+		margin-top: 80px;
+		position: relative;
+		padding: 100px;
+	}
+	
+	#topMenu ul li {
+		list-style: none;
+		color: white;
+		background-color: #2d2d2d;
+		float: left;
+		line-height: 30px;
+		vertical-align: middle;
+		text-align: center;
+	}
+	
+	#topMenu .menuLink, #topMenu .reviewLink, #topMenu .infoLink {
+		text-decoration: none;
+		color: white;
+		display: block;
+		background: linear-gradient(to right, hsl(98 100% 62%),
+			hsl(204 100% 59%));
+		width: 150px;
+		font-size: 12px;
+		font-weight: bold;
+		font-family: "Trebuchet MS";
+	}
+	
+	#topMenu .menuLink:hover, #topMenu .reviewLink:hover, #topMenu .infoLink:hover {
+		color: red;
+		background-color: #4d4d4d;
+		cursor:pointer;
+	} */
+	#topMunu{
+		padding: 0;
+		margin: 0;
+		padding-left: 0;
+	}
+	#topMenu li{
+		margin-top: 0;
+		list-style: none;
+		float: left;
+		width: 300px;
+		text-align: center;	
+		border : 1px solid #d9d9d9;
+		line-height: 50px;
+	}
+	#topMenu:HOVER {
+		cursor: pointer;
+	}
+	
+	.display-on {
+		display: block;
+	}
+	.display-off {
+		display: none;
+	}
+	.storeName{
+		padding: 10px;
+    	font-size: 110%;
+		border: 1px solid #d9d9d9;
+		margin: 30px 30px;
+		margin-bottom: 0;
+		padding-left: 30px;
+		margin-left: 0;
+		margin-right: 0;
+	}
+	.guideText{
+		color: #999;
+	}
+	.avg{
+		float: right;
+		margin-right: 250px;
+		margin-top: 30px;
+	}
+	#storeAvgStar{
+		font-size: 15px;
+		color: #ffa400;
+	}
+	#storeAvgScore{
+		float: right;
+	}
+	.storeInfo{
+		padding: 10px;
+    	font-size: 110%;
+		border: 1px solid #d9d9d9;
+		margin: 30px 30px;
+		overflow: hidden;	
+		margin-top: 0;
+		margin-left: 0;
+		margin-right: 0;
+	}
 
-#topMenu ul li {
-	list-style: none;
-	color: white;
-	background-color: #2d2d2d;
-	float: left;
-	line-height: 30px;
-	vertical-align: middle;
-	text-align: center;
-}
 
-#topMenu .menuLink, #topMenu .reviewLink, #topMenu .infoLink {
-	text-decoration: none;
-	color: white;
-	display: block;
-	background: linear-gradient(to right, hsl(98 100% 62%),
-		hsl(204 100% 59%));
-	width: 150px;
-	font-size: 12px;
-	font-weight: bold;
-	font-family: "Trebuchet MS";
-}
-
-#topMenu .menuLink:hover {
-	color: red;
-	background-color: #4d4d4d;
-}
-
-.display-on {
-	display: block;
-}
-.display-off {
-	display: none;
-}
-/*카트 디자인*/
-/*******************************************************************/
-</style> <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	#topMenu a,#topMenu li{
+		height: 46px;
+	}
+</style>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>
+<body>
 
+	<div id="mainDiv">
+	
+		
+
+
+		
+		<c:set var="info" value="${requestScope.storeInfo}"/>
+		<div class="storeName"><h2>${info.name}</h2></div>
+		<div class="storeInfo">
+			<span class="storeImg"><img src="./images/${info.image}" style="width: 200px; margin: 30px 30px;"></span>
+			<div class="avg">
+				<c:set value="${requestScope.storeNo }" var="storeNo"/>
+				
+				<c:set var="info" value="${requestScope.storeInfo}"/>
+				<c:set var="star" value="${requestScope.storereview}"/> <br>
+				<%-- <div id="storeAvgScore">${star.points}</div> --%> 
+				<c:if test="${star.points eq 0 }">
+					<div id="storeAvgStar">☆☆☆☆☆</div>
+				</c:if>
+				<c:if test="${star.points eq 1 }">
+					<div id="storeAvgStar">★☆☆☆☆</div>
+				</c:if>
+				<c:if test="${star.points eq 2 }">
+					<div id="storeAvgStar">★★☆☆☆</div>
+				</c:if>
+				<c:if test="${star.points eq 3 }">
+					<div id="storeAvgStar">★★★☆☆</div>
+				</c:if>
+				<c:if test="${star.points eq 4 }">
+					<div id="storeAvgStar">★★★★☆</div>
+				</c:if>
+				<c:if test="${star.points eq 5 }">
+					<div id="storeAvgStar">★★★★★</div>
+				</c:if>
+				<c:if test="${star.points eq null}">
+					<!-- <div id="storeAvgScore">0</div> -->
+					<div id="storeAvgStar">☆☆☆☆☆</div>
+				</c:if>
+				
+				<div class="storeHours"><span class="guideText">영업시간 :</span> ${info.storeHours}</div>
+				<div class="storeMessage"><span class="guideText">사장님 한마디 :</span> ${info.message}</div>
+			</div>
+		</div>
+		
+		
+		
+		<!-- 플로팅 배너 -->
+		<div class="cart">  
+			<h2>장바구니</h2>
+				<div id = "cartDiv">
+					<ul id="cartUl" class="cartUl">
+					</ul>
+				</div>
+				<hr>
+		    	<h1 id="total"></h1>
+		    <input type="button" value="주문" onclick="order();">
+		</div>
+		<c:set var="info" value="${requestScope.storeInfo}"/>
+	
+		<nav id="topMenu">
+			<ul>
+				<li class="menuLink">메뉴</li>
+				<li class="reviewLink">리뷰</li>
+				<li class="infoLink">정보</li>
+			</ul>
+		</nav>
+			
+		<div id="menuDiv" class="display-on">
+			<jsp:include page="/store/menu.jsp"></jsp:include>
+		</div>
+		<div id="reviewDiv" class="display-off">
+			<jsp:include page="/store/review.jsp"></jsp:include>
+		</div>
+		<div id="infoDiv" class="display-off">
+			<jsp:include page="/store/info.jsp"></jsp:include>
+		</div>
+	
+	</div>
+</body>
 <script>
 	document.querySelector(".menuLink").addEventListener("click", function() {
 		document.getElementById("menuDiv").setAttribute("class", "display-on");
@@ -120,54 +256,5 @@
 		document.getElementById("reviewDiv").setAttribute("class", "display-off");
 		document.getElementById("infoDiv").setAttribute("class", "display-on");
 	});
-</script>	
-<body>
-	<jsp:include page="/inc/top.jsp"/>
-	
-	<!-- 플로팅 배너 -->
-	<div class="cart">  
-		<div id = "cartTitle">
-			<span>주문표</span>
-			<span class="cartClear"> 
-			<button type="button" class="icoClear" onclick="clearCart();">
-				<img src="images/ICON/trash_bin_remove_delete_icon_133483.ico" width="20" height="20">
-			</button>
-			</span>
-		</div>
-		<div id="cartStatusClear">
-			<span>주문표에 담긴 메뉴가 없습니다.</span>
-		</div>
-		<div id = "cartStatusFilled">
-			<ul id="cartUl" class="cartUl">
-			</ul>
-		</div>
-		<hr>
-		    <h3 id="total"></h3>
-	    <button type="button" id="obtn" onclick="order();" disabled="disabled">주문하기</button>
-	</div>
-	
-<c:set var="info" value="${requestScope.storeInfo}"/>
-	
-		<nav id="topMenu">
-		<ul>
-			<li><a class="menuLink">메뉴</a></li>
-			<li>|</li>
-			<li><a class="reviewLink">리뷰</a></li>
-			<li>|</li>
-			<li><a class="infoLink">정보</a></li>
-			<li>|</li>
-
-		</ul>
-		</nav>
-		
-		<div id="menuDiv" class="display-on">
-			<jsp:include page="/store/menu.jsp"></jsp:include>
-		</div>
-		<div id="reviewDiv" class="display-on">
-			<jsp:include page="/store/review.jsp"></jsp:include>
-		</div>
-		<div id="infoDiv" class="display-on">
-			<jsp:include page="/store/info.jsp"></jsp:include>
-		</div>
-</body>
+</script>
 </html>

@@ -11,6 +11,12 @@
 <title>Insert title here</title>
 </head>
 <body>
+<style>
+	#mainDiv{
+		clear: both;
+		border: 1px solid #d9d9d9;
+	}
+</style>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 
@@ -18,9 +24,6 @@
 		<c:set var="star" value="${requestScope.storereview}"/>
 		
 		<div id="mainDiv">
-		<h1>storeinformation.jsp</h1>
-		<br>
-		<h2>storeNo : ${info.storeNo}</h2>
 
 	<img src="${pageContext.request.contextPath }/images/house.jpg" height="50" width="50" alt="업체정보"> <font size="6">업체정보 </font>
 	<hr>
