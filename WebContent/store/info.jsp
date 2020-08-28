@@ -146,7 +146,7 @@ mapOption = {
 var map = new kakao.maps.Map(mapContainer, mapOption); 
 var data = '<c:out value="${info.roadAddress}"/>'; // jstl변수 여기로 보냄
 var data2 ='<c:out value="${info.detailAddress}"/>';   
-alert("가게 요청주소 : " + data + " "+ data2);
+
 //주소-좌표 변환 객체를 생성합니다
 var geocoder = new kakao.maps.services.Geocoder();
 

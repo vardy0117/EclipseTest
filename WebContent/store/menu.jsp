@@ -37,7 +37,7 @@
 		background: url("./images/btn_count_down.gif") no-reapt;
 	}
 	
-	button.tbtn{
+	.tbtn, .icoClear{
 		cursor : pointer;
 		background-color: white;
 		border : 0;
@@ -76,6 +76,8 @@
 		$(".toggleImg:first").attr("src","images/btn_count_up.gif");
 		
 	}
+	
+	fun
 	  
   	 function toggleMenuTr(element,category){
 		if(element.querySelector(".toggleImg").getAttribute("src")=="images/btn_count_down.gif"){
@@ -100,33 +102,17 @@
  		var cartItem = JSON.parse(sessionStorage.getItem("cart"));
  		
  		var name=$(element).parents("li").find(".name").html();
-		var basePrice=parseInt($(element).parents("li").find(".price").html())/
-					  parseInt($(element).parents("li").find(".qty").val());
-		if(qty == 1) {
-			 element.parentNode.querySelector(".qty").value++;
-		 } else if (element.parentNode.querySelector(".qty").value > 0 && qty ==-1) {
-			 element.parentNode.querySelector(".qty").value--;
-		 }
-		
-		var quantity=parseInt(element.parentNode.querySelector(".qty").value);
-		var price = basePrice*quantity
-		
-		var orderItem = {
-				 name:name,
-				 basePrice:basePrice,
-				 quantity:quantity,
-				 price:price
+	 		for(var j=0; j<cartItem.length; j++){
+				if (name ==cartItem[j]["name"]){
+					if(qty == 1) {
+						cartItem[j]["quantity"]++;
+					} else if(qty == -1 && cartItem[j]["quantity"]>1){
+						cartItem[j]["quantity"]--;
+					} else {
+						break;
+					}
 				}
-		
-		for(var j=0; j<cartItem.length; j++){
-			if (name == JSON.parse(cartItem[j])["name"]){		
-				
-				var json = orderItem;			
-				cartItem.splice(j, 1, json);
-				break;
-			} 
-		}	
-			
+	 		}	
 		var cart = JSON.stringify(cartItem);
 		sessionStorage.setItem("cart",cart);	
 			
@@ -191,7 +177,7 @@
  		var name=$(element).parents("li").find(".name").html();
 
 		for(var j=0; j<cartItem.length; j++){
-			if (name == JSON.parse(cartItem[j])["name"]){		
+			if (name == cartItem[j]["name"]){		
 				cartItem.splice(j, 1);
 				break;
 			} 
@@ -203,14 +189,27 @@
 		getCart();		
 	}
 	
+ 	function clearCart(){
+		var cart = null;
+		sessionStorage.setItem("cart",cart);
+		getCart();
+	} 
+	
 	function getCart(){
 		var cart=JSON.parse(sessionStorage.getItem("cart"));
 		var tag = "";
 		var totalPrice = 0;
-		if(cart==null){
-			$("#cartDiv").text("주문표에 담긴 메뉴가 없습니다.");
+		if(cart=="" || cart == null){
+			$("#cartStatusClear").css("display","block");
+			$("#cartStatusFilled").css("display","none");
+			$(".cartClear").css("display","none");
+			$("#total").html("합계 : 0 원");
+			$("#obtn").attr("disabled",true);
 		}else {
-			$(".cartTitle").append('<img src="images/ICON/trash_bin_remove_delete_icon_133483.ico" width="20" height="20">');
+			$("#cartStatusClear").css("display","none");
+			$("#cartStatusFilled").css("display","block");
+			$(".cartClear").css("display","block")
+			$("#obtn").removeAttr("disabled");
 			for(i=0; i<cart.length; i++){
 				tag += 
 					'<li class="cartLi" id=food'+i+'>'+
@@ -238,10 +237,9 @@
 			}
 			
 			$("#cartUl").html(tag);
-			$("#total").html("총 합계 : "+totalPrice+ " 원");
+			$("#total").html("합계 : "+totalPrice+ " 원");
 		}
 	}
-	
 
 	
 	function order(){
@@ -250,24 +248,7 @@
 		if (storageCart == null){
 			alert("장바구니가 비어있습니다");
 		} else {
-			/* var cnt = $(".cartLi").length;			
-			for(i=0; i<cnt; i++){
-				var name = $("#food"+i+" .name").text();		
-				var quantity = $("#food"+i+" .qty").val();
-				var price =  $("#food"+i+" .price").text();
-				
-				var menu = {
-						 name:name,
-						 quantity:quantity,
-						 price:price
-						}
-			
-				var json = JSON.stringify(menu);
-				
-				cartList.push(json); */
-				
 			cart = sessionStorage.getItem("cart");
-		 
 			var storeNo="${storeNo}";
 			$.ajax({
 					type : "post",
