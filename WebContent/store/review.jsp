@@ -3,6 +3,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -15,57 +16,68 @@
 		border: 1px solid gray;
 		padding: 0;
 		margin: 0 auto;
-		width: 700px auto;
+		width: 996px;
 	}
 	#content{
 		font-size: 1em;
 		font-family: none;
+		margin-left: 40px;
 	}
 
 	#star{
 		color: #ffa400;
+		margin-left: 40px;
+	}
+	#avgStar{
+		color: #ffa400;
+		font-size: 2em;
+		text-align: center;
+	}
+	#avgScore{
+		text-align: center;
+		font-size: 3em;
+		clear: both;
 	}
 	.nickname{
-		font-size: 1.3;em;
+		font-size: 20px;
+		margin-left: 40px;
 	}
 	.date{
 		color: gray;
+		font-size: 14px;
 	}
 
 </style>
 
 	<!-- 주문한 메뉴 review.jsp로 가져오기는 일단 보류 - 이태우 - --> 	
-	<h1>review.jsp 태우</h1>
 	
 	
 <!-- ---------------------------------	평균 별점  --------------------------------------------->
 	<c:set var="info" value="${requestScope.storeInfo}"/>
 	<c:set var="star" value="${requestScope.storereview}"/> <br>
-			업체명 : ${info.name } <br>
-			평균별점: ${star.points} : 
+			<div id="avgScore">${star.points}</div> 
 			<c:if test="${star.points eq 0 }">
-							<i id="star">☆☆☆☆☆</i>
-						</c:if>
-						<c:if test="${star.points eq 1 }">
-							<i id="star">★☆☆☆☆</i>
-						</c:if>
-						<c:if test="${star.points eq 2 }">
-							<i id="star">★★☆☆☆</i>
-						</c:if>
-						<c:if test="${star.points eq 3 }">
-							<i id="star">★★★☆☆</i>
-						</c:if>
-						<c:if test="${star.points eq 4 }">
-							<i id="star">★★★★☆</i>
-						</c:if>
-						<c:if test="${star.points eq 5 }">
-							<i id="star">★★★★★</i>
-						</c:if>
-						<br><br><br>
-		<c:if test="${ star.points eq null}">
-			평균별점 : 등록된 평균 별점이 없네요 <br>
-		</c:if>
-	<br><br>
+				<div id="avgStar">☆☆☆☆☆</div>
+			</c:if>
+			<c:if test="${star.points eq 1 }">
+				<div id="avgStar">★☆☆☆☆</div>
+			</c:if>
+			<c:if test="${star.points eq 2 }">
+				<div id="avgStar">★★☆☆☆</div>
+			</c:if>
+			<c:if test="${star.points eq 3 }">
+				<div id="avgStar">★★★☆☆</div>
+			</c:if>
+			<c:if test="${star.points eq 4 }">
+				<div id="avgStar">★★★★☆</div>
+			</c:if>
+			<c:if test="${star.points eq 5 }">
+				<div id="avgStar">★★★★★</div>
+			</c:if>
+			<c:if test="${ star.points eq null}">
+				<div id="avgScore">0</div>
+				<div id="avgStar">☆☆☆☆☆</div>
+			</c:if>
 <!-- ---------------------------------	평균 별점  --------------------------------------------->
 
 	<!-- 등록된 리뷰가 없을때 -->
@@ -93,7 +105,8 @@
 						&nbsp;
 						<span class="date">
 							<c:set var="date" value="${rBean.date}"/>
-							${fn:substring(date,0,10) }
+							<fmt:formatDate value="${rBean.date}" dateStyle="long" var="date"/>
+							${fn:substring(date,0,12) }
 						</span>
 						<br>
 						<c:if test="${rBean.points eq 0 }">
@@ -118,7 +131,7 @@
 				</tr>
 				<tr>
 					<td>
-						<img src="./images/${rBean.image }"> 
+						<center><img src="./images/${rBean.image }" style="width: 900px; height: 400px;"></center> 
 					</td>
 				</tr>
 				<tr>
