@@ -29,12 +29,10 @@
 		margin: 0 auto;
 		width : 600px;
 	}
-	button#qtyUp{
-		background: url("./images/btn_count_up.gif") no-reapt;
-	}
-	
-	button#qtyDown{
-		background: url("./images/btn_count_down.gif") no-reapt;
+
+	.menuImage{
+		width : 100px;
+		height : 100px;
 	}
 	
 	.tbtn, .icoClear{
@@ -76,8 +74,6 @@
 		$(".toggleImg:first").attr("src","images/btn_count_up.gif");
 		
 	}
-	
-	fun
 	  
   	 function toggleMenuTr(element,category){
 		if(element.querySelector(".toggleImg").getAttribute("src")=="images/btn_count_down.gif"){
@@ -255,14 +251,9 @@
 					async : false,
 					url : "Order.do?storeNo="+storeNo,
 					data : {"cart":cart},
-					dataType : "json",
-					success : function(result,textStatus){
-						if(result == 1){ // 결제페이지로 넘어감!
-							location.href="";
-						} else {
-							location.href="";
-						}
-					}, 
+					success : function(orderNo,textStatus){
+							location.href="OrderCheck.do?orderNo="+orderNo;
+					},		
 					error:function(data,textStatus){
 						console.log(data);
 						alert("에러가 발생했슈");
@@ -309,8 +300,12 @@
 			
 			<tr class="${category}" style="display:none;">
 				<td>
-					<span><img src="images/${menu.image}"></span> | 
+					<div class="menuImg">
+						<span><img src="upload/store/${menu.image}"></span> | 
+					</div>
+					<div class="menuName">					
 					<span class="name">${menu.name}</span>
+					</div>
 				</td>
 				<td  class="basePrice">${menu.price}</td>
 				<td>
