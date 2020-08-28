@@ -101,9 +101,7 @@
 }
 /*카트 디자인*/
 /*******************************************************************/
-
-</style>
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+</style> <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>
 
 <script>
@@ -123,27 +121,29 @@
 		document.getElementById("infoDiv").setAttribute("class", "display-on");
 	});
 </script>	
-
-</script>
 <body>
 	<jsp:include page="/inc/top.jsp"/>
 	
 	<!-- 플로팅 배너 -->
 	<div class="cart">  
-			<div id = "cartTitle">
-				<span>주문표</span>
-				<a class=".cartTitle" onclick="clearCart()">
-				<span class="icoClear"></span>
-			</div>
-			<div id="">
-				<div id = "cartDiv">
-					<ul id="cartUl" class="cartUl">
-					</ul>
-				</div>
-				<hr>
-		    	<h1 id="total"></h1>
-	    	</div>
-	    <input type="button" id="obtn" value="주문" onclick="order();">
+		<div id = "cartTitle">
+			<span>주문표</span>
+			<span class="cartClear"> 
+			<button type="button" class="icoClear" onclick="clearCart();">
+				<img src="images/ICON/trash_bin_remove_delete_icon_133483.ico" width="20" height="20">
+			</button>
+			</span>
+		</div>
+		<div id="cartStatusClear">
+			<span>주문표에 담긴 메뉴가 없습니다.</span>
+		</div>
+		<div id = "cartStatusFilled">
+			<ul id="cartUl" class="cartUl">
+			</ul>
+		</div>
+		<hr>
+		    <h3 id="total"></h3>
+	    <button type="button" id="obtn" onclick="order();" disabled="disabled">주문하기</button>
 	</div>
 	
 <c:set var="info" value="${requestScope.storeInfo}"/>

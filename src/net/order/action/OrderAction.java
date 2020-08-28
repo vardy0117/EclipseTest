@@ -25,10 +25,15 @@ public class OrderAction {
 		
 		oBean.setStoreNo(request.getParameter("storeNo"));
 		oBean.setCustomerNo((String) request.getSession().getAttribute("customerNo"));
-		oBean.setRoadAddress((String) request.getSession().getAttribute("roadAddress")); 
-		oBean.setDetailAddress((String) request.getSession().getAttribute("detailAddress")); 
+		oBean.setRoadAddress((String) request.getSession().getAttribute("orderRoadAddress")); 
+		oBean.setDetailAddress((String) request.getSession().getAttribute("orderDetailAddress"));
 		//oBean.setRoadAddress("나나");
 		//oBean.setDetailAddress("나나");
+		System.out.println("일반 주소 확인중 " + request.getSession().getAttribute("orderRoadAddress"));
+		System.out.println("oBean주소 받기 " + oBean.getDetailAddress());
+		System.out.println("oBean주소 받기 " + oBean.getRoadAddress());
+		System.out.println("상세 주소 확인중 " + request.getSession().getAttribute("orderDetailAddress"));
+		
 		oBean.setPhone((String) request.getSession().getAttribute("phone"));
 		
 		OrderListDAO odao = new OrderListDAO();
@@ -36,7 +41,6 @@ public class OrderAction {
 		
 		return orderNo;
 	}
-
 
 	public void insertOrderMenu(HttpServletRequest req, HttpServletResponse resp, int orderNo) throws ParseException, JSONException{
 		JSONArray cart = new JSONArray(req.getParameter("cart"));
