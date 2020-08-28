@@ -170,7 +170,7 @@
 		<c:set var="info" value="${requestScope.storeInfo}"/>
 		<div class="storeName"><h2>${info.name}</h2></div>
 		<div class="storeInfo">
-			<span class="storeImg"><img src="./images/${info.image}" style="width: 200px; margin: 30px 30px;"></span>
+			<span class="storeImg"><img src="upload/store/${info.image}" style="width: 200px; margin: 30px 30px;"></span>
 			<div class="avg">
 				<c:set value="${requestScope.storeNo }" var="storeNo"/>
 				
