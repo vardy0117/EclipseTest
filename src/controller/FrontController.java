@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.catalina.tribes.group.Response;
+
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
@@ -296,7 +298,6 @@ public class FrontController extends HttpServlet {
 				e.printStackTrace();
 			}
 		}		
-		
 
 		
 		if(command.equals("SearchStore.do")) {
@@ -324,18 +325,6 @@ public class FrontController extends HttpServlet {
 			forward.execute(request, response);
 		
 		}
-		
-/*		if(command.equals("Store.do")) {
-			String storeNo = request.getParameter("storeNo");
-			// storeNo를 받아서 storeDAO에서 bean(model)을 찾고 request에 넣은뒤 store.jsp로 이동해 사용
-			// 아마도? 리뷰도 여기화면 하단에서 뿌려줄듯
-			// 지금은 우선 storeNo만 request에 저장
-			request.setAttribute("storeNo", storeNo);
-			
-			forward = new ActionForward();
-			forward.setView("index.jsp?center=store/store.jsp");
-			forward.execute(request, response);
-		}*/
 
 		if(command.equals("Store.do")) {
 			int storeNo = Integer.parseInt(request.getParameter("storeNo"));
@@ -363,21 +352,24 @@ public class FrontController extends HttpServlet {
 		}
 		
 		if(command.equals("Order.do")){
-		//	int storeNo = Integer.parseInt(request.getParameter("stroeNo"));
-		//	int customerNo= Integer.parseInt((String) request.getSession().getAttribute("customerNo"));
-			
+			int orderNo=0;
 			try{
 				OrderAction action = new OrderAction();
-			int orderNo = action.insertOrderList(request, response);
+				orderNo = action.insertOrderList(request, response);
 			
 				action.insertOrderMenu(request, response, orderNo);
 			
 			} catch (Exception e){
 				e.printStackTrace();
 			}
-			forward.execute(request, response);
+			PrintWriter out = response.getWriter();
+			out.print(orderNo);
 		}
 		
+		if(command.equals("OrderCheck.do")){
+			String orderNo = request.getParameter("orderNo");
+			System.out.println("내 주문 번호는dd :" + orderNo);
+		}
 		
 		
 		
