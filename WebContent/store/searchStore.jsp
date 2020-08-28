@@ -16,7 +16,7 @@
 	#mainDiv {
 		width: 1000px;
 		min-height: 600px;
-		border: 2px solid green;
+		/* border: 2px solid green;  줄그리는건데 삭제 */
 		margin: 0 auto;
 		margin-top: 50px;
 		position: relative;
@@ -24,6 +24,69 @@
 	.storeDetail:HOVER{
 		background-color: silver;
 	}
+	
+	div {
+		box-sizing: border-box;
+	}
+	#mainDiv {
+		width: 1000px;
+		min-height: 600px;
+		margin: 0 auto;
+		margin-top: 80px;
+		position: relative;
+		padding: 50px;
+	}
+	#storeListDiv {
+		margin: 0 auto;
+		width: 1000px;
+		border: 2px solid #c7c7c7;
+		border-radius: 15px;
+		box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+		padding-bottom: 50px;
+	}
+	#storeListDiv table {
+		margin: 10px auto;
+		width: 500px;
+		border-bottom: 2px gray solid;
+	}
+	#storeListDiv img {
+		border-radius: 15px;
+		width: 100px;
+	}
+	#storeListDiv a {
+		text-decoration: none;
+		color: black;
+		cursor: pointer;
+	}
+	#storeListDiv a:hover {
+		text-decoration: underline;
+		color: gray;
+	}
+	#updateBtn {
+		background: url("images/setting_black.svg") no-repeat;
+		background-size: 32px;
+		width: 35px;
+		height: 35px;
+		cursor: pointer;
+		border: none;
+	}
+	#updateBtn:hover {
+		background: url("images/setting_gray.svg") no-repeat;
+		background-size: 32px;
+	}
+	#deleteBtn {
+		background: url("images/delete_black.svg") no-repeat;
+		background-size: 32px;
+		width: 35px;
+		height: 35px;
+		cursor: pointer;
+		border: none;
+	}
+	#deleteBtn:hover {
+		background: url("images/delete_gray.svg") no-repeat;
+		background-size: 32px;
+	}
+	
 </style>
 </head>
 <script>
@@ -62,19 +125,19 @@
 <body>
 
 	<div id="mainDiv">
-	
+		<div id="storeListDiv">
 
-		<h1>storeList.jsp</h1>
-		<br>
-		<h3>sessionScope.orderRoadAddress : ${sessionScope.orderRoadAddress } (session에 저장해두고 주문시 사용하고 해당세션 비워줌)</h3>
-		<h3>sessionScope.orderDetailAddress : ${sessionScope.orderDetailAddress } (session에 저장해두고 주문시 사용하고 해당세션 비워줌)</h3>
-		<h3>sessionScope.orderBname : ${sessionScope.orderBname } (store 리스트를 검색할때 deliveryArea컬럼 문자열에 해당 bname이 포함되어 있어야함.)</h3>
-		<h3>sessionScope.orderSido : ${sessionScope.orderSido }</h3>
-		<h1>위의 데이터로 리스트 보여주기</h1>
+<!-- 		<h1>storeList.jsp</h1> -->
+<!-- 		<br> -->
+<%-- 		<h3>sessionScope.orderRoadAddress : ${sessionScope.orderRoadAddress } (session에 저장해두고 주문시 사용하고 해당세션 비워줌)</h3> --%>
+<%-- 		<h3>sessionScope.orderDetailAddress : ${sessionScope.orderDetailAddress } (session에 저장해두고 주문시 사용하고 해당세션 비워줌)</h3> --%>
+<%-- 		<h3>sessionScope.orderBname : ${sessionScope.orderBname } (store 리스트를 검색할때 deliveryArea컬럼 문자열에 해당 bname이 포함되어 있어야함.)</h3> --%>
+<%-- 		<h3>sessionScope.orderSido : ${sessionScope.orderSido }</h3> --%>
+<!-- 		<h1>위의 데이터로 리스트 보여주기</h1> -->
 		
-		<a href="./Store.do?storeNo=100"> 경로=./Store.do?storeNo=100 -> 100번가게로 이동</a>
+<!-- 		<a href="./Store.do?storeNo=100"> 경로=./Store.do?storeNo=100 -> 100번가게로 이동</a> -->
 
-		<br>
+<!-- 		<br> -->
 		
 <%-- 		<c:set var="good" value="${customerNo}" /> <!-- 로그인 세션중 customerNo가져옴 --> --%>
 		커스터머 번호 : ${customerNo } <br>
@@ -83,17 +146,17 @@
 	
 		
 		<c:if test="${customerNo ne null }">
-	<p>----------------------------------------------------------------------------------------</p>
+<!-- 	<p>----------------------------------------------------------------------------------------</p> -->
 	귀하의 현재 계정기준 요청주소는 :  <font color="blue" size="5">	
 	<c:out value="${orderSido}" />
 	 </font> 입니다 <br>
 	
-	 <p>----------------------------------------------------------------------------------------</p>
+<!-- 	 <p>----------------------------------------------------------------------------------------</p> -->
 	
 		<c:forEach var="bean" items="${storelist}">
 			<a onclick="addStoreNoToStorage('${bean.storeNo}')">	
 				<div class="storeDetail">
-					<font size="10">---가져온 스토어 데이터---</font> <br>
+<!-- 					<font size="10">---가져온 스토어 데이터---</font> <br> -->
 					
 					<font color="purple" size="5">가게 이름 :		<c:out value=" ${bean.name}" /> </font> <br>
 					<c:out value="스토어 번호 : ${bean.storeNo}" /><br>
@@ -119,7 +182,7 @@
 </c:if> <!-- 로그인 확인여부 if문 -->
 	</div>
 	
-	
+	</div>
 		
 		
 </body>
