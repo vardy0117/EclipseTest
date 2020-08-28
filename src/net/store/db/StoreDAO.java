@@ -329,6 +329,44 @@ public int getStoreCount(String ceoNo) {
 	
 	
 }
+
+public void insertmenu(MenuBean mbean) {
 	
 	
+	try {
+		
+	con =	getConnection();
+	sql ="insert into menu (storeNo, name, price, image, category) "
+			+ "values(?, ?, ?, ?, ?)";
+	
+	
+	
+	 pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+	 
+	 pstmt.setString(1, mbean.getStoreNo());
+	 pstmt.setString(2, mbean.getName());
+	 pstmt.setInt(3, mbean.getPrice());
+	 pstmt.setString(4, mbean.getImage());
+	 pstmt.setString(5,mbean.getCategory());
+	 
+	 
+	
+	 pstmt.executeUpdate();
+	 
+	 rs = pstmt.getGeneratedKeys();
+	 
+
+} catch (Exception e){
+	System.out.println("insertStore inner Error : " + e);
+} finally {
+	resourceClose();
+}
+	
+}
+	
+
+
+
+
+//
 }

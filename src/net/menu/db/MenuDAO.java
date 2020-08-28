@@ -125,5 +125,27 @@ public class MenuDAO {
 		
 	}
 
+	public void insertMenu(MenuBean mbean) {
+
+		try {
+			getConnection();
+			sql ="insert into menu(storeNo,name,price,category,image) values(?,?,?,?,?)";
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setInt(1, Integer.parseInt(mbean.getStoreNo()) );
+			pstmt.setString(2, mbean.getName());
+			pstmt.setInt(3, mbean.getPrice());
+			pstmt.setString(4, mbean.getCategory());
+			pstmt.setString(5, mbean.getImage());
+			
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			System.out.println("menu insert inner Error : " + e);
+		}finally {
+			resourceClose();
+		}
+	}
+
 }
 

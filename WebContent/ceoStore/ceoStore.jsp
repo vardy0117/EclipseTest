@@ -106,7 +106,7 @@
 		
 			<c:forEach items="${menuList }" var="menu">
 				<c:if test="${menu.category eq '세트 메뉴'}">
-					<table>
+					<table id="">
 						<tr>
 							<td rowspan="3" width="200">
 								<img src="./upload/store/${menu.image }" style="width:100%;">
@@ -219,7 +219,8 @@
 					</table>
 				</c:if>
 			</c:forEach>
-			
+			  <button type="button" id="obtn" onclick="location.href='menuadd.do?storeNo=${param.storeNo}'" > 메뉴 추가 하기 </button>
+
 			
 		</div>
 		
@@ -241,5 +242,7 @@
 			  location.href='deleteMenu.do?menuNo='+menuNo;
 		}
 	}
+	
+	
 </script>
 </html>

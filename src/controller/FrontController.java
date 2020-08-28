@@ -565,6 +565,7 @@ public class FrontController extends HttpServlet {
 		
 		if(command.equals("updateStoreAction.do")) {
 			String ceoNo = (String)request.getSession().getAttribute("ceoNo");
+			
 			request.setCharacterEncoding("utf-8");
 			String realFolder = getServletContext().getRealPath("/upload/store");
 			int max = 1000 * 1024 * 1024;
@@ -618,9 +619,31 @@ public class FrontController extends HttpServlet {
 			
 		}
 		
-	
+		if(command.equals("menuadd.do")){
+			request.setCharacterEncoding("utf-8");
+			//String ceoNo = (String)request.getSession().getAttribute("ceoNo");
+			String storeNo = request.getParameter("storeNo");
+			
+			forward = new ActionForward();
+			forward.setView("ceoIndex.jsp?center=ceoStore/addmenu.jsp");
+			forward.execute(request, response);
+		}
 		
-		
+		if(command.equals("addMenuAction.do")){
+			request.setCharacterEncoding("utf-8");
+			
+			String realFolder = getServletContext().getRealPath("/upload/store");
+			int max = 1000 * 1024 * 1024;
+			
+			MultipartRequest multi = new MultipartRequest(request, realFolder, max, "utf-8", new DefaultFileRenamePolicy());
+			MenuAction menuAction = new MenuAction();
+			menuAction.insertMenu(request, response, multi);
+			
+			forward = new ActionForward();
+			forward.setView("ceoStore.do?storeNo="+multi.getParameter("storeNo"));
+			forward.setRedirect(true);
+			forward.execute(request, response);
+		}
 		
 		
 	}

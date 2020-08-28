@@ -18,12 +18,9 @@ public class MenuAction {
 	public void insertStore(HttpServletRequest request, HttpServletResponse response, MultipartRequest multi,int storeNo) {
 		
 		int menuCnt = Integer.parseInt(multi.getParameter("menuCnt"));
-		
-		
+
 		List<MenuBean> menuList = new ArrayList();
-		
-		
-		
+
 		for(int i=1; i<=menuCnt; i++) {
 			MenuBean menuBean = new MenuBean();
 			
@@ -51,29 +48,44 @@ public class MenuAction {
 			
 			menuList.add(menuBean);
 		}
-	
-		
-		
+
 		MenuDAO menuDAO = new MenuDAO();
 		menuDAO.insertMenus(menuList);
-		
-		
-		
-		
-		
+
 	}
 
-	
+	//insert
+	public void insertMenu(HttpServletRequest request, HttpServletResponse response, MultipartRequest multi){
+		
+		MenuBean mbean = new MenuBean();
+		mbean.setStoreNo(multi.getParameter("storeNo"));
+		mbean.setName(multi.getParameter("menu_name"));
+		mbean.setCategory(multi.getParameter("menu_category"));
+		mbean.setPrice( Integer.parseInt(multi.getParameter("menu_price")) );
+		mbean.setImage(multi.getFilesystemName("menu_image"));
 		
 		
+		System.out.println(mbean);
 		
 		
-		
-		
-		
+		MenuDAO mdao= new MenuDAO();
+		mdao.insertMenu(mbean);
 		
 		
 		
 		
 		
 	}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+//		
+}

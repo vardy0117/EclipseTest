@@ -49,6 +49,13 @@ public class MenuBean {
 		this.menuNo = menuNo;
 	}
 	
+	@Override
+	public String toString() {
+		return "MenuBean [menuNo=" + menuNo + ", storeNo=" + storeNo + ", category=" + category + ", name=" + name
+				+ ", price=" + price + ", image=" + image + "]";
+	}
+	
+	
 }
 	
 
