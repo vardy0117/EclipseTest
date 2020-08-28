@@ -144,7 +144,7 @@
 							 	카테고리 : ${menu.category }
 							</td>
 							<td rowspan="3">
-								<button id="updateBtn" onclick="location.href='updateMenu.do?menuNo=${menu.menuNo}'"></button>
+								<button id="updateBtn" onclick="openChild(${menu.menuNo})"></button>
 								<button id="deleteBtn" onclick="deleteMenu(${menu.menuNo});"></button>
 							</td>
 						</tr>
@@ -241,5 +241,26 @@
 			  location.href='deleteMenu.do?menuNo='+menuNo;
 		}
 	}
+	
+	var openWin;
+	
+	function openChild(menuNo){
+		
+		window.name = "updateMenu";
+		
+		openWin = window.open("updateMenu.do?menuNo="+menuNo, 
+				"자식창이름", 
+				"width=570, height=350, resizable = no, scrollbars = no"
+				)
+	}
+	
+	/* function setChildText(){
+		
+		openWin.document.getElementById("cInput").value = document.getElementById("updateBtn").value;
+		}	
+	 */
+	
+	
+	
 </script>
 </html>
