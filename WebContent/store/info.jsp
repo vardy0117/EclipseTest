@@ -145,12 +145,13 @@ mapOption = {
 //지도를 생성합니다    
 var map = new kakao.maps.Map(mapContainer, mapOption); 
 var data = '<c:out value="${info.roadAddress}"/>'; // jstl변수 여기로 보냄
-alert("가게 요청주소 : " + data);
+var data2 ='<c:out value="${info.detailAddress}"/>';   
+alert("가게 요청주소 : " + data + " "+ data2);
 //주소-좌표 변환 객체를 생성합니다
 var geocoder = new kakao.maps.services.Geocoder();
 
 //주소로 좌표를 검색합니다
-geocoder.addressSearch(data, function(result, status) {
+geocoder.addressSearch(data + " "+ data2, function(result, status) {
 
 // 정상적으로 검색이 완료됐으면 
  if (status === kakao.maps.services.Status.OK) {
