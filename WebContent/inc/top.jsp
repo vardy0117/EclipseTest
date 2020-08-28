@@ -80,9 +80,8 @@
 			</c:when>
 			<c:when test="${!empty sessionScope.customerNo}">
 				<div id="loginAndJoin">
-					${sessionScope.nickname} 회원님 어서 오세요!
-					<a href="#"></a> | 
-					<a onclick = "logOut()">logout</a> |	
+					${sessionScope.nickname} 회원님 어서 오세요! | 
+					<a onclick = "logOut()" style="cursor:pointer;">logout</a> |	
 					<a href="./CustomerModifyIntro.do">회원수정</a>
 				</div>
 			</c:when>
