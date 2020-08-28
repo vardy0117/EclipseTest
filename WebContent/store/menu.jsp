@@ -27,7 +27,7 @@
 	
 	table#menuTable{
 		margin: 0 auto;
-		width : 600px;
+		width : 900px;
 	}
 
 	.menuImage{
@@ -238,32 +238,7 @@
 	}
 
 	
-	function order(){
-		var storageCart=JSON.parse(sessionStorage.getItem("cart"));
-		var cartList = new Array();
-		if (storageCart == null){
-			alert("장바구니가 비어있습니다");
-		} else {
-			cart = sessionStorage.getItem("cart");
-			var storeNo="${storeNo}";
-			$.ajax({
-					type : "post",
-					async : false,
-					url : "Order.do?storeNo="+storeNo,
-					data : {"cart":cart},
-					success : function(orderNo,textStatus){
-							location.href="OrderCheck.do?orderNo="+orderNo;
-					},		
-					error:function(data,textStatus){
-						console.log(data);
-						alert("에러가 발생했슈");
-					}
-				}); // $ajax()
-		}
-	}
-		
 
-	
 </script>
 </head>
 <body>
@@ -313,7 +288,7 @@
 					<input type="hidden" class="name" value="${menu.name}"> 
 					<input type="hidden" class="price" value="${menu.price}"> 
 					<a onclick=" modifyQty(this, 1)" style="cursor: pointer">+</a> 
-						<input type="number" id="quantity" name="quantity" class="qty" min="0" value="1" width="50px"> 
+						<input type="number" id="quantity" name="quantity" class="qty" min="0" value="1" style="width:50px;"> 
 					<a onclick=" modifyQty(this, -1)" style="cursor: pointer">-</a> 
 						<input type="button" type="button" id="tbtn" value="주문표에 추가" onclick="addToCartStorage(this)">
 				</td>
