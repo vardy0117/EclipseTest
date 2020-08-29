@@ -128,18 +128,10 @@
 		border-radius: 15px;
 		box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 		padding: 20px;
+		list-style:none; /* li태그쓸때 점 없애기*/
 	
 	}
-	
-		.litest1{
-		margin-top: 0;
-		list-style: none;
-		float: left;
-		width: 300px;
-		text-align: center;	
-		border : 1px solid #d9d9d9;
-		line-height: 50px;
-	}
+
 	
 </style>
 </head>
