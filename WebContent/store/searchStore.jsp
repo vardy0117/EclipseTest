@@ -48,14 +48,16 @@
 		box-sizing: border-box;
 	}
 	#mainDiv {
-		width: 1000px;
-		min-height: 600px;
+		/* width: 1000px; */
+		width: auto;
+		min-height: auto;
 		margin: 0 auto;
 		margin-top: 80px;
 		position: relative;
-		padding: 50px;
+		display: grid;
+		/* padding: 50px; */
 	}
- /* 	#storeListDiv {
+/*   	#storeListDiv {
 		margin: 0 auto;
 		width: 1000px;
 		height: 900px;
@@ -64,7 +66,7 @@
 		box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 		padding-bottom: 50px;
 		
-	}  */
+	}   */
 	#storeListDiv table {
 		margin: 10px auto;
 		width: 500px;
@@ -140,14 +142,14 @@
 	
 	}
 	
-:root {
+/* :root {
     --heightsize: 900px;
 }  
 
 #storeListDiv {
     height: var(--heightsize);
 }
-
+ */
 
 
 .moreTab{
@@ -192,7 +194,33 @@
 			}
 		}
 	}
-	
+	/* var count=0; // 더보기 카운트  전역변수
+	// $(function() {
+		function autosize() {
+		var storesize = '<c:out value="${fn:length(storelist) }"/>';  // 스토어 가게 사이즈
+		var storelistsize = 1700; // 일단 임시로 고정
+		var normalsize = 900;
+		var px="px";
+		// var storesizesum = storelistsize + px;
+		
+
+	if(storesize < 8) { // 스토어 개수가 8개가 안넘어가면 900px 로 고정
+		 count++; 
+		console.log(count);
+		$("#storeListDiv").css("height","1000px");
+	}else{
+		count++; 	
+		console.log(count);	
+		console.log("기존 스토어 사이즈" + storelistsize);
+		$("#storeListDiv").css("height",storelistsize + normalsize + px);
+	//	storelistsize += storelistsize;
+		console.log("늘어난 스토어 사이즈 " + storelistsize + normalsize + px);
+		console.log(storelistsize + px);
+
+	}
+		
+}
+ */
 
 	function moreStore(orderSido) {
 		 var orderSido = orderSido;
@@ -205,7 +233,7 @@
 			dataType : "text",
 			success : function(data,textStatus){
 //			alert("moreStore ajax 받은 데이터 : " + data + " " + orderSido);
-
+			alert("준비중입니다 \n 작업 충돌방지로 잠시 보류되었습니다");
 			autosize();
 
 						var show;
@@ -247,14 +275,8 @@
 				color="orange" size="5"> <c:out value="${orderSido}" />
 			</font> 입니다 <br>
 			
-					<font size="5">총 가게 갯수 : ${length}개 </font>
-					
-<%-- 		<c:if test="${length >= 1 }"> --%>
-<!-- 			1개가 넘네 -->
+					<font size="5">DB에 들어있는 총 가게 갯수 : ${length}개 </font>
 
-<%-- 		</c:if> --%>
-
-<%-- 			<font size="5">요청된 가게 갯수 : ${storeNo}</font> --%>
 
 	
 				<c:forEach var="bean" items="${storelist }">
