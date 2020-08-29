@@ -30,6 +30,13 @@
 	.storeDetail{
 		height:300px;
 		width:450px;
+		
+			float: left;
+		margin: 10px auto;
+		border: 2px solid #c7c7c7;
+		border-radius: 15px;
+		box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+		padding: 20px;
 	}
 	
 	div {
@@ -46,10 +53,12 @@
 	#storeListDiv {
 		margin: 0 auto;
 		width: 1000px;
+		height: 900px;
 		border: 2px solid #c7c7c7;
 		border-radius: 15px;
 		box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 		padding-bottom: 50px;
+		
 	}
 	#storeListDiv table {
 		margin: 10px auto;
@@ -65,16 +74,13 @@
 		text-decoration: none;
 		color: black;
 		cursor: pointer;
+		
 	}
 	#storeListDiv a:hover {
 		text-decoration: underline;
 		color: gray;
 	}
-	
-	#test {
-	width: 100px;
-	}
-	
+
 	
 /* 		#storeListDiv { */
 /* 		width: 1000px; */
@@ -115,6 +121,25 @@
 		padding: 20px;
 	}
 	
+		.litest{
+		float: left;
+		margin: 10px auto;
+		border: 2px solid #c7c7c7;
+		border-radius: 15px;
+		box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+		padding: 20px;
+	
+	}
+	
+		.litest1{
+		margin-top: 0;
+		list-style: none;
+		float: left;
+		width: 300px;
+		text-align: center;	
+		border : 1px solid #d9d9d9;
+		line-height: 50px;
+	}
 	
 </style>
 </head>
@@ -153,45 +178,36 @@
 <body>
 ​
 	<div id="mainDiv">
-		<div id="storeListDiv">
+		<div id="storeListDiv" >
 
-			커스터머 번호 : ${customerNo } <br> ​ 귀하의 현재 계정기준 요청주소는 : <font
+			커스터머 번호 : ${customerNo } <br>귀하의 현재 계정기준 요청주소는 : <font
 				color="orange" size="5"> <c:out value="${orderSido}" />
 			</font> 입니다 <br>
+			
+<%-- 			<font size="5">요청된 가게 갯수 : ${storeNo}</font> --%>
 
+	
+				<c:forEach var="bean" items="${storelist }">
+					<ul>
 
-			<div id="test" class="contentDiv">
-				<c:set var="i" value="0" />
-				<c:set var="j" value="4" />
+						<li class="litest">
+								<a
+							onclick="addStoreNoToStorage('${bean.storeNo}')"> <font
+								color="purple" size="5"><c:out value="${bean.name}" /> </font>
+								<br> <c:out value="스토어 번호 : ${bean.storeNo}" /> <br>
+								<img src="upload/store/${bean.image}"> <br> <%-- <c:out value="✆전화번호 : 객체에 아직 안가져옴" /> <br> --%>
+								<c:out value="종류 : ${bean.category }" /> <br> <c:out
+									value="운영시간 : ${bean.storeHours }" />
 
-				<c:forEach var="bean" items="${storelist}">
-
-
-
-
-					<table border="1">
-
-						<tr>
-							<td><a onclick="addStoreNoToStorage('${bean.storeNo}')">
-
-									<div class="storeDetail">
-										<font color="purple" size="5"><c:out
-												value="${bean.name}" /> </font> <br>
-										<c:out value="스토어 번호 : ${bean.storeNo}" />
-										<br> <img src="upload/store/${bean.image}"> <br>
-										<%-- <c:out value="✆전화번호 : 객체에 아직 안가져옴" /> <br> --%>
-										<c:out value="종류 : ${bean.category }" /> <br>
-											<c:out value="운영시간 : ${bean.storeHours }" />
-									</div>
-								
-							</a></td>
-						</tr>
-
-					</table>
+								</a>
+						
+						</li>
+					</ul>
 
 				</c:forEach>
 
-				<c:set var="area" value="${storelist}" />
+
+			<c:set var="area" value="${storelist}" />
 				<c:if test="${area eq '[]' }">
 					<font size="6" color="orange">
 						<p>귀하의 지역에 맞는 가게가 없습니다</p>
@@ -199,8 +215,6 @@
 				</c:if>
 
 			</div>
-		</div>
-
 	</div>
 
 
