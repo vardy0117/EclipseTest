@@ -42,7 +42,7 @@ public class ReviewDAO {
       
       try {
          con = getConnection();
-         sql = "select * from review where storeNo=? order by date desc";
+         sql = "select * from review where storeNo=? order by date desc limit 0,2";
          pstmt=con.prepareStatement(sql);
          pstmt.setString(1, storeNo);
          rs = pstmt.executeQuery();

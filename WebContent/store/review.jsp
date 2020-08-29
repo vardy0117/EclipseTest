@@ -4,13 +4,18 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>
 <body>
+
+<c:set value="${requestScope.storeNo}" var="storeNo"/>
+
 <style>
 	#reviewT{
 		border: 1px solid gray;
@@ -45,6 +50,13 @@
 	.date{
 		color: gray;
 		font-size: 14px;
+	}
+	.moreTab{
+		height: 100px;
+		text-align: center;
+	}
+	.moreTab:HOVER {
+		background-color: #4d4d4d;	
 	}
 
 </style>
@@ -93,10 +105,15 @@
 	
 	
 	<!-- 등록된 리뷰가 존재할때 -->
-	<c:forEach items="${requestScope.reviewList}" var="rBean" varStatus="status">
+	<c:set value="${requestScope.reviewList}" var="rvl"/>
+	<c:if test="${fn:length(rvl) > 0}">
+	</c:if>
 
+	<c:forEach items="${requestScope.reviewList}" var="rBean" varStatus="status">
 		<c:set var="i" value="${status.index }"/>
-		
+		<c:if test="${status.index > 5}">
+			
+		</c:if>
 		<div>
 			<table id="reviewT" align="center">
 				<tr>
@@ -138,16 +155,35 @@
 					<td>
 						<span id="content">${rBean.contents }</span>
 					</td>
-				</tr>			
+				</tr>
 			</table>
 		</div>
-
-
-
-
 	</c:forEach>
+	
+	<div class="moreTab"  onclick="moreReview(${storeNo})">
+		<a class="more">더보기</a>
+	</div>	
 
+	<!-- ////////////////////////////////더보기 클릭했을때 ////////////////////////////////////////// -->
 
+	<script type="text/javascript">
+		function moreReview(storeNo) {
+			var storeNo = storeNo;
+			
+			$.ajax({
+				type : "post",
+				async : false,
+				url : "./moreReview.do",
+				data : {storeNo:storeNo},
+				dataType : "text",
+				success : function(data,textStatus){
+					
+				}, 
+				error:function(data,textStatus){
 
+				}
+			});
+		}
+	</script>
 </body>
 </html>

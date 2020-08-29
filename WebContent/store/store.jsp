@@ -106,10 +106,19 @@
 		border : 1px solid #d9d9d9;
 		line-height: 50px;
 	}
-	#topMenu:HOVER {
+	#topMenu .menuLink:hover, #topMenu .reviewLink:hover, #topMenu .infoLink:hover {
+		color: red;
+		background-color: #4d4d4d;
+		cursor:pointer;
+	}
+	.clicked{
+		background-color: #4d4d4d;
+		color: red;
 		cursor: pointer;
 	}
-	
+	.unclicked{
+		cursor: pointer; 
+	 }
 	.display-on {
 		display: block;
 	}
@@ -205,8 +214,6 @@
 			</div>
 		</div>
 		
-		
-		
 		<!-- 플로팅 배너 -->
 		<div class="cart">  
 			<h2>장바구니</h2>
@@ -222,9 +229,9 @@
 	
 		<nav id="topMenu">
 			<ul>
-				<li class="menuLink">메뉴</li>
-				<li class="reviewLink">리뷰</li>
-				<li class="infoLink">정보</li>
+				<li class="menuLink" id="menuLink">메뉴</li>
+				<li class="reviewLink" id="reviewLink">리뷰</li>
+				<li class="infoLink" id="infoLink">정보</li>
 			</ul>
 		</nav>
 			
@@ -245,16 +252,31 @@
 		document.getElementById("menuDiv").setAttribute("class", "display-on");
 		document.getElementById("reviewDiv").setAttribute("class", "display-off");
 		document.getElementById("infoDiv").setAttribute("class", "display-off");
+		
+		document.getElementById("menuLink").setAttribute("class", "clicked");
+		document.getElementById("reviewLink").setAttribute("class", "unclicked");
+		document.getElementById("infoLink").setAttribute("class", "unclicked");
+		
 	});
 	document.querySelector(".reviewLink").addEventListener("click", function() {
 		document.getElementById("menuDiv").setAttribute("class", "display-off");
 		document.getElementById("reviewDiv").setAttribute("class", "display-on");
 		document.getElementById("infoDiv").setAttribute("class", "display-off");
+		
+		document.getElementById("reviewLink").setAttribute("class", "clicked");
+		document.getElementById("infoLink").setAttribute("class", "unclicked");
+		document.getElementById("menuLink").setAttribute("class", "unclicked");
 	});
 	document.querySelector(".infoLink").addEventListener("click", function() {
 		document.getElementById("menuDiv").setAttribute("class", "display-off");
 		document.getElementById("reviewDiv").setAttribute("class", "display-off");
 		document.getElementById("infoDiv").setAttribute("class", "display-on");
+		
+		document.getElementById("infoLink").setAttribute("class", "clicked");
+		document.getElementById("reviewLink").setAttribute("class", "unclicked");
+		document.getElementById("menuLink").setAttribute("class", "unclicked");
 	});
+	
+	
 </script>
 </html>
