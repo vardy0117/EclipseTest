@@ -607,7 +607,11 @@ public class FrontController extends HttpServlet {
 			forward.setView("manageStore.do");
 			forward.setRedirect(true);
 			forward.execute(request, response);
-			
+		}
+		
+		// review.jsp에서 더보기란을 클릭했을때 ajax로 이동되는 컨트롤러
+		if(command.equals("moreReview.do")){
+			System.out.println("moreReview로 이동");
 		}
 		
 	
