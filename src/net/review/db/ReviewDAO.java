@@ -42,7 +42,7 @@ public class ReviewDAO {
       
       try {
          con = getConnection();
-         sql = "select * from review where storeNo=? order by date desc limit 0,2";
+         sql = "select * from review where storeNo=? order by date desc";
          pstmt=con.prepareStatement(sql);
          pstmt.setString(1, storeNo);
          rs = pstmt.executeQuery();
@@ -69,6 +69,42 @@ public class ReviewDAO {
       
       return list;
    }
+   
+//   public ArrayList<ReviewBean> getReview(String storeNo){
+//	      ArrayList<ReviewBean> list = new ArrayList<ReviewBean>();
+//	      ReviewBean rBean;
+//	      
+//	      try {
+//	         con = getConnection();
+//	         sql = "select * from review where storeNo=? order by date desc limit 0,2";
+//	         pstmt=con.prepareStatement(sql);
+//	         pstmt.setString(1, storeNo);
+//	         rs = pstmt.executeQuery();
+//	         while(rs.next()){
+//	        	rBean = new ReviewBean();
+//	            rBean.setReviewNo(rs.getString(1));
+//	            rBean.setOrderNo(rs.getString(2));
+//	            rBean.setCustomerNo(rs.getString(3));
+//	            rBean.setStoreNo(rs.getString(4));
+//	            rBean.setContents(rs.getString(5));
+//	            rBean.setPoints(rs.getString(6));
+//	            rBean.setImage(rs.getString(7));
+//	            rBean.setDate(rs.getTimestamp(8));
+//	            rBean.setComment(rs.getString(9));
+//	            list.add(rBean);
+//	         }
+//	               
+//	      } catch (Exception e) {
+//	         System.out.println("getReview() 내에서 예외 발생 : "+e);
+//	         e.printStackTrace();
+//	      } finally {
+//	         resourceClose();
+//	      }
+//	      
+//	      return list;
+//	   }
+   
+   
    
    public ReviewBean AvgReview (int storeNo) { // 업체에 대한 별점 평균 
 	   ReviewBean review = new ReviewBean();

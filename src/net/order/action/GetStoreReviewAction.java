@@ -16,14 +16,10 @@ import net.review.db.ReviewDAO;
 public class GetStoreReviewAction {
 
 	public void getStoreReview(HttpServletRequest request, HttpServletResponse response, int storeNo) {
-		
-		
 		List<ReviewBean> reviewList = new ArrayList<ReviewBean>();
 		
 		ReviewDAO rdao = new ReviewDAO();
 		reviewList = rdao.getReview(Integer.toString(storeNo));
-		
-		
 		
 
 		// store.jsp 리뷰란에서 고객번호로 글 구분짓는거 말고 고객닉네임으로 구분 짓다가 잠시 보류 - 이태우- 
@@ -39,5 +35,10 @@ public class GetStoreReviewAction {
 		request.setAttribute("reviewList", reviewList);
 		request.setAttribute("nickNameList", nickNameList);
 	}
+	
+//	public void getStoreReviewMore(int storeNo){
+//		ReviewDAO rDAO = new ReviewDAO();
+//		rDAO.getReview(Integer.toString(storeNo));
+//	}
 
 }
