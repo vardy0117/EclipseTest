@@ -143,7 +143,7 @@ public class FrontController extends HttpServlet {
 				 if(result){
 					 forward.setRedirect(true);
 					 forward.setView("index.jsp"); // 사장님 전용페이지가 없어서 일단 여기로 했습니당
-					 System.out.println("사장님 로그인 리다이렉트 작동 " + forward.getView());
+					 System.out.println("일반 고객 로그인 리다이렉트 작동 " + forward.getView());
 				 } else {
 					 response.setContentType("text/html;charset=UTF-8"); 
 					 PrintWriter out = response.getWriter();
@@ -639,17 +639,77 @@ public class FrontController extends HttpServlet {
 			forward = new ActionForward();
 			forward.setView("/ceoStore/updateMenu.jsp");
 			forward.execute(request, response);
-			
-			
-			
-			
-			
 		}
 		
 		
-		
-		
-	}
+	/*	if(command.equals("UserSearchStore.do")) { // 스토어 사용자 검색
+				CustomerLoginAction action = new CustomerLoginAction() ;
+				boolean result = false;
+				try {
+					 forward = new ActionForward();
+					 result = action.execute(request, response);
+					  if(result){
+					//	 forward.setRedirect(true);
+					//	 forward.setView("index.jsp"); // 사장님 전용페이지가 없어서 일단 여기로 했습니당
+						//  System.out.println("사장님 로그인 리다이렉트 작동 " + forward.getView());
+					 } else {
+						 response.setContentType("text/html;charset=UTF-8"); 
+						 PrintWriter out = response.getWriter();
+						 out.println("<script>"); 
+						 out.println("alert('아직 준비중입니다');"); 
+						 out.println("history.back();");
+						// forward.setView("index.jsp?center=member/customerLogin.jsp");
+						 out.println("</script>");
+					 }
 
+					forward.execute(request, response);
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}		*/
+		
+		
+		
+		
+		if(command.equals("UserSearchStore.do")) {
+			StoreDAO store = new StoreDAO();
+
+			// 받은 값 : roadAddress / detailAddress / bname 
+			request.setCharacterEncoding("utf-8");
+			/*
+			request.getSession().setAttribute("orderRoadAddress", request.getParameter("roadAddress"));
+			request.getSession().setAttribute("orderDetailAddress", request.getParameter("detailAddress"));
+			request.getSession().setAttribute("orderBname", request.getParameter("bname"));
+			request.getSession().setAttribute("orderSido", request.getParameter("sido"));*/
+			request.getSession().getAttribute("sido");
+			System.out.println("User Search Store Get Sido : " + request.getSession().getAttribute("sido"));
+			System.out.println("name 값에서 받아온 search store : " + request.getParameter("search"));
+			
+			String search = request.getParameter("search"); // searchstore.jsp 에서 name 값
+			if(search != "") {
+			
+			List<StoreBean> UserSearchStorelist = store.UserGetStore((String) request.getSession().getAttribute("orderSido"),search);
+			
+			
+			 request.setAttribute("UserSearchStorelist", UserSearchStorelist);
+
+			// store.GetStore((String) request.getSession().getAttribute("orderSido"));
+			System.out.println("UserSearchStore 프론트 컨트롤러 -> 값가져오기 테스트 " + UserSearchStorelist.toString());
+			System.out.println("주소 시도  : " + request.getSession().getAttribute("orderSido"));
+			forward = new ActionForward();
+			forward.setView("index.jsp?center=store/searchStore.jsp");
+			forward.execute(request, response);
+			}else{
+				response.setContentType("text/html;charset=UTF-8"); 
+				PrintWriter out = response.getWriter();
+				out.print("<script>alert('검색할 가게를 입력해주세요'); history.back(); </script>");
+				System.out.println("User Search Store null값 감지");
+			}
+		
+		}
+
+		
+}
 	
 }
