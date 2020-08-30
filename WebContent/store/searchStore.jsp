@@ -183,16 +183,41 @@
     -webkit-transition: .5s;
     -moz-transition: .5s;
     transition: .5s;
-    z-index: 12
+    z-index: 12;
+     border-radius: 15px;
 }
 
-#searchstore img {
+/* #searchstore img {
 width: 50px;
 height: 50px;
 border: none;
 vertical-align: top;
     
+} */
+input:focus {outline:none;} /*input클릭시 자체 테두리 생기는 거 삭제 */
+
+#searchbutton {
+background: url("images/search.jpg") no-repeat;
+width: 70px;
+height: 50px;
+border: none;
+vertical-align: top;
+ border-radius: 15px
 }
+
+#searchcenter{ /* 검색창 높낮이 */
+height: 80px;
+}
+
+/* #customerfont{ /*폰트*/
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    text-decoration: none;
+    color: white;
+    text-shadow
+    
+} */
 </style>
 </head>
 <script>
@@ -238,7 +263,7 @@ vertical-align: top;
 			dataType : "text",
 			success : function(data,textStatus){
 //			alert("moreStore ajax 받은 데이터 : " + data + " " + orderSido);
-			alert("준비중입니다 \n 작업 충돌방지로 잠시 보류되었습니다");
+			alert("준비중입니다 \n작업 충돌방지로 잠시 보류되었습니다");
 			autosize();
 
 						var show;
@@ -274,34 +299,56 @@ vertical-align: top;
 		
 </script>	
 <body>
-​	
+​	<!-- -------------------------------------------------------------------------- -->
 <c:set var="length" value="${fn:length(storelist) }" /> <!-- 가게개수 구하는 변수 -->
-
+<c:set var="SearchStoreLength" value="${fn:length(UserSearchStorelist) }" /> <!-- 검결과과 가게 개수  -->
+<c:set var="searchcontent" value="${param.search}"/>
+	
 	<div id="mainDiv">
 	
 		<div id="storeListDiv" >
 
 
 	
-			커스터머 번호 : ${customerNo } <br>
+			고객 번호 : ${customerNo } <br>
+		반갑습니다	<font id="customerfont" size="5" color="#FF6347"> ${nickname } </font>님<br>
 			귀하의 현재 계정기준 요청주소는 : 
 			<font color="orange" size="5"> <c:out value="${orderSido}" /> </font> 입니다 <br>
-			
-			
-			
-					<font size="5">DB에 들어있는 총 가게 갯수 : ${length}개 </font> <br>
+<!-- ------------------------------------------------------ -->
+<c:choose>
+
+	<c:when test="${length >= 0 && searchcontent eq null}"> 	
+		<font size="5"><font color="blue">일반</font> DB에 들어있는 총 가게 갯수 : ${length}개 </font> <br> 
+	</c:when>
+
+	<c:when test="${SearchStoreLength >= 0 && searchcontent ne null}"> 
+		<font size="5"><font color="powerblue">검색결과</font> DB에 들어있는 총 가게 갯수 : ${SearchStoreLength}개 </font> <br> 
+	</c:when>
+
+<c:otherwise> otherwise임</c:otherwise>
+
+
+</c:choose>
+
+<!-- ------------------------------------------------------ -->
+
+
+<%-- 					<font size="5">DB에 들어있는 총 가게 갯수 : ${length}개 </font> <br> --%>
+<%-- 			파람 : ${param.search} <!-- input에 saerch name값 가져옴 --> --%>
 			
 			<div id="searchstore">
 					
-		<form action="UserSearchStore.do" method="post" id="frm">
-			<center>
+		<form action="UserSearchStore.do" method="get" id="frm">
+			<center id="searchcenter">
 			<input id="search" name="search" placeholder="검색할 가게를 입력하세요">	
-			<a><img src="images/search.jpg" alt="사진" onclick="javascript:alert('아직 준비중입니다')"/></a>
+<!-- 			<a href="#"><img src="images/search.jpg" alt="사진" onclick="search();"/></a> -->
+		<button id="searchbutton" onclick="location.href = '#"></button>
 			</center>
  		</form> 
 		</div>
+<!-- -------------------------------------------------------------------------- -->
 
-	
+	<!-- -------------------------------------------------------------------------- -->
 				<c:forEach var="bean" items="${storelist }">
 					<ul>
 						<li id="ajaxtest" class="litest">
@@ -319,18 +366,47 @@ vertical-align: top;
 		
 
 				</c:forEach>
+	<!-- -------------------------------------------------------------------------- -->
+				
+	<!-- 검색결과로 나온 스토어 표시---------------------------------------------------------- -->
+	<!-- storelist로 통합해서 쓰려고 했는데 가게 존재 유무 확인할때 겹쳐서 따로 나눔 -->			
+					<c:forEach var="bean" items="${UserSearchStorelist }">
+					<ul>
+						<li id="ajaxtest" class="litest">
+								<a onclick="addStoreNoToStorage('${bean.storeNo}')"> 
+								<font color="purple" size="5"><c:out value="${bean.name}" /> </font>
+								<br> <c:out value="스토어 번호 : ${bean.storeNo}" /> <br>
+								<img src="upload/store/${bean.image}"> <br> <%-- <c:out value="✆전화번호 : 객체에 아직 안가져옴" /> <br> --%>
+								<c:out value="종류 : ${bean.category }" /> <br> 
+								<c:out value="운영시간 : ${bean.storeHours }" /> <br>
+									
+								</a>
+						
+						</li>
+					</ul>
+		
 
+				</c:forEach>
+	<!-- 검색결과로 나온 스토어 표시---------------------------------------------------------- -->
 	</div>
 </div>
-
+<!-- -------------------------------------------------------------------------- -->
+<!-- 일반 가게 리스트 출력 (배달 가능 가게로 검색을 했을 경우) -->
 			<c:set var="area" value="${storelist}" />
 				<c:if test="${area eq '[]' }">
 					<font size="6" color="orange">
 						<p>귀하의 지역에 맞는 가게가 없습니다</p>
 					</font>
 				</c:if>
+	<!-- -------------------------------------------------------------------------- -->	
+<!-- 검색된 결과가 없을 경우 -->		
+			<c:set var="UserSearchStore" value="${UserSearchStorelist}" />
+				<c:if test="${UserSearchStore eq '[]' }">
+					<font size="6" color="black">
+						<p> "${param.search }" 라는 가게는 존재하지 않습니다</p>
+					</font>
+				</c:if>
 
-		
 	
 	
 	<div class="moreTab"  onclick="moreStore('${orderSido}');">
