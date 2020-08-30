@@ -263,10 +263,48 @@ height: 80px;
 			dataType : "text",
 			success : function(data,textStatus){
 //			alert("moreStore ajax 받은 데이터 : " + data + " " + orderSido);
-			alert("준비중입니다 \n작업 충돌방지로 잠시 보류되었습니다");
-			autosize();
+			 alert("준비중 입니다");
+				
 
-						var show;
+						var show="";
+						show += "<c:forEach var='bean' items='${storelist}'>";
+						show += " <ul>";
+						show += " <li id='ajaxtest' class='litest'>";
+						show += "<a onclick='addStoreNoToStorage(${bean.storeNo})'>";
+						show += "<font color='purple' size='5'>${bean.name}</font> <br> ";
+						show += "스토어 번호 : ${bean.storeNo} <br>";
+						show += "<img src='upload/store/${bean.image}'> <br>";
+						show += "  종류 : ${bean.category } <br> ";
+						show += "  운영시간 : ${bean.storeHours} <br> ";
+						show += "</a>";
+						show += "</li>";
+						show += " </ul>";
+						show += "</c:forEach>";
+					//	console.log(show);
+						$("#storeListDiv").append(show);
+			}, 
+			error:function(data,textStatus){
+		alert("에러발생");
+			}
+		});
+		
+
+	
+	}
+	
+/* 	function SearchmoreStore(orderSido, search) { // 검색후 ajax 함수 실행
+		 var orderSido = orderSido;
+		var search = search;
+		$.ajax({
+			type : "get",
+			async : false,
+			url : "./searchmoreStore.do",
+			data : {orderSido: search},
+			dataType : "text",
+			success : function(data,textStatus){
+				
+			alert("search 내용 : " + search + " : " + orderSido);
+						var show="";
 						show += "<c:forEach var='bean' items='${storelist}'>";
 						show += " <ul>";
 						show += " <li id='ajaxtest' class='litest'>";
@@ -281,7 +319,7 @@ height: 80px;
 						show += " </ul>";
 						show += "</c:forEach>";
 						$("#storeListDiv").append(show);
-						// button_onclick();
+						console.log("show 내용 " + data);
 			}, 
 			error:function(data,textStatus){
 		alert("에러발생");
@@ -290,13 +328,7 @@ height: 80px;
 		
 
 	
-	}
-	
-	function search() {
-		document.getElementById("frm").value();
-		alert("아직 준비중 입니다");
-	}
-		
+	} */
 </script>	
 <body>
 ​	<!-- -------------------------------------------------------------------------- -->
@@ -406,12 +438,36 @@ height: 80px;
 						<p> "${param.search }" 라는 가게는 존재하지 않습니다</p>
 					</font>
 				</c:if>
+	<!-- -------------------------------------------------------------------------- -->	
 
-	
-	
-	<div class="moreTab"  onclick="moreStore('${orderSido}');">
-		<a class="more">더보기</a>
-	</div>	
+<!-- 검색하기전의 더보기 상태랑 아닐때랑 나눔  -->
+<!-- 괜히 나눠가지고 ㅡ.ㅡ;;;;;;;;;;;;;;;; -->
 
+	<c:if test="${length >= 2 }"> <!-- 검색전 storesize가 8개 이상이면 더보기창 활성화 -->
+<%-- 	storelistsize 조건문 실행 = ${length} --%>
+		<c:choose>
+
+		<c:when test="${length >= 0 && searchcontent eq null}"> 	
+			<div class="moreTab"  onclick="moreStore('${orderSido}');">
+			<a class="more">더보기</a>
+			</div>	
+		</c:when>
+
+	</c:choose>
+	</c:if>
+	<!-- -------------------------------------------------------------------------- -->	
+	<%-- <c:if test="${SearchStoreLength >= 2 }"> <!-- 검색후 storesize가 8개 이상이면 더보기창 활성화 -->
+		검색후 더보기 : ${SearchStoreLength } <br>
+		ordersido : ${orderSido }
+		<c:choose>
+		<c:when test="${SearchStoreLength >= 0 && searchcontent ne null}"> 
+			<div class="moreTab"  onclick="SearchmoreStore('${orderSido}','${searchcontent}');">
+			<!-- 이거 아마 검색후 전용 함수 또만들 ㅡ.ㅡ????? -->
+			<a class="more">더보기</a>
+			</div>	
+		</c:when>
+
+	</c:choose>
+	</c:if> --%>
 </body>
 </html>​

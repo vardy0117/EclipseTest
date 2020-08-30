@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -708,8 +709,22 @@ public class FrontController extends HttpServlet {
 			}
 		
 		}
-
 		
+		
+
+		if(command.equals("moreStore.do")) { // store ajax 
+				AjaxAction ajax = new AjaxAction();
+				List<StoreBean> result= new ArrayList<StoreBean>();
+				try {
+					 result = ajax.moreStoreAction(request, response);
+				} catch (Exception e) {
+						e.printStackTrace();
+				}
+				
+				PrintWriter out = response.getWriter();
+			}
+		
+
 }
 	
 }
