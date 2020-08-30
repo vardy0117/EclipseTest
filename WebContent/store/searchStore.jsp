@@ -142,14 +142,6 @@
 	
 	}
 	
-/* :root {
-    --heightsize: 900px;
-}  
-
-#storeListDiv {
-    height: var(--heightsize);
-}
- */
 
 
 .moreTab{
@@ -194,33 +186,6 @@
 			}
 		}
 	}
-	/* var count=0; // 더보기 카운트  전역변수
-	// $(function() {
-		function autosize() {
-		var storesize = '<c:out value="${fn:length(storelist) }"/>';  // 스토어 가게 사이즈
-		var storelistsize = 1700; // 일단 임시로 고정
-		var normalsize = 900;
-		var px="px";
-		// var storesizesum = storelistsize + px;
-		
-
-	if(storesize < 8) { // 스토어 개수가 8개가 안넘어가면 900px 로 고정
-		 count++; 
-		console.log(count);
-		$("#storeListDiv").css("height","1000px");
-	}else{
-		count++; 	
-		console.log(count);	
-		console.log("기존 스토어 사이즈" + storelistsize);
-		$("#storeListDiv").css("height",storelistsize + normalsize + px);
-	//	storelistsize += storelistsize;
-		console.log("늘어난 스토어 사이즈 " + storelistsize + normalsize + px);
-		console.log(storelistsize + px);
-
-	}
-		
-}
- */
 
 	function moreStore(orderSido) {
 		 var orderSido = orderSido;
