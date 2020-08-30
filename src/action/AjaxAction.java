@@ -2,7 +2,8 @@
 package action;
 
 import java.io.PrintWriter;
-
+import java.util.ArrayList;
+import java.util.List;
 
 import org.json.simple.JSONObject;
 
@@ -12,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import net.ceo.db.CeoDAO;
 import net.customer.db.CustomerBean;
 import net.customer.db.CustomerDAO;
+import net.store.db.StoreBean;
+import net.store.db.StoreDAO;
 
 public class AjaxAction {
 	public String emailCheckFromCustomer(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -59,4 +62,17 @@ public class AjaxAction {
 				
 		return jsonObj.toJSONString();
 	}
+	
+	
+
+	public List<StoreBean> moreStoreAction(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		request.setCharacterEncoding("UTF-8");
+		List<StoreBean> result = new ArrayList<StoreBean>();
+
+		StoreDAO store = new StoreDAO();
+			result = store.GetStore((String) request.getSession().getAttribute("orderSido"));
+		
+		return result;
+	} // method
 }
