@@ -329,6 +329,54 @@ public int getStoreCount(String ceoNo) {
 	
 	
 }
+
+
+
+
+public List<StoreBean> UserGetStore(String sido, String search){
+	List<StoreBean> storelist = new ArrayList<StoreBean>();
+	
+	try {
+		 con = getConnection();
+		 
+		 sql = "select * from store where sido like ? and name like ?";
+		 
+		 pstmt = con.prepareStatement(sql);
+		 
+		 pstmt.setString(1, "%" + sido + "%");
+		 pstmt.setString(2, "%" + search + "%");
+		 System.out.println("유저 검색 시도 스토어 받은값 : DAO (sido) : " + sido);
+		 System.out.println("유저 검색 시도 검색 받은값 : DAO (search) : " + search);
+		 
+		 rs = pstmt.executeQuery();
+		 
+		 while(rs.next()){
+			 StoreBean mBean = new StoreBean();
+				 mBean.setStoreNo(rs.getString("storeNo"));
+				 mBean.setCeoNo(rs.getString("ceoNo"));
+				 mBean.setName(rs.getString("name"));
+				 mBean.setRoadAddress(rs.getString("roadAddress"));
+				 mBean.setCategory(rs.getString("category"));
+				 mBean.setStoreHours(rs.getString("storeHours"));
+				 mBean.setSido(rs.getString("sido"));
+				 mBean.setImage(rs.getString("image"));
+				 mBean.setMessage(rs.getString("message"));
+				 System.out.println("Get 스토어 호출");
+				 // ��癒몄��� �ㅼ���� 媛��몄�ㅻ�� 嫄몃� ^^;;;;;;;;;;;;;;;;;;;;;;;;;
+				 storelist.add(mBean);
+		 }
+		
+	} catch (Exception e) {
+		System.out.println("User GetStore Error : " + e);
+	} finally {
+		resourceClose();
+	}
+	
+	
+	
+	return storelist;
+	
+}
 	
 	
 }
