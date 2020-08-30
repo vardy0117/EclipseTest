@@ -152,7 +152,47 @@
 		background-color: #4d4d4d;	
 	}
 
+#search {
+    width: 306px;
+    height: 50px;
+    border-radius: 0 0 0 0;
+    padding: 0 0 0 0;
+ /*    border: 0; 
+/   border-top-color: initial;
+    border-top-style: initial;
+    border-top-width: 0px;
+    border-right-color: initial;
+    border-right-style: initial;
+    border-right-width: 0px;
+    border-bottom-color: initial;
+    border-bottom-style: initial;
+    border-bottom-width: 0px;
+    border-left-color: initial;
+    border-left-style: initial;
+    border-left-width: 0px;
+    border-image-source: initial;
+    border-image-slice: initial;
+    border-image-width: initial;
+    border-image-outset: initial;
+    border-image-repeat: initial; */
+    line-height: 45px;
+    font-size: 15px;
+    color: #7c8389;
+    background: #fff;
+        text-indent: 15px;
+    -webkit-transition: .5s;
+    -moz-transition: .5s;
+    transition: .5s;
+    z-index: 12
+}
 
+#searchstore img {
+width: 50px;
+height: 50px;
+border: none;
+vertical-align: top;
+    
+}
 </style>
 </head>
 <script>
@@ -227,21 +267,39 @@
 	
 	}
 	
-	
+	function search() {
+		document.getElementById("frm").value();
+		alert("아직 준비중 입니다");
+	}
+		
 </script>	
 <body>
 ​	
 <c:set var="length" value="${fn:length(storelist) }" /> <!-- 가게개수 구하는 변수 -->
 
 	<div id="mainDiv">
+	
 		<div id="storeListDiv" >
 
-			커스터머 번호 : ${customerNo } <br>귀하의 현재 계정기준 요청주소는 : <font
-				color="orange" size="5"> <c:out value="${orderSido}" />
-			</font> 입니다 <br>
-			
-					<font size="5">DB에 들어있는 총 가게 갯수 : ${length}개 </font>
 
+	
+			커스터머 번호 : ${customerNo } <br>
+			귀하의 현재 계정기준 요청주소는 : 
+			<font color="orange" size="5"> <c:out value="${orderSido}" /> </font> 입니다 <br>
+			
+			
+			
+					<font size="5">DB에 들어있는 총 가게 갯수 : ${length}개 </font> <br>
+			
+			<div id="searchstore">
+					
+		<form action="UserSearchStore.do" method="post" id="frm">
+			<center>
+			<input id="search" name="search" placeholder="검색할 가게를 입력하세요">	
+			<a><img src="images/search.jpg" alt="사진" onclick="javascript:alert('아직 준비중입니다')"/></a>
+			</center>
+ 		</form> 
+		</div>
 
 	
 				<c:forEach var="bean" items="${storelist }">
