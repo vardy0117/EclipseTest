@@ -263,10 +263,9 @@ height: 80px;
 			dataType : "text",
 			success : function(data,textStatus){
 //			alert("moreStore ajax 받은 데이터 : " + data + " " + orderSido);
-			// alert("준비중입니다 \n작업 충돌방지로 잠시 보류되었습니다");
+			 alert("준비중 입니다");
 				
-				count += 1;
-				console.log("카운트 값 : " + count);
+
 						var show="";
 						show += "<c:forEach var='bean' items='${storelist}'>";
 						show += " <ul>";
