@@ -619,9 +619,12 @@ public class FrontController extends HttpServlet {
 		}
 		
 		// review.jsp에서 더보기란을 클릭했을때 ajax로 이동되는 컨트롤러
-		if(command.equals("moreReview.do")){
-			System.out.println("moreReview로 이동");
-		}
+//		if(command.equals("moreReview.do")){
+//			int storeNo = Integer.parseInt(request.getParameter("storeNo"));
+//			GetStoreReviewAction action = new GetStoreReviewAction();
+//			action.getStoreReviewMore(storeNo);
+//			
+//		}
 		
 		if(command.equals("updateMenu.do")){
 			

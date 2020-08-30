@@ -91,82 +91,90 @@
 				<div id="avgStar">☆☆☆☆☆</div>
 			</c:if>
 <!-- ---------------------------------	평균 별점  --------------------------------------------->
-
 	<!-- 등록된 리뷰가 없을때 -->
-	<c:if test="${requestScope.reviewList eq '[]' }">
+	<c:if test="${requestScope.reviewList eq '[]'}">
 		<div>
 			<table id="reviewT" align="center">
 				<tr rowspan="3">
-					<td>주문후 첫번째 리뷰를 남겨보세요.</td>
+					<td style="text-align: center;">아직 리뷰가 없습니다 <br>주문후 첫번째 리뷰를 남겨보세요.</td>
 				</tr>			
 			</table>
 		</div>
 	</c:if>
 	
-	
 	<!-- 등록된 리뷰가 존재할때 -->
-	<c:set value="${requestScope.reviewList}" var="rvl"/>
-	<c:if test="${fn:length(rvl) > 0}">
-	</c:if>
-
-	<c:forEach items="${requestScope.reviewList}" var="rBean" varStatus="status">
-		<c:set var="i" value="${status.index }"/>
-		<c:if test="${status.index > 5}">
+	<c:if test="${requestScope.reviewList ne '[]' }">
+		<c:set value="${requestScope.reviewList}" var="rvl"/>
+			${fn:length(rvl)}개의 리뷰가 있습니다.
 			
-		</c:if>
-		<div>
-			<table id="reviewT" align="center">
-				<tr>
-					<td>
-						<span class="nickname">${nickNameList[i]}님</span>
-						&nbsp;
-						<span class="date">
-							<c:set var="date" value="${rBean.date}"/>
-							<fmt:formatDate value="${rBean.date}" dateStyle="long" var="date"/>
-							${fn:substring(date,0,12) }
-						</span>
-						<br>
-						<c:if test="${rBean.points eq 0 }">
-							<i id="star">☆☆☆☆☆</i>
+			
+		<c:forEach items="${requestScope.reviewList}" var="rBean" varStatus="status">
+			<c:set var="i" value="${status.index }"/>
+			<div>
+				<table id="reviewT" align="center">
+					<tr>
+						<td>
+							<span class="nickname">${nickNameList[i]}님</span>
+							&nbsp;
+							<span class="date">
+								<c:set var="date" value="${rBean.date}"/>
+								<fmt:formatDate value="${rBean.date}" dateStyle="long" var="date"/>
+								${fn:substring(date,0,12) }
+							</span>
+							<br>
+							<c:if test="${rBean.points eq 0 }">
+								<i id="star">☆☆☆☆☆</i>
+							</c:if>
+							<c:if test="${rBean.points eq 1 }">
+								<i id="star">★☆☆☆☆</i>
+							</c:if>
+							<c:if test="${rBean.points eq 2 }">
+								<i id="star">★★☆☆☆</i>
+							</c:if>
+							<c:if test="${rBean.points eq 3 }">
+								<i id="star">★★★☆☆</i>
+							</c:if>
+							<c:if test="${rBean.points eq 4 }">
+								<i id="star">★★★★☆</i>
+							</c:if>
+							<c:if test="${rBean.points eq 5 }">
+								<i id="star">★★★★★</i>
+							</c:if>
+						</td>
+					</tr>
+					<tr>
+						<c:if test="${rBean.image eq null}">
+							<td>
+							</td>
 						</c:if>
-						<c:if test="${rBean.points eq 1 }">
-							<i id="star">★☆☆☆☆</i>
+						<c:if test="${rBean.image ne null}">
+							<td>
+								<center><img src="./images/${rBean.image }" style="width: 900px; height: 400px;"></center> 
+							</td>
 						</c:if>
-						<c:if test="${rBean.points eq 2 }">
-							<i id="star">★★☆☆☆</i>
-						</c:if>
-						<c:if test="${rBean.points eq 3 }">
-							<i id="star">★★★☆☆</i>
-						</c:if>
-						<c:if test="${rBean.points eq 4 }">
-							<i id="star">★★★★☆</i>
-						</c:if>
-						<c:if test="${rBean.points eq 5 }">
-							<i id="star">★★★★★</i>
-						</c:if>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<center><img src="./images/${rBean.image }" style="width: 900px; height: 400px;"></center> 
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<span id="content">${rBean.contents }</span>
-					</td>
-				</tr>
-			</table>
+					</tr>
+					<tr>
+						<td>
+							<span id="content">${rBean.contents }</span>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</c:forEach>
+		
+		<div class="moreTab"  onclick="moreReview(${storeNo})">
+			<a class="more">더보기</a>
 		</div>
-	</c:forEach>
+	</c:if>	
 	
-	<div class="moreTab"  onclick="moreReview(${storeNo})">
-		<a class="more">더보기</a>
-	</div>	
-
+	
+	
 	<!-- ////////////////////////////////더보기 클릭했을때 ////////////////////////////////////////// -->
 
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
+	
+		var cnt = 
+	
 		function moreReview(storeNo) {
 			var storeNo = storeNo;
 			
@@ -184,6 +192,6 @@
 				}
 			});
 		}
-	</script>
+	</script> -->
 </body>
 </html>
