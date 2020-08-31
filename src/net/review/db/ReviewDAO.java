@@ -5,10 +5,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 public class ReviewDAO {
    Connection con = null;
@@ -36,15 +40,17 @@ public class ReviewDAO {
    
    
    /******************************************************************************************/
-   public ArrayList<ReviewBean> getReview(String storeNo){
+   
+   // **************모든 리뷰 리스트를 가져오는 쿼리문**************
+   public ArrayList<ReviewBean> getReview(int storeNo){
       ArrayList<ReviewBean> list = new ArrayList<ReviewBean>();
       ReviewBean rBean;
       
       try {
          con = getConnection();
-         sql = "select * from review where storeNo=? order by date desc";
+         sql = "select * from review where storeNo=? order by date desc limit 0,2";
          pstmt=con.prepareStatement(sql);
-         pstmt.setString(1, storeNo);
+         pstmt.setInt(1, storeNo);
          rs = pstmt.executeQuery();
          while(rs.next()){
         	rBean = new ReviewBean();
@@ -70,18 +76,34 @@ public class ReviewDAO {
       return list;
    }
    
-//   public ArrayList<ReviewBean> getReview(String storeNo){
-//	      ArrayList<ReviewBean> list = new ArrayList<ReviewBean>();
-//	      ReviewBean rBean;
-//	      
-//	      try {
-//	         con = getConnection();
-//	         sql = "select * from review where storeNo=? order by date desc limit 0,2";
-//	         pstmt=con.prepareStatement(sql);
-//	         pstmt.setString(1, storeNo);
-//	         rs = pstmt.executeQuery();
-//	         while(rs.next()){
-//	        	rBean = new ReviewBean();
+   
+   // **************limit으로 2개씩 리뷰 리스트를 가져오는 쿼리문**************
+
+   public JSONArray getReview(int storeNo,int startNum){
+	      ArrayList<ReviewBean> list = new ArrayList<ReviewBean>();
+	      JSONArray jsonArr = new JSONArray();
+	      ReviewBean rBean;
+	      JSONObject jsonObj;
+	      try {
+	         con = getConnection();
+	         sql = "select * from review where storeNo=? order by date desc limit ?,2";
+	         pstmt=con.prepareStatement(sql);
+	         pstmt.setInt(1, storeNo);
+	         pstmt.setInt(2, startNum);
+	         rs = pstmt.executeQuery();
+	         while(rs.next()){
+	        	rBean = new ReviewBean();
+	        	jsonObj = new JSONObject();
+	        	jsonObj.put("reviewNo", rs.getString(1));
+	        	jsonObj.put("orderNo", rs.getString(2));
+	        	jsonObj.put("customerNo", rs.getString(3));
+	        	jsonObj.put("storeNo", rs.getString(4));
+	        	jsonObj.put("contents", rs.getString(5));
+	        	jsonObj.put("points", rs.getString(6));
+	        	jsonObj.put("image", rs.getString(7));
+	        	jsonObj.put("date", rs.getTimestamp(8).toString());
+	        	jsonObj.put("comment", rs.getString(9));
+	        	
 //	            rBean.setReviewNo(rs.getString(1));
 //	            rBean.setOrderNo(rs.getString(2));
 //	            rBean.setCustomerNo(rs.getString(3));
@@ -92,17 +114,18 @@ public class ReviewDAO {
 //	            rBean.setDate(rs.getTimestamp(8));
 //	            rBean.setComment(rs.getString(9));
 //	            list.add(rBean);
-//	         }
-//	               
-//	      } catch (Exception e) {
-//	         System.out.println("getReview() 내에서 예외 발생 : "+e);
-//	         e.printStackTrace();
-//	      } finally {
-//	         resourceClose();
-//	      }
-//	      
-//	      return list;
-//	   }
+	        	jsonArr.add(jsonObj);
+	         }
+	               
+	      } catch (Exception e) {
+	         System.out.println("오버로딩된 getReview() 내에서 예외 발생 : "+e);
+	         e.printStackTrace();
+	      } finally {
+	         resourceClose();
+	      }
+	      
+	      return jsonArr;
+	   }
    
    
    

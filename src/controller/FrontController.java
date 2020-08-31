@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.ParseConversionEvent;
 
 import org.apache.catalina.tribes.group.Response;
+import org.json.simple.JSONArray;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
@@ -40,6 +41,7 @@ import net.order.action.GetStoreMenuAction;
 import net.order.action.GetStoreReviewAction;
 import net.order.action.OrderAction;
 import net.orderList.db.OrderListBean;
+import net.review.db.ReviewBean;
 import net.store.action.StoreAction;
 import net.store.db.StoreBean;
 import net.store.db.StoreDAO;
@@ -620,12 +622,20 @@ public class FrontController extends HttpServlet {
 		}
 		
 		// review.jsp에서 더보기란을 클릭했을때 ajax로 이동되는 컨트롤러
-//		if(command.equals("moreReview.do")){
-//			int storeNo = Integer.parseInt(request.getParameter("storeNo"));
-//			GetStoreReviewAction action = new GetStoreReviewAction();
-//			action.getStoreReviewMore(storeNo);
-//			
-//		}
+		if(command.equals("moreReview.do")){
+			int storeNo = Integer.parseInt(request.getParameter("storeNo"));   //글번호
+			int startNum = Integer.parseInt(request.getParameter("startNum")); //현재 보여지는 리뷰 수
+			
+			GetStoreReviewAction action = new GetStoreReviewAction();
+			action.getStoreReviewMore(request,response,storeNo,startNum);
+			
+			JSONArray jsonArr = (JSONArray) request.getAttribute("jsonArr");
+			
+			
+			response.setContentType("text/html;charset=UTF-8"); 
+			PrintWriter out = response.getWriter();
+			out.print(jsonArr);
+		}
 		
 		if(command.equals("updateMenu.do")){
 			

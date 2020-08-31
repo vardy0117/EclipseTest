@@ -17,7 +17,7 @@
 <c:set value="${requestScope.storeNo}" var="storeNo"/>
 
 <style>
-	#reviewT{
+	#reviewT , #appendT{
 		border: 1px solid gray;
 		padding: 0;
 		margin: 0 auto;
@@ -110,7 +110,7 @@
 			
 		<c:forEach items="${requestScope.reviewList}" var="rBean" varStatus="status">
 			<c:set var="i" value="${status.index }"/>
-			<div>
+			<div id="table">
 				<table id="reviewT" align="center">
 					<tr>
 						<td>
@@ -158,11 +158,14 @@
 							<span id="content">${rBean.contents }</span>
 						</td>
 					</tr>
+				
+				</table>
+				<table id="appendT">
+					
 				</table>
 			</div>
 		</c:forEach>
-		
-		<div class="moreTab"  onclick="moreReview(${storeNo})">
+		<div class="moreTab" onclick="moreReview(${requestScope.storeNo})">
 			<a class="more">더보기</a>
 		</div>
 	</c:if>	
@@ -171,27 +174,36 @@
 	
 	<!-- ////////////////////////////////더보기 클릭했을때 ////////////////////////////////////////// -->
 
-	<!-- <script type="text/javascript">
+	<script type="text/javascript">
 	
-		var cnt = 
 	
 		function moreReview(storeNo) {
-			var storeNo = storeNo;
+ 			var startNum = $("#table tr").length / 3;	// 현재 보여지는 게시글의 수
+ 			var storeNo = storeNo	// 가게고유번호
+			
 			
 			$.ajax({
 				type : "post",
 				async : false,
 				url : "./moreReview.do",
-				data : {storeNo:storeNo},
+				data : {"storeNo":storeNo,"startNum":startNum},
 				dataType : "text",
 				success : function(data,textStatus){
-					
+					//var jsonData = JSON.parse('[{"image":"salmon.jpg","storeNo":"100","orderNo":"1","contents":"맛있어요","reviewNo":"1","comment":null,"customerNo":"22","points":"2"},{"image":"salmon.jpg","storeNo":"100","orderNo":"2","contents":"정말맛이.......","reviewNo":"2","comment":null,"customerNo":"22","points":"2"}]');
+					var jsonData = JSON.parse(data);
+					if(jsonData!=null){
+						for(var i = 0; i<jsonData.length; i++){
+							$("#appendT").append("<tr><td>"+jsonData[i].date+"</td></tr>");
+							$("#appendT").append("<tr><td>"+jsonData[i].contents+"</td></tr>");
+							$("#appendT").append("<tr><td>"+jsonData[i].nickName+"</td></tr>");
+						}
+					}						
 				}, 
 				error:function(data,textStatus){
-
+					alert("moreReview에러발생 : "+textStatus)
 				}
 			});
 		}
-	</script> -->
+	</script>
 </body>
 </html>
