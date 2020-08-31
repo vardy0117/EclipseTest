@@ -10,14 +10,6 @@
 	div {
 		box-sizing: border-box;
 	}
-	#mainDiv {
-		width: 1000px;
-		min-height: 600px;
-		border: 2px solid green;
-		margin: 0 auto;
-		margin-top: 50px;
-		position: relative;
-	}
 	
 	input[type=number]::-webkit-inner-spin-button {
      width: 30px;
@@ -27,7 +19,7 @@
 	
 	table#menuTable{
 		margin: 0 auto;
-		width : 900px;
+		width : 100%;
 	}
 
 	.menuImage{
@@ -70,7 +62,7 @@
 <script>
 	window.onload = function(){
 		getCart();
-		$("tbody:first").children().css("display","block");
+		//$("tbody:first").children().css("display","block");
 		$(".toggleImg:first").attr("src","images/btn_count_up.gif");
 		
 	}
