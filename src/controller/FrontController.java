@@ -26,10 +26,12 @@ import net.ceo.action.CeoLogoutAction;
 import net.ceo.action.CeoModifyAction;
 import net.ceo.db.CeoBean;
 import net.ceo.db.CeoDAO;
+import net.coupon.db.CouponBean;
 import net.customer.action.CustomerJoinAction;
 import net.customer.action.CustomerLoginAction;
 import net.customer.action.CustomerLogoutAction;
 import net.customer.action.CustomerModifyAction;
+import net.customer.action.GetCouponAction;
 import net.customer.db.CustomerBean;
 import net.customer.db.CustomerDAO;
 import net.manage.action.updateAction;
@@ -365,6 +367,21 @@ public class FrontController extends HttpServlet {
 			forward.execute(request, response);
 		}
 		
+		if(command.equals("DiscountCheck.do")){	
+			response.setCharacterEncoding("utf-8");
+			forward = new ActionForward();
+			String customerNo = (String)request.getSession().getAttribute("customerNo");
+			String couponList = "";
+			try {
+				 GetCouponAction action = new GetCouponAction();
+				 
+				 couponList= action.getCoupons(customerNo);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			PrintWriter out = response.getWriter();
+			out.print(couponList);
+		}
 		
 		if(command.equals("Order.do")){
 			int orderNo=0;

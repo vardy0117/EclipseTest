@@ -222,9 +222,11 @@ height: 80px;
 </style>
 </head>
 <script>
-	function setStoreInStorage(storeNo){
+	function setStoreInStorage(storeNo, storeName){
+		console.log(storeName);
 		var store = {
-			storeNo : storeNo	
+			storeNo : storeNo,	
+			storeName : storeName
 		};
 			
 		var json = JSON.stringify(store);
@@ -234,10 +236,10 @@ height: 80px;
 		location.href = "Store.do?storeNo="+storeNo;
 	}
 
-	function addStoreNoToStorage(storeNo){
+	function addStoreNoToStorage(storeNo, storeName){
 		var cartItem=JSON.parse(sessionStorage.getItem("cart"));
 		if(cartItem==null){
-		setStoreInStorage(storeNo);
+		setStoreInStorage(storeNo, storeName);
 		} else { // 카트가 이미 저장된 메뉴가 있으면 (이미 storeNo는 저장된 상태 )
 			var store = JSON.parse(sessionStorage.getItem("store"));
 			if (storeNo == store["storeNo"]) {
@@ -246,7 +248,7 @@ height: 80px;
 				if(confirm("카트를 비우고 다른 가게를 가시겠어요?") == true){
 					var cart = null;
 					sessionStorage.setItem("cart",cart);
-					setStoreInStorage(storeNo);
+					setStoreInStorage(storeNo, storeName);
 					location.href="Store.do?storeNo="+storeNo;
 				}
 			}
@@ -404,7 +406,7 @@ height: 80px;
 				<c:forEach var="bean" items="${storelist }">
 					<ul id="unlength">
 						<li id="ajaxtest" class="litest">
-								<a onclick="addStoreNoToStorage('${bean.storeNo}')"> 
+								<a onclick="addStoreNoToStorage('${bean.storeNo}','${bean.name}')"> 
 								<font color="purple" size="5"><c:out value="${bean.name}" /> </font>
 								<br> <c:out value="스토어 번호 : ${bean.storeNo}" /> <br>
 								<img src="upload/store/${bean.image}"> <br> <%-- <c:out value="✆전화번호 : 객체에 아직 안가져옴" /> <br> --%>

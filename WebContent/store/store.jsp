@@ -321,7 +321,7 @@
 				</div>
 				<hr>
 		    	<h1 id="total"></h1>
-		    <input type="button" value="주문" onclick="order();">
+		    <input type="button" value="주문" onclick="location.href='OrderCheck.do';">
 		</div>
 		<c:set var="info" value="${requestScope.storeInfo}"/>
 	
