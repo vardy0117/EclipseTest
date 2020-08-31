@@ -66,6 +66,8 @@
 		background-color: #4d4d4d;	
 	}
 
+
+
 </style>
 
 	<!-- 주문한 메뉴 review.jsp로 가져오기는 일단 보류 - 이태우 - --> 	
@@ -127,8 +129,8 @@
 							&nbsp;
 							<span class="date">
 								<c:set var="date" value="${rBean.date}"/>
-								<fmt:formatDate value="${rBean.date}" dateStyle="long" var="date"/>
-								${fn:substring(date,0,12) }
+							<%-- 	<fmt:formatDate value="${rBean.date}" dateStyle="long" var="date"/> --%>
+								${fn:substring(date,0,11) }
 							</span>
 							<br>
 							<c:if test="${rBean.points eq 0 }">
@@ -182,7 +184,6 @@
 	</c:if>	
 	
 	
-	
 	<!-- ////////////////////////////////더보기 클릭했을때 ////////////////////////////////////////// -->
 
 	<script type="text/javascript">
@@ -201,7 +202,9 @@
 				success : function(data,textStatus){
 					var jsonData = JSON.parse(data);
 					if(jsonData != null){
+						
 						var stars;
+						
 						for(var i = 0; i<jsonData.length; i++){
 							if(jsonData[i].points==0){
 								stars = "☆☆☆☆☆";
@@ -216,10 +219,8 @@
 							}else if(jsonData[i].points==5){
 								stars = "★★★★★"
 							}
-							
-							
-							$("#appendDiv").append("<table id='appendT'><tr><td><span class='nickname'>테스트 님</span>&nbsp"+
-								 "<span class='date'>"+jsonData[i].date+"</span>"+
+							$("#appendDiv").append("<table id='appendT'><tr><td><span class='nickname'>닉네임</span> &nbsp&nbsp"+
+								 "<span class='date'>"+jsonData[i].date.substring(0,10)+"</span>"+
 								 "<br><i id='star'>"+stars+"</i></td></tr>"+
 								 "<tr><td><center><img src='./images/"+jsonData[i].image+"' style='width: 900px; height: 400px;'></center></td></tr>"+
 								 "<tr><td><span id='content'>"+jsonData[i].contents+"</span></td></tr></table>");
@@ -229,10 +230,10 @@
 							$("div").remove(".moreTab");
 						}
 					}						
-				}, 
-				error:function(data,textStatus){
+				},error:function(data,textStatus){
 					alert("moreReview에러발생 : "+textStatus)
 				}
+				
 			});
 		}
 	</script>
