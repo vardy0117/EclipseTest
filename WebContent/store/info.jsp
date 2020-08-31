@@ -12,7 +12,7 @@
 </head>
 <body>
 <style>
-	#mainDiv{
+	#infoDiv{
 		clear: both;
 		border: 1px solid #d9d9d9;
 	}
@@ -23,7 +23,7 @@
 		<c:set var="info" value="${requestScope.storeInfo}"/>
 		<c:set var="star" value="${requestScope.storereview}"/>
 		
-		<div id="mainDiv">
+		<div id="infoDiv">
 
 	<img src="${pageContext.request.contextPath }/images/house.jpg" height="50" width="50" alt="업체정보"> <font size="6">업체정보 </font>
 	<hr>
