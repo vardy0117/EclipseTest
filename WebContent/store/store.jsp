@@ -16,9 +16,88 @@
 		margin: 0 auto;
 		margin-top: 80px;
 		position: relative;
+		padding-top: 15px;
+		padding-bottom: 15px;
 	}
 	
-	input[type=number]::-webkit-inner-spin-button {
+	#storeDiv {
+		width: 66.666667%;
+		float: left;
+	}
+	#storeNameDiv {
+		border : 1px solid #d9d9d9;
+	}
+	#storeNameDiv > h3 {
+		margin: 0;
+		background: linear-gradient( to right, hsl(98 100% 62%), hsl(204 100% 59%) );
+		color: white;
+		height: 50px;
+		line-height: 50px;
+		text-align: center;
+		text-shadow: 2px 1px 1px grey;
+	}
+	#storeBasicInfoDiv {
+		border : 1px solid #d9d9d9;
+		margin-bottom: 10px;
+	}
+	#storeBasicInfoDiv > table {
+		margin: 15px 10px;
+	}
+	#storeBasicInfoDiv > table img {
+		width: 130px;
+		border-radius: 12px;
+	}
+	
+	#topMenu > div {
+		float:left;
+		width: 33.333333%;
+		text-align: center;	
+		border : 1px solid #d9d9d9;
+		line-height: 50px;
+	}
+	.clicked{
+		background: linear-gradient( to right, hsl(98 100% 62%), hsl(204 100% 59%) );
+		color: white;
+		cursor: pointer;
+		text-shadow: 2px 1px 1px grey;
+	}
+	.unclicked{
+		cursor: pointer; 
+	 }
+	.display-on {
+		display: block;
+	}
+	.display-off {
+		display: none;
+	}
+	#menuDiv {
+		border : 1px solid #d9d9d9;
+	}
+	#reviewDiv {
+		border : 1px solid #d9d9d9;
+	}
+	#infoDiv {
+		border : 1px solid #d9d9d9;
+	}
+	
+	#cartDiv {
+		width: 31%;
+		min-height: 300px;
+		border : 1px solid #d9d9d9;
+		position: absolute;
+		left: 68%;
+	}
+	#cartDiv > h3 {
+		margin: 0;
+	    color: white;
+	    height: 50px;
+	    line-height: 50px;
+	    text-align: center;
+	    background: linear-gradient( to right, hsl(98 100% 62%), hsl(204 100% 59%) );
+	    text-shadow: 2px 1px 1px grey;
+	}
+	
+	/* input[type=number]::-webkit-inner-spin-button {
      width: 30px;
      height: 30px;
      -webkit-appearance: none;
@@ -53,45 +132,6 @@
 		list-style-type : none;
 	}
 	
-
-	/*메뉴 디자인*/
-	/*******************************************************************/
-	/* #topMenu {
-		height: 30px;
-		width: 850px;
-		margin: 0 auto;
-		margin-top: 80px;
-		position: relative;
-		padding: 100px;
-	}
-	
-	#topMenu ul li {
-		list-style: none;
-		color: white;
-		background-color: #2d2d2d;
-		float: left;
-		line-height: 30px;
-		vertical-align: middle;
-		text-align: center;
-	}
-	
-	#topMenu .menuLink, #topMenu .reviewLink, #topMenu .infoLink {
-		text-decoration: none;
-		color: white;
-		display: block;
-		background: linear-gradient(to right, hsl(98 100% 62%),
-			hsl(204 100% 59%));
-		width: 150px;
-		font-size: 12px;
-		font-weight: bold;
-		font-family: "Trebuchet MS";
-	}
-	
-	#topMenu .menuLink:hover, #topMenu .reviewLink:hover, #topMenu .infoLink:hover {
-		color: red;
-		background-color: #4d4d4d;
-		cursor:pointer;
-	} */
 	#topMunu{
 		padding: 0;
 		margin: 0;
@@ -126,14 +166,8 @@
 		display: none;
 	}
 	.storeName{
-		padding: 10px;
     	font-size: 110%;
 		border: 1px solid #d9d9d9;
-		margin: 30px 30px;
-		margin-bottom: 0;
-		padding-left: 30px;
-		margin-left: 0;
-		margin-right: 0;
 	}
 	.guideText{
 		color: #999;
@@ -164,20 +198,84 @@
 
 	#topMenu a,#topMenu li{
 		height: 46px;
-	}
+	} */
 </style>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>
 <body>
+	<c:set var="info" value="${requestScope.storeInfo}"/>
+	<c:set var="star" value="${requestScope.storereview}"/>
 
 	<div id="mainDiv">
-	
+		<div id="storeDiv">
+		
+			<div id="storeNameDiv">
+				<h3>${info.name }</h3>
+			</div>
+			
+			<div id="storeBasicInfoDiv">
+				<table>
+					<tr>
+						<td rowspan="2">
+							<img src="upload/store/${info.image}">
+						</td>
+						<td style="padding-left: 15px;">
+							<c:if test="${star.points eq 0 }">
+								<span style="color: #ffa400"></span><span style="color: #e0e0e0">★★★★★</span>
+							</c:if>
+							<c:if test="${star.points eq 1 }">
+								<span style="color: #ffa400">★</span><span style="color: #e0e0e0">★★★★</span>
+							</c:if>
+							<c:if test="${star.points eq 2 }">
+								<span style="color: #ffa400">★★</span><span style="color: #e0e0e0">★★★</span>
+							</c:if>
+							<c:if test="${star.points eq 3 }">
+								<span style="color: #ffa400">★★★</span><span style="color: #e0e0e0">★★</span>
+							</c:if>
+							<c:if test="${star.points eq 4 }">
+								<span style="color: #ffa400">★★★★</span><span style="color: #e0e0e0">★</span>
+							</c:if>
+							<c:if test="${star.points eq 5 }">
+								<span style="color: #ffa400">★★★★★</span><span style="color: #e0e0e0"></span>
+							</c:if>
+						</td>
+					</tr>
+					<tr>
+						<td style="padding-left: 15px;">영업시간 : ${info.storeHours}</td>
+					</tr>
+				</table>
+			</div>
+			
+			<div id="topMenu">
+				<div class="menuLink clicked" id="menuLink">메뉴</div>
+				<div class="reviewLink" id="reviewLink">리뷰</div>
+				<div class="infoLink" id="infoLink">정보</div>
+			</div>
+			<div style="clear:both;"></div>
+			
+			<div id="menuDiv" class="display-on">
+				<jsp:include page="/store/menu.jsp"></jsp:include>
+			</div>
+			<div id="reviewDiv" class="display-off">
+				<jsp:include page="/store/review.jsp"></jsp:include>
+			</div>
+			<div id="infoDiv" class="display-off">
+				<jsp:include page="/store/info.jsp"></jsp:include>
+			</div>
+
+		</div>
+		
+		<div id="cartDiv">
+			<h3>주문표</h3>
+		</div>
+		
 		
 
 
 		
-		<c:set var="info" value="${requestScope.storeInfo}"/>
-		<div class="storeName"><h2>${info.name}</h2></div>
+		<%-- <div class="storeName">
+			<h2>${info.name}</h2>
+		</div>
 		<div class="storeInfo">
 			<span class="storeImg"><img src="upload/store/${info.image}" style="width: 200px; margin: 30px 30px;"></span>
 			<div class="avg">
@@ -185,7 +283,7 @@
 				
 				<c:set var="info" value="${requestScope.storeInfo}"/>
 				<c:set var="star" value="${requestScope.storereview}"/> <br>
-				<%-- <div id="storeAvgScore">${star.points}</div> --%> 
+				<div id="storeAvgScore">${star.points}</div> 
 				<c:if test="${star.points eq 0 }">
 					<div id="storeAvgStar">☆☆☆☆☆</div>
 				</c:if>
@@ -223,7 +321,7 @@
 				</div>
 				<hr>
 		    	<h1 id="total"></h1>
-		    <input type="button" value="주문" onclick="order();">
+		    <input type="button" value="주문" onclick="location.href='OrderCheck.do';">
 		</div>
 		<c:set var="info" value="${requestScope.storeInfo}"/>
 	
@@ -233,9 +331,9 @@
 				<li class="reviewLink" id="reviewLink">리뷰</li>
 				<li class="infoLink" id="infoLink">정보</li>
 			</ul>
-		</nav>
+		</nav> --%>
 			
-		<div id="menuDiv" class="display-on">
+		<%-- <div id="menuDiv" class="display-on">
 			<jsp:include page="/store/menu.jsp"></jsp:include>
 		</div>
 		<div id="reviewDiv" class="display-off">
@@ -243,9 +341,10 @@
 		</div>
 		<div id="infoDiv" class="display-off">
 			<jsp:include page="/store/info.jsp"></jsp:include>
-		</div>
+		</div> --%>
 	
 	</div>
+	<div style="clear:both; margin-bottom: 15px;"></div>
 </body>
 <script>
 	document.querySelector(".menuLink").addEventListener("click", function() {
@@ -275,6 +374,10 @@
 		document.getElementById("infoLink").setAttribute("class", "clicked");
 		document.getElementById("reviewLink").setAttribute("class", "unclicked");
 		document.getElementById("menuLink").setAttribute("class", "unclicked");
+	});
+	
+	document.addEventListener("scroll", function() {
+		document.getElementById("cartDiv").style.top = (window.scrollY+15) + "px";
 	});
 	
 	

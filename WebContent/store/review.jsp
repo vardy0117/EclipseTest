@@ -22,13 +22,13 @@
 		border: 1px solid gray;
 		padding: 0;
 		margin: 0 auto;
-		width: 996px;
+		width: 100%;
 	}
 	#appendT{
 		border: 1px solid gray;
 		padding: 0;
 		margin: 0 auto;
-		width: 996px;
+		width: 100%;
 	}
 	#content{
 		font-size: 1em;
@@ -160,7 +160,7 @@
 						</c:if>
 						<c:if test="${rBean.image ne null}">
 							<td>
-								<center><img src="./images/${rBean.image }" style="width: 900px; height: 400px;"></center> 
+								<center><img src="./images/${rBean.image }" style="width: 100%; height: 300px;"></center> 
 							</td>
 						</c:if>
 					</tr>

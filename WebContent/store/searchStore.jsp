@@ -15,6 +15,7 @@
 <title>Insert title here</title>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
+
 <style>
 	div {
 		box-sizing: border-box;
@@ -221,9 +222,11 @@ height: 80px;
 </style>
 </head>
 <script>
-	function setStoreInStorage(storeNo){
+	function setStoreInStorage(storeNo, storeName){
+		console.log(storeName);
 		var store = {
-			storeNo : storeNo	
+			storeNo : storeNo,	
+			storeName : storeName
 		};
 			
 		var json = JSON.stringify(store);
@@ -233,10 +236,10 @@ height: 80px;
 		location.href = "Store.do?storeNo="+storeNo;
 	}
 
-	function addStoreNoToStorage(storeNo){
+	function addStoreNoToStorage(storeNo, storeName){
 		var cartItem=JSON.parse(sessionStorage.getItem("cart"));
 		if(cartItem==null){
-		setStoreInStorage(storeNo);
+		setStoreInStorage(storeNo, storeName);
 		} else { // 카트가 이미 저장된 메뉴가 있으면 (이미 storeNo는 저장된 상태 )
 			var store = JSON.parse(sessionStorage.getItem("store"));
 			if (storeNo == store["storeNo"]) {
@@ -245,59 +248,61 @@ height: 80px;
 				if(confirm("카트를 비우고 다른 가게를 가시겠어요?") == true){
 					var cart = null;
 					sessionStorage.setItem("cart",cart);
-					setStoreInStorage(storeNo);
+					setStoreInStorage(storeNo, storeName);
 					location.href="Store.do?storeNo="+storeNo;
 				}
 			}
 		}
 	}
 
+
 	function moreStore(orderSido) {
-		var pagetest = $("#storeListDiv ul").length;
-		var startNum = $("#storeListDiv ul").length / 4;	// 현재 보여지는 게시글의 수
+		var startNum = $("#storeListDiv ul").length / 4;	// 나누기해서 짝수로 만듦
  		var orderSido = orderSido;
-		var test = [];
-		console.log("pagetest 갯수 : " + pagetest );
+
+
+ 		
+			console.log("storeLiveDiv길이 " + startNum);
 		$.ajax({
 			type : "post",
 			async : false,
 			url : "./moreStore.do",
-			// data : {orderSido: orderSido},
 			data : {"orderSido":orderSido,"startNum":startNum},
 			dataType : "text",
 			success : function(data,textStatus){
-//			alert("moreStore ajax 받은 데이터 : " + data + " " + orderSido);
-			 alert("준비중 입니다");
-				console.log("data내용 : " + data);
-				console.log ("startNum갯수 : " + startNum);
-						var show="";
-						test = data;
-						console.log("test 값 :  " + test);
-						
-						console.log("data길이 : " + data.length);
-						console.log("show 길이 : " + show.length);
-						console.log ("전달받은 startNum : " + startNum);
-						var dataleg = data.length;
-						console.log(dataleg);
-				//	show += "<c:forEach var='bean' items='${storelist}'>";
-				//		for (var i=0; i<dataleg; i++) {
-						show += " <ul>";
+			var MoreStoreData = JSON.parse(data);
+			var show="";
+			alert("아직 상태가 안좋습니다");
+			var jsonlength = MoreStoreData.length;
+		
+			if (MoreStoreData != null) {
+				for (var i=0; i<MoreStoreData.length; i++) {
+					console.log("json길이 " + MoreStoreData.length);
+						show += " <ul id='unlength'>";
 						show += " <li id='appendtest' class='litest'>";
-						show += "<a onclick='addStoreNoToStorage(${bean.storeNo})'>";
-						show += "<font color='purple' size='5'>${bean.name}</font> <br> ";
-						show += "스토어 번호 : ${bean.storeNo} <br>";
-						show += "<img src='upload/store/${bean.image}'> <br>";
-						show += "  종류 : ${bean.category } <br> ";
-						show += "  운영시간 : ${bean.storeHours} <br> ";
+						show += "<a onclick='addStoreNoToStorage(" + MoreStoreData[i].storeNo +")'>";
+						show += "<font color='purple' size='5'>" + MoreStoreData[i].name + "</font> <br> ";
+						show += "스토어 번호 : " + MoreStoreData[i].storeNo + " <br>";
+						show += "<img src='upload/store/" + MoreStoreData[i].image +  "'> <br>";
+						show += "  종류 : " + MoreStoreData[i].category + " <br> ";
+						show += "  운영시간 : " + MoreStoreData[i].storeHours + "  <br> ";
 						show += "</a>";
 						show += "</li>";
-						show += " </ul>";
-				// 		show += "</c:forEach>"; 
-				// 		
-						// $("#storeListDiv").append(show); 
-							$("#storeListDiv").append(show);
-					//	}
+						show += " </ul>"; 
+						$("#storeListDiv").append(show);
 
+						
+						// console.log("가져온 가게 갯수 : " + MoreStoreData[i].length);
+				}
+
+	
+						}
+						
+						if(MoreStoreData.length==0){
+							alert("더 이상 가게가 없습니다.");
+						
+						}			
+						
 			}, 
 			error:function(data,textStatus){
 				alert("에러발생");
@@ -307,6 +312,7 @@ height: 80px;
 
 	
 	}
+
 	
 /* 	function SearchmoreStore(orderSido, search) { // 검색후 ajax 함수 실행
 		 var orderSido = orderSido;
@@ -398,9 +404,9 @@ height: 80px;
 
 	<!-- -------------------------------------------------------------------------- -->
 				<c:forEach var="bean" items="${storelist }">
-					<ul>
+					<ul id="unlength">
 						<li id="ajaxtest" class="litest">
-								<a onclick="addStoreNoToStorage('${bean.storeNo}')"> 
+								<a onclick="addStoreNoToStorage('${bean.storeNo}','${bean.name}')"> 
 								<font color="purple" size="5"><c:out value="${bean.name}" /> </font>
 								<br> <c:out value="스토어 번호 : ${bean.storeNo}" /> <br>
 								<img src="upload/store/${bean.image}"> <br> <%-- <c:out value="✆전화번호 : 객체에 아직 안가져옴" /> <br> --%>
@@ -414,10 +420,7 @@ height: 80px;
 		
 
 				</c:forEach>
-				
-<!-- 				<ul class ="litest"> -->
-<!-- 					<li  id="appendtest">여기에 넣을거임</li> -->
-<!-- 				</ul> -->
+
 	<!-- -------------------------------------------------------------------------- -->
 				
 	<!-- 검색결과로 나온 스토어 표시---------------------------------------------------------- -->
@@ -468,7 +471,7 @@ height: 80px;
 		<c:choose>
 
 		<c:when test="${length >= 0 && searchcontent eq null}"> 	
-			<div class="moreTab"  onclick="moreStore('${orderSido}');">
+			<div class="moreTab"  onclick="moreStore('${orderSido}'); ">
 			<a class="more">더보기</a>
 			</div>	
 		</c:when>
