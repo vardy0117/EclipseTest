@@ -30,6 +30,7 @@ import net.customer.action.CustomerJoinAction;
 import net.customer.action.CustomerLoginAction;
 import net.customer.action.CustomerLogoutAction;
 import net.customer.action.CustomerModifyAction;
+import net.customer.action.CustomerReviewAction;
 import net.customer.db.CustomerBean;
 import net.customer.db.CustomerDAO;
 import net.manage.action.updateAction;
@@ -42,6 +43,7 @@ import net.order.action.GetStoreReviewAction;
 import net.order.action.OrderAction;
 import net.orderList.db.OrderListBean;
 import net.review.db.ReviewBean;
+import net.review.db.ReviewDAO;
 import net.store.action.StoreAction;
 import net.store.db.StoreBean;
 import net.store.db.StoreDAO;
@@ -719,8 +721,6 @@ public class FrontController extends HttpServlet {
 			}
 		
 		}
-		
-		
 
 		if(command.equals("moreStore.do")) { // store ajax 
 				AjaxAction ajax = new AjaxAction();
@@ -735,6 +735,21 @@ public class FrontController extends HttpServlet {
 				
 				PrintWriter out = response.getWriter();
 			}
+		
+		if(command.equals("MyPage.do")){
+			forward = new ActionForward();
+			forward.setView("index.jsp?center=member/myPage.jsp");
+			forward.execute(request, response);
+		}
+		
+		// MyPage에서 나의 리뷰 클릭 시
+		if(command.equals("MyReview.do")){
+			// 세션에 있는 사용자번호
+			String customerNo = (String)request.getSession().getAttribute("customerNo");
+			CustomerReviewAction action = new CustomerReviewAction();
+			action.execute(request, response, customerNo);
+			
+		}
 		
 
 }

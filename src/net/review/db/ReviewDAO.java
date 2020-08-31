@@ -165,5 +165,9 @@ public class ReviewDAO {
 	return review;
 	   
    }
-   
+
+	public void getMyReview(String customerNo) {
+		System.out.println("DAO까지 이동 성공 !!");
+	}
+	   
 }

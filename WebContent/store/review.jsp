@@ -230,7 +230,8 @@
 							$("div").remove(".moreTab");
 						}
 					}						
-				},error:function(data,textStatus){
+				}
+				,error:function(data,textStatus){
 					alert("moreReview에러발생 : "+textStatus)
 				}
 				
