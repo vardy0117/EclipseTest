@@ -724,6 +724,8 @@ public class FrontController extends HttpServlet {
 
 		if(command.equals("moreStore.do")) { // store ajax 
 				AjaxAction ajax = new AjaxAction();
+				// int storeNo = Integer.parseInt(request.getParameter("storeNo"));   //글번호
+		
 				List<StoreBean> result= new ArrayList<StoreBean>();
 				try {
 					 result = ajax.moreStoreAction(request, response);

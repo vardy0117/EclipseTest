@@ -69,10 +69,14 @@ public class AjaxAction {
 
 		request.setCharacterEncoding("UTF-8");
 		List<StoreBean> result = new ArrayList<StoreBean>();
-
-		StoreDAO store = new StoreDAO();
-			result = store.GetStore((String) request.getSession().getAttribute("orderSido"));
+		String orderSido = request.getParameter("orderSido");
+		 int startNum = Integer.parseInt(request.getParameter("startNum")); //현재 보여지는 리뷰 수
+		System.out.println("Ajax Action : more store.do에서 받은 파라메터 값 orderSido :" +orderSido);
+		System.out.println("Ajax Action : more store.do에서 받은 파라메터 값 startNum : " +startNum);
 		
+		StoreDAO store = new StoreDAO();
+			result = store.UserGetMoreStore((String) request.getSession().getAttribute("orderSido"),startNum);
+			// 시도는 스트링으로 받고 limit검색용은 int로 받음
 		return result;
 	} // method
 }

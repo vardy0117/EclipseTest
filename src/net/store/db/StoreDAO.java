@@ -138,13 +138,15 @@ public class StoreDAO {
 	} // method
 	
 	/***********************************************************************/
-	public List<StoreBean> GetStore(String sido){ // �ㅽ���� ��蹂� 媛��몄�ㅺ린
+	public List<StoreBean> GetStore(String sido){ // 평상시 스토어 받아오는 함수
+												 // more버튼 눌러서 가져오는 함수는 별도로 밑에 있음
+		
 		List<StoreBean> storelist = new ArrayList<StoreBean>();
 		
 		try {
 			 con = getConnection();
 			 
-			 sql = "select * from store where sido=?";
+			 sql = "select * from store where sido=? limit 0,4"; // 초반부터 4개씩
 			 
 			 pstmt = con.prepareStatement(sql);
 			 
@@ -368,6 +370,52 @@ public List<StoreBean> UserGetStore(String sido, String search){
 		
 	} catch (Exception e) {
 		System.out.println("User GetStore Error : " + e);
+	} finally {
+		resourceClose();
+	}
+	
+	
+	
+	return storelist;
+	
+}
+
+
+/*****************************************************************/
+public List<StoreBean> UserGetMoreStore(String sido, int limit){ // 스토어에서 more버튼 눌렀을때
+	List<StoreBean> storelist = new ArrayList<StoreBean>();
+	
+	try {
+		 con = getConnection();
+		 
+		 sql = "select * from store where sido = ? limit ?,4";
+		 
+		 pstmt = con.prepareStatement(sql);
+		 
+		 pstmt.setString(1, sido);
+		 pstmt.setInt(2, limit);
+		 System.out.println("시도 스토어 받은값 : DAO (sido) : " + sido);
+		 System.out.println("UserGetMoreStore limit값 : " + limit);
+		 rs = pstmt.executeQuery();
+		 
+		 while(rs.next()){
+			 StoreBean mBean = new StoreBean();
+				 mBean.setStoreNo(rs.getString("storeNo"));
+				 mBean.setCeoNo(rs.getString("ceoNo"));
+				 mBean.setName(rs.getString("name"));
+				 mBean.setRoadAddress(rs.getString("roadAddress"));
+				 mBean.setCategory(rs.getString("category"));
+				 mBean.setStoreHours(rs.getString("storeHours"));
+				 mBean.setSido(rs.getString("sido"));
+				 mBean.setImage(rs.getString("image"));
+				 mBean.setMessage(rs.getString("message"));
+				 System.out.println("Get 스토어 호출");
+				 
+				 storelist.add(mBean);
+		 }
+		
+	} catch (Exception e) {
+		System.out.println("UserGetMoreStore 에러발생 : "+e);
 	} finally {
 		resourceClose();
 	}

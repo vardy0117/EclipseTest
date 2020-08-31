@@ -253,23 +253,36 @@ height: 80px;
 	}
 
 	function moreStore(orderSido) {
-		 var orderSido = orderSido;
-		var storeNo;
+		var pagetest = $("#storeListDiv ul").length;
+		var startNum = $("#storeListDiv ul").length / 4;	// 현재 보여지는 게시글의 수
+ 		var orderSido = orderSido;
+		var test = [];
+		console.log("pagetest 갯수 : " + pagetest );
 		$.ajax({
 			type : "post",
 			async : false,
 			url : "./moreStore.do",
-			data : {orderSido: orderSido},
+			// data : {orderSido: orderSido},
+			data : {"orderSido":orderSido,"startNum":startNum},
 			dataType : "text",
 			success : function(data,textStatus){
 //			alert("moreStore ajax 받은 데이터 : " + data + " " + orderSido);
 			 alert("준비중 입니다");
-				
-
+				console.log("data내용 : " + data);
+				console.log ("startNum갯수 : " + startNum);
 						var show="";
-						show += "<c:forEach var='bean' items='${storelist}'>";
+						test = data;
+						console.log("test 값 :  " + test);
+						
+						console.log("data길이 : " + data.length);
+						console.log("show 길이 : " + show.length);
+						console.log ("전달받은 startNum : " + startNum);
+						var dataleg = data.length;
+						console.log(dataleg);
+				//	show += "<c:forEach var='bean' items='${storelist}'>";
+				//		for (var i=0; i<dataleg; i++) {
 						show += " <ul>";
-						show += " <li id='ajaxtest' class='litest'>";
+						show += " <li id='appendtest' class='litest'>";
 						show += "<a onclick='addStoreNoToStorage(${bean.storeNo})'>";
 						show += "<font color='purple' size='5'>${bean.name}</font> <br> ";
 						show += "스토어 번호 : ${bean.storeNo} <br>";
@@ -279,12 +292,15 @@ height: 80px;
 						show += "</a>";
 						show += "</li>";
 						show += " </ul>";
-						show += "</c:forEach>";
-					//	console.log(show);
-						$("#storeListDiv").append(show);
+				// 		show += "</c:forEach>"; 
+				// 		
+						// $("#storeListDiv").append(show); 
+							$("#storeListDiv").append(show);
+					//	}
+
 			}, 
 			error:function(data,textStatus){
-		alert("에러발생");
+				alert("에러발생");
 			}
 		});
 		
@@ -398,6 +414,10 @@ height: 80px;
 		
 
 				</c:forEach>
+				
+<!-- 				<ul class ="litest"> -->
+<!-- 					<li  id="appendtest">여기에 넣을거임</li> -->
+<!-- 				</ul> -->
 	<!-- -------------------------------------------------------------------------- -->
 				
 	<!-- 검색결과로 나온 스토어 표시---------------------------------------------------------- -->
