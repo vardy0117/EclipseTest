@@ -11,13 +11,20 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
 <body>
 
 <c:set value="${requestScope.storeNo}" var="storeNo"/>
 
 <style>
-	#reviewT , #appendT{
+	#reviewT{
+		border: 1px solid gray;
+		padding: 0;
+		margin: 0 auto;
+		width: 996px;
+	}
+	#appendT{
 		border: 1px solid gray;
 		padding: 0;
 		margin: 0 auto;
@@ -104,8 +111,10 @@
 	
 	<!-- 등록된 리뷰가 존재할때 -->
 	<c:if test="${requestScope.reviewList ne '[]' }">
-		<c:set value="${requestScope.reviewList}" var="rvl"/>
-			${fn:length(rvl)}개의 리뷰가 있습니다.
+	
+		<!-- ajax때문에 제대로 안나옴 ;;;;  -->	
+		<%-- <c:set value="${requestScope.reviewList}" var="rvl"/>
+			${fn:length(rvl)}개의 리뷰가 있습니다. --%>
 			
 			
 		<c:forEach items="${requestScope.reviewList}" var="rBean" varStatus="status">
@@ -160,11 +169,13 @@
 					</tr>
 				
 				</table>
-				<table id="appendT">
-					
-				</table>
-			</div>
+				
 		</c:forEach>
+		<div id="appendDiv">
+			<!-- 비동기방식으로 리뷰가 들어갈 자리 -->		
+		</div>
+		
+		</div>
 		<div class="moreTab" onclick="moreReview(${requestScope.storeNo})">
 			<a class="more">더보기</a>
 		</div>
@@ -176,12 +187,11 @@
 
 	<script type="text/javascript">
 	
-	
 		function moreReview(storeNo) {
  			var startNum = $("#table tr").length / 3;	// 현재 보여지는 게시글의 수
  			var storeNo = storeNo	// 가게고유번호
 			
-			
+ 			
 			$.ajax({
 				type : "post",
 				async : false,
@@ -189,13 +199,34 @@
 				data : {"storeNo":storeNo,"startNum":startNum},
 				dataType : "text",
 				success : function(data,textStatus){
-					//var jsonData = JSON.parse('[{"image":"salmon.jpg","storeNo":"100","orderNo":"1","contents":"맛있어요","reviewNo":"1","comment":null,"customerNo":"22","points":"2"},{"image":"salmon.jpg","storeNo":"100","orderNo":"2","contents":"정말맛이.......","reviewNo":"2","comment":null,"customerNo":"22","points":"2"}]');
 					var jsonData = JSON.parse(data);
-					if(jsonData!=null){
+					if(jsonData != null){
+						var stars;
 						for(var i = 0; i<jsonData.length; i++){
-							$("#appendT").append("<tr><td>"+jsonData[i].date+"</td></tr>");
-							$("#appendT").append("<tr><td>"+jsonData[i].contents+"</td></tr>");
-							$("#appendT").append("<tr><td>"+jsonData[i].nickName+"</td></tr>");
+							if(jsonData[i].points==0){
+								stars = "☆☆☆☆☆";
+							}else if(jsonData[i].points==1){
+								stars = "★☆☆☆☆"
+							}else if(jsonData[i].points==2){
+								stars = "★★☆☆☆"
+							}else if(jsonData[i].points==3){
+								stars = "★★★☆☆"
+							}else if(jsonData[i].points==4){
+								stars = "★★★★☆"
+							}else if(jsonData[i].points==5){
+								stars = "★★★★★"
+							}
+							
+							
+							$("#appendDiv").append("<table id='appendT'><tr><td><span class='nickname'>테스트 님</span>&nbsp"+
+								 "<span class='date'>"+jsonData[i].date+"</span>"+
+								 "<br><i id='star'>"+stars+"</i></td></tr>"+
+								 "<tr><td><center><img src='./images/"+jsonData[i].image+"' style='width: 900px; height: 400px;'></center></td></tr>"+
+								 "<tr><td><span id='content'>"+jsonData[i].contents+"</span></td></tr></table>");
+						}
+						if(jsonData.length==0){
+							alert("남은 리뷰가 없습니다.");
+							$("div").remove(".moreTab");
 						}
 					}						
 				}, 
