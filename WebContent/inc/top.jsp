@@ -82,7 +82,8 @@
 				<div id="loginAndJoin">
 					${sessionScope.nickname} 회원님 어서 오세요! | 
 					<a onclick = "logOut()" style="cursor:pointer;">logout</a> |	
-					<a href="./CustomerModifyIntro.do">회원수정</a>
+					<!-- <a href="./CustomerModifyIntro.do">회원수정</a> | -->
+					<a href="./MyPage.do">MyPage</a>
 				</div>
 			</c:when>
 		</c:choose>	

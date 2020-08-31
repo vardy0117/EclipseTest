@@ -31,6 +31,9 @@ import net.customer.action.CustomerJoinAction;
 import net.customer.action.CustomerLoginAction;
 import net.customer.action.CustomerLogoutAction;
 import net.customer.action.CustomerModifyAction;
+
+import net.customer.action.CustomerReviewAction;
+
 import net.customer.action.GetCouponAction;
 import net.customer.db.CustomerBean;
 import net.customer.db.CustomerDAO;
@@ -44,7 +47,11 @@ import net.order.action.GetStoreReviewAction;
 import net.order.action.OrderAction;
 import net.orderList.db.OrderListBean;
 import net.review.db.ReviewBean;
+
+import net.review.db.ReviewDAO;
+
 import net.store.action.GetStoreMoreAction;
+
 import net.store.action.StoreAction;
 import net.store.db.StoreBean;
 import net.store.db.StoreDAO;
@@ -707,6 +714,18 @@ public class FrontController extends HttpServlet {
 			}
 		
 		}
+
+
+		if(command.equals("moreStore.do")) { // store ajax 
+				AjaxAction ajax = new AjaxAction();
+				// int storeNo = Integer.parseInt(request.getParameter("storeNo"));   //글번호
+		
+				List<StoreBean> result= new ArrayList<StoreBean>();
+				try {
+					 result = ajax.moreStoreAction(request, response);
+				} catch (Exception e) {
+						e.printStackTrace();
+
 		
 		
 		// 일반 스토어 모드에서 더보기란을 클릭했을때 ajax로 이동되는 컨트롤러
@@ -724,8 +743,24 @@ public class FrontController extends HttpServlet {
 					response.setContentType("text/html;charset=UTF-8"); 
 					 PrintWriter out = response.getWriter();
 					 out.print(jsonArr); // ajax에 data로 뿌려주는 역할, 없으면 null나옴
+
 				}
 				
+		
+		if(command.equals("MyPage.do")){
+			forward = new ActionForward();
+			forward.setView("index.jsp?center=member/myPage.jsp");
+			forward.execute(request, response);
+		}
+		
+		// MyPage에서 나의 리뷰 클릭 시
+		if(command.equals("MyReview.do")){
+			// 세션에 있는 사용자번호
+			String customerNo = (String)request.getSession().getAttribute("customerNo");
+			CustomerReviewAction action = new CustomerReviewAction();
+			action.execute(request, response, customerNo);
+			
+		}
 		
 
 }
