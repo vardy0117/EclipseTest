@@ -15,6 +15,8 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import org.apache.catalina.Store;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import com.sun.javafx.fxml.BeanAdapter;
 import com.sun.org.apache.xml.internal.security.keys.storage.StorageResolverException;
@@ -335,7 +337,7 @@ public int getStoreCount(String ceoNo) {
 
 
 
-public List<StoreBean> UserGetStore(String sido, String search){
+public List<StoreBean> UserGetStore(String sido, String search){ // 검색용
 	List<StoreBean> storelist = new ArrayList<StoreBean>();
 	
 	try {
@@ -382,8 +384,10 @@ public List<StoreBean> UserGetStore(String sido, String search){
 
 
 /*****************************************************************/
-public List<StoreBean> UserGetMoreStore(String sido, int limit){ // 스토어에서 more버튼 눌렀을때
-	List<StoreBean> storelist = new ArrayList<StoreBean>();
+public JSONArray GetMoreStore(String sido, int limit){ // 스토어에서 more버튼 눌렀을때
+	 JSONArray StoreMoreArr = new JSONArray();
+	 JSONObject StoreMoreJsonObj;
+// 	List<StoreBean> storelist = new ArrayList<StoreBean>();
 	
 	try {
 		 con = getConnection();
@@ -394,35 +398,38 @@ public List<StoreBean> UserGetMoreStore(String sido, int limit){ // 스토어에
 		 
 		 pstmt.setString(1, sido);
 		 pstmt.setInt(2, limit);
-		 System.out.println("시도 스토어 받은값 : DAO (sido) : " + sido);
-		 System.out.println("UserGetMoreStore limit값 : " + limit);
+		 
+		 System.out.println("GetMoreStore sido값 : " + sido);
+		 System.out.println("GetMoreStore limit값 : " + limit);
 		 rs = pstmt.executeQuery();
 		 
 		 while(rs.next()){
-			 StoreBean mBean = new StoreBean();
-				 mBean.setStoreNo(rs.getString("storeNo"));
-				 mBean.setCeoNo(rs.getString("ceoNo"));
-				 mBean.setName(rs.getString("name"));
-				 mBean.setRoadAddress(rs.getString("roadAddress"));
-				 mBean.setCategory(rs.getString("category"));
-				 mBean.setStoreHours(rs.getString("storeHours"));
-				 mBean.setSido(rs.getString("sido"));
-				 mBean.setImage(rs.getString("image"));
-				 mBean.setMessage(rs.getString("message"));
-				 System.out.println("Get 스토어 호출");
+			 StoreMoreJsonObj = new JSONObject();
+			 StoreMoreJsonObj.put("storeNo", rs.getString(1));
+			 StoreMoreJsonObj.put("ceoNo", rs.getString(2));
+			 StoreMoreJsonObj.put("name", rs.getString(3));
+			StoreMoreJsonObj.put("roadAddress", rs.getString("roadAddress"));
+			 StoreMoreJsonObj.put("category", rs.getString("category"));
+			 StoreMoreJsonObj.put("storeHours", rs.getString("storeHours"));
+			 StoreMoreJsonObj.put("sido",rs.getString("sido"));
+			 StoreMoreJsonObj.put("image", rs.getString("image"));
+		     StoreMoreJsonObj.put("message", rs.getString("message"));
+			System.out.println("GetMoreStore Json스토어 호출");
 				 
-				 storelist.add(mBean);
+			StoreMoreArr.add(StoreMoreJsonObj);
+			System.out.println("Json Object 내용 : " + StoreMoreJsonObj);
+		
 		 }
 		
 	} catch (Exception e) {
-		System.out.println("UserGetMoreStore 에러발생 : "+e);
+		System.out.println("GetMoreStore 에러발생 : " + e);
 	} finally {
 		resourceClose();
 	}
 	
 	
 	
-	return storelist;
+	return StoreMoreArr;
 	
 }
 	

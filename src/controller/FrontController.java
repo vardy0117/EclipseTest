@@ -42,6 +42,7 @@ import net.order.action.GetStoreReviewAction;
 import net.order.action.OrderAction;
 import net.orderList.db.OrderListBean;
 import net.review.db.ReviewBean;
+import net.store.action.GetStoreMoreAction;
 import net.store.action.StoreAction;
 import net.store.db.StoreBean;
 import net.store.db.StoreDAO;
@@ -652,37 +653,7 @@ public class FrontController extends HttpServlet {
 			forward.execute(request, response);
 		}
 		
-		
-	/*	if(command.equals("UserSearchStore.do")) { // 스토어 사용자 검색
-				CustomerLoginAction action = new CustomerLoginAction() ;
-				boolean result = false;
-				try {
-					 forward = new ActionForward();
-					 result = action.execute(request, response);
-					  if(result){
-					//	 forward.setRedirect(true);
-					//	 forward.setView("index.jsp"); // 사장님 전용페이지가 없어서 일단 여기로 했습니당
-						//  System.out.println("사장님 로그인 리다이렉트 작동 " + forward.getView());
-					 } else {
-						 response.setContentType("text/html;charset=UTF-8"); 
-						 PrintWriter out = response.getWriter();
-						 out.println("<script>"); 
-						 out.println("alert('아직 준비중입니다');"); 
-						 out.println("history.back();");
-						// forward.setView("index.jsp?center=member/customerLogin.jsp");
-						 out.println("</script>");
-					 }
-
-					forward.execute(request, response);
-					
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}		*/
-		
-		
-		
-		
+			
 		if(command.equals("UserSearchStore.do")) {
 			StoreDAO store = new StoreDAO();
 
@@ -721,20 +692,23 @@ public class FrontController extends HttpServlet {
 		}
 		
 		
-
-		if(command.equals("moreStore.do")) { // store ajax 
-				AjaxAction ajax = new AjaxAction();
-				// int storeNo = Integer.parseInt(request.getParameter("storeNo"));   //글번호
-		
-				List<StoreBean> result= new ArrayList<StoreBean>();
-				try {
-					 result = ajax.moreStoreAction(request, response);
-				} catch (Exception e) {
-						e.printStackTrace();
+		// 일반 스토어 모드에서 더보기란을 클릭했을때 ajax로 이동되는 컨트롤러
+				if(command.equals("moreStore.do")){
+					String orderSido = request.getParameter("orderSido");
+					 int startNum = Integer.parseInt(request.getParameter("startNum")); //현재 보여지는 글 
+					
+					 System.out.println("FrontController moreStore.do 받은 Sidi : " + orderSido);
+					 System.out.println("FrontController moreStore.do 받은 Sidi : " + startNum);
+					 GetStoreMoreAction action = new GetStoreMoreAction();
+					action.GetStoreMore(request, response, orderSido, startNum);
+					JSONArray jsonArr = (JSONArray) request.getAttribute("StoreArr");
+					System.out.println("Front 컨트롤러 받은 Json : " + jsonArr);
+					
+					response.setContentType("text/html;charset=UTF-8"); 
+					 PrintWriter out = response.getWriter();
+					 out.print(jsonArr); // ajax에 data로 뿌려주는 역할, 없으면 null나옴
 				}
 				
-				PrintWriter out = response.getWriter();
-			}
 		
 
 }
