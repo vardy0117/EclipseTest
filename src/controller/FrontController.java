@@ -63,11 +63,12 @@ public class FrontController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doProcesss(request,response);
 	}
+	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doProcesss(request,response);
 	}
-	
+
 	protected void doProcesss(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String requestURI = request.getRequestURI();
 		String contextPath = request.getContextPath();
@@ -561,7 +562,7 @@ public class FrontController extends HttpServlet {
 			int storeNo = storeAction.insertStore(request, response, multi);
 			
 			MenuAction menuAction = new MenuAction();
-			menuAction.insertStore(request, response, multi, storeNo);
+			menuAction.insertStore(request, response, multi, storeNo, null);
 			
 			forward.setRedirect(true);
 			forward.setView("manageStore.do");
@@ -662,6 +663,7 @@ public class FrontController extends HttpServlet {
 			out.print(jsonArr);
 		}
 		
+		///updateMenu
 		if(command.equals("updateMenu.do")){
 			
 			request.setCharacterEncoding("utf-8");
@@ -715,6 +717,7 @@ public class FrontController extends HttpServlet {
 		
 		}
 
+
 		// 일반 스토어 모드에서 더보기란을 클릭했을때 ajax로 이동되는 컨트롤러
 				if(command.equals("moreStore.do")){
 					String orderSido = request.getParameter("orderSido");
@@ -732,7 +735,7 @@ public class FrontController extends HttpServlet {
 					 out.print(jsonArr); // ajax에 data로 뿌려주는 역할, 없으면 null나옴
 
 				}
-				
+		//		
 		
 		if(command.equals("MyPage.do")){
 			forward = new ActionForward();
@@ -748,11 +751,62 @@ public class FrontController extends HttpServlet {
 			action.execute(request, response, customerNo);
 			
 		}
+	
+		//deleteMenu
+		if(command.equals("deleteMenu.do")){
+				
+			request.setCharacterEncoding("utf-8");
+			
+			int menuNo = Integer.parseInt(request.getParameter("menuNo"));
+			
+			MenuDAO mdao = new  MenuDAO();
+			mdao.deleteMenu(menuNo);
+		
+			forward = new ActionForward();
+						
+			forward.setView("ceoStore.do?storeNo="+request.getParameter("storeNo"));
+			forward.setRedirect(true);
+			forward.execute(request, response);
+		}
+		
+		//insertMenu
+		if(command.equals("addMenu.do")){
+			request.setCharacterEncoding("utf-8");
+			String storeNo= request.getParameter("storeNo");
+			
+			forward = new ActionForward();
+						
+			forward.setView("ceoIndex.jsp?center=ceoStore/addMenu.jsp");
+			forward.execute(request, response);
+		}
 		
 
-	
+		if(command.equals("addMenuAction.do")){
+			request.setCharacterEncoding("utf-8");
+			
+			String realFolder = getServletContext().getRealPath("/upload/store");
+			int max = 1000 * 1024 * 1024;
+			MultipartRequest multi = new MultipartRequest(request, realFolder, max, "utf-8", new DefaultFileRenamePolicy());
+			
+			MenuAction menuAction = new MenuAction();
+			menuAction.insertMenu(request, response, multi, Integer.parseInt(multi.getParameter("storeNo")));
+			
+			forward = new ActionForward();
+			forward.setView("ceoStore.do?storeNo="+multi.getParameter("storeNo"));
+			forward.setRedirect(true);
+			forward.execute(request, response);
+			
+			
+		}
+		
+		
+
+
+
+
 		}
 				
 }
 		
 	
+
