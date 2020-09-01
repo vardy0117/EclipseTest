@@ -140,7 +140,6 @@
 		var totalPrice = 0;
 		
 		if(cart=="" || cart == null){
-			
 			$("#clearCartBtn").css("display","none");
 			$(".emptyCart").css("display","block");
 			$(".cartRow").css("display","none");
