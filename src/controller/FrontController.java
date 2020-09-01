@@ -673,11 +673,25 @@ public class FrontController extends HttpServlet {
 			request.setAttribute("menuBean",mdao.getMenu(Integer.parseInt(menuNo)));
 			
 			forward = new ActionForward();
-			forward.setView("/ceoStore/updateMenu.jsp");
+			forward.setView("ceoIndex.jsp?center=ceoStore/updateMenu.jsp");
 			forward.execute(request, response);
 		}
 		
 			
+
+		if(command.equals("updateMenuAction.do")) {
+				
+			String realFolder = getServletContext().getRealPath("/upload/store");
+			int max = 1000 * 1024 * 1024;
+				
+			MultipartRequest multi = new MultipartRequest(request, realFolder, max, "utf-8", new DefaultFileRenamePolicy());
+			MenuAction menuAction = new MenuAction();
+			menuAction.updateMenu(request, response, multi);		
+			
+			forward = new ActionForward();
+			forward.setView("/ceoStore.do?storeNo="+multi.getParameter("storeNo"));
+			forward.execute(request, response);
+		}
 		if(command.equals("UserSearchStore.do")) {
 			StoreDAO store = new StoreDAO();
 
@@ -694,18 +708,17 @@ public class FrontController extends HttpServlet {
 			
 			String search = request.getParameter("search"); // searchstore.jsp 에서 name 값
 			if(search != "") {
+				List<StoreBean> UserSearchStorelist = store.UserGetStore((String) request.getSession().getAttribute("orderSido"),search);
 			
-			List<StoreBean> UserSearchStorelist = store.UserGetStore((String) request.getSession().getAttribute("orderSido"),search);
 			
-			
-			 request.setAttribute("UserSearchStorelist", UserSearchStorelist);
+				request.setAttribute("UserSearchStorelist", UserSearchStorelist);
 
-			// store.GetStore((String) request.getSession().getAttribute("orderSido"));
-			System.out.println("UserSearchStore 프론트 컨트롤러 -> 값가져오기 테스트 " + UserSearchStorelist.toString());
-			System.out.println("주소 시도  : " + request.getSession().getAttribute("orderSido"));
-			forward = new ActionForward();
-			forward.setView("index.jsp?center=store/searchStore.jsp");
-			forward.execute(request, response);
+				// store.GetStore((String) request.getSession().getAttribute("orderSido"));
+				System.out.println("UserSearchStore 프론트 컨트롤러 -> 값가져오기 테스트 " + UserSearchStorelist.toString());
+				System.out.println("주소 시도  : " + request.getSession().getAttribute("orderSido"));
+				forward = new ActionForward();
+				forward.setView("index.jsp?center=store/searchStore.jsp");
+				forward.execute(request, response);
 			}else{
 				response.setContentType("text/html;charset=UTF-8"); 
 				PrintWriter out = response.getWriter();
@@ -714,7 +727,6 @@ public class FrontController extends HttpServlet {
 			}
 		
 		}
-
 
 
 		/*if(command.equals("moreStore.do")) { // store ajax 

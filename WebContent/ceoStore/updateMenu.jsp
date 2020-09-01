@@ -7,38 +7,53 @@
 <title>Insert title here</title>
 </head>
 <body>
-	${menuBean.image }
+	
 	${menuBean.name }
 	${menuBean.price }
 	${menuBean.category }
 	${menuBean.storeNo }
 	
 	<h1 style="text-align: center;">메뉴 수정</h1>
-			<form action="updateMenu.do" method="post" enctype="multipart/form-data">
-				<table>
+
+			<form name="fr" action="updateMenuAction.do" method="post" enctype="multipart/form-data">
+				<table  id="updatemenu">
 					<tr>
 						<th>메뉴사진</th>
-						<td><input type="file" value="${cBean.email }" ></td>
+						<td><input type="file" value="${cBean.image }" onchange="document.getElementById('imageflag').value = 'true';" name="image"></td>
 					</tr>
 					<tr>
-						<th>가게명</th>
-						<td><input  type="text" value="${menuBean.name }"></td>
+						<th>음식명</th>
+						<td><input  type="text" value="${menuBean.name }" name="name"></td>
 					</tr>
 					<tr>
 						<th>가격</th>
-						<td><input type="text" value="${menuBean.price }"></td>
+						<td><input type="text" value="${menuBean.price }" name="price"></td>
 					</tr>
 					<tr>
 						<th>카테고리</th>
-						<td><input type="text" value="${menuBean.category }"></td>
+						<td id="category2">
+							<select class="select" style="width:130px;" name="category">
+								<option value="세트 메뉴">세트 메뉴</option>
+								<option value="주 메뉴">주 메뉴</option>
+								<option value="사이드 메뉴">사이드 메뉴</option>
+								<option value="음료/주류">음료/주류</option>
+							</select>  
+						</td>
+						
 					</tr>
 					<tr>
 						<th colspan="2">
 							<br>
+							
+							<input type="hidden" value="${menuBean.storeNo }" name="storeNo" >
+							<input type="hidden" value="${menuBean.menuNo }" name="menuNo">
+							<input type="hidden" value="false" id="imageflag" name="imageflag">
+							<input type="hidden" value="${menuBean.image }" name="before_image">
 							<input class="btn" type="submit" value="수정하기">
+							<!--  onclick="setParentText()"> -->
 						</th>
 					</tr>
-					<input type="hidden" value="${menuBean.storeNo }" >
+					
  				</table>
 			</form>
 	
@@ -46,16 +61,10 @@
 	
 </body>
 
-<script type="text/javascript">
-	
-	function getParentText(){
-    	document.getElementById("cInput").value = opener.document.getElementById("pInput").value;
-		}
-
-
-
-
+<script>
+	document.fr.category.value = '${menuBean.category}';
 </script>
+
 
 
 </html>

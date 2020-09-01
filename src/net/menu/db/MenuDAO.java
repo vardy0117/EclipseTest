@@ -158,6 +158,34 @@ public class MenuDAO {
 		
 		return mBean;
 	}
+
+	
+	public void updateMenu(MenuBean mbean) {
+		
+		try {
+			con = getConnection();
+			
+			sql = "update menu set name=?, category=?, price=?, image=? where menuNo=?";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setString(1, mbean.getName());
+			pstmt.setString(2, mbean.getCategory());
+			pstmt.setInt(3, mbean.getPrice());
+			pstmt.setString(4, mbean.getImage());
+			pstmt.setString(5, mbean.getMenuNo());
+			
+			System.out.println(pstmt.executeUpdate());
+			//pstmt.executeUpdate();
+			
+			System.out.println("menudao updatemenu 내부");
+		} catch (Exception e) {
+			System.out.println("MenuDAO updateMenu 오류"+e);
+		}finally {
+			resourceClose();
+		}
+		
+	}
 	
 
 	
