@@ -15,6 +15,8 @@ import net.menu.db.MenuDAO;
 
 public class MenuAction {
 
+	
+
 	public void insertStore(HttpServletRequest request, HttpServletResponse response, MultipartRequest multi,int storeNo) {
 		
 		int menuCnt = Integer.parseInt(multi.getParameter("menuCnt"));
@@ -48,22 +50,33 @@ public class MenuAction {
 			menuBean.setPrice(menu_price);
 			menuBean.setStoreNo(Integer.toString(storeNo));
 			
-			
 			menuList.add(menuBean);
 		}
 	
-		
-		
 		MenuDAO menuDAO = new MenuDAO();
 		menuDAO.insertMenus(menuList);
 		
-		
-		
-		
-		
 	}
 
-	
+		public void updateMenu(HttpServletRequest request, HttpServletResponse response,MultipartRequest multi) {
+			
+			MenuBean mbean = new MenuBean();
+			MenuDAO mdao = new MenuDAO();
+			
+			if(multi.getParameter("imageflag") == "true") {
+				mbean.setImage(multi.getFilesystemName("image"));
+				
+				
+			} else {
+				mbean.setImage( mdao.getMenu( Integer.parseInt(multi.getParameter("menuNo")) ).getImage() );
+			}
+				
+			mbean.setCategory(multi.getParameter("category"));
+			mbean.setName(multi.getParameter("name"));
+			mbean.setPrice(Integer.parseInt(multi.getParameter("price")));
+			mbean.setMenuNo(multi.getParameter("menuNo"));
+			mdao.updateMenu(mbean);
+		}
 		
 		
 		

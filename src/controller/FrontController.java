@@ -634,10 +634,25 @@ public class FrontController extends HttpServlet {
 			request.setAttribute("menuBean",mdao.getMenu(Integer.parseInt(menuNo)));
 			
 			forward = new ActionForward();
-			forward.setView("/ceoStore/updateMenu.jsp");
+			forward.setView("ceoIndex.jsp?center=ceoStore/updateMenu.jsp");
 			forward.execute(request, response);
 			
+		}
+		if(command.equals("updateMenuAction.do")) {
 			
+			String realFolder = getServletContext().getRealPath("/upload/store");
+			int max = 1000 * 1024 * 1024;
+			
+			MultipartRequest multi = new MultipartRequest(request, realFolder, max, "utf-8", new DefaultFileRenamePolicy());
+			
+			
+			MenuAction menuAction = new MenuAction();
+			menuAction.updateMenu(request, response, multi);
+			
+			
+			forward = new ActionForward();
+			forward.setView("/ceoStore.do?storeNo="+multi.getParameter("storeNo"));
+			forward.execute(request, response);
 			
 			
 			
