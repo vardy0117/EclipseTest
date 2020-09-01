@@ -92,21 +92,7 @@
 		color: gray;
 	}
 
-	
-/* 		#storeListDiv { */
-/* 		width: 1000px; */
-/* 		height: 1000px; */
-/* 		text-decoration: underline; */
-/* 		color: green; */
-/* 	} */
-	/* #updateBtn {
-		background: url("images/setting_black.svg") no-repeat;
-		background-size: 32px;
-		width: 35px;
-		height: 35px;
-		cursor: pointer;
-		border: none;
-	} */
+
 	#updateBtn:hover {
 		background: url("images/setting_gray.svg") no-repeat;
 		background-size: 32px;
@@ -158,24 +144,6 @@
     height: 50px;
     border-radius: 0 0 0 0;
     padding: 0 0 0 0;
- /*    border: 0; 
-/   border-top-color: initial;
-    border-top-style: initial;
-    border-top-width: 0px;
-    border-right-color: initial;
-    border-right-style: initial;
-    border-right-width: 0px;
-    border-bottom-color: initial;
-    border-bottom-style: initial;
-    border-bottom-width: 0px;
-    border-left-color: initial;
-    border-left-style: initial;
-    border-left-width: 0px;
-    border-image-source: initial;
-    border-image-slice: initial;
-    border-image-width: initial;
-    border-image-outset: initial;
-    border-image-repeat: initial; */
     line-height: 45px;
     font-size: 15px;
     color: #7c8389;
@@ -188,14 +156,6 @@
      border-radius: 15px;
 }
 
-/* #searchstore img {
-width: 50px;
-height: 50px;
-border: none;
-vertical-align: top;
-    
-} */
-input:focus {outline:none;} /*input클릭시 자체 테두리 생기는 거 삭제 */
 
 #searchbutton {
 background: url("images/search.jpg") no-repeat;
@@ -257,12 +217,12 @@ height: 80px;
 
 
 	function moreStore(orderSido) {
-		var startNum = $("#storeListDiv ul").length / 4;	// 나누기해서 짝수로 만듦
+	//	var num = 2;
+		var startNum = $("#ullength ul").length;
  		var orderSido = orderSido;
 
 
- 		
-			console.log("storeLiveDiv길이 " + startNum);
+	//	console.log("storeLiveDiv길이" + startNum + " / " + num + " = " + startNum  / num);
 		$.ajax({
 			type : "post",
 			async : false,
@@ -271,14 +231,13 @@ height: 80px;
 			dataType : "text",
 			success : function(data,textStatus){
 			var MoreStoreData = JSON.parse(data);
-			var show="";
-			alert("아직 상태가 안좋습니다");
-			var jsonlength = MoreStoreData.length;
+		
 		
 			if (MoreStoreData != null) {
-				for (var i=0; i<MoreStoreData.length; i++) {
-					console.log("json길이 " + MoreStoreData.length);
-						show += " <ul id='unlength'>";
+				for (var i=0; i<MoreStoreData.length; i++) { // json길이가 줄어들때 까지
+					console.log("json길이 : " + MoreStoreData.length);
+					var show="";
+			      		show += " <ul>";
 						show += " <li id='appendtest' class='litest'>";
 						show += "<a onclick='addStoreNoToStorage(" + MoreStoreData[i].storeNo +")'>";
 						show += "<font color='purple' size='5'>" + MoreStoreData[i].name + "</font> <br> ";
@@ -289,11 +248,8 @@ height: 80px;
 						show += "</a>";
 						show += "</li>";
 						show += " </ul>"; 
-						$("#storeListDiv").append(show);
-
-						
-						// console.log("가져온 가게 갯수 : " + MoreStoreData[i].length);
-				}
+						$("#appendMoreStore").append(show);  
+						}
 
 	
 						}
@@ -314,43 +270,6 @@ height: 80px;
 	}
 
 	
-/* 	function SearchmoreStore(orderSido, search) { // 검색후 ajax 함수 실행
-		 var orderSido = orderSido;
-		var search = search;
-		$.ajax({
-			type : "get",
-			async : false,
-			url : "./searchmoreStore.do",
-			data : {orderSido: search},
-			dataType : "text",
-			success : function(data,textStatus){
-				
-			alert("search 내용 : " + search + " : " + orderSido);
-						var show="";
-						show += "<c:forEach var='bean' items='${storelist}'>";
-						show += " <ul>";
-						show += " <li id='ajaxtest' class='litest'>";
-						show += "<a onclick='addStoreNoToStorage(${bean.storeNo})'>";
-						show += "<font color='purple' size='5'>${bean.name}</font> <br> ";
-						show += "스토어 번호 : ${bean.storeNo} <br>";
-						show += "<img src='upload/store/${bean.image}'> <br>";
-						show += "  종류 : ${bean.category } <br> ";
-						show += "  운영시간 : ${bean.storeHours} <br> ";
-						show += "</a>";
-						show += "</li>";
-						show += " </ul>";
-						show += "</c:forEach>";
-						$("#storeListDiv").append(show);
-						console.log("show 내용 " + data);
-			}, 
-			error:function(data,textStatus){
-		alert("에러발생");
-			}
-		});
-		
-
-	
-	} */
 </script>	
 <body>
 ​	<!-- -------------------------------------------------------------------------- -->
@@ -368,43 +287,12 @@ height: 80px;
 		반갑습니다	<font id="customerfont" size="5" color="#FF6347"> ${nickname } </font>님<br>
 			귀하의 현재 계정기준 요청주소는 : 
 			<font color="orange" size="5"> <c:out value="${orderSido}" /> </font> 입니다 <br>
-<!-- ------------------------------------------------------ -->
-<c:choose>
-
-	<c:when test="${length >= 0 && searchcontent eq null}"> 	
-		<font size="5"><font color="blue">일반</font> DB에 들어있는 총 가게 갯수 : ${length}개 </font> <br> 
-	</c:when>
-
-	<c:when test="${SearchStoreLength >= 0 && searchcontent ne null}"> 
-		<font size="5"><font color="powerblue">검색결과</font> DB에 들어있는 총 가게 갯수 : ${SearchStoreLength}개 </font> <br> 
-	</c:when>
-
-<c:otherwise> otherwise임</c:otherwise>
-
-
-</c:choose>
-
-<!-- ------------------------------------------------------ -->
-
-
-<%-- 					<font size="5">DB에 들어있는 총 가게 갯수 : ${length}개 </font> <br> --%>
-<%-- 			파람 : ${param.search} <!-- input에 saerch name값 가져옴 --> --%>
-			
-			<div id="searchstore">
-					
-		<form action="UserSearchStore.do" method="get" id="frm">
-			<center id="searchcenter">
-			<input id="search" name="search" placeholder="검색할 가게를 입력하세요">	
-<!-- 			<a href="#"><img src="images/search.jpg" alt="사진" onclick="search();"/></a> -->
-		<button id="searchbutton" onclick="location.href = '#"></button>
-			</center>
- 		</form> 
-		</div>
-<!-- -------------------------------------------------------------------------- -->
 
 	<!-- -------------------------------------------------------------------------- -->
-				<c:forEach var="bean" items="${storelist }">
-					<ul id="unlength">
+
+			<c:forEach var="bean" items="${storelist}" varStatus="status">
+				<div id="ullength">
+					<ul >
 						<li id="ajaxtest" class="litest">
 								<a onclick="addStoreNoToStorage('${bean.storeNo}','${bean.name}')"> 
 								<font color="purple" size="5"><c:out value="${bean.name}" /> </font>
@@ -414,83 +302,18 @@ height: 80px;
 								<c:out value="운영시간 : ${bean.storeHours }" /> <br>
 									
 								</a>
-						
 						</li>
 					</ul>
+			</div>
 		
 
 				</c:forEach>
-
-	<!-- -------------------------------------------------------------------------- -->
 				
-	<!-- 검색결과로 나온 스토어 표시---------------------------------------------------------- -->
-	<!-- storelist로 통합해서 쓰려고 했는데 가게 존재 유무 확인할때 겹쳐서 따로 나눔 -->			
-					<c:forEach var="bean" items="${UserSearchStorelist }">
-					<ul>
-						<li id="ajaxtest" class="litest">
-								<a onclick="addStoreNoToStorage('${bean.storeNo}')"> 
-								<font color="purple" size="5"><c:out value="${bean.name}" /> </font>
-								<br> <c:out value="스토어 번호 : ${bean.storeNo}" /> <br>
-								<img src="upload/store/${bean.image}"> <br> <%-- <c:out value="✆전화번호 : 객체에 아직 안가져옴" /> <br> --%>
-								<c:out value="종류 : ${bean.category }" /> <br> 
-								<c:out value="운영시간 : ${bean.storeHours }" /> <br>
-									
-								</a>
-						
-						</li>
-					</ul>
-		
+	
 
-				</c:forEach>
-	<!-- 검색결과로 나온 스토어 표시---------------------------------------------------------- -->
 	</div>
 </div>
-<!-- -------------------------------------------------------------------------- -->
-<!-- 일반 가게 리스트 출력 (배달 가능 가게로 검색을 했을 경우) -->
-			<c:set var="area" value="${storelist}" />
-				<c:if test="${area eq '[]' }">
-					<font size="6" color="orange">
-						<p>귀하의 지역에 맞는 가게가 없습니다</p>
-					</font>
-				</c:if>
-	<!-- -------------------------------------------------------------------------- -->	
-<!-- 검색된 결과가 없을 경우 -->		
-			<c:set var="UserSearchStore" value="${UserSearchStorelist}" />
-				<c:if test="${UserSearchStore eq '[]' }">
-					<font size="6" color="black">
-						<p> "${param.search }" 라는 가게는 존재하지 않습니다</p>
-					</font>
-				</c:if>
-	<!-- -------------------------------------------------------------------------- -->	
 
-<!-- 검색하기전의 더보기 상태랑 아닐때랑 나눔  -->
-<!-- 괜히 나눠가지고 ㅡ.ㅡ;;;;;;;;;;;;;;;; -->
 
-	<c:if test="${length >= 2 }"> <!-- 검색전 storesize가 8개 이상이면 더보기창 활성화 -->
-<%-- 	storelistsize 조건문 실행 = ${length} --%>
-		<c:choose>
-
-		<c:when test="${length >= 0 && searchcontent eq null}"> 	
-			<div class="moreTab"  onclick="moreStore('${orderSido}'); ">
-			<a class="more">더보기</a>
-			</div>	
-		</c:when>
-
-	</c:choose>
-	</c:if>
-	<!-- -------------------------------------------------------------------------- -->	
-	<%-- <c:if test="${SearchStoreLength >= 2 }"> <!-- 검색후 storesize가 8개 이상이면 더보기창 활성화 -->
-		검색후 더보기 : ${SearchStoreLength } <br>
-		ordersido : ${orderSido }
-		<c:choose>
-		<c:when test="${SearchStoreLength >= 0 && searchcontent ne null}"> 
-			<div class="moreTab"  onclick="SearchmoreStore('${orderSido}','${searchcontent}');">
-			<!-- 이거 아마 검색후 전용 함수 또만들 ㅡ.ㅡ????? -->
-			<a class="more">더보기</a>
-			</div>	
-		</c:when>
-
-	</c:choose>
-	</c:if> --%>
 </body>
 </html>​
