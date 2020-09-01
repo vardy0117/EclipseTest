@@ -8,10 +8,7 @@
 </head>
 <body>
 	
-	${menuBean.name }
-	${menuBean.price }
-	${menuBean.category }
-	${menuBean.storeNo }
+	
 	
 	<h1 style="text-align: center;">메뉴 수정</h1>
 
