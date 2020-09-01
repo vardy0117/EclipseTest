@@ -147,6 +147,7 @@
 			$("#obtn").addClass("obtn-off");
 			$("#obtn").attr("disabled", true);
 		}else {
+			
 			$("#clearCartBtn").css("display","block");
 			$(".emptyCart").css("display","none");
 			$(".cartRow").css("display","block");
