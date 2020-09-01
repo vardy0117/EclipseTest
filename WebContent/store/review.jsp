@@ -204,26 +204,51 @@
 					if(jsonData != null){
 						
 						var stars;
-						
 						for(var i = 0; i<jsonData.length; i++){
-							if(jsonData[i].points==0){
-								stars = "☆☆☆☆☆";
-							}else if(jsonData[i].points==1){
-								stars = "★☆☆☆☆"
-							}else if(jsonData[i].points==2){
-								stars = "★★☆☆☆"
-							}else if(jsonData[i].points==3){
-								stars = "★★★☆☆"
-							}else if(jsonData[i].points==4){
-								stars = "★★★★☆"
-							}else if(jsonData[i].points==5){
-								stars = "★★★★★"
+							
+							// image가 null이 아닐때
+							if(jsonData[i].image != null){
+								if(jsonData[i].points==0){
+									stars = "☆☆☆☆☆";
+								}else if(jsonData[i].points==1){
+									stars = "★☆☆☆☆"
+								}else if(jsonData[i].points==2){
+									stars = "★★☆☆☆"
+								}else if(jsonData[i].points==3){
+									stars = "★★★☆☆"
+								}else if(jsonData[i].points==4){
+									stars = "★★★★☆"
+								}else if(jsonData[i].points==5){
+									stars = "★★★★★"
+								}
+								$("#appendDiv").append("<table id='appendT'><tr><td><span class='nickname'>"+jsonData[i].nickname+"</span> &nbsp&nbsp"+
+									 "<span class='date'>"+jsonData[i].date.substring(0,10)+"</span>"+
+									 "<br><i id='star'>"+stars+"</i></td></tr>"+
+									 "<tr><td><center><img src='./images/"+jsonData[i].image+"' style='width: 656px; height: 400px;' class='image'></center></td></tr>"+
+									 "<tr><td><span id='content'>"+jsonData[i].contents+"</span></td></tr></table>");
+			
+							// image가 null일때
+							}else{
+								if(jsonData[i].points==0){
+									stars = "☆☆☆☆☆";
+								}else if(jsonData[i].points==1){
+									stars = "★☆☆☆☆"
+								}else if(jsonData[i].points==2){
+									stars = "★★☆☆☆"
+								}else if(jsonData[i].points==3){
+									stars = "★★★☆☆"
+								}else if(jsonData[i].points==4){
+									stars = "★★★★☆"
+								}else if(jsonData[i].points==5){
+									stars = "★★★★★"
+								}
+								$("#appendDiv").append("<table id='appendT'><tr><td><span class='nickname'>"+jsonData[i].nickname+"</span> &nbsp&nbsp"+
+									 "<span class='date'>"+jsonData[i].date.substring(0,10)+"</span>"+
+									 "<br><i id='star'>"+stars+"</i></td></tr>"+
+									 "<tr><td></td></tr>"+
+									 "<tr><td><span id='content'>"+jsonData[i].contents+"</span></td></tr></table>");
+								
 							}
-							$("#appendDiv").append("<table id='appendT'><tr><td><span class='nickname'>닉네임</span> &nbsp&nbsp"+
-								 "<span class='date'>"+jsonData[i].date.substring(0,10)+"</span>"+
-								 "<br><i id='star'>"+stars+"</i></td></tr>"+
-								 "<tr><td><center><img src='./images/"+jsonData[i].image+"' style='width: 900px; height: 400px;'></center></td></tr>"+
-								 "<tr><td><span id='content'>"+jsonData[i].contents+"</span></td></tr></table>");
 						}
 						if(jsonData.length==0){
 							alert("남은 리뷰가 없습니다.");
@@ -240,3 +265,4 @@
 	</script>
 </body>
 </html>
+
