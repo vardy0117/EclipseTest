@@ -5,159 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<style> 
- #mainDiv {
-		width: 1000px;
-		min-height: 600px;
-		margin: 0 auto;
-		margin-top: 80px;
-		position: relative;
-}
-
- .left {
- 	width : 480px; 
- 	float: left;
- 	padding : 10px;
- }	
- 
- .right {
- 	width : 380px;
- 	float: left;
-	padding : 10px;
- }
- 
- .panelGroup, .storeName, .orderRow, .carTotal  {
- 	border : 1px solid #DCDCDC;
- }
- 
- .panelGroup-Default {
- 	margin-bottom: 20px;
- }
- 
- .panelGroup-Default-Head {
- 	height : 40px;
- 	padding : 0 0 0 0 ;
- }
- 
- .subTitle {
- 	background-color : #000000;
- 	width : 460px;
- 	height : 23px;
- 	padding : 10px;
- 	margin : 0 auto;
- 	color : #F0FFFF;
- 	font-weight : bold
- }
-
- .panelHeading {
- 	background-color : #DCDCDC;
- 	padding : 10px;
- 	margin : 0 auto;
- }	
- 
- .panelGroup-Body {
- 	padding : 10px;
- 	display : inline-block;
- }
- 
- div.formGroup{
- 	padding : 5px 0 5px;
- }
- 
- div.formGroup div.formGroupInputRaddr input, ::placeholder{
- 	color : #A4A4A4;
-	font-weight : bolder;
- }
- 
- div.formGroup div.formGroupInputRaddr, div.formGroupInputDaddr, div.formGroupInputPhone, div.formGroupTextArea{
- 	float : right;
- }
- 
- input:focus, textarea:focus, button:focus{ 
- 	outline: none; 
- }
- 
- div.formGroupPhone{
- 	margin-top:10px;
- }
- 
- .storeName {
- 	height : 22px;
- 	padding : 10px;
- }
- 
- .orderRow {
-  	padding : 10px;
-  	width : 358px;
-  	background-color: #FFF8DC;
-  	display : inline-block;
- }
- 
- div.orderMenu {
- 	float : left;
- }
- 
- div.orderPrice{
- 	float : right;
- }
- 
-  .carTotal {
- 	padding : 10px;
- }
- 
- .orderTotal{
- 	margin-top : 10px;
- 	color : #DC143C;
- 	font-weight : bold;
- }
- 
- .discountName, .totalName {
-	float : left;
- }
- 
-  .clearBoth {
-	clear : both;	
- }
-
- .discountPrice, .totalPrice {
- 	float : right;
- }
-
- .AggreedText {
-  	clear : both;
-  	margin-top : 20px;
- 	font-size : 12px;
- }
- 
- 	button#pbtn{
- 	width : 100%;
- 	height : 40px;
-	margin-top: 20px;
- 	background-color:  #DC143C;
- 	border:0px;
- 	color :  #F0FFFF;
- 	font-size : 20px;
- 	font-weight : bold;
- 	text-align : center;
- 	cursor : pointer;
- }
- 
- button#dbtn{
- 	width : 33%;
- 	border:0px;
- 	color :  green;
- 	font-size : 14px;
- 	font-weight : bold;
- 	text-align : center;
- 	cursor : pointer;
- }
- 
- table#myCouponList tr.data:hover {
- 	color : green;
- }
- 
-
-</style>
+<link rel="stylesheet" href="CSS/orderCheckJSP.css">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
 	window.onload = function(){
@@ -233,7 +81,7 @@
 	} 
 	
 	function discountPrice(dcoupon, couponNo){
-		var discount=dcoupon;
+		console.log(dcoupon)
 		
 		var discountP = -1*totalPrice*(dcoupon/100);
 		
@@ -241,9 +89,9 @@
 		
 		$("#myCouponList").css("display","none");	
 		$(".discountPrice").html(discountP + " &nbsp;원");
-		$(".totalPrice").html((totalPrice-discountP) +" &nbsp;원");
+		$(".totalPrice").html((totalPrice+discountP) +" &nbsp;원");
 		
-		$(".orderForm").html(inputHiddenTag);
+		$("#couponNo").val(couponNo);
 	}
 	
 	function cancelDiscount(){	
@@ -275,7 +123,7 @@
 </head>	
 <body>
 	<div id="mainDiv">
-		<form action="Order.do" class="orderForm" method="post">
+		<form action="Order.do" class="orderForm" onsubmit=false method="post">
 		<div class="left">
 			<div class="subTitle">
 				<span>결제하기</span>
@@ -369,9 +217,10 @@
 			</div>		
 			<div class="AggreedText">
 				<span>이용약관, 개인정보 수집 및 이용, 개인정보 제 3자 제공, 전자금융거래 이용약관, 만 14세 이상 이용자 내용을 확인하였으며 결제에 동의합니다.</span>
-			</div>
+			</div>		
 			<button id="pbtn" onclick="payment();">결 제 하 기</button>
 		</div>	
+			<input type="hidden" id="couponNo" name="couponNo">
 		</form>
 		<div style="clear:both;"></div>
 	</div>

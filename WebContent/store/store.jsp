@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="CSS/storeJSP.css">.
+<link rel="stylesheet" href="CSS/storeJSP.css">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>
 <body>
