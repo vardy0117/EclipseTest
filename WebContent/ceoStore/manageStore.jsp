@@ -5,6 +5,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
  
+ <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+
  <%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c" %>
  
 <title>Insert title here</title>
@@ -73,6 +75,7 @@
 </style>
 </head>
 <body>
+
 	<div id="mainDiv">
 		<div id="storeListDiv">
 			<h1 style="text-align:center;">업체 관리</h1>
@@ -106,6 +109,9 @@
 	  location.href='deletemanage.do?storeNo='+storeNo;
   }
 }
+ 
+ 
+ 
 </script>
 	
 
