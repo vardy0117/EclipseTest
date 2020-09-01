@@ -63,11 +63,12 @@ public class FrontController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doProcesss(request,response);
 	}
+	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doProcesss(request,response);
 	}
-	
+
 	protected void doProcesss(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String requestURI = request.getRequestURI();
 		String contextPath = request.getContextPath();
@@ -662,6 +663,7 @@ public class FrontController extends HttpServlet {
 			out.print(jsonArr);
 		}
 		
+		///updateMenu
 		if(command.equals("updateMenu.do")){
 			
 			request.setCharacterEncoding("utf-8");
@@ -716,6 +718,19 @@ public class FrontController extends HttpServlet {
 		}
 
 
+//		if(command.equals("moreStore.do")) { // store ajax 
+//				AjaxAction ajax = new AjaxAction();
+//				// int storeNo = Integer.parseInt(request.getParameter("storeNo"));   //글번호
+//		
+//				List<StoreBean> result= new ArrayList<StoreBean>();
+//				try {
+//					 result = ajax.moreStoreAction(request, response);
+//				} catch (Exception e) {
+//						e.printStackTrace();
+
+		
+
+//충돌 부분
 	/*	if(command.equals("moreStore.do")) { // store ajax 
 				AjaxAction ajax = new AjaxAction();
 				// int storeNo = Integer.parseInt(request.getParameter("storeNo"));   //글번호
@@ -727,7 +742,7 @@ public class FrontController extends HttpServlet {
 						e.printStackTrace();
 				}
 		*/
-		
+
 		// 일반 스토어 모드에서 더보기란을 클릭했을때 ajax로 이동되는 컨트롤러
 				if(command.equals("moreStore.do")){
 					String orderSido = request.getParameter("orderSido");
@@ -745,7 +760,7 @@ public class FrontController extends HttpServlet {
 					 out.print(jsonArr); // ajax에 data로 뿌려주는 역할, 없으면 null나옴
 
 				}
-				
+		//		
 		
 		if(command.equals("MyPage.do")){
 			forward = new ActionForward();
@@ -761,11 +776,40 @@ public class FrontController extends HttpServlet {
 			action.execute(request, response, customerNo);
 			
 		}
+	
+		//deleteMenu
+		if(command.equals("deletemanage.do")){
+				
+				request.setCharacterEncoding("utf-8");
+				String ceoNo = (String)request.getSession().getAttribute("ceoNo");
+				int storeNo = Integer.parseInt(request.getParameter("storeNo"));
+				
+				MenuDAO mdao = new  MenuDAO();
+				mdao.deleteMenu(storeNo);
+				
+				forward = new ActionForward();
+							
+				forward.setView("manageStore.do");
+				forward.setRedirect(true);
+				forward.execute(request, response);
+			}
+		
+		
+		
+	
+		
 		
 
 	
+
+	
+	
+
+
+
 		}
 				
 }
 		
 	
+

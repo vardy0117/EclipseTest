@@ -14,7 +14,7 @@
 	${menuBean.storeNo }
 	
 	<h1 style="text-align: center;">메뉴 수정</h1>
-			<form action="" method="post" enctype="multipart/form-data">
+			<form action="updateMenu.do" method="post" enctype="multipart/form-data">
 				<table>
 					<tr>
 						<th>메뉴사진</th>
