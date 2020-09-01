@@ -716,7 +716,7 @@ public class FrontController extends HttpServlet {
 		}
 
 
-		if(command.equals("moreStore.do")) { // store ajax 
+	/*	if(command.equals("moreStore.do")) { // store ajax 
 				AjaxAction ajax = new AjaxAction();
 				// int storeNo = Integer.parseInt(request.getParameter("storeNo"));   //글번호
 		
@@ -725,8 +725,8 @@ public class FrontController extends HttpServlet {
 					 result = ajax.moreStoreAction(request, response);
 				} catch (Exception e) {
 						e.printStackTrace();
-
-		
+				}
+		*/
 		
 		// 일반 스토어 모드에서 더보기란을 클릭했을때 ajax로 이동되는 컨트롤러
 				if(command.equals("moreStore.do")){
@@ -763,6 +763,9 @@ public class FrontController extends HttpServlet {
 		}
 		
 
-}
 	
+		}
+				
 }
+		
+	
