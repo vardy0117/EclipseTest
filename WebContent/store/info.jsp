@@ -48,7 +48,8 @@ margin-bottom: -8px;
 	<hr>
 		카테고리 : ${info.category} <br>
 		가게이름 : ${info.storeHours} <br>
-
+		사업자 등록번호 : ${info.regNo }
+		
 <c:if test="${ info.regNo eq null}">
 		<script>
 
