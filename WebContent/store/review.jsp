@@ -221,7 +221,7 @@
 								}else if(jsonData[i].points==5){
 									stars = "★★★★★"
 								}
-								$("#appendDiv").append("<table id='appendT'><tr><td><span class='nickname'>"+jsonData[i].nickname+"</span> &nbsp&nbsp"+
+								$("#appendDiv").append("<table id='appendT'><tr><td><span class='nickname'>"+jsonData[i].nickname+"님 </span> &nbsp&nbsp"+
 									 "<span class='date'>"+jsonData[i].date.substring(0,10)+"</span>"+
 									 "<br><i id='star'>"+stars+"</i></td></tr>"+
 									 "<tr><td><center><img src='./images/"+jsonData[i].image+"' style='width: 656px; height: 400px;' class='image'></center></td></tr>"+
