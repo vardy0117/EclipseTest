@@ -842,7 +842,6 @@ public class FrontController extends HttpServlet {
 		}
 		
 
-	}
 		
 		// MyPage에서 나의 주문 클릭시
 		if(command.equals("OrderDetail.do")){
@@ -863,7 +862,7 @@ public class FrontController extends HttpServlet {
 
 
 
-		}
+	}
 				
 }
 	
