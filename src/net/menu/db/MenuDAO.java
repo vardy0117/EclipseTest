@@ -161,15 +161,16 @@ public class MenuDAO {
 	
 
 	
-	public int deleteMenu(int storeNo){
+	public int deleteMenu(int menuNo){
 		int result = 0;
 		
 		try {
 			con=getConnection();
-			sql="delete from menu where storeNo=?";
+		
+			sql="delete from menu where menuNo=?";
 			pstmt=con.prepareStatement(sql);
 			
-			pstmt.setInt(1,storeNo); 
+			pstmt.setInt(1,menuNo); 
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -181,12 +182,28 @@ public class MenuDAO {
 	}
 
 	
-	
-	
-	
-	
-	
-	
-	
+	//insertMenu
+	public void insertMenu( MenuBean mbean) {
+		
+		try {
+			con =	getConnection();
+			sql="insert into menu (name, price, image, category, storeNo) values(?, ?, ?, ? ,?)";
+			
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1,mbean.getName());
+			pstmt.setInt(2, mbean.getPrice());
+			pstmt.setString(3, mbean.getImage());
+			pstmt.setString(4, mbean.getCategory());
+			pstmt.setString(5, mbean.getStoreNo());
+			
+			pstmt.executeUpdate();
+		
+		} catch (Exception e) {
+			System.out.println("insertMenu inner error"+e); 
+		} finally {
+			resourceClose();
+		}
+	}
+
 }
 
