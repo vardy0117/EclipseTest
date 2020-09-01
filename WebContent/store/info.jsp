@@ -48,60 +48,11 @@ margin-bottom: -8px;
 	<hr>
 		카테고리 : ${info.category} <br>
 		가게이름 : ${info.storeHours} <br>
-	
-
-		
-
-		<%-- 사업자 등록 번호 : ${info.regNo} --%>
-		<%--사업자 등록번호 JSTL로 하려니까 계속 안되서 스크립틀딱 기호씀 --%>
-		
-		<%
-		StoreDAO storedao = new StoreDAO();
-		StoreBean storebean = new StoreBean();
-		
-		String regNo,high,middle,end,regNoChange = "";
-	
-try {
-		int storeNo = Integer.parseInt(request.getParameter("storeNo"));
-		System.out.printf("사용자가 요청한 사업자 스토어 번호 값  : " + storeNo + "\n");
-		
-		storebean = storedao.getStoreInfo(storeNo);
-	
-		System.out.printf("스크립 틀딱 기호로 가져온 사업자 등록번호값  : " + storebean.getRegNo() + "\n");
-		
-			// 자리수 변환
-		
-		 regNo = storebean.getRegNo();
-			
-			// 유효성 체크여부 아님 
-		/*****************************************************/
-		  if (regNo.contains("-")){ // 사업자 등록번호에 이미 -가 포함되어있으면
-			  System.out.println("하이픈 발견 기존 출력문에 사업자 번호 그대로  사용함 변환 안함 : " + regNo);
-			  regNoChange = regNo;
-	      }else{
-	  	high = regNo.substring(0,3) + "-"; // 0~3자리면 
-	     middle = regNo.substring(3,5) + "-"; // 3~5자리면 
-	     end = regNo.substring(5,10);  // 5~10자리면, 이건 왜했지? 
-	      regNoChange = high + middle + end;
-	      System.out.println("숫자만 된 사업자 등록번호 : " + regNo);
-	      System.out.println("변환된 번호 : " + regNoChange);
-	      }
-			/*****************************************************/
-
-}catch(Exception e) {
-			System.out.println("스토어 정보가 널임 " + e);
-			regNoChange = null;
-	}
-			%>
-		
-사업자 등록번호 : <%=(regNoChange!=null) ? regNoChange : "사업자번호 자릿수가 잘못되었습니다 자릿수를 확인해주세요 000-00-00000 순입니다"  %>
-<br>
 
 <c:if test="${ info.regNo eq null}">
-그딴 정보가 없습니다
 		<script>
 
-			alert("정보가 없는 페이지 입니다 \n 으~딜 ^^");
+			alert("정보가 없는 페이지 입니다");
 			location.href="index.jsp";
 		</script>
 		</c:if>
@@ -180,7 +131,7 @@ geocoder.addressSearch(data + " "+ data2, function(result, status) {
 
     // 인포윈도우로 장소에 대한 설명을 표시합니다
     var infowindow = new kakao.maps.InfoWindow({
-        content: '<div style="width:150px;text-align:center;padding:6px 0;">'+ storename + '</div>'
+        content: '<div style="width:150px;text-align:center;padding:0px 0;">'+ storename + '</div>'
     });
     infowindow.open(map, marker);
 

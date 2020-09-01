@@ -718,42 +718,17 @@ public class FrontController extends HttpServlet {
 		}
 
 
-//		if(command.equals("moreStore.do")) { // store ajax 
-//				AjaxAction ajax = new AjaxAction();
-//				// int storeNo = Integer.parseInt(request.getParameter("storeNo"));   //글번호
-//		
-//				List<StoreBean> result= new ArrayList<StoreBean>();
-//				try {
-//					 result = ajax.moreStoreAction(request, response);
-//				} catch (Exception e) {
-//						e.printStackTrace();
-
-		
-
-//충돌 부분
-	/*	if(command.equals("moreStore.do")) { // store ajax 
-				AjaxAction ajax = new AjaxAction();
-				// int storeNo = Integer.parseInt(request.getParameter("storeNo"));   //글번호
-		
-				List<StoreBean> result= new ArrayList<StoreBean>();
-				try {
-					 result = ajax.moreStoreAction(request, response);
-				} catch (Exception e) {
-						e.printStackTrace();
-				}
-		*/
-
 		// 일반 스토어 모드에서 더보기란을 클릭했을때 ajax로 이동되는 컨트롤러
 				if(command.equals("moreStore.do")){
 					String orderSido = request.getParameter("orderSido");
 					 int startNum = Integer.parseInt(request.getParameter("startNum")); //현재 보여지는 글 
 					
-					 System.out.println("FrontController moreStore.do 받은 Sidi : " + orderSido);
-					 System.out.println("FrontController moreStore.do 받은 Sidi : " + startNum);
+					 System.out.println("FrontController moreStore.do 받은 Sido : " + orderSido);
+					 System.out.println("FrontController moreStore.do 받은 startNum : " + startNum);
 					 GetStoreMoreAction action = new GetStoreMoreAction();
 					action.GetStoreMore(request, response, orderSido, startNum);
 					JSONArray jsonArr = (JSONArray) request.getAttribute("StoreArr");
-					System.out.println("Front 컨트롤러 받은 Json : " + jsonArr);
+
 					
 					response.setContentType("text/html;charset=UTF-8"); 
 					 PrintWriter out = response.getWriter();
