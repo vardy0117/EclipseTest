@@ -562,7 +562,7 @@ public class FrontController extends HttpServlet {
 			int storeNo = storeAction.insertStore(request, response, multi);
 			
 			MenuAction menuAction = new MenuAction();
-			menuAction.insertStore(request, response, multi, storeNo);
+			menuAction.insertStore(request, response, multi, storeNo, null);
 			
 			forward.setRedirect(true);
 			forward.setView("manageStore.do");
@@ -778,32 +778,54 @@ public class FrontController extends HttpServlet {
 		}
 	
 		//deleteMenu
-		if(command.equals("deletemanage.do")){
+		if(command.equals("deleteMenu.do")){
 				
-				request.setCharacterEncoding("utf-8");
-				String ceoNo = (String)request.getSession().getAttribute("ceoNo");
-				int storeNo = Integer.parseInt(request.getParameter("storeNo"));
-				
-				MenuDAO mdao = new  MenuDAO();
-				mdao.deleteMenu(storeNo);
-				
-				forward = new ActionForward();
-							
-				forward.setView("manageStore.do");
-				forward.setRedirect(true);
-				forward.execute(request, response);
-			}
+			request.setCharacterEncoding("utf-8");
+			
+			int menuNo = Integer.parseInt(request.getParameter("menuNo"));
+			
+			MenuDAO mdao = new  MenuDAO();
+			mdao.deleteMenu(menuNo);
 		
+			forward = new ActionForward();
+						
+			forward.setView("ceoStore.do?storeNo="+request.getParameter("storeNo"));
+			forward.setRedirect(true);
+			forward.execute(request, response);
+		}
 		
+		//insertMenu
+		if(command.equals("addMenu.do")){
+			request.setCharacterEncoding("utf-8");
+			String storeNo= request.getParameter("storeNo");
+			
+			forward = new ActionForward();
+						
+			forward.setView("ceoIndex.jsp?center=ceoStore/addMenu.jsp");
+			forward.execute(request, response);
+		}
 		
-	
+
+		if(command.equals("addMenuAction.do")){
+			request.setCharacterEncoding("utf-8");
+			
+			String realFolder = getServletContext().getRealPath("/upload/store");
+			int max = 1000 * 1024 * 1024;
+			MultipartRequest multi = new MultipartRequest(request, realFolder, max, "utf-8", new DefaultFileRenamePolicy());
+			
+			MenuAction menuAction = new MenuAction();
+			menuAction.insertMenu(request, response, multi, Integer.parseInt(multi.getParameter("storeNo")));
+			
+			forward = new ActionForward();
+			forward.setView("ceoStore.do?storeNo="+multi.getParameter("storeNo"));
+			forward.setRedirect(true);
+			forward.execute(request, response);
+			
+			
+		}
 		
 		
 
-	
-
-	
-	
 
 
 

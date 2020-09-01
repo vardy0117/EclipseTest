@@ -83,6 +83,14 @@
 		background: url("images/delete_gray.svg") no-repeat;
 		background-size: 32px;
 	}
+	#addBtn {
+		background: url("images/addBtn.svg") no-repeat;
+		background-size: 32px;
+		width: 35px;
+		height: 35px;
+		cursor: pointer;
+		border: none;
+	}
 </style>
 
 <script>
@@ -92,6 +100,7 @@
 		document.getElementById('orderDiv').classList.remove('display-on');
 		document.getElementById(id).classList.add('display-on');
 	}
+	
 </script>
 </head>
 <body>
@@ -116,7 +125,7 @@
 							</td>
 							<td rowspan="3">
 								<button id="updateBtn" onclick="location.href='updateMenu.do?menuNo=${menu.menuNo}'"></button>
-								<button id="deleteBtn" onclick="deleteMenu(${menu.menuNo});"></button>
+								<button id="deleteBtn" onclick="deleteMenu(${menu.menuNo},${menu.storeNo });"></button>
 							</td>
 						</tr>
 						<tr>
@@ -145,7 +154,7 @@
 							</td>
 							<td rowspan="3">
 								<button id="updateBtn" onclick="openChild(${menu.menuNo})"></button>
-								<button id="deleteBtn" onclick="deleteMenu(${menu.menuNo});"></button>
+								<button id="deleteBtn" onclick="deleteMenu(${menu.menuNo},${menu.storeNo });"></button>
 							</td>
 						</tr>
 						<tr>
@@ -174,7 +183,7 @@
 							</td>
 							<td rowspan="3">
 								<button id="updateBtn" onclick="location.href='updateMenu.do?menuNo=${menu.menuNo}'"></button>
-								<button id="deleteBtn" onclick="deleteMenu(${menu.menuNo});"></button>
+								<button id="deleteBtn" onclick="deleteMenu(${menu.menuNo},${menu.storeNo });"></button>
 							</td>
 						</tr>
 						<tr>
@@ -203,7 +212,7 @@
 							</td>
 							<td rowspan="3">
 								<button id="updateBtn" onclick="location.href='updateMenu.do?menuNo=${menu.menuNo}'"></button>
-								<button id="deleteBtn" onclick="deleteMenu(${menu.menuNo});"></button>
+								<button id="deleteBtn" onclick="deleteMenu(${menu.menuNo},${menu.storeNo });"></button>
 							</td>
 						</tr>
 						<tr>
@@ -219,9 +228,13 @@
 					</table>
 				</c:if>
 			</c:forEach>
-			
-			
+			<div style="text-align: center;">
+				<input id="addBtn" type="button" onclick="location.href='addMenu.do?storeNo=${param.storeNo}';">
+			</div>
 		</div>
+		
+		
+		
 		
 		<div class="contentDiv" id="reviewDiv">
 			reviewDiv
@@ -236,9 +249,9 @@
 	
 </body>
 <script>
-	function deleteMenu(menuNo) {
+	function deleteMenu(menuNo, storeNo) {
 		if(confirm(" 메뉴를 삭제 하시겠습니까? ")==true){
-			  location.href='deleteMenu.do?menuNo='+menuNo;
+			  location.href='deleteMenu.do?menuNo='+menuNo+'&storeNo='+storeNo;
 		}
 	}
 	
