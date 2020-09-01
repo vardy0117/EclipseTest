@@ -258,20 +258,9 @@
 	var openWin;
 	
 	function openChild(menuNo){
-		
-		window.name = "updateMenu";
-		
-		openWin = window.open("updateMenu.do?menuNo="+menuNo, 
-				"자식창이름", 
-				"width=570, height=350, resizable = no, scrollbars = no"
-				)
+		location.href = 'updateMenu.do?menuNo='+menuNo;
 	}
 	
-	/* function setChildText(){
-		
-		openWin.document.getElementById("cInput").value = document.getElementById("updateBtn").value;
-		}	
-	 */
 	
 	
 	
