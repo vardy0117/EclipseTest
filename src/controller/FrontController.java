@@ -798,7 +798,22 @@ public class FrontController extends HttpServlet {
 		}
 		
 		
+		// MyPage에서 나의 주문 클릭시
+		if(command.equals("OrderDetail.do")){
 
+			String customerNo = (String) request.getSession().getAttribute("customerNo");// 세션에 있는 사용자번호
+			OrderAction action = new OrderAction();
+			// action.execute(request, response, customerNo);
+			try {
+				action.GetOrderDetail(request, response, customerNo);
+				System.out.println("OrderDetail 컨트롤러 호출");
+				System.out.println("FrontController 전달받은 customerNo : " + customerNo);
+			} catch (Exception e) {
+				System.out.println("OrderDetail 오류" + e);
+				e.printStackTrace();
+			}
+			
+		}
 
 
 
