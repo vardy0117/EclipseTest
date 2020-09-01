@@ -51,6 +51,18 @@ public class OrderAction {
 		System.out.println("성공!");
 	
 	}
+	
+	
+	public void GetOrderDetail(HttpServletRequest request, HttpServletResponse response, String customerNo) throws Exception{
+		OrderListBean oBean = new OrderListBean();
+		// oBean.setCustomerNo((String) request.getSession().getAttribute("customerNo"));
+		String number = (String) request.getSession().getAttribute("customerNo");
+		OrderListDAO odao = new OrderListDAO();
+		odao.GetOrderDetail(number);
+		System.out.println("OrderDetail Action 호출!");
+		System.out.println("전달받은 고객 number : " + number);
+	
+	}
 
 
 }
