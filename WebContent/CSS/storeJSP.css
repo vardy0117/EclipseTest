@@ -75,7 +75,7 @@
 	
 	#cartDiv {
 		width: 31%;
-		min-height: 300px;
+		min-height: 150px;
 		position: absolute;
 		left: 68%;
 	}
@@ -113,30 +113,27 @@
 		float : right;	
 		margin-top : 5px;
 	}
-	
+		
 	button#clearCartBtn{
 		border : 0;
 		background: none;
 		cursor : pointer;
 		display : none;
-		
 	}
 	
 	button:focus{ 
  		outline: none; 
  	}
 	
-	
 	.cart-Body{
 		width : 100%;
-		min-height: 200px;
+		min-height: 97px;
 		display : table;
-		margin : 0 auto;
 	}
 	
 	.emptyCart{
 		display : table-cell;
-		vertical-align: middle;
+		vertical-align : middle;
 		text-align : center;
 		color : #848484;
 		font-weight : bold;
@@ -144,13 +141,12 @@
 	
 	.emptyCartSpan{
 		width : 100%;
-		display : table-cell;
-		color : 
 	}
  	
  	.cartRow {
  		width : 100%;
  		padding : 10px;
+ 		border-bottom : 1px solid #D3D3D3;
  	}
  	
  	ul {
@@ -169,6 +165,7 @@
 	div.priceQty{
 		width : 100%;
 		margin : 0 auto;
+		display : inline-block;
 	}	
 		
 	div.priceQty-Group{
@@ -182,23 +179,6 @@
 		float : right;
 		margin-right : 20px;
 	} 
-	
-/* 	div.nameQuantity, div.DelPrice{
-		width : 100%;
-		margin : 0 auto;
-	}	
-	
-	div.priceQty-Group{
-		margin : 10px auto;
-	}	
-		
-	div.left{
-		float : left;
-	}
-	div.right{
-		float : right;
-		margin-right : 20px;
-	} */
  	
  	.cartTotal {
  		width : 100%;
@@ -217,7 +197,7 @@
  		color : #DC143C;
  		font-weight : bold;
  	}
-	 
+ 	
 	  .clearBoth {
 		clear : both;	
 	 }
@@ -226,14 +206,24 @@
 	 	width : 100%;
 	 	height : 40px;
 		margin : 0 auto;
-	 	background-color: #D3D3D3;
 	 	border:0px;
 	 	color :  #F0FFFF;
 	 	font-size : 20px;
 	 	font-weight : bold;
 	 	text-align : center;
  	}
-	
+ 
+	.obtn-on{
+	 	background-color: #DC143C;
+	 	cursor : pointer;
+ 	}	
+ 	
+ 	.obtn-off{
+	 	background-color: #D3D3D3;
+	 	cursor : default;
+ 	} 	
+
+ 	
 	/* input[type=number]::-webkit-inner-spin-button {
      width: 30px;
      height: 30px;

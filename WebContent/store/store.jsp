@@ -87,10 +87,8 @@
 					<div class="emptyCart">
 						<span class="emptyCartSpan">주문표에 담긴 메뉴가 없습니다.</span>
 					</div>
-					<div class="cartRow" id="cartRow">
-						<ul class="cartUl">
-						</ul>
-					</div>	
+					<ul class="cartUl">
+					</ul>
 				</div>			
 				<div class="clearBoth"></div>
 				<div class="cartTotal">

@@ -140,24 +140,25 @@
 		var totalPrice = 0;
 		
 		if(cart=="" || cart == null){
+			$("#clearCartBtn").css("display","none");
 			$(".emptyCart").css("display","block");
 			$(".cartRow").css("display","none");
-			$(".cartClear").css("display","none");
 			$(".cartTotal").css("visibility","hidden");
+			$("#obtn").addClass("obtn-off");
 			$("#obtn").attr("disabled", true);
 		}else {
-			$(".emptyCart").css("display","none");
 			$("#clearCartBtn").css("display","block");
+			$(".emptyCart").css("display","none");
 			$(".cartRow").css("display","block");
-			$(".cartRow").css("display","block")
 			$(".cartTotal").css("background-color","#FFF8DC");
 			$(".cartTotal").css("visibility","visible");
-			$("#obtn").css("background-color","#DC143C");
-			$("#obtn").css("cursor","pointer");
+			$("#obtn").removeClass("obtn-off");
+			$("#obtn").addClass("obtn-on");
 			$("#obtn").removeAttr("disabled");
 			
 			for(i=0; i<cart.length; i++){
 				tag += 
+					'<div class="cartRow" id="cartRow">'+
 					'<li class="cartLi" id=food'+i+'>'+
 						'<div class="name">'+
 							cart[i]["name"]+
@@ -181,6 +182,7 @@
 							'</div>'+	
 						'</div>'+	
 					'</li>'+
+					'</div>'+
 					'<div class="clearBoth"></div>'
 					;
 					
