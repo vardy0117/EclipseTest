@@ -22,7 +22,6 @@
 		font-style: normal;
 	}
             
-            
 	body {
 		margin: 0 0;
 		font-family: 'Binggrae-Bold';

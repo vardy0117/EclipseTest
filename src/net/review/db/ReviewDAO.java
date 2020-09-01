@@ -104,6 +104,18 @@ public class ReviewDAO {
 	        	jsonObj.put("date", rs.getTimestamp(8).toString());
 	        	jsonObj.put("comment", rs.getString(9));
 	        	
+	        	
+	        	sql="select nickname from customer where customerNo=?";
+	        	pstmt=con.prepareStatement(sql);
+	        	pstmt.setString(1, rs.getString(3));
+	        	ResultSet rs2;
+	        	rs2 = pstmt.executeQuery();
+	        	if(rs2.next()){
+	        		jsonObj.put("nickname", rs2.getString(1));
+	        	}
+	        	
+	        	
+	        	
 //	            rBean.setReviewNo(rs.getString(1));
 //	            rBean.setOrderNo(rs.getString(2));
 //	            rBean.setCustomerNo(rs.getString(3));

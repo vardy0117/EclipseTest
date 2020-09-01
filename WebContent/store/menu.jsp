@@ -6,68 +6,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<style>
-	div {
-		box-sizing: border-box;
-	}
-	
-	input[type=number]::-webkit-inner-spin-button {
-     width: 30px;
-     height: 30px;
-     -webkit-appearance: none;
-	}
-	
-	table#menuTable{
-		margin: 0 auto;
-		width : 100%;
-	}
-
-	.menuImage{
-		width : 100px;
-		height : 100px;
-	}
-	
-	.tbtn, .icoClear{
-		cursor : pointer;
-		background-color: white;
-		border : 0;
-		outline: 0;
-	}
-	
-	.cart { 
-	position: fixed; 
-	right: 50%; 
-	top: 180px; 
-	margin-right: -720px; 
-	text-align:center; 
-	width: 120px; 
-	}
-	
-	.cart a{
-		text-decoration: none;
-		color: black;
-	}
-	.cart input{
-		width: 40px;
-	}
-	
-	.cartUl li {
-		list-style-type : none;
-	}
-	
-	
-		
-</style>
+<link rel="stylesheet" href="CSS/menuJSP.css">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
 	window.onload = function(){
 		getCart();
 		//$("tbody:first").children().css("display","block");
-		$(".toggleImg:first").attr("src","images/btn_count_up.gif");
+		//$(".toggleImg:first").attr("src","images/btn_count_up.gif");
 		
 	}
 	  
-  	 function toggleMenuTr(element,category){
+ /*  	 function toggleMenuTr(element,category){
 		if(element.querySelector(".toggleImg").getAttribute("src")=="images/btn_count_down.gif"){
   			$("."+category).css("display","block");
   			element.querySelector(".toggleImg").setAttribute("src","images/btn_count_up.gif");
@@ -76,7 +25,7 @@
 			element.querySelector(".toggleImg").setAttribute("src","images/btn_count_down.gif");
 		}
 		
-	 }  
+	 }  */ 
 	 
  	 function modifyQty(element, qty) {
 		 if(qty == 1) {
@@ -94,8 +43,10 @@
 				if (name ==cartItem[j]["name"]){
 					if(qty == 1) {
 						cartItem[j]["quantity"]++;
+						cartItem[j]["price"]+=cartItem[j]["basePrice"];
 					} else if(qty == -1 && cartItem[j]["quantity"]>1){
 						cartItem[j]["quantity"]--;
+						cartItem[j]["price"]-=cartItem[j]["basePrice"];
 					} else {
 						break;
 					}
@@ -187,49 +138,62 @@
 		var cart=JSON.parse(sessionStorage.getItem("cart"));
 		var tag = "";
 		var totalPrice = 0;
+		
 		if(cart=="" || cart == null){
-			$("#cartStatusClear").css("display","block");
-			$("#cartStatusFilled").css("display","none");
-			$(".cartClear").css("display","none");
-			$("#total").html("합계 : 0 원");
-			$("#obtn").attr("disabled",true);
+			$("#clearCartBtn").css("display","none");
+			$(".emptyCart").css("display","block");
+			$(".cartRow").css("display","none");
+			$(".cartTotal").css("visibility","hidden");
+			$("#obtn").addClass("obtn-off");
+			$("#obtn").attr("disabled", true);
 		}else {
-			$("#cartStatusClear").css("display","none");
-			$("#cartStatusFilled").css("display","block");
-			$(".cartClear").css("display","block")
+			
+			$("#clearCartBtn").css("display","block");
+			$(".emptyCart").css("display","none");
+			$(".cartRow").css("display","block");
+			$(".cartTotal").css("background-color","#FFF8DC");
+			$(".cartTotal").css("visibility","visible");
+			$("#obtn").removeClass("obtn-off");
+			$("#obtn").addClass("obtn-on");
 			$("#obtn").removeAttr("disabled");
+			
 			for(i=0; i<cart.length; i++){
 				tag += 
+					'<div class="cartRow" id="cartRow">'+
 					'<li class="cartLi" id=food'+i+'>'+
-						'<div class="row">'+
-							'<div class="name">'+
-								cart[i]["name"]+
-							'</div>'+
-							'<div class="left">'+
-								'<a class="btn del-menu" onclick="delOrderItem(this)" style="cursor:pointer">삭제</a>'+
-								'<span class="price">'+
-									cart[i]["price"]+" 원"+
-								'</span>'+
-							'</div>'+
-							'<div class="right">'+
-								'<a onclick=" modifyMenuOnCartQty(this, 1)" style="cursor:pointer" >+</a>'+
-								'<span class="orderQuantity">'+
-									cart[i]["quantity"]+ 
-								'</span>'+
-								'<a onclick=" modifyMenuOnCartQty(this, -1)" style="cursor:pointer">-</a>'+	
-							'</div>'+
+						'<div class="name">'+
+							cart[i]["name"]+
 						'</div>'+
-					'</li>';
+						'<div class="priceQty">'+
+							'<div class="priceQty-Group">'+
+								'<div class="left">'+
+									'<a class="btn del-menu" onclick="delOrderItem(this)" style="cursor:pointer">X</a>'+
+									'&nbsp;'+
+									'<span class="price">'+
+										cart[i]["price"]+" 원"+
+									'</span>'+
+								'</div>'+
+								'<div class="right">'+
+									'<a onclick=" modifyMenuOnCartQty(this, 1)" style="cursor:pointer" >+</a>'+
+									'<span class="orderQuantity">'+
+										cart[i]["quantity"]+ 
+									'</span>'+
+									'<a onclick=" modifyMenuOnCartQty(this, -1)" style="cursor:pointer">-</a>'+	
+								'</div>'+
+							'</div>'+	
+						'</div>'+	
+					'</li>'+
+					'</div>'+
+					'<div class="clearBoth"></div>'
+					;
 					
 				totalPrice += cart[i]["price"];
 			}
 			
-			$("#cartUl").html(tag);
-			$("#total").html("합계 : "+totalPrice+ " 원");
+			$(".cartUl").html(tag);
+			$(".cartTotalSpan").html("합 계 : "+totalPrice+ " 원");
 		}
 	}
-
-	
 
 </script>
 </head>
@@ -265,7 +229,7 @@
 			<%-- <fmt:parseNumber var="num" value="${menu.level div 10}" type="number" integerOnly="true"/> --%>
 			<c:if test="${menu.category==categorys}">
 			
-			<tr class="${category}" style="display:none;">
+			<tr class="${category}">
 				<td>
 					<div class="menuImg">
 						<span><img src="upload/store/${menu.image}"></span> | 

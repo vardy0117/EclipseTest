@@ -69,5 +69,39 @@ public class OrderListDAO {
 		return storeNo;
 		
 	}
+	
+	
+	
+	public int GetOrderDetail(String  number) { 
+		// 리스트 방식으로 변경해야 됨
+		int test =0;
+		
+		try {
+			 getConnection();
+
+			 sql = "select * from orderList where customerNo = ? ";
+			 pstmt = con.prepareStatement(sql);
+			 pstmt.setString(1, number);
+			 System.out.println("OrderListDao에 SELECT에 가지고온 customerNo : " + number);
+			
+			 rs = pstmt.executeQuery();
+			 
+
+			 
+			 if(rs.next()) {
+				 test = rs.getInt(1);
+				 System.out.println("test값 결과 " + test);
+			 }
+			 
+			
+		} catch (Exception e){
+			System.out.println("GetOrderDetail Error : " + e);
+		} finally {
+			resourceClose();
+		}
+		
+		return test;
+		
+	}
 
 }
