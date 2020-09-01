@@ -373,6 +373,7 @@
 			<button id="pbtn" onclick="payment();">결 제 하 기</button>
 		</div>	
 		</form>
+		<div style="clear:both;"></div>
 	</div>
 </body>
 <script>
