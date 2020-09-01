@@ -12,10 +12,19 @@
 </head>
 <body>
 <style>
-	#mainDiv{
+	#infoDiv{
 		clear: both;
 		border: 1px solid #d9d9d9;
+}	
+
+img{ /*위치 조정*/
+margin-bottom: -8px;	
 	}
+	
+.star { 
+    color: #ffa400;
+    margin-left: 0px
+  }	
 </style>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
@@ -23,9 +32,9 @@
 		<c:set var="info" value="${requestScope.storeInfo}"/>
 		<c:set var="star" value="${requestScope.storereview}"/>
 		
-		<div id="mainDiv">
+		<div id="infoDiv">
 
-	<img src="${pageContext.request.contextPath }/images/house.jpg" height="50" width="50" alt="업체정보"> <font size="6">업체정보 </font>
+	<img src="${pageContext.request.contextPath }/images/홈.svg" height="50" width="50" alt="업체정보"> <font size="6">업체정보 </font>
 	<hr>
 		스토어 넘버 : ${info.storeNo} <br>
 		사장님 넘버 : ${info.ceoNo} <br>
@@ -34,68 +43,22 @@
 		도로명 : ${info.roadAddress} <br>
 		상세주소 : ${info.detailAddress} <br>
 		
-		스토어 이름 : ${info.name} <br>
-	<img src="${pageContext.request.contextPath }/images/house.jpg" height="50" width="50" alt="사업자정보"> <font size="6">사업자정보 </font>
+		스토어 이름 : ${info.name} <br><br>
+	<img src="${pageContext.request.contextPath }/images/게시글.svg" height="50" width="50" alt="사업자정보"> <font size="6">사업자정보 </font>
 	<hr>
 		카테고리 : ${info.category} <br>
 		가게이름 : ${info.storeHours} <br>
-	
-
+		사업자 등록번호 : ${info.regNo }
 		
-
-		<%-- 사업자 등록 번호 : ${info.regNo} --%>
-		<%--사업자 등록번호 JSTL로 하려니까 계속 안되서 스크립틀딱 기호씀 --%>
-		
-		<%
-		StoreDAO storedao = new StoreDAO();
-		StoreBean storebean = new StoreBean();
-		
-		String regNo,high,middle,end,regNoChange = "";
-	
-try {
-		int storeNo = Integer.parseInt(request.getParameter("storeNo"));
-		System.out.printf("사용자가 요청한 사업자 스토어 번호 값  : " + storeNo + "\n");
-		
-		storebean = storedao.getStoreInfo(storeNo);
-	
-		System.out.printf("스크립 틀딱 기호로 가져온 사업자 등록번호값  : " + storebean.getRegNo() + "\n");
-		
-			// 자리수 변환
-		
-		 regNo = storebean.getRegNo();
-			
-			// 유효성 체크여부 아님 
-		/*****************************************************/
-		  if (regNo.contains("-")){ // 사업자 등록번호에 이미 -가 포함되어있으면
-			  System.out.println("하이픈 발견 기존 출력문에 사업자 번호 그대로  사용함 변환 안함 : " + regNo);
-			  regNoChange = regNo;
-	      }else{
-	  	high = regNo.substring(0,3) + "-"; // 0~3자리면 
-	     middle = regNo.substring(3,5) + "-"; // 3~5자리면 
-	     end = regNo.substring(5,10);  // 5~10자리면, 이건 왜했지? 
-	      regNoChange = high + middle + end;
-	      System.out.println("숫자만 된 사업자 등록번호 : " + regNo);
-	      System.out.println("변환된 번호 : " + regNoChange);
-	      }
-			/*****************************************************/
-
-}catch(Exception e) {
-			System.out.println("스토어 정보가 널임 " + e);
-			regNoChange = null;
-	}
-%>
-		
-사업자 등록번호 : <%=(regNoChange!=null) ? regNoChange : "사업자번호 자릿수가 잘못되었습니다 자릿수를 확인해주세요 000-00-00000 순입니다"  %>
 <c:if test="${ info.regNo eq null}">
-그딴 정보가 없습니다
 		<script>
 
-			alert("정보가 없는 페이지 입니다 \n 으~딜 ^^");
+			alert("정보가 없는 페이지 입니다");
 			location.href="index.jsp";
 		</script>
 		</c:if>
 
-		<br> <img src="${pageContext.request.contextPath }/images/house.jpg" height="50" width="50" alt="기타"> <font size="6">기타 </font>
+		<br> <img src="${pageContext.request.contextPath }/images/확성기.svg" height="50" width="50" alt="게시글"> <font size="6">게시글</font>
 		<br>
 	<hr>	
 	<c:set var="po" value="${star.points}" /> <!-- 포인트 전용 변수 -->
@@ -105,14 +68,14 @@ try {
 		
 		<c:if test="${po != null }">
 		평균별점: ${star.points}점 
-		<c:forEach var="rBean" varStatus="status" begin="1" end="${ star.points}">
+		<c:forEach var="rBean" varStatus="status" begin="1" end="${star.points}">
 				<c:if test="${star.points ne null}">
-					<i id="star">★</i>
+					<i class="star">★</i>
 				</c:if> <!-- 별찍는 if문 -->	
 		</c:forEach>
 		
-		<c:forEach var="rBean" varStatus="status" begin="1" end="${ 5-star.points}">
-				<i id="star">☆</i>
+		<c:forEach var="rBean" varStatus="status" begin="1" end="${5-star.points}">
+				<i class="star">☆</i>
 				</c:forEach>
 		</c:if>
 		<br>
@@ -122,17 +85,17 @@ try {
 			평균별점 : 등록된 평균 별점이 없네요 <br>
 		</c:if>
 
-		누적주문수 : ${info.orderCount} <br>
+		누적주문수 : ${info.orderCount} <br><br>
 		
 		</div>
 
-	<img src="${pageContext.request.contextPath }/images/house.jpg" height="50" width="50" alt="업체정보"> <font size="6">업체정보 </font>
+	<img src="${pageContext.request.contextPath }/images/위치.svg" height="50" width="50" alt="업체위치"> <font size="6">업체위치 </font>
 	<hr>
 	<div id="map" style="width:400px;height:400px;"></div>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c8aab9da70f9c5bec74d9ebf3d0437a3&libraries=services"></script>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c8aab9da70f9c5bec74d9ebf3d0437a3&libraries=LIBRARY"></script>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c8aab9da70f9c5bec74d9ebf3d0437a3&libraries=services,clusterer,drawing"></script>
-<script type="text/javascript"
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c8aab9da70f9c5bec74d9ebf3d0437a3&libraries=LIBRARY"></script>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c8aab9da70f9c5bec74d9ebf3d0437a3&libraries=services,clusterer,drawing"></script>
+	<script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c8aab9da70f9c5bec74d9ebf3d0437a3"></script>
 
 
@@ -169,7 +132,7 @@ geocoder.addressSearch(data + " "+ data2, function(result, status) {
 
     // 인포윈도우로 장소에 대한 설명을 표시합니다
     var infowindow = new kakao.maps.InfoWindow({
-        content: '<div style="width:150px;text-align:center;padding:6px 0;">'+ storename + '</div>'
+        content: '<div style="width:150px;text-align:center;padding:0px 0;">'+ storename + '</div>'
     });
     infowindow.open(map, marker);
 

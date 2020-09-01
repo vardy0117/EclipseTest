@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.ParseConversionEvent;
 
 import org.apache.catalina.tribes.group.Response;
+import org.json.simple.JSONArray;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
@@ -24,10 +26,15 @@ import net.ceo.action.CeoLogoutAction;
 import net.ceo.action.CeoModifyAction;
 import net.ceo.db.CeoBean;
 import net.ceo.db.CeoDAO;
+import net.coupon.db.CouponBean;
 import net.customer.action.CustomerJoinAction;
 import net.customer.action.CustomerLoginAction;
 import net.customer.action.CustomerLogoutAction;
 import net.customer.action.CustomerModifyAction;
+
+import net.customer.action.CustomerReviewAction;
+
+import net.customer.action.GetCouponAction;
 import net.customer.db.CustomerBean;
 import net.customer.db.CustomerDAO;
 import net.manage.action.updateAction;
@@ -39,6 +46,12 @@ import net.order.action.GetStoreMenuAction;
 import net.order.action.GetStoreReviewAction;
 import net.order.action.OrderAction;
 import net.orderList.db.OrderListBean;
+import net.review.db.ReviewBean;
+
+import net.review.db.ReviewDAO;
+
+import net.store.action.GetStoreMoreAction;
+
 import net.store.action.StoreAction;
 import net.store.db.StoreBean;
 import net.store.db.StoreDAO;
@@ -50,11 +63,12 @@ public class FrontController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doProcesss(request,response);
 	}
+	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doProcesss(request,response);
 	}
-	
+
 	protected void doProcesss(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String requestURI = request.getRequestURI();
 		String contextPath = request.getContextPath();
@@ -143,7 +157,7 @@ public class FrontController extends HttpServlet {
 				 if(result){
 					 forward.setRedirect(true);
 					 forward.setView("index.jsp"); // 사장님 전용페이지가 없어서 일단 여기로 했습니당
-					 System.out.println("사장님 로그인 리다이렉트 작동 " + forward.getView());
+					 System.out.println("일반 고객 로그인 리다이렉트 작동 " + forward.getView());
 				 } else {
 					 response.setContentType("text/html;charset=UTF-8"); 
 					 PrintWriter out = response.getWriter();
@@ -342,7 +356,6 @@ public class FrontController extends HttpServlet {
 				
 				forward = new ActionForward();
 				forward.setRedirect(false);
-
 				forward.setView("index.jsp?center=store/store.jsp");
 
 				
@@ -355,12 +368,26 @@ public class FrontController extends HttpServlet {
 		if(command.equals("OrderCheck.do")){
 			forward = new ActionForward();
 			
-			forward.setRedirect(true);
 			forward.setView("index.jsp?center=store/orderCheck.jsp");
 			
 			forward.execute(request, response);
 		}
 		
+		if(command.equals("DiscountCheck.do")){	
+			response.setCharacterEncoding("utf-8");
+			forward = new ActionForward();
+			String customerNo = (String)request.getSession().getAttribute("customerNo");
+			String couponList = "";
+			try {
+				 GetCouponAction action = new GetCouponAction();
+				 
+				 couponList= action.getCoupons(customerNo);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			PrintWriter out = response.getWriter();
+			out.print(couponList);
+		}
 		
 		if(command.equals("Order.do")){
 			int orderNo=0;
@@ -533,7 +560,7 @@ public class FrontController extends HttpServlet {
 			int storeNo = storeAction.insertStore(request, response, multi);
 			
 			MenuAction menuAction = new MenuAction();
-			menuAction.insertStore(request, response, multi, storeNo);
+			menuAction.insertStore(request, response, multi, storeNo, null);
 			
 			forward.setRedirect(true);
 			forward.setView("manageStore.do");
@@ -620,9 +647,21 @@ public class FrontController extends HttpServlet {
 		
 		// review.jsp에서 더보기란을 클릭했을때 ajax로 이동되는 컨트롤러
 		if(command.equals("moreReview.do")){
-			System.out.println("moreReview로 이동");
+			int storeNo = Integer.parseInt(request.getParameter("storeNo"));   //글번호
+			int startNum = Integer.parseInt(request.getParameter("startNum")); //현재 보여지는 리뷰 수
+			
+			GetStoreReviewAction action = new GetStoreReviewAction();
+			action.getStoreReviewMore(request,response,storeNo,startNum);
+			
+			JSONArray jsonArr = (JSONArray) request.getAttribute("jsonArr");
+			
+			
+			response.setContentType("text/html;charset=UTF-8"); 
+			PrintWriter out = response.getWriter();
+			out.print(jsonArr);
 		}
 		
+		///updateMenu
 		if(command.equals("updateMenu.do")){
 			
 			request.setCharacterEncoding("utf-8");
@@ -636,32 +675,207 @@ public class FrontController extends HttpServlet {
 			forward = new ActionForward();
 			forward.setView("ceoIndex.jsp?center=ceoStore/updateMenu.jsp");
 			forward.execute(request, response);
-			
 		}
-		if(command.equals("updateMenuAction.do")) {
+		
 			
+
+		if(command.equals("updateMenuAction.do")) {
+				
 			String realFolder = getServletContext().getRealPath("/upload/store");
 			int max = 1000 * 1024 * 1024;
-			
+				
 			MultipartRequest multi = new MultipartRequest(request, realFolder, max, "utf-8", new DefaultFileRenamePolicy());
-			
-			
 			MenuAction menuAction = new MenuAction();
-			menuAction.updateMenu(request, response, multi);
-			
+			menuAction.updateMenu(request, response, multi);		
 			
 			forward = new ActionForward();
 			forward.setView("/ceoStore.do?storeNo="+multi.getParameter("storeNo"));
 			forward.execute(request, response);
+		}
+		if(command.equals("UserSearchStore.do")) {
+			StoreDAO store = new StoreDAO();
+
+			// 받은 값 : roadAddress / detailAddress / bname 
+			request.setCharacterEncoding("utf-8");
+			/*
+			request.getSession().setAttribute("orderRoadAddress", request.getParameter("roadAddress"));
+			request.getSession().setAttribute("orderDetailAddress", request.getParameter("detailAddress"));
+			request.getSession().setAttribute("orderBname", request.getParameter("bname"));
+			request.getSession().setAttribute("orderSido", request.getParameter("sido"));*/
+			request.getSession().getAttribute("sido");
+			System.out.println("User Search Store Get Sido : " + request.getSession().getAttribute("sido"));
+			System.out.println("name 값에서 받아온 search store : " + request.getParameter("search"));
 			
+			String search = request.getParameter("search"); // searchstore.jsp 에서 name 값
+			if(search != "") {
+				List<StoreBean> UserSearchStorelist = store.UserGetStore((String) request.getSession().getAttribute("orderSido"),search);
+			
+			
+				request.setAttribute("UserSearchStorelist", UserSearchStorelist);
+
+				// store.GetStore((String) request.getSession().getAttribute("orderSido"));
+				System.out.println("UserSearchStore 프론트 컨트롤러 -> 값가져오기 테스트 " + UserSearchStorelist.toString());
+				System.out.println("주소 시도  : " + request.getSession().getAttribute("orderSido"));
+				forward = new ActionForward();
+				forward.setView("index.jsp?center=store/searchStore.jsp");
+				forward.execute(request, response);
+			}else{
+				response.setContentType("text/html;charset=UTF-8"); 
+				PrintWriter out = response.getWriter();
+				out.print("<script>alert('검색할 가게를 입력해주세요'); history.back(); </script>");
+				System.out.println("User Search Store null값 감지");
+			}
+		
+		}
+
+
+		/*if(command.equals("moreStore.do")) { // store ajax 
+				AjaxAction ajax = new AjaxAction();
+				// int storeNo = Integer.parseInt(request.getParameter("storeNo"));   //글번호
+		
+				List<StoreBean> result= new ArrayList<StoreBean>();
+				try {
+					 result = ajax.moreStoreAction(request, response);
+				} catch (Exception e) {
+						e.printStackTrace();*/
+
+		
+		
+		// 일반 스토어 모드에서 더보기란을 클릭했을때 ajax로 이동되는 컨트롤러
+		/*if(command.equals("moreStore.do")){
+			String orderSido = request.getParameter("orderSido");
+			 int startNum = Integer.parseInt(request.getParameter("startNum")); //현재 보여지는 글 
+			
+			 System.out.println("FrontController moreStore.do 받은 Sidi : " + orderSido);
+			 System.out.println("FrontController moreStore.do 받은 Sidi : " + startNum);
+			 GetStoreMoreAction action = new GetStoreMoreAction();
+			action.GetStoreMore(request, response, orderSido, startNum);
+			JSONArray jsonArr = (JSONArray) request.getAttribute("StoreArr");
+			System.out.println("Front 컨트롤러 받은 Json : " + jsonArr);
+			
+			response.setContentType("text/html;charset=UTF-8"); 
+			 PrintWriter out = response.getWriter();
+			 out.print(jsonArr); // ajax에 data로 뿌려주는 역할, 없으면 null나옴
+
+		}*/
+				
+
+		// 일반 스토어 모드에서 더보기란을 클릭했을때 ajax로 이동되는 컨트롤러
+				if(command.equals("moreStore.do")){
+					String orderSido = request.getParameter("orderSido");
+					 int startNum = Integer.parseInt(request.getParameter("startNum")); //현재 보여지는 글 
+					
+					 System.out.println("FrontController moreStore.do 받은 Sido : " + orderSido);
+					 System.out.println("FrontController moreStore.do 받은 startNum : " + startNum);
+					 GetStoreMoreAction action = new GetStoreMoreAction();
+					action.GetStoreMore(request, response, orderSido, startNum);
+					JSONArray jsonArr = (JSONArray) request.getAttribute("StoreArr");
+
+					
+					response.setContentType("text/html;charset=UTF-8"); 
+					 PrintWriter out = response.getWriter();
+					 out.print(jsonArr); // ajax에 data로 뿌려주는 역할, 없으면 null나옴
+
+				}
+
+		
+		if(command.equals("MyPage.do")){
+			forward = new ActionForward();
+			forward.setView("index.jsp?center=member/myPage.jsp");
+			forward.execute(request, response);
+		}
+		
+		// MyPage에서 나의 리뷰 클릭 시
+		if(command.equals("MyReview.do")){
+			// 세션에 있는 사용자번호
+			String customerNo = (String)request.getSession().getAttribute("customerNo");
+			CustomerReviewAction action = new CustomerReviewAction();
+			action.execute(request, response, customerNo);
+			
+		}
+	
+		//deleteMenu
+		if(command.equals("deleteMenu.do")){
+				
+			request.setCharacterEncoding("utf-8");
+			
+			int menuNo = Integer.parseInt(request.getParameter("menuNo"));
+			
+			MenuDAO mdao = new  MenuDAO();
+			mdao.deleteMenu(menuNo);
+		
+			forward = new ActionForward();
+						
+			forward.setView("ceoStore.do?storeNo="+request.getParameter("storeNo"));
+			forward.setRedirect(true);
+			forward.execute(request, response);
+		}
+		
+		//insertMenu
+		if(command.equals("addMenu.do")){
+			request.setCharacterEncoding("utf-8");
+			String storeNo= request.getParameter("storeNo");
+			
+			forward = new ActionForward();
+						
+			forward.setView("ceoIndex.jsp?center=ceoStore/addMenu.jsp");
+			forward.execute(request, response);
+		}
+		
+
+		if(command.equals("addMenuAction.do")){
+			request.setCharacterEncoding("utf-8");
+			
+			String realFolder = getServletContext().getRealPath("/upload/store");
+			int max = 1000 * 1024 * 1024;
+			MultipartRequest multi = new MultipartRequest(request, realFolder, max, "utf-8", new DefaultFileRenamePolicy());
+			
+			MenuAction menuAction = new MenuAction();
+			menuAction.insertMenu(request, response, multi, Integer.parseInt(multi.getParameter("storeNo")));
+			
+			forward = new ActionForward();
+			forward.setView("ceoStore.do?storeNo="+multi.getParameter("storeNo"));
+			forward.setRedirect(true);
+			forward.execute(request, response);
 			
 			
 		}
 		
-		
-		
-		
-	}
 
-	
+		if(command.equals("getStoreListByCategory.do")) {
+			//System.out.println("프론트컨트롤러 getStoreListByCategory.do 요청");
+			request.setCharacterEncoding("utf-8");
+			AjaxAction ajaxAction = new AjaxAction();
+			String jsonStr = ajaxAction.getStoreList(request, response);
+			
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.print(jsonStr);
+		}
+		
+
+		
+		// MyPage에서 나의 주문 클릭시
+		if(command.equals("OrderDetail.do")){
+
+			String customerNo = (String) request.getSession().getAttribute("customerNo");// 세션에 있는 사용자번호
+			OrderAction action = new OrderAction();
+			// action.execute(request, response, customerNo);
+			try {
+				action.GetOrderDetail(request, response, customerNo);
+				System.out.println("OrderDetail 컨트롤러 호출");
+				System.out.println("FrontController 전달받은 customerNo : " + customerNo);
+			} catch (Exception e) {
+				System.out.println("OrderDetail 오류" + e);
+				e.printStackTrace();
+			}
+			
+		}
+
+
+
+	}
+				
 }
+	
+

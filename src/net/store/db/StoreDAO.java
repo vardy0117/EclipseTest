@@ -15,6 +15,8 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import org.apache.catalina.Store;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import com.sun.javafx.fxml.BeanAdapter;
 import com.sun.org.apache.xml.internal.security.keys.storage.StorageResolverException;
@@ -138,13 +140,15 @@ public class StoreDAO {
 	} // method
 	
 	/***********************************************************************/
-	public List<StoreBean> GetStore(String sido){ // �ㅽ���� ��蹂� 媛��몄�ㅺ린
+	public List<StoreBean> GetStore(String sido){ // 평상시 스토어 받아오는 함수
+												 // more버튼 눌러서 가져오는 함수는 별도로 밑에 있음
+		
 		List<StoreBean> storelist = new ArrayList<StoreBean>();
 		
 		try {
 			 con = getConnection();
 			 
-			 sql = "select * from store where sido=?";
+			 sql = "select * from store where sido=? limit 0,4"; // 초반부터 4개씩
 			 
 			 pstmt = con.prepareStatement(sql);
 			 
@@ -228,7 +232,7 @@ public class StoreDAO {
 	
 	
 	///
-public void updateStore(StoreBean bean) {
+	public void updateStore(StoreBean bean) {
 		try {
 			con = getConnection();
 
@@ -265,70 +269,219 @@ public void updateStore(StoreBean bean) {
 //delete 
 
 
-public void deleteStore(String storeNo) {
+	public void deleteStore(String storeNo) {
+		
+		 try {
+			con = getConnection();
+			
+			sql= "delete from store where storeNo=?";
+			
+			pstmt =  con.prepareStatement(sql);
+			pstmt.setString(1, storeNo);
+			
+			pstmt.executeUpdate();
+			
+			
+			
+			
+		} catch (Exception e) {
+			System.out.println("deleteStore inner error" +e );
+			e.printStackTrace();
+		}finally {
+			resourceClose();
+		}
 	
-	 try {
-		con = getConnection();
-		
-		sql= "delete from store where storeNo=?";
-		
-		pstmt =  con.prepareStatement(sql);
-		pstmt.setString(1, storeNo);
-		
-		pstmt.executeUpdate();
 		
 		
 		
 		
-	} catch (Exception e) {
-		System.out.println("deleteStore inner error" +e );
-		e.printStackTrace();
-	}finally {
-		resourceClose();
+		
+		
+		
 	}
 
-	
-	
-	
-	
-	
-	
-	
-}
-
-public int getStoreCount(String ceoNo) {
-	
-	int storeCount = 0;
-	
-	try {
-		con =	getConnection();
-		sql="select  count(storeNo) as storecount from store where ceoNo=? ";
-	
-		pstmt =  con.prepareStatement(sql);
-		pstmt.setString(1,ceoNo);
+	public int getStoreCount(String ceoNo) {
 		
-		rs=	pstmt.executeQuery();
+		int storeCount = 0;
+		
+		try {
+			con =	getConnection();
+			sql="select  count(storeNo) as storecount from store where ceoNo=? ";
+		
+			pstmt =  con.prepareStatement(sql);
+			pstmt.setString(1,ceoNo);
+			
+			rs=	pstmt.executeQuery();
+		
+			if(rs.next()){
+				storeCount = rs.getInt("storecount");
+				System.out.println(storeCount+"랄랄라");
+			}
+			
+		
+		
+		} catch (Exception e) {
+			System.out.println(" getStoreCount inner error" +e );
+			e.printStackTrace();
+		}finally {
+			resourceClose();
+		}
 	
-		if(rs.next()){
-			storeCount = rs.getInt("storecount");
-			System.out.println(storeCount+"랄랄라");
+		
+		return storeCount;
+		
+		
+		
+	}
+
+
+
+
+	public List<StoreBean> UserGetStore(String sido, String search){ // 검색용
+		List<StoreBean> storelist = new ArrayList<StoreBean>();
+		
+		try {
+			 con = getConnection();
+			 
+			 sql = "select * from store where sido like ? and name like ?";
+			 
+			 pstmt = con.prepareStatement(sql);
+			 
+			 pstmt.setString(1, "%" + sido + "%");
+			 pstmt.setString(2, "%" + search + "%");
+			 System.out.println("유저 검색 시도 스토어 받은값 : DAO (sido) : " + sido);
+			 System.out.println("유저 검색 시도 검색 받은값 : DAO (search) : " + search);
+			 
+			 rs = pstmt.executeQuery();
+			 
+			 while(rs.next()){
+				 StoreBean mBean = new StoreBean();
+					 mBean.setStoreNo(rs.getString("storeNo"));
+					 mBean.setCeoNo(rs.getString("ceoNo"));
+					 mBean.setName(rs.getString("name"));
+					 mBean.setRoadAddress(rs.getString("roadAddress"));
+					 mBean.setCategory(rs.getString("category"));
+					 mBean.setStoreHours(rs.getString("storeHours"));
+					 mBean.setSido(rs.getString("sido"));
+					 mBean.setImage(rs.getString("image"));
+					 mBean.setMessage(rs.getString("message"));
+					 System.out.println("Get 스토어 호출");
+					 // ��癒몄��� �ㅼ���� 媛��몄�ㅻ�� 嫄몃� ^^;;;;;;;;;;;;;;;;;;;;;;;;;
+					 storelist.add(mBean);
+			 }
+			
+		} catch (Exception e) {
+			System.out.println("User GetStore Error : " + e);
+		} finally {
+			resourceClose();
 		}
 		
-	
-	
-	} catch (Exception e) {
-		System.out.println(" getStoreCount inner error" +e );
-		e.printStackTrace();
-	}finally {
-		resourceClose();
+		
+		
+		return storelist;
+		
 	}
 
+
+/*****************************************************************/
+	public JSONArray GetMoreStore(String sido, int limit){ // 스토어에서 more버튼 눌렀을때
+		 JSONArray StoreMoreArr = new JSONArray();
+		 JSONObject StoreMoreJsonObj;
+	// 	List<StoreBean> storelist = new ArrayList<StoreBean>();
+		
+		try {
+			 con = getConnection();
+			 
+			 sql = "select * from store where sido = ? limit ?,4";
+			 
+			 pstmt = con.prepareStatement(sql);
+			 
+			 pstmt.setString(1, sido);
+			 pstmt.setInt(2, limit);
+			 
+			 System.out.println("GetMoreStore sido값 : " + sido);
+			 System.out.println("GetMoreStore limit값 : " + limit);
+			 rs = pstmt.executeQuery();
+			 
+			 while(rs.next()){
+				 StoreMoreJsonObj = new JSONObject();
+				 StoreMoreJsonObj.put("storeNo", rs.getString(1));
+				 StoreMoreJsonObj.put("ceoNo", rs.getString(2));
+				 StoreMoreJsonObj.put("name", rs.getString(3));
+				StoreMoreJsonObj.put("roadAddress", rs.getString("roadAddress"));
+				 StoreMoreJsonObj.put("category", rs.getString("category"));
+				 StoreMoreJsonObj.put("storeHours", rs.getString("storeHours"));
+				 StoreMoreJsonObj.put("sido",rs.getString("sido"));
+				 StoreMoreJsonObj.put("image", rs.getString("image"));
+			     StoreMoreJsonObj.put("message", rs.getString("message"));
+				System.out.println("GetMoreStore Json스토어 호출");
+					 
+				StoreMoreArr.add(StoreMoreJsonObj);
+				System.out.println("Json Object 내용 : " + StoreMoreJsonObj);
+			
+			 }
+			
+		} catch (Exception e) {
+			System.out.println("GetMoreStore 에러발생 : " + e);
+		} finally {
+			resourceClose();
+		}
+		
+		
+		
+		return StoreMoreArr;
+		
+	}
+
+	public List<StoreBean> getStoreList(String category, String startNo, String currentHour, String orderSido, String orderBname) {
+		//System.out.println("ajaxAction -> StoreDAO.getStoreList() 호출");
+		//System.out.println("category : " + category + " / orderSido : " + orderSido + " / orderBname : " + orderBname);
+		List<StoreBean> storeList = new ArrayList<>();
+		
+		try {
+			con = getConnection();
+			sql = "select * from store where sido = ? and deliveryArea like ? and category = ? " +
+				  "and ( (substr(storeHours,1,2) <= ? and substr(storeHours,5,2) > ?) or (storeHours = '00시~00시') )" + " limit ?, 10";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, orderSido);
+			pstmt.setString(2, "%"+orderBname+"%");
+			pstmt.setString(3, category);
+			pstmt.setString(4, currentHour);
+			pstmt.setString(5, currentHour);
+			pstmt.setInt(6, Integer.parseInt(startNo));
+			
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				StoreBean storeBean = new StoreBean();
+				storeBean.setStoreNo(rs.getString(1));
+				storeBean.setCeoNo(rs.getString(2));
+				storeBean.setName(rs.getString(3));
+				storeBean.setRoadAddress(rs.getString(4));
+				storeBean.setDetailAddress(rs.getString(5));
+				storeBean.setCategory(rs.getString(6));
+				storeBean.setPhone(rs.getString(7));
+				storeBean.setStoreHours(rs.getString(8));
+				storeBean.setMessage(rs.getString(9));
+				storeBean.setImage(rs.getString(10));
+				storeBean.setPoints(rs.getString(11));
+				storeBean.setOrderCount(rs.getString(12));
+				storeBean.setDeliveryArea(rs.getString(13));
+				storeBean.setRegNo(rs.getString(14));
+				storeBean.setSido(rs.getString(15));
+				
+				storeList.add(storeBean);
+			}
+		} catch (Exception e) {
+			System.out.println("getStoreList 에러 발생 : " + e);
+		} finally {
+			resourceClose();
+		}
+		
+		return storeList;
+	}
 	
-	return storeCount;
 	
-	
-	
-}
+
 	
 	
 }

@@ -52,6 +52,18 @@
 	#logo img {
 		width: 250px;
 	}
+	
+	cartButton {
+		display: table;
+	}
+	
+	.cartIco {
+		display : table-cell;
+		vertical-align:middle;
+		border : 0;
+		background: none;
+		cursor : pointer;
+	}
 </style>
 </head>
 <script>
@@ -80,9 +92,13 @@
 			</c:when>
 			<c:when test="${!empty sessionScope.customerNo}">
 				<div id="loginAndJoin">
+					<!-- <span class ="cartButton">
+						<button type="button" class="cartIco" onclick=""><img src="./images/ICON/icons8-meal-50 (3).png" width="40" height="40"></button>
+					</span> -->
 					${sessionScope.nickname} 회원님 어서 오세요! | 
 					<a onclick = "logOut()" style="cursor:pointer;">logout</a> |	
-					<a href="./CustomerModifyIntro.do">회원수정</a>
+					<!-- <a href="./CustomerModifyIntro.do">회원수정</a> | -->
+					<a href="./MyPage.do">MyPage</a>
 				</div>
 			</c:when>
 		</c:choose>	

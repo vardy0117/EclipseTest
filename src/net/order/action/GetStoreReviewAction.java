@@ -7,6 +7,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONArray;
+
+import jdk.nashorn.internal.ir.RuntimeNode.Request;
 import net.customer.db.CustomerBean;
 import net.customer.db.CustomerDAO;
 import net.menu.db.MenuBean;
@@ -16,17 +19,13 @@ import net.review.db.ReviewDAO;
 public class GetStoreReviewAction {
 
 	public void getStoreReview(HttpServletRequest request, HttpServletResponse response, int storeNo) {
-		
-		
 		List<ReviewBean> reviewList = new ArrayList<ReviewBean>();
 		
 		ReviewDAO rdao = new ReviewDAO();
-		reviewList = rdao.getReview(Integer.toString(storeNo));
-		
-		
+		reviewList = rdao.getReview(storeNo);
 		
 
-		// store.jsp 리뷰란에서 고객번호로 글 구분짓는거 말고 고객닉네임으로 구분 짓다가 잠시 보류 - 이태우- 
+		// 닉네임을 가져와서 리뷰에 뿌려줌
 		List<String> nickNameList = new ArrayList<String>();
 		String nickName="";
 		CustomerDAO cDAO = new CustomerDAO();
@@ -38,6 +37,13 @@ public class GetStoreReviewAction {
 		
 		request.setAttribute("reviewList", reviewList);
 		request.setAttribute("nickNameList", nickNameList);
+	}
+	
+	// 더보기 클릭했을때 다음 리뷰를 가져오는 작업을 위한 메소드
+	public void getStoreReviewMore(HttpServletRequest request, HttpServletResponse response,int storeNo,int startNum){
+		ReviewDAO rDAO = new ReviewDAO();
+		JSONArray jsonArr = rDAO.getReview(storeNo,startNum);
+		request.setAttribute("jsonArr", jsonArr);
 	}
 
 }

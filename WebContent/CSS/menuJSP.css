@@ -1,0 +1,51 @@
+@CHARSET "UTF-8";
+
+	div {
+		box-sizing: border-box;
+	}
+	
+	input[type=number]::-webkit-inner-spin-button {
+     width: 30px;
+     height: 30px;
+     -webkit-appearance: none;
+	}
+	
+	table#menuTable{
+		margin: 0 auto;
+		width : 100%;
+	}
+
+	.menuImage{
+		width : 100px;
+		height : 100px;
+	}
+	
+	.tbtn, .icoClear{
+		cursor : pointer;
+		background-color: white;
+		border : 0;
+		outline: 0;
+	}
+	
+	.cart { 
+	position: fixed; 
+	right: 50%; 
+	top: 180px; 
+	margin-right: -720px; 
+	text-align:center; 
+	width: 120px; 
+	}
+	
+	.cart a{
+		text-decoration: none;
+		color: black;
+	}
+	.cart input{
+		width: 40px;
+	}
+	
+	.cartUl li {
+		list-style-type : none;
+	}
+	
+	
