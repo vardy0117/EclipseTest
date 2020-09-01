@@ -356,7 +356,6 @@ public class FrontController extends HttpServlet {
 				
 				forward = new ActionForward();
 				forward.setRedirect(false);
-
 				forward.setView("index.jsp?center=store/store.jsp");
 
 				
@@ -369,7 +368,6 @@ public class FrontController extends HttpServlet {
 		if(command.equals("OrderCheck.do")){
 			forward = new ActionForward();
 			
-			forward.setRedirect(true);
 			forward.setView("index.jsp?center=store/orderCheck.jsp");
 			
 			forward.execute(request, response);

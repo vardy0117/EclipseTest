@@ -28,7 +28,7 @@ public class GetStoreMenuAction {
 			categoryList = mdao.getMenuCategory(storeNo);
 			req.setAttribute("storeNo", storeNo);						
 			req.setAttribute("menuList", menuList);	
-			req.setAttribute("categoryList", categoryList);		
+			req.setAttribute("categoryList", categoryList);
 	}
 
 }
