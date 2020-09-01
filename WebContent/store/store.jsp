@@ -220,6 +220,9 @@
 							<img src="upload/store/${info.image}">
 						</td>
 						<td style="padding-left: 15px;">
+							<c:if test="${star.points eq null }">
+								<span>주문기록이 없습니다! 첫 주문을 해주세요!</span>
+							</c:if>
 							<c:if test="${star.points eq 0 }">
 								<span style="color: #ffa400"></span><span style="color: #e0e0e0">★★★★★</span>
 							</c:if>
