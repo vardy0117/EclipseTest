@@ -159,6 +159,32 @@ public class MenuDAO {
 		return mBean;
 	}
 	
+
+	
+	public int deleteMenu(int storeNo){
+		int result = 0;
+		
+		try {
+			con=getConnection();
+			sql="delete from menu where storeNo=?";
+			pstmt=con.prepareStatement(sql);
+			
+			pstmt.setInt(1,storeNo); 
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			resourceClose();
+		}
+		
+		return result;
+	}
+
+	
+	
+	
+	
+	
 	
 	
 	

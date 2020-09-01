@@ -38,26 +38,28 @@ public class MenuAction {
 					break;
 				}
 			}
-			String menu_category = multi.getParameter("menu_category" + i);
-			String menu_name = multi.getParameter("menu_name" + i);
-			int menu_price = Integer.parseInt(multi.getParameter("menu_price" + i));
-			
-			menuBean.setImage(menu_image);
-			menuBean.setCategory(menu_category);
-			menuBean.setName(menu_name);
-			menuBean.setPrice(menu_price);
-			menuBean.setStoreNo(Integer.toString(storeNo));
-			
-			
-			menuList.add(menuBean);
-		}
+		String menu_category = multi.getParameter("menu_category" + i);
+		String menu_name = multi.getParameter("menu_name" + i);
+		int menu_price = Integer.parseInt(multi.getParameter("menu_price" + i));
+		
+		menuBean.setImage(menu_image);
+		menuBean.setCategory(menu_category);
+		menuBean.setName(menu_name);
+		menuBean.setPrice(menu_price);
+		menuBean.setStoreNo(Integer.toString(storeNo));
+		
+		
+		menuList.add(menuBean);
+	}
 	
 		
 		
 		MenuDAO menuDAO = new MenuDAO();
 		menuDAO.insertMenus(menuList);
 		
-		
+	
+		MenuDAO mdao = new MenuDAO();
+		mdao.deleteMenu(storeNo);
 		
 		
 		
