@@ -20,7 +20,8 @@
 </head>
 <body>
 	<div id="bottomDiv">
-		inc/ceoBottom.jsp
+		bottom
+		<div><a href="./CustomerLogin.do" target="_blank">일반회원 로그인</a></div>
 	</div>
 	
 </body>
