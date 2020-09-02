@@ -2,6 +2,9 @@ package net.order.action;
 
 import java.util.ArrayList;
 
+import java.util.List;
+
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,10 +16,15 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import javafx.beans.binding.StringExpression;
+import net.orderList.db.OrderJoinBean;
 import net.orderList.db.OrderListBean;
 import net.orderList.db.OrderListDAO;
 import net.orderMenu.db.OrderMenuBean;
 import net.orderMenu.db.OrderMenuDAO;
+import net.review.db.ReviewBean;
+import net.review.db.ReviewDAO;
+import net.store.db.StoreBean;
+import net.store.db.StoreDAO;
 
 
 public class OrderAction {
@@ -55,15 +63,25 @@ public class OrderAction {
 	}
 	
 	
-	public void GetOrderDetail(HttpServletRequest request, HttpServletResponse response, String customerNo) throws Exception{
-		OrderListBean oBean = new OrderListBean();
-		// oBean.setCustomerNo((String) request.getSession().getAttribute("customerNo"));
-		String number = (String) request.getSession().getAttribute("customerNo");
+	public  void GetOrderDetail(HttpServletRequest request, HttpServletResponse response, String customerNo) throws Exception{
+
 		OrderListDAO odao = new OrderListDAO();
-		odao.GetOrderDetail(number);
-		System.out.println("OrderDetail Action 호출!");
-		System.out.println("전달받은 고객 number : " + number);
+		List<OrderJoinBean> orderlist = new ArrayList<OrderJoinBean>();
 	
+		
+		orderlist = odao.GetOrderDetail(customerNo); // orderlist 테이블 
+
+	
+		System.out.println("OrderDetail Action 호출!");
+		System.out.println("전달받은 고객 number : " + customerNo);
+		
+		request.setAttribute("orderlist", orderlist);
+		
+		System.out.println("join내용 : " + orderlist);
+
+
+		System.out.println("request getAttribute " + orderlist.toString());
+		
 	}
 
 	// 리뷰작성 안된 주문목록 가져오기

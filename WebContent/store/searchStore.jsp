@@ -50,6 +50,7 @@
 		border-radius: 12px;
 		cursor: pointer;
 		margin-right: 10px;
+		margin-bottom: 10px;
 	}
 	#storeBox img {
 		width: 100px;
@@ -58,6 +59,23 @@
 	}
 	#storeBox td {
 		padding-left: 15px;
+	}
+	#buttonDiv button {
+		background: linear-gradient( to right, hsl(98 100% 62%), hsl(204 100% 59%) );
+	    font-family: Binggrae-Bold;
+	    font-size: 1rem;
+	    color: white;
+	    border: none;
+	    border-radius: 12px;
+	    width: 270px;
+	    height: 35px;
+	    transition-duration: 1s;
+	    opacity: 0.7;
+	    margin-bottom: 10px;
+	}
+	#buttonDiv button:hover {
+		cursor: pointer;
+		opacity: 1;
 	}
 </style>
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
