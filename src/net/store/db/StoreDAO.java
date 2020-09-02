@@ -439,7 +439,7 @@ public class StoreDAO {
 		List<StoreBean> storeList = new ArrayList<>();
 		
 		try {
-			con = getConnection();
+			con = getConnection(); 
 			sql = "select * from store where sido = ? and deliveryArea like ? and category = ? " +
 				  "and ( (substr(storeHours,1,2) <= ? and substr(storeHours,5,2) > ?) or ( substr(storeHours,1,2) <= ? and substr(storeHours,1,2) > substr(storeHours,5,2) ) or (storeHours = '00시~00시') )" + " limit ?, 10";
 			pstmt = con.prepareStatement(sql);
