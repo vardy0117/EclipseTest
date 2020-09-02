@@ -118,7 +118,7 @@ public class StoreAction {
 		
 	}
 
-	public String getStoreNameByStoreNo(HttpServletRequest request, HttpServletResponse response, String storeNo) {
+	public StoreBean getStoreNameByStoreNo(HttpServletRequest request, HttpServletResponse response, String storeNo) {
 		StoreDAO sDAO = new StoreDAO();
 		return sDAO.getStoreName(storeNo);
 	}

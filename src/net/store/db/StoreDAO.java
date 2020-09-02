@@ -481,18 +481,34 @@ public class StoreDAO {
 	}
 
 	// MyReview.jsp에서 가게이름을 얻어오기 위한 메소드
-	public String getStoreName(String storeNo) {
+	public StoreBean getStoreName(String storeNo) {
 		
-		//ArrayList<String> storeName=new ArrayList<String>();
-		String name="";
+		StoreBean sBean=null;
 		try {
 			con = getConnection();
-			sql="select name from store where storeNo=?";
+			sql="select * from store where storeNo=?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, storeNo);
 			rs = pstmt.executeQuery();
 			if(rs.next()){
-				name=rs.getString(1);
+				sBean = new StoreBean();
+				
+				sBean.setStoreNo(rs.getString(1));
+				sBean.setCeoNo(rs.getString(2));
+				sBean.setName(rs.getString(3));
+				sBean.setRoadAddress(rs.getString(4));
+				sBean.setDetailAddress(rs.getString(5));
+				sBean.setCategory(rs.getString(6));
+				sBean.setPhone(rs.getString(7));
+				sBean.setStoreHours(rs.getString(8));
+				sBean.setMessage(rs.getString(9));
+				sBean.setImage(rs.getString(10));
+				sBean.setPoints(rs.getString(11));
+				sBean.setOrderCount(rs.getString(12));
+				sBean.setDeliveryArea(rs.getString(13));
+				sBean.setRegNo(rs.getString(14));
+				sBean.setSido(rs.getString(15));
+				
 			}
 		} catch (Exception e) {
 			System.out.println("getStoreName() 내에서 예외 발생 ");
@@ -500,7 +516,7 @@ public class StoreDAO {
 		} finally {
 			resourceClose();
 		}
-		return name;
+		return sBean;
 		
 	}
 	

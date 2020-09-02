@@ -12,6 +12,19 @@ public class CustomerReviewAction {
 
 	public ArrayList<ReviewBean> execute(HttpServletRequest request,HttpServletResponse response,String customerNo){
 		ReviewDAO rDAO = new ReviewDAO();
-		return rDAO.getMyReview(customerNo);
+		if(request.getParameter("writedPageNo")==null){
+			return rDAO.getMyReview(customerNo,1);
+		}else{
+			return rDAO.getMyReview(customerNo,Integer.parseInt(request.getParameter("writedPageNo")));
+		}
+		
+		
+	}
+
+	public int getAllReviewCount(HttpServletRequest request, HttpServletResponse response, String customerNo) {
+		int count=0;
+		ReviewDAO rDAO = new ReviewDAO();
+		count = rDAO.getAllReviewCount(customerNo);
+		return count;
 	}
 }

@@ -799,20 +799,56 @@ public class FrontController extends HttpServlet {
 		if(command.equals("MyReview.do")){
 			// 세션에 있는 사용자번호
 			String customerNo = (String)request.getSession().getAttribute("customerNo");
+			
+			// 페이징처리
+			request.setAttribute("unReviewPageNo", request.getParameter("unReviewPageNo")==null?"1":request.getParameter("unReviewPageNo"));
+			request.setAttribute("writedPageNo", request.getParameter("writedPageNo")==null?"1":request.getParameter("writedPageNo"));
+			
+			
+			
 			CustomerReviewAction action = new CustomerReviewAction();
 			ArrayList<ReviewBean> reviewList =  action.execute(request, response, customerNo);
-			request.setAttribute("reviewList",reviewList);
+			int writedReviewCount = action.getAllReviewCount(request, response, customerNo);
+			request.setAttribute("writedReviewCount", writedReviewCount);
+			
 			
 			// 나의 리뷰 페이지에서는 테이블에 닉네임이 아니라 가게이름을 띄워주려고한다
-			ArrayList<String> storeName=new ArrayList<String>();
-			String name="";
+			ArrayList<StoreBean> storeName=new ArrayList<StoreBean>();
+			StoreBean sBean;
 			for(int i=0;i<reviewList.size();i++){
 				StoreAction action2 = new StoreAction();
-				name = action2.getStoreNameByStoreNo(request,response,reviewList.get(i).getStoreNo());
-				storeName.add(name);
+				sBean = action2.getStoreNameByStoreNo(request,response,reviewList.get(i).getStoreNo());
+				storeName.add(sBean);
 			}
 			
+			// 리뷰 작성 안한 가게 목록 띄워주기 작업
+			OrderAction action3 = new OrderAction();
+			ArrayList<OrderListBean> unReviewOrderList = action3.getUnReviewOrder(request,response,customerNo);
+			int unReviewCount = action3.getUnAllReviewCount(request,response,customerNo);
+			
+			request.setAttribute("unReviewCount", unReviewCount);
+			
+			// 리뷰 작성 안한 가게이름을 띄워주는 작업
+			ArrayList<StoreBean> unReviewStoreNameList=new ArrayList<StoreBean>();
+			StoreBean sBean2;
+			for(int i =0;i<unReviewOrderList.size();i++){
+				StoreAction action4 = new StoreAction();
+				sBean2 = action4.getStoreNameByStoreNo(request, response, unReviewOrderList.get(i).getStoreNo());
+				unReviewStoreNameList.add(sBean2);
+			}
+			
+			
+			
+			
+			
+			//---------------------- request.setAttribute -------------------------
+			
+			
+			request.setAttribute("reviewList",reviewList);
 			request.setAttribute("storeName", storeName);
+			request.setAttribute("unReviewOrderList", unReviewOrderList);
+			request.setAttribute("unReviewStoreNameList", unReviewStoreNameList);
+			
 			
 			forward = new ActionForward();
 			forward.setView("index.jsp?center=member/myReview.jsp");
