@@ -4,8 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+
+import java.sql.Timestamp;
+
+
 import java.util.ArrayList;
 import java.util.List;
+
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -118,5 +123,62 @@ public class OrderListDAO {
 		
 	}
 	
+
+	// 리뷰작성 안된 주문목록 가져오기
+	public ArrayList<OrderListBean> getUnReviewOrder(String customerNo,int startNum) {
+		ArrayList<OrderListBean> list = new ArrayList<OrderListBean>();
+		OrderListBean oBean;
+		try {
+			con= getConnection();
+			sql="select * from orderList where deliveryCheck ='T' and customerNo=? and orderNo not in (select orderNo from review) limit ?,6";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, customerNo);
+			pstmt.setInt(2, (startNum-1)*6);
+			rs = pstmt.executeQuery();
+			while(rs.next()){
+				oBean = new OrderListBean();
+				oBean.setOrderNo(rs.getString(1));
+				oBean.setCustomerNo(rs.getString(2));
+				oBean.setStoreNo(rs.getString(3));
+				oBean.setRoadAddress(rs.getString(4));
+				oBean.setDetailAddress(rs.getString(5));
+				oBean.setPhone(rs.getString(6));
+				oBean.setPayment(rs.getString(7));
+				oBean.setRequest(rs.getString(8));
+				oBean.setOrderTime(rs.getTimestamp(9));
+				oBean.setOrderCheck(rs.getString(10));
+				oBean.setPrepareTime(rs.getString(11));
+				oBean.setDeliveryCheck(rs.getString(12));
+				list.add(oBean);
+			}
+		} catch (Exception e) {
+			System.out.println("getUnReviewOrder() 내에서 예외 발생");
+			e.printStackTrace();
+		} finally {
+			resourceClose();
+		}
+		return list;
+	}
+
+	public int getUnAllReviewCount(String customerNo) {
+		int count=0;
+		try {
+			con=getConnection();
+			sql="select count(*) from orderList where deliveryCheck ='T' and customerNo=? and orderNo not in (select orderNo from review)";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, customerNo);
+			rs = pstmt.executeQuery();
+			if(rs.next()){
+				count = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			System.out.println("getUnAllReviewCount() 내에서 예외 발생");
+			e.printStackTrace();
+		} finally {
+			resourceClose();
+		}
+		
+		return count;
+	}
 
 }

@@ -178,15 +178,16 @@ public class ReviewDAO {
 	   
    }
 
-	public ArrayList<ReviewBean> getMyReview(String customerNo) {
+	public ArrayList<ReviewBean> getMyReview(String customerNo,int pageNum) {
 		
 		ArrayList<ReviewBean> reviewList = new ArrayList<ReviewBean>();
 		ReviewBean rBean;
 		try {
 			con = getConnection();
-			sql="select * from review where customerNo=? order by date desc";
+			sql="select * from review where customerNo=? order by date desc limit ?,6";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, customerNo);
+			pstmt.setInt(2, (pageNum-1)*6);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()){
@@ -211,6 +212,27 @@ public class ReviewDAO {
 		}
 		
 		return reviewList;
+	}
+
+	public int getAllReviewCount(String customerNo) {
+		int count = 0;
+		try {
+			con=getConnection();
+			sql = "select count(*) from review where customerNo=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, customerNo);
+			rs = pstmt.executeQuery();
+			if(rs.next()){
+				count=rs.getInt(1);
+			}
+		} catch (Exception e) {
+			System.out.println("getAllReviewCount() 내에서 예외발생");
+			e.printStackTrace();
+		} finally {
+			resourceClose();
+		}
+		
+		return count;
 	}
 	
 	

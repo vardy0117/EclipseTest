@@ -1,7 +1,9 @@
 package net.order.action;
 
 import java.util.ArrayList;
+
 import java.util.List;
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -80,6 +82,25 @@ public class OrderAction {
 
 		System.out.println("request getAttribute " + orderlist.toString());
 		
+	}
+
+	// 리뷰작성 안된 주문목록 가져오기
+	public ArrayList<OrderListBean> getUnReviewOrder(HttpServletRequest request, HttpServletResponse response,String customerNo) {
+		OrderListDAO oDAO = new OrderListDAO();
+		int unReviewPageNo;
+		if(request.getParameter("unReviewPageNo")==null){
+			unReviewPageNo=1;
+		}else{
+			unReviewPageNo=Integer.parseInt(request.getParameter("unReviewPageNo"));
+		}
+		
+		return oDAO.getUnReviewOrder(customerNo,unReviewPageNo);
+	}
+
+	public int getUnAllReviewCount(HttpServletRequest request, HttpServletResponse response, String customerNo) {
+		
+		OrderListDAO oDAO = new OrderListDAO();
+		return oDAO.getUnAllReviewCount(customerNo);
 	}
 
 
