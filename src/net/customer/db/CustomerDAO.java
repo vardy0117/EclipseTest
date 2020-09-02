@@ -85,7 +85,7 @@ public class CustomerDAO {
 		return result; 		
 	} // method()
 	
-	public boolean insertCustomer(CustomerBean cb) {
+	public int insertCustomer(CustomerBean cb) {
 		
 		int result = 0;
 		
@@ -127,7 +127,7 @@ public class CustomerDAO {
 			 result = pstmt.executeUpdate();
 			 
 			 if(result != 0) {
-				 return true;
+				 return 1;
 			 }
 			
 		} catch (Exception e){
@@ -136,7 +136,7 @@ public class CustomerDAO {
 			resourceClose();
 		}
 		
-		return false;
+		return result;
 	} // method
 /***********************************************************************************************/
 	public boolean CheckCustomer(CustomerBean cb) { // 占싸깍옙占쏙옙 占싯삼옙 

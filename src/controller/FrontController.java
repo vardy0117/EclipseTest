@@ -107,6 +107,7 @@ public class FrontController extends HttpServlet {
 			
 			PrintWriter out = response.getWriter();
 			out.print(result);
+			
 		}
 		
 		if(command.equals("getCustomer.do")) {
@@ -126,12 +127,16 @@ public class FrontController extends HttpServlet {
 			forward.execute(request, response);
 		}
 		
+	
+		
 		// >customerJoinExecute >customerLogin.jsp
 		if(command.equals("CustomerJoinAction.do")) {
 			CustomerJoinAction action = new CustomerJoinAction();
-				try {
-					action.customerJoin(request, response);
-				} catch (Exception e) {
+				
+			try {
+				action.customerJoin(request, response);
+				
+			} catch (Exception e) {
 					e.printStackTrace();
 				}
 				
@@ -140,6 +145,9 @@ public class FrontController extends HttpServlet {
 			forward.setView("index.jsp?center=member/customerLogin.jsp");	
 			forward.execute(request, response);
 		}
+		
+		
+		
 		
 		// >Login.jsp
 		if(command.equals("CustomerLogin.do")) {

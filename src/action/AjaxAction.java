@@ -98,6 +98,7 @@ public class AjaxAction {
 			
 			jsonArr.put(jsonObj);
 		}
+		System.out.println(jsonArr.toString());
 		
 		return jsonArr.toString();
 	}
