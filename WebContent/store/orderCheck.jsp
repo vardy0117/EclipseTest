@@ -148,6 +148,7 @@
 		    alert(msg);
 		});
 	}
+	
 </script>	
 
 </head>	
