@@ -59,7 +59,7 @@
 					$(".myCouponList").html(tag);
 				} else {
 					for(var i=0 in coupon){
-						tag += "<tr class='data' onclick='discountPrice("+coupon[i].discount+","+coupon[i].couponNo+")'+ style='cursor:pointer;'>"+
+						tag += "<tr class='data' onclick='discountPrice("+coupon[i].discount+","+coupon[i].couponNo+", \""+coupon[i].name+"\")'+ style='cursor:pointer;'>"+
 								"<td>"+coupon[i].name+"</td>"+
 								"<td>"+coupon[i].expDate+"</td>"+
 								"</tr>";
@@ -81,15 +81,17 @@
 				
 	} 
 	
-	function discountPrice(dcoupon, couponNo){
+	function discountPrice(dcoupon, couponNo, couponName){
 		console.log(dcoupon)
 		
 		var discountP = -1*totalPrice*(dcoupon/100);
 		
 		$("#myCouponList").css("display","none");	
 		$(".discountPrice").html(discountP + " &nbsp;원");
+		$(".discountName").html("할인 금액&nbsp;&nbsp;["+couponName+"]");
 		if(dcoupon==0){
 			$(".discountPrice").css("display","none");
+			$(".discountName").html("할인 금액");
 		}
 		$(".totalPrice").html((totalPrice+discountP) +" &nbsp;원");
 		
