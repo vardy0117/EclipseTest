@@ -54,7 +54,8 @@
 	 주문번호 : ${orderlistarray.orderNo} <br>
 	 주문메뉴 : ${orderlistarray.name} <br>
 	 가격 : ${orderlistarray.price} <br>
-
+	 스토어 번호 ${orderlistarray.storeNo }
+	 
 
 		</td>
 	</tr>
