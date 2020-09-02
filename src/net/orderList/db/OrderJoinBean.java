@@ -1,6 +1,10 @@
 package net.orderList.db;
 
 public class OrderJoinBean {
+	
+	/********************************************************************/
+	//마이페이지에서 주문리스트 확인 전용 조인 ean
+	/********************************************************************/
 	String OrderNo;
 	String CustomerNo;
 	String name;

@@ -41,9 +41,8 @@
 <body>	
 
 <div id="mainDiv">
-<%-- 	<c:set var="customer" value="${orderlist}"/> --%>
-	
-	 고객번호 : ${customerNo} <br>
+	<c:set var="length" value="${fn:length(orderlist) }" />
+	 <font color="black" size="10"> 고객번호 : ${customerNo} <br> </font>
 	 
 	 <c:forEach var="orderlistarray" items="${orderlist}" varStatus="status"> 
 	<div id="storeBox">
@@ -63,7 +62,9 @@
 	</div>
 		</c:forEach>
 
-
+<c:if test="${length eq 0 }" >
+	<font color="black" size="10"> 니 주문이 존재하지 않습니다 ^^ </font>
+</c:if>
 
 	
 </div>

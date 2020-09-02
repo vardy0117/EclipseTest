@@ -79,8 +79,6 @@ public class OrderListDAO {
 	
 	public   List<OrderJoinBean>  GetOrderDetail(String  number) { 
 		 List<OrderJoinBean> orderlist = new ArrayList<OrderJoinBean>();		
-/*		OrderListBean orderlist = new OrderListBean();
-		OrderMenuBean ordermenulist = new OrderMenuBean();*/
 		OrderJoinBean join = null ;
 		
 		try {

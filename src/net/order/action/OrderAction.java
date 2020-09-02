@@ -62,28 +62,20 @@ public class OrderAction {
 	
 	
 	public  void GetOrderDetail(HttpServletRequest request, HttpServletResponse response, String customerNo) throws Exception{
-		OrderListBean oBean = new OrderListBean();
+
 		OrderListDAO odao = new OrderListDAO();
-		// OrderMenuDAO menudao = new OrderMenuDAO();
-		OrderMenuBean menuBean = new OrderMenuBean();
-		
-		OrderJoinBean join = new OrderJoinBean();
-		
 		List<OrderJoinBean> orderlist = new ArrayList<OrderJoinBean>();
-		// oBean.setCustomerNo((String) request.getSession().getAttribute("customerNo"));
-		String number = (String) request.getSession().getAttribute("customerNo");
-		// String ordernumber = (String) request.getSession().getAttribute("orderNo");
 	
-		orderlist = odao.GetOrderDetail(number); // orderlist 테이블 
-		// menuBean = menudao.GetOrderMenuDetail(number); // order menu 테이블
+		
+		orderlist = odao.GetOrderDetail(customerNo); // orderlist 테이블 
 
 	
 		System.out.println("OrderDetail Action 호출!");
-		System.out.println("전달받은 고객 number : " + number);
+		System.out.println("전달받은 고객 number : " + customerNo);
 		
 		request.setAttribute("orderlist", orderlist);
 		
-		System.out.println("join내용 " + orderlist);
+		System.out.println("join내용 : " + orderlist);
 
 
 		System.out.println("request getAttribute " + orderlist.toString());
