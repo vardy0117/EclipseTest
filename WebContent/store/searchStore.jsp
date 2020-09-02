@@ -113,8 +113,8 @@
 					var starPoint = jsonArray[i].orderCount == "0" ? 0 : jsonArray[i].points / jsonArray[i].orderCount;
 					starPoint = starPoint.toFixed(1);
 					var storeHours = jsonArray[i].storeHours == '00시~00시' ? '24시간 영업' : jsonArray[i].storeHours;
-					
-					var storeBox = '<div id="storeBox" onclick="location.href=\'Store.do?storeNo=' + jsonArray[i].storeNo + '\'">' +
+					var storeBox = /* '<div id="storeBox" onclick="location.href=\'Store.do?storeNo='+jsonArray[i].storeNo+'\'">'+  */
+									'<div id="storeBox" onclick="addStoreNoToStorage('+jsonArray[i].storeNo +', \''+jsonArray[i].name+'\')">'+ 
 										'<table>' + 
 											'<tr>' +
 												'<td rowspan="4">' +
@@ -169,6 +169,39 @@
 			}
 		});
 	}
+	
+	
+	function setStoreInStorage(storeNo, storeName){
+		console.log(storeName);
+		var store = {
+			storeNo : storeNo,	
+			storeName : storeName
+		};
+			
+		var json = JSON.stringify(store);
+		
+		sessionStorage.setItem("store",json);	
+		
+		location.href = "Store.do?storeNo="+storeNo;
+	}
+	function addStoreNoToStorage(storeNo, storeName){
+		var cartItem=JSON.parse(sessionStorage.getItem("cart"));
+		if(cartItem==null){
+		setStoreInStorage(storeNo, storeName);
+		} else { // 카트가 이미 저장된 메뉴가 있으면 (이미 storeNo는 저장된 상태 )
+			var store = JSON.parse(sessionStorage.getItem("store"));
+			if (storeNo == store["storeNo"]) {
+				location.href="Store.do?storeNo="+storeNo;	
+			} else {	
+				if(confirm("카트를 비우고 다른 가게를 가시겠어요?") == true){
+					var cart = null;
+					sessionStorage.setItem("cart",cart);
+					setStoreInStorage(storeNo, storeName);
+					location.href="Store.do?storeNo="+storeNo;
+				}
+			}
+		}
+	}	
 	
 </script>
 <body>
