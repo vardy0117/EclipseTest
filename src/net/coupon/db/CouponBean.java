@@ -8,6 +8,7 @@ public class CouponBean {
 	private String name;
 	private int discount;
 	private Timestamp expDate;
+	private String used;
 	
 	
 	
@@ -40,6 +41,12 @@ public class CouponBean {
 	}
 	public void setExpDate(Timestamp expDate) {
 		this.expDate = expDate;
+	}
+	public String getUsed() {
+		return used;
+	}
+	public void setUsed(String used) {
+		this.used = used;
 	}
 	
 	

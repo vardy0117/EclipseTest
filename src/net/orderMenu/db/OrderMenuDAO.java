@@ -42,7 +42,7 @@ public class OrderMenuDAO {
 		   
 		   con = getConnection();
 		    
-		   sql = "insert into orderMenu(orderNo, name, quantity, price) values(?, ? ,? ,?)";
+		   sql = "insert into orderMenu(orderNo, name, basePrice, quantity, price) values(?, ?, ?, ?, ?)";
 		    
 		   pstmt = con.prepareStatement(sql);
 		    
@@ -52,8 +52,9 @@ public class OrderMenuDAO {
 			   
 			    pstmt.setInt(1, orderNo);
 			    pstmt.setString(2, order.getString("name"));
-			    pstmt.setInt(3, order.getInt("quantity"));
-			    pstmt.setInt(4, order.getInt("price"));
+			    pstmt.setInt(3, order.getInt("basePrice"));
+			    pstmt.setInt(4, order.getInt("quantity"));
+			    pstmt.setInt(5, order.getInt("price"));
 			    
 			    pstmt.executeUpdate();
 		    }

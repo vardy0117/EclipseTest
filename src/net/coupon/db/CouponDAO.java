@@ -41,7 +41,7 @@ public class CouponDAO {
 			con = getConnection();
 			
 			sql = "select *  from coupon "
-				+ "where customerNo=? and "
+				+ "where customerNo=? and used='F' and "
 			    + "expDate>=DATE_FORMAT(NOW(),'%y-%m-%d')";
 			
 			pstmt = con.prepareStatement(sql);
@@ -69,6 +69,29 @@ public class CouponDAO {
 		}
 		
 		return couponList;
+	}
+
+	public void updateUsedCoupon(int couponNo) {
+		try {
+			con = getConnection();
+			
+			sql = "update coupon "
+				+ "set used='F' "
+			    + "where couponNo=?";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setInt(1, couponNo);
+			
+			rs = pstmt.executeQuery();
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			resourceClose();
+		}
+		
 	}
 
 }

@@ -365,7 +365,6 @@ public class FrontController extends HttpServlet {
 					action3.getStoreReview(request, response, storeNo);
 				
 				forward = new ActionForward();
-				forward.setRedirect(false);
 				forward.setView("index.jsp?center=store/store.jsp");
 
 				
@@ -400,11 +399,14 @@ public class FrontController extends HttpServlet {
 		}
 		
 		if(command.equals("Order.do")){
+			request.setCharacterEncoding("utf-8");
+			response.setCharacterEncoding("utf-8");
+			
 			int orderNo=0;
 			try{
 				OrderAction action = new OrderAction();
 				orderNo = action.insertOrderList(request, response);
-			
+	
 				action.insertOrderMenu(request, response, orderNo);
 			
 			} catch (Exception e){

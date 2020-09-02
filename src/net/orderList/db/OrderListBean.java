@@ -17,6 +17,7 @@ public class OrderListBean {
 	private String orderCheck;
 	private String prepareTime;
 	private String deliveryCheck;
+	private String couponNo;
 	
 	
 	//getter,setter
@@ -93,4 +94,11 @@ public class OrderListBean {
 	public void setOrderTime(Timestamp orderTime) {
 		this.orderTime = orderTime;
 	}
+	public String getCouponNo() {
+		return couponNo;
+	}
+	public void setCouponNo(String couponNo) {
+		this.couponNo = couponNo;
+	}
+	
 }

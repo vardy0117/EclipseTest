@@ -11,33 +11,40 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import javafx.beans.binding.StringExpression;
+import net.coupon.db.CouponDAO;
 import net.orderList.db.OrderListBean;
 import net.orderList.db.OrderListDAO;
-import net.orderMenu.db.OrderMenuBean;
 import net.orderMenu.db.OrderMenuDAO;
 
 
 public class OrderAction {
 	
-	public int insertOrderList(HttpServletRequest request, HttpServletResponse response) {
-
+	public int insertOrderList(HttpServletRequest request, HttpServletResponse response) throws ParseException, JSONException {		
+		JSONParser parser = new JSONParser();
+		Object obj = parser.parse(request.getParameter("deliveryInfo"));
+		JSONObject deliveryInfo = (JSONObject) obj;
 		OrderListBean oBean = new OrderListBean();
 		
-		oBean.setStoreNo(request.getParameter("storeNo"));
 		oBean.setCustomerNo((String) request.getSession().getAttribute("customerNo"));
-		oBean.setRoadAddress((String) request.getSession().getAttribute("orderRoadAddress")); 
-		oBean.setDetailAddress((String) request.getSession().getAttribute("orderDetailAddress"));
-		//oBean.setRoadAddress("나나");
-		//oBean.setDetailAddress("나나");
-		System.out.println("일반 주소 확인중 " + request.getSession().getAttribute("orderRoadAddress"));
-		System.out.println("oBean주소 받기 " + oBean.getDetailAddress());
-		System.out.println("oBean주소 받기 " + oBean.getRoadAddress());
-		System.out.println("상세 주소 확인중 " + request.getSession().getAttribute("orderDetailAddress"));
-		
-		oBean.setPhone((String) request.getSession().getAttribute("phone"));
-		
+		oBean.setStoreNo(request.getParameter("storeNo"));
+		oBean.setRoadAddress((String) deliveryInfo.get("roadAddress")); 
+		oBean.setDetailAddress((String) deliveryInfo.get("detailAddress"));
+		oBean.setPhone((String) deliveryInfo.get("phone"));
+		oBean.setPayment((String) deliveryInfo.get("payment"));
+		oBean.setRequest((String) deliveryInfo.get("request"));
+		oBean.setCouponNo((String) deliveryInfo.get("couponNo"));
+	
 		OrderListDAO odao = new OrderListDAO();
 		int orderNo = odao.insertOrderList(oBean);
+		
+		
+		if(deliveryInfo.get("couponNo")!=null && !deliveryInfo.get("couponNo").equals("false")){
+			CouponDAO cdao = new CouponDAO();
+			int couponNo = Integer.parseInt((String) deliveryInfo.get("couponNo"));
+			
+			cdao.updateUsedCoupon(couponNo);
+		};
+		
 		
 		return orderNo;
 	}
