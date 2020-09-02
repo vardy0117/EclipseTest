@@ -74,23 +74,21 @@ public class OrderAction {
 
 		OrderListDAO odao = new OrderListDAO();
 		List<OrderJoinBean> orderlist = new ArrayList<OrderJoinBean>();
-		List<OrderJoinBean> orderlist2 = new ArrayList<OrderJoinBean>();
+
 		OrderJoinBean join = new OrderJoinBean();
 		
 		orderlist = odao.GetOrderDetail(customerNo); // orderlist 테이블 
-		orderlist2 = odao.GetOrderStoreName(join.getStoreName());
-		System.out.println("GetOrderDetail 서버 겟스토어 네임 " + join.getStoreName());
+	//	orderlist2 = odao.GetOrderStoreName("시발");
 		
-		System.out.println("OrderDetail Action 호출!");
-		System.out.println("전달받은 고객 number : " + customerNo);
+		System.out.println("오더 액션 GetOrderDetail 서버 액션 겟스토어 네임 " + join.getStoreName());
 		
-		request.setAttribute("orderlist", orderlist);
-		request.setAttribute("orderlist2", orderlist2);
+		System.out.println("오더 액션 전달받은 고객 number : " + customerNo);
 		
-		System.out.println("join내용 : " + orderlist);
+		request.setAttribute("orderlist", orderlist);		
+		System.out.println("join내용 : " + orderlist + "      ");
 
 
-		System.out.println("request getAttribute " + orderlist.toString());
+		System.out.println("request getAttribute " + orderlist.toString() + "      ");
 		
 	}
 

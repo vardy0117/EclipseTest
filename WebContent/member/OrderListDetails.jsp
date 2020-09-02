@@ -66,9 +66,6 @@
 		<font color="black" size="5"> ${nickname}님의 주문내역 입니다
 		
 		</font> <br> <br>
-		
-<c:if test="${orderlistarray.orderNo eq orderlistarray.orderNo}">
-<c:set var="order" value="${orderlist}"/>
 
 		<c:forEach var="orderlistarray" items="${orderlist}"
 			varStatus="status">
@@ -76,18 +73,19 @@
 				<table>
 					<tr>
 						<td>
-						<a href="#">
-						    주문번호 : ${orderlistarray.orderNo} <br>
-							주문했던 가게 : ${orderlistarray.storeName }
-						</a>
+							스토어 이름 : ${orderlistarray.storeName} <br>
+						     주문번호 : ${orderlistarray.orderNo} <br>
+						     주문했던메뉴 : ${orderlistarray.name} <br> 가격 : ${orderlistarray.price} <br>
+							스토어 번호 ${orderlistarray.storeNo } <br>
+							
+
 						</td>
 					</tr>
 				</table>
 			</div>
 		</c:forEach>
-	</c:if>
-		
-		
+
+
 		<c:if test="${length eq 0 }">
 			<font color="black" size="10"> 당신의 주문이 존재하지 않습니다 ^^ <br>주문하러 가시겠어요? <br><br>
 			<a href="./SearchStore.do">클릭</a>

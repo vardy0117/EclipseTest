@@ -943,9 +943,7 @@ public class FrontController extends HttpServlet {
 				e.printStackTrace();
 			}
 			forward.execute(request, response);
-		
-			// request.setAttribute("orderlist", odao.GetOrderDetail(number));
-			
+
 		}
 
 
