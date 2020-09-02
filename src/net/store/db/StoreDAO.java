@@ -479,6 +479,30 @@ public class StoreDAO {
 		
 		return storeList;
 	}
+
+	// MyReview.jsp에서 가게이름을 얻어오기 위한 메소드
+	public String getStoreName(String storeNo) {
+		
+		//ArrayList<String> storeName=new ArrayList<String>();
+		String name="";
+		try {
+			con = getConnection();
+			sql="select name from store where storeNo=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, storeNo);
+			rs = pstmt.executeQuery();
+			if(rs.next()){
+				name=rs.getString(1);
+			}
+		} catch (Exception e) {
+			System.out.println("getStoreName() 내에서 예외 발생 ");
+			e.printStackTrace();
+		} finally {
+			resourceClose();
+		}
+		return name;
+		
+	}
 	
 	
 
