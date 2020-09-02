@@ -52,22 +52,22 @@
 			url : "DiscountCheck.do",
 			type: "post",
 			success : function(data, textStatus){
-				if(data==null){
-					tag = "<tr class='data' onclick='cancelDiscount()'><td colspan='2'>할인 쿠폰이 없습니다.</td></tr>"
+				var coupon = JSON.parse(data).couponList;
+				console.log(coupon)
+				if(coupon==null || coupon.length==0){
+					tag = "<div class='noneCoupon' style='color:#A4A4A4;'>할인 쿠폰이 존재하지 않습니다.</div>"
+					$(".myCouponList").html(tag);
 				} else {
-					var coupon = JSON.parse(data).couponList;
 					for(var i=0 in coupon){
 						tag += "<tr class='data' onclick='discountPrice("+coupon[i].discount+","+coupon[i].couponNo+")'+ style='cursor:pointer;'>"+
 								"<td>"+coupon[i].name+"</td>"+
 								"<td>"+coupon[i].expDate+"</td>"+
 								"</tr>";
-								
-						console.log(coupon[i].discount);
 					}
 					
 					$("#myCouponList").html(tag);
 					
-					var cancelTag="<tr class='data'><td colspan='2'><a onclick='cancelDiscount()' style='cursor:pointer;'>사용 안함</a></td></tr>";		
+					var cancelTag="<tr class='data'><td colspan='2'><a onclick='discountPrice(0, \"false\")' style='cursor:pointer;'>사용 안함</a></td></tr>";		
 					$("#myCouponList").append(cancelTag);
 				}
 			},		
@@ -86,17 +86,14 @@
 		
 		var discountP = -1*totalPrice*(dcoupon/100);
 		
-		var inputHiddenTag = "<input type='hidden' name='couponNo' value="+couponNo+">";
-		
 		$("#myCouponList").css("display","none");	
 		$(".discountPrice").html(discountP + " &nbsp;원");
+		if(dcoupon==0){
+			$(".discountPrice").css("display","none");
+		}
 		$(".totalPrice").html((totalPrice+discountP) +" &nbsp;원");
 		
 		$("#couponNo").val(couponNo);
-	}
-	
-	function cancelDiscount(){	
-		$("#myCouponList").css("display","none");			
 	}
 	
 /* 	function order(){
@@ -250,7 +247,7 @@
 			</div>		
 			<button id="pbtn" onclick="payment();">결 제 하 기</button>
 		</div>	
-			<input type="hidden" id="couponNo" name="couponNo">
+			<input type="hidden" id="couponNo" name="couponNo" value="false">
 		</form>
 		<div style="clear:both;"></div>
 	</div>
