@@ -79,34 +79,55 @@ public class OrderListDAO {
 	
 	public   List<OrderJoinBean>  GetOrderDetail(String  number) { 
 		 List<OrderJoinBean> orderlist = new ArrayList<OrderJoinBean>();		
+		 List<OrderJoinBean> orderstorename = new ArrayList<OrderJoinBean>();	
 		OrderJoinBean join = null ;
 		
 		try {
 			 getConnection();
 
 			// sql = "select orderNo, customerNo, storeNo from orderList where customerNo = ? ";
-			sql = "select a.orderNo, a.customerNo, b.name, b.price "
+			sql = "select a.orderNo, a.customerNo, storeNo, b.name, b.price "
 					+ "from orderList a, orderMenu b "
 					+ "where a.orderNo = b.orderNo and customerNo = ?";
+
+			 
 
 			 pstmt = con.prepareStatement(sql);
 			 
 			 pstmt.setString(1, number);
 			 System.out.println("OrderListDao에 SELECT에 가지고온 customerNo : " + number);
-			 System.out.println("sql " + sql);
+
 			 rs = pstmt.executeQuery();
 			 while(rs.next()) {
 				 join = new OrderJoinBean();
 				 
 				 join.setOrderNo(rs.getString(1));
 				 join.setCustomerNo(rs.getString(2));
-				 join.setName(rs.getString(3));
-				 
-				 join.setPrice(rs.getString(4));
+				 join.setStoreNo(rs.getString(3));
+				 join.setName(rs.getString(4));
+				 join.setPrice(rs.getString(5));
 				 orderlist.add(join);
-
-				
+	 
 			 }
+			 
+			 
+				sql = "select name from store where storeNo = ?";
+				 pstmt = con.prepareStatement(sql);
+				 pstmt.setString(1, join.getStoreNo());
+				 System.out.println("GetOrderDetail 스토어 번호 찾기 : " + join.getStoreNo());
+				 rs = pstmt.executeQuery();
+				
+				 
+				 if(rs.next()) {
+				 System.out.println("store번호 찾기 rs.next성공");
+				System.out.println("가져온 가게이름 : " + rs.getString("name")); 
+
+				String name = rs.getString("name");
+				GetOrderStoreName(name);
+				System.out.println("오더리스트 들어간 내용 : " +name);
+				 }
+				
+			 
 			
 		} catch (Exception e){
 			System.out.println("GetOrderDetail Error : " + e);
@@ -114,9 +135,52 @@ public class OrderListDAO {
 			resourceClose();
 		}
 		
+		
+		
 		return orderlist  ;
 		
 	}
 	
+	
+	
+	
+
+	public   List<OrderJoinBean>  GetOrderStoreName(String  name) { 
+		 List<OrderJoinBean> orderlist = new ArrayList<OrderJoinBean>();		
+		 List<OrderJoinBean> orderstorename = new ArrayList<OrderJoinBean>();	
+		OrderJoinBean join = null ;
+		
+		try {
+			 getConnection();
+
+			// sql = "select orderNo, customerNo, storeNo from orderList where customerNo = ? ";
+			sql = "select * from store where name = ?";
+			 pstmt = con.prepareStatement(sql);
+			 
+			 pstmt.setString(1, name);
+			 System.out.println("GetOrderStoreName에 SELECT에 가지고온 customerNo : " + name);
+
+			 rs = pstmt.executeQuery();
+			 while(rs.next()) {
+				 join = new OrderJoinBean();
+				 join.setStoreName(rs.getString(name));
+
+				 orderlist.add(join);
+	 
+			 }
+			
+			 
+			
+		} catch (Exception e){
+			System.out.println("GetOrderDetail Error : " + e);
+		} finally {
+			resourceClose();
+		}
+		
+		
+		
+		return orderlist  ;
+		
+	}
 
 }

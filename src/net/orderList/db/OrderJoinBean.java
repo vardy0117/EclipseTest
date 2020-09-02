@@ -3,23 +3,39 @@ package net.orderList.db;
 public class OrderJoinBean {
 	
 	/********************************************************************/
-	//마이페이지에서 주문리스트 확인 전용 조인 ean
+	//마이페이지에서 주문리스트 확인 전용 조인 bean
 	/********************************************************************/
-	String OrderNo;
-	String CustomerNo;
-	String name;
+	String orderNo;
+	String customerNo;
+	String storeNo;
+	String name; // 메뉴 이름
 	String price;
+	String storeName; 
+	
+	
+	public String getStoreName() {
+		return storeName;
+	}
+	public void setStoreName(String storeName) {
+		this.storeName = storeName;
+	}
 	public String getOrderNo() {
-		return OrderNo;
+		return orderNo;
 	}
 	public void setOrderNo(String orderNo) {
-		OrderNo = orderNo;
+		this.orderNo = orderNo;
 	}
 	public String getCustomerNo() {
-		return CustomerNo;
+		return customerNo;
 	}
 	public void setCustomerNo(String customerNo) {
-		CustomerNo = customerNo;
+		this.customerNo = customerNo;
+	}
+	public String getStoreNo() {
+		return storeNo;
+	}
+	public void setStoreNo(String storeNo) {
+		this.storeNo = storeNo;
 	}
 	public String getName() {
 		return name;
@@ -35,8 +51,9 @@ public class OrderJoinBean {
 	}
 	@Override
 	public String toString() {
-		return "OrderJoinBean [OrderNo=" + OrderNo + ", CustomerNo=" + CustomerNo + ", name=" + name + ", price="
-				+ price + "]";
+		return "OrderJoinBean [orderNo=" + orderNo + ", customerNo=" + customerNo + ", storeNo=" + storeNo + ", name="
+				+ name + ", price=" + price + ", storeName=" + storeName + "]";
 	}
-	
+
+
 }
