@@ -441,14 +441,14 @@ public class StoreDAO {
 		try {
 			con = getConnection();
 			sql = "select * from store where sido = ? and deliveryArea like ? and category = ? " +
-				  "and ( (substr(storeHours,1,2) <= ? and substr(storeHours,5,2) > ?) or (storeHours = '00시~00시') or (substr(storeHours,1,2) <= ? and substr(storeHours,1,2) > substr(storeHours,5,2) )" + " limit ?, 10";
+				  "and ( (substr(storeHours,1,2) <= ? and substr(storeHours,5,2) > ?) or ( substr(storeHours,1,2) <= ? and substr(storeHours,1,2) > substr(storeHours,5,2) ) or (storeHours = '00시~00시') )" + " limit ?, 10";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, orderSido);
 			pstmt.setString(2, "%"+orderBname+"%");
 			pstmt.setString(3, category);
 			pstmt.setString(4, currentHour);
 			pstmt.setString(5, currentHour);
-			pstmt.setInt(6, Integer.parseInt(startNo));
+			pstmt.setString(6, currentHour);
 			pstmt.setInt(7, Integer.parseInt(startNo));
 			
 			rs = pstmt.executeQuery();
