@@ -31,6 +31,8 @@ public class AjaxAction {
 		return result;
 	} // method
 	
+	
+	
 	public String emailCheckFromCeo(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		request.setCharacterEncoding("UTF-8");

@@ -261,11 +261,13 @@ public class FrontController extends HttpServlet {
 		if(command.equals("CeoJoinCheck.do")) {
 			AjaxAction ajax = new AjaxAction();
 			String result="";
+			 
 			try {
 				result=ajax.emailCheckFromCeo(request, response);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			
 			PrintWriter out = response.getWriter();
 			out.print(result);
 		}		

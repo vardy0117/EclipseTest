@@ -174,9 +174,11 @@
 	var notuseableMsg="이미 가입된 계정입니다!";
 	
 	function emailCheck(){
-		readyEmailCheck();
+		//readyEmailCheck();
 		if($("#emailId").val()!="" && $("#emailServer").val()!=""){
+		
 			var email = $("#emailId").val()+"@"+$("#emailServer").val();
+		
 			$.ajax({
 				type : "post",
 				async : false,
@@ -202,9 +204,9 @@
 		} // if
 	} // function
 
- 	function readyEmailCheck(){
+ 	/* function readyEmailCheck(){
 		$("#emailChkMsg").html("<img src='./images/loading.gif' width='20' height='20' stye='display: block; margin: 0px auto;'>")
-	} 
+	}  */
 		
 	var pwChkSuccessMsg="비밀 번호 확인 완료!";
 	
@@ -286,8 +288,8 @@
 					<tr>
 						<td class="td_left">이메일</td>
 						<td class="td_right">
-							<input class="textBox" type="text" name="emailId" size="10" placeholder="이메일 주소"> @
-							<input class="textBox" type="text" name="emailServer" onfocusout="emailCheck()"/>
+							<input class="textBox" type="text" id="emailId" name="emailId" size="10" placeholder="이메일 주소"> @
+							<input class="textBox" type="text" id="emailServer"  name="emailServer" onfocusout="emailCheck()"/>
 							<select id="emailServerSelBox" name="emailServerSelBox" onchange="emailAddress_Change()" onfocusout="emailCheck()"> 
 								<option value="">직접 입력</option>
 								<option value="naver.com">naver.com</option>

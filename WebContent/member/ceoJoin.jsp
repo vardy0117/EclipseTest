@@ -158,11 +158,13 @@
 	function emailCheck(){
 		readyEmailCheck();
 		if($("#emailId").val()!="" && $("#emailServer").val()!=""){
+			
 			var email = $("#emailId").val()+"@"+$("#emailServer").val();
+			console.log(email);
 			$.ajax({
 				type : "post",
 				async : false,
-				url : "./CustomerJoinCheck.do",
+				url : "./CeoJoinCheck.do",
 				data : {email:email},
 				dataType : "text",
 				success : function(result,textStatus){
@@ -223,14 +225,14 @@
 
 	<div id="mainDiv"> 
 		<div id="formDiv">
-			<h1 style="text-align: center;">일반 회원 가입</h1>
+			<h1 style="text-align: center;">사장님 회원 가입</h1>
 			<form action="./CeoJoinAction.do" id="join" method="post" name="fr">
 				<table>
 					<tr>
 						<td class="td_left">이메일</td>
 						<td class="td_right">
-							<input class="textBox" type="text" name="emailId" size="10" placeholder="이메일 주소"> @
-							<input class="textBox" type="text" name="emailServer" onfocusout="emailCheck()"/>
+							<input class="textBox" type="text" id="emailId" name="emailId" size="10" placeholder="이메일 주소"> @
+							<input class="textBox" type="text" id="emailServer" name="emailServer" onfocusout="emailCheck()"/>
 							<select id="emailServerSelBox" name="emailServerSelBox" onchange="emailAddress_Change()" onfocusout="emailCheck()"> 
 								<option value="">직접 입력</option>
 								<option value="naver.com">naver.com</option>
