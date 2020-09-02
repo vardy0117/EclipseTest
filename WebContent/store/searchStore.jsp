@@ -114,7 +114,6 @@
 					starPoint = starPoint.toFixed(1);
 					var storeHours = jsonArray[i].storeHours == '00시~00시' ? '24시간 영업' : jsonArray[i].storeHours;
 					var storeBox = /* '<div id="storeBox" onclick="location.href=\'Store.do?storeNo='+jsonArray[i].storeNo+'\'">'+  */
-								   // sessionStorage에 음식점 정보 저장
 									'<div id="storeBox" onclick="addStoreNoToStorage('+jsonArray[i].storeNo +', \''+jsonArray[i].name+'\')">'+ 
 										'<table>' + 
 											'<tr>' +
