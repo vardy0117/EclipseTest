@@ -4,10 +4,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
+
+import net.orderMenu.db.OrderMenuBean;
+import net.store.db.StoreBean;
 
 public class OrderListDAO {
 	Connection con = null;
@@ -72,27 +77,38 @@ public class OrderListDAO {
 	
 	
 	
-	public int GetOrderDetail(String  number) { 
-		// 리스트 방식으로 변경해야 됨
-		int test =0;
+	public   List<OrderJoinBean>  GetOrderDetail(String  number) { 
+		 List<OrderJoinBean> orderlist = new ArrayList<OrderJoinBean>();		
+/*		OrderListBean orderlist = new OrderListBean();
+		OrderMenuBean ordermenulist = new OrderMenuBean();*/
+		OrderJoinBean join = null ;
 		
 		try {
 			 getConnection();
 
-			 sql = "select * from orderList where customerNo = ? ";
+			// sql = "select orderNo, customerNo, storeNo from orderList where customerNo = ? ";
+			sql = "select a.orderNo, a.customerNo, b.name, b.price "
+					+ "from orderList a, orderMenu b "
+					+ "where a.orderNo = b.orderNo and customerNo = ?";
+
 			 pstmt = con.prepareStatement(sql);
+			 
 			 pstmt.setString(1, number);
 			 System.out.println("OrderListDao에 SELECT에 가지고온 customerNo : " + number);
-			
+			 System.out.println("sql " + sql);
 			 rs = pstmt.executeQuery();
-			 
+			 while(rs.next()) {
+				 join = new OrderJoinBean();
+				 
+				 join.setOrderNo(rs.getString(1));
+				 join.setCustomerNo(rs.getString(2));
+				 join.setName(rs.getString(3));
+				 
+				 join.setPrice(rs.getString(4));
+				 orderlist.add(join);
 
-			 
-			 if(rs.next()) {
-				 test = rs.getInt(1);
-				 System.out.println("test값 결과 " + test);
+				
 			 }
-			 
 			
 		} catch (Exception e){
 			System.out.println("GetOrderDetail Error : " + e);
@@ -100,8 +116,9 @@ public class OrderListDAO {
 			resourceClose();
 		}
 		
-		return test;
+		return orderlist  ;
 		
 	}
+	
 
 }

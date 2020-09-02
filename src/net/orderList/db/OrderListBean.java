@@ -93,4 +93,11 @@ public class OrderListBean {
 	public void setOrderTime(Timestamp orderTime) {
 		this.orderTime = orderTime;
 	}
+	@Override
+	public String toString() {
+		return "OrderListBean [orderNo=" + orderNo + ", customerNo=" + customerNo + ", storeNo=" + storeNo
+				+ ", roadAddress=" + roadAddress + ", detailAddress=" + detailAddress + ", phone=" + phone
+				+ ", payment=" + payment + ", request=" + request + ", orderTime=" + orderTime + ", orderCheck="
+				+ orderCheck + ", prepareTime=" + prepareTime + ", deliveryCheck=" + deliveryCheck + "]";
+	}
 }

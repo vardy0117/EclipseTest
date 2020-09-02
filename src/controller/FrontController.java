@@ -46,6 +46,7 @@ import net.order.action.GetStoreMenuAction;
 import net.order.action.GetStoreReviewAction;
 import net.order.action.OrderAction;
 import net.orderList.db.OrderListBean;
+import net.orderList.db.OrderListDAO;
 import net.review.db.ReviewBean;
 
 import net.review.db.ReviewDAO;
@@ -884,18 +885,31 @@ public class FrontController extends HttpServlet {
 		if(command.equals("OrderDetail.do")){
 
 			String customerNo = (String) request.getSession().getAttribute("customerNo");// 세션에 있는 사용자번호
+		
 			OrderAction action = new OrderAction();
-			// action.execute(request, response, customerNo);
+			
 			try {
-				action.GetOrderDetail(request, response, customerNo);
+				
 				System.out.println("OrderDetail 컨트롤러 호출");
 				System.out.println("FrontController 전달받은 customerNo : " + customerNo);
+	
+				 action.GetOrderDetail(request, response, customerNo);
+
+				forward = new ActionForward();
+		
+				forward.setView("index.jsp?center=member/OrderList.jsp");
+				forward.setRedirect(false);
+
 			} catch (Exception e) {
 				System.out.println("OrderDetail 오류" + e);
 				e.printStackTrace();
 			}
+			forward.execute(request, response);
+		
+			// request.setAttribute("orderlist", odao.GetOrderDetail(number));
 			
 		}
+
 
 
 
