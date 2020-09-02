@@ -52,14 +52,20 @@ public class CustomerDAO {
 			 } else {
 				 result = "useable";			 				
 			 }
+			 
+			 
+			 
 		} catch (Exception e) {
-			System.out.println("joinCheckEmail占쌨소듸옙 占쏙옙占싸울옙占쏙옙 占쏙옙占쏙옙 占쌩삼옙 : " + e);
+			System.out.println("joinCheckEmail 내부 안에 에러  : " + e);
 		} finally {
 			resourceClose();
 		}
 		return result; 		
 	} // method
 
+	
+	
+	
 	public String joinCheckPhone(String phone) {
 		String result="";
 		try {

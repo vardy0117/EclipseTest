@@ -53,6 +53,7 @@ public class CeoDAO {
 	
 		public String joinCheckEmail(String email) {
 		String result="";
+		
 		try {
 			 getConnection();
 			
@@ -62,12 +63,17 @@ public class CeoDAO {
 			 pstmt.setString(1, email);
 			
 			 rs = pstmt.executeQuery();
-			 
+			
 			 if(rs.next()){
 				 result = "notUsable";
+			
 			 } else {
-				 result = "useable";			 				
+				 result = "useable";
+				
 			 }
+			 
+			 
+			 
 		} catch (Exception e) {
 			System.out.println(e);
 		} finally {
