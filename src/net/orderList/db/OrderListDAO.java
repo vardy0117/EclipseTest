@@ -44,13 +44,13 @@ public class OrderListDAO {
 	} // resourceClose()
 	
 	public int insertOrderList(OrderListBean oBean) {
-		int storeNo = 0;
+		int orderNo = 0;
 		
 		try {
 			 getConnection();
 
-			 sql="insert into orderList(customerNo, storeNo, roadAddress, detailAddress, phone)" +
-				 " values(?,?,?,?,?)";
+			 sql="insert into orderList(customerNo, storeNo, roadAddress, detailAddress, phone, request, payment, couponNo)" +
+				 " values(?,?,?,?,?,?,?,?)";
 			 
 			 pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			 
@@ -59,24 +59,29 @@ public class OrderListDAO {
 			 pstmt.setString(3, oBean.getRoadAddress());
 			 pstmt.setString(4, oBean.getDetailAddress());
 			 pstmt.setString(5, oBean.getPhone());
-			
+			 pstmt.setString(6, oBean.getRequest());
+			 pstmt.setString(7, oBean.getPayment());
+			 pstmt.setString(8, oBean.getCouponNo());
+			 
 			 pstmt.executeUpdate();
 			 
 			 rs = pstmt.getGeneratedKeys();
 			 
 			 
 			 if(rs.next()) {
-				 storeNo = rs.getInt(1);
+				 orderNo = rs.getInt(1);
 			 }
+			 
 			 
 			
 		} catch (Exception e){
 			System.out.println("insertOrderList inner Error : " + e);
+			e.printStackTrace();
 		} finally {
 			resourceClose();
 		}
 		
-		return storeNo;
+		return orderNo;
 		
 	}
 	

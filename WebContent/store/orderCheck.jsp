@@ -7,20 +7,30 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="CSS/orderCheckJSP.css">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <script>
 	window.onload = function(){
 		fillOutList();
 	}
+	
 	var totalPrice=0;
-		
+	var firstFood = "";
+	var totalQuantity = 0;
+	var storeNo="";
+	
+	
 	function fillOutList(){		
 		// 결제란 정보 입력
 		var storeInfo=JSON.parse(sessionStorage.getItem("store"));
-		$(".storeName").html(storeInfo.storeName);
-		
+			$(".storeName").html(storeInfo.storeName);
+			// $(".storeNo").val(storeInfo.storeName);
+			storeNo= storeInfo.storeNo;
+
 		var cart=JSON.parse(sessionStorage.getItem("cart"));
 		var tag = "";
+		firstFood = cart[0].name;
+		
 			for(i=0; i<cart.length; i++){
 				tag += '<div class="orderMenu">'+
 					   		'<span class="menus">'+cart[i].name+'</span>'+
@@ -32,28 +42,22 @@
 					   '</div>'+
 					   '<div class="clearBoth"></div>';
 	
-					
+				totalQuantity += cart[i]["quantity"];	
 				totalPrice += cart[i]["price"];
 			}
 				
 			$(".orderRow").html(tag);
 			$(".totalPrice").html(totalPrice +" &nbsp;원");
+			$("#payment").val(totalPrice);
 	}
 	
-	function discountCoupon(){
-	 	/* var url = "store/myCoupon.jsp"
-		var title ="myCoupon"
-		var status ="toolbar=no,directories=no,scrollbars=no,resizable=no,status=no,menubar=no,width=240, height=200, top=0,left=20";
-			window.open(url, title, status);  */
-			
-			
+	function discountCoupon(){			
 		var tag = "<tr><th style='width:120px'>이 름</th><th style='width:120px'>만료기한</th></tr>";
 		$.ajax({
 			url : "DiscountCheck.do",
 			type: "post",
 			success : function(data, textStatus){
 				var coupon = JSON.parse(data).couponList;
-				console.log(coupon)
 				if(coupon==null || coupon.length==0){
 					tag = "<div class='noneCoupon' style='color:#A4A4A4;'>할인 쿠폰이 존재하지 않습니다.</div>"
 					$(".myCouponList").html(tag);
@@ -82,8 +86,6 @@
 	} 
 	
 	function discountPrice(dcoupon, couponNo, couponName){
-		console.log(dcoupon)
-		
 		var discountP = -1*totalPrice*(dcoupon/100);
 		
 		$("#myCouponList").css("display","none");	
@@ -96,63 +98,119 @@
 		$(".totalPrice").html((totalPrice+discountP) +" &nbsp;원");
 		
 		$("#couponNo").val(couponNo);
+		$("#payment").val((totalPrice+discountP));
 	}
-	
-/* 	function order(){
-		var storageCart=JSON.parse(sessionStorage.getItem("cart"));
+
+	function checkData(){
+		if(document.getElementById("detailAddress").value == ""){
+			$(".alertAddr").css("display", "block");
+			$(".alertAddr").text("상세 주소를 입력해 주세요");
+			$(".alertAddr").css("color", "red");
+			document.getElementById("detailAddress").focus();
+	    	return false;
+	 	} 
 		
+		if(document.getElementById("detailAddress").value != ""){
+			$(".alertAddr").css("display", "none");
+	 	}
+ 	
+		if(document.getElementById("phone").value == ""){
+			$(".alertPhone").css("display", "block");
+			$(".alertPhone").text("연락처를 입력해 주세요");
+			$(".alertPhone").css("color", "red");
+			document.getElementById("phone").focus();
+		   	return false;
+		}
+		
+		if(document.getElementById("phone").value != ""){
+			$(".alertPhone").css("display", "none");
+	 	}
+ 	} 
+	
+	function doPayment(){	
+		checkData();
+ 		var msg = '주문 확인 \n\n'+
+				  '배달 장소 : '+ 
+				   document.getElementById("roadAddress").value + ' [상세주소: '+
+				   document.getElementById("detailAddress").value + '] \n' +
+				  '연 락 처 : '+
+				   document.getElementById("phone").value + '\n' +
+				   '주문 메뉴 : '+ firstFood+" 외 "+totalQuantity + '\n'+
+				   '총 결제 금액 : '+ document.getElementById("payment").value+ '원 \n';
+				   
+					if( document.getElementById("request").value==""){
+						document.getElementById("request").value="없음";
+						msg += '주문 시 요청 사항 : 없음 \n\n'+
+							   '해당 주문을 결제하시겠습니까?';
+					} else {
+						msg += '주문 시 요청 사항 : ' + document.getElementById("request").value + '\n\n' +
+						       '해당 주문을 결제하시겠습니까?';
+					}		   
+   					
+		console.log(msg);
+				   
+		/* if(confirm(msg)==true){
+			IMP.init('imp93100667');
+			
+			IMP.request_pay({
+			    pg : 'inicis', // version 1.1.0부터 지원.
+			    pay_method : 'card',
+			    merchant_uid : 'merchant_' + new Date().getTime(),
+			    name : $(".storeName").html(),
+			    amount : document.getElementById("payment").value,
+			    buyer_email : 'iamport@siot.do',
+			}, function(rsp) {
+			    if ( rsp.success ) {
+			        var msg = '결제가 완료되었습니다.';
+			        msg += '고유ID : ' + rsp.imp_uid;
+			        msg += '상점 거래ID : ' + rsp.merchant_uid;
+			        msg += '결제 금액 : ' + rsp.paid_amount;
+			        msg += '카드 승인번호 : ' + rsp.apply_num;
+			       
+			        alert(msg);
+			        document.getElementById("orderfr").submit();
+			    } else {
+			        var msg = '결제에 실패하였습니다.';
+			        msg += '에러내용 : ' + rsp.error_msg;
+			        alert(msg);
+			    }
+			}); */
+			
+		//document.getElementById("orderfr").submit();
+			
 		var cartList = new Array();
-			cart = sessionStorage.getItem("cart");
+		    cart = sessionStorage.getItem("cart");  
+		var deliveryInfoItem ={
+						   roadAddress:document.getElementById("roadAddress").value,
+				           detailAddress:document.getElementById("detailAddress").value,
+				           phone:document.getElementById("phone").value,
+				           payment:document.getElementById("payment").value,
+				           request:document.getElementById("request").value,
+				           usedCoupon:document.getElementById("couponNo").value
+						  }
 		
-			$.ajax({
-					type : "post",
-					async : false,
-					url : "Order.do?storeNo="+storeNo,
-					data : {"cart":cart,"deliveryInfo":deliveryInfo},
-					success : function(result,textStatus){
-							kakaoPayment();
-					},		
-					error:function(data,textStatus){
-						console.log(data);
-						alert("에러가 발생했슈");
-					}
-				}); // $ajax()
-	} */
-	
-	function payment(){
-		IMP.init('imp93100667');
+		deliveryInfo = JSON.stringify(deliveryInfoItem);
+		console.log(deliveryInfo);
 		
-		IMP.request_pay({
-		    pg : 'inicis', // version 1.1.0부터 지원.
-		    pay_method : 'card',
-		    merchant_uid : 'merchant_' + new Date().getTime(),
-		    name : '주문명:결제테스트',
-		    amount : 14000, //판매 가격
-		    buyer_email : 'iamport@siot.do',
-		    buyer_name : '구매자이름',
-		    buyer_tel : '010-1234-5678',
-		    buyer_addr : '서울특별시 강남구 삼성동',
-		    buyer_postcode : '123-456'
-		}, function(rsp) {
-		    if ( rsp.success ) {
-		        var msg = '결제가 완료되었습니다.';
-		        msg += '고유ID : ' + rsp.imp_uid;
-		        msg += '상점 거래ID : ' + rsp.merchant_uid;
-		        msg += '결제 금액 : ' + rsp.paid_amount;
-		        msg += '카드 승인번호 : ' + rsp.apply_num;
-		    } else {
-		        var msg = '결제에 실패하였습니다.';
-		        msg += '에러내용 : ' + rsp.error_msg;
-		    }
-		    alert(msg);
-		});
+        $.ajax({
+               type : "post",
+               async : false,
+               url : "Order.do?storeNo="+storeNo,
+               data : {"cart":cart,"deliveryInfo":deliveryInfo},
+               success : function() {
+            	   alert("주문이 완료되었습니다. 메인 페이지로 이동합니다.");
+            	   location.href='./';
+               }
+         });
+		
+		
 	}
 </script>	
 
 </head>	
 <body>
 	<div id="mainDiv">
-		<form action="Order.do" class="orderForm" onsubmit=false method="post">
+		<form action="Order.do" id="orderfr" method="post">
 		<div class="left">
 			<div class="subTitle">
 				<span>결제하기</span>
@@ -170,7 +228,7 @@
 					<div class="formGroup">
 						<label class="panelLabel" style="width:100px; margin-right:10px; font-size:14px">주 &nbsp;&nbsp;&nbsp;&nbsp;소</label>
 							<div class="formGroupInputRaddr">
-								<input type="text" name="roadAddress" class="formRAddress" 
+								<input type="text" id="roadAddress" name="roadAddress" class="formRAddress" 
 									   value="${sessionScope.orderRoadAddress}"
 								  	   style="width:320px;" readOnly>
 							</div>
@@ -178,18 +236,20 @@
 					</div>		
 					<div class="formGroup">		
 							<div class="formGroupInputDaddr" >
-								<input type="text" name="detailAddress" class="fromDAddress"  
+								<input type="text" id="detailAddress" name="detailAddress" class="fromDAddress"  
 								  	   value="${sessionScope.orderDetailAddress}" 
 								  	   style="width:320px;" placeholder="(필수) 상세 주소 입력">
+								<div class="alertAddr"></div>  	   
 							</div>
 					</div>
 					<div class="clearBoth"></div>
 					<div class="formGroupPhone">
 						<label calss="panelLabel" style="width:100px; margin-right:10px; font-size:14px">연 락 처</label>
 							<div class="formGroupInputPhone" >
-								<input type="text" name="phone" class="formPhone" 
+								<input type="text" id="phone" name="phone" class="formPhone"
 									   value="${sessionScope.phone}" 
 									   style="width:320px;" placeholder="숫자만 입력하세요 ex)01012345678" numberOnly>
+								<div class="alertPhone"></div>
 							</div> 
 					</div>
 				</div>
@@ -207,7 +267,7 @@
 					<div class="formGroup">
 						<label class="panelLabel" style="width:100px; margin-right:10px; font-size:14px">요청사항</label>
 							<div class="formGroupTextArea">
-								<textarea name="request" style="width:360px;" placeholder="코로나19예방을 위해 비대면 배달을 권장 드립니다. &quot;문 앞 배달&quot;을 요청사항에 남겨주세요."></textarea>
+								<textarea id="request" name="request" style="width:360px;" placeholder="코로나19예방을 위해 비대면 배달을 권장 드립니다. &quot;문 앞 배달&quot;을 요청사항에 남겨주세요."></textarea>
 							</div>
 					</div>
 				</div>
@@ -238,7 +298,7 @@
 						<div class="clearBoth"></div>
 						<div class="orderTotal">
 							<div class="totalName">총 결제 금액</div>
-							<div class="totalPrice"></div>
+							<div id="totalPrice" class="totalPrice"></div>
 						</div>
 						<div class="clearBoth"></div>	
 					</div>
@@ -246,10 +306,12 @@
 			</div>		
 			<div class="AggreedText">
 				<span>이용약관, 개인정보 수집 및 이용, 개인정보 제 3자 제공, 전자금융거래 이용약관, 만 14세 이상 이용자 내용을 확인하였으며 결제에 동의합니다.</span>
-			</div>		
-			<button id="pbtn" onclick="payment();">결 제 하 기</button>
+			</div>
+			<input type="hidden" id="payment" name="payment">
+			<input type="hidden" name="storeNo" class="storeNo">
+			<input type="hidden" id="couponNo" name="couponNo" value="false">		
+			<button type="button" id="pbtn" onclick="doPayment()">결 제 하 기</button>
 		</div>	
-			<input type="hidden" id="couponNo" name="couponNo" value="false">
 		</form>
 		<div style="clear:both;"></div>
 	</div>
