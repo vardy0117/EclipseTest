@@ -75,6 +75,9 @@ public class CustomerLoginAction {
 				
 				
 				System.out.println("세션 등록 완료 ");
+				
+				cdao.deleteLastCouponsAfterLogin(Integer.parseInt(a.getCustomerNo()));
+				System.out.println("유효기간 지난 쿠폰 삭제");
 				// 페이지 이동 설정 (이동 방식, 경로)
 			
 		}else{

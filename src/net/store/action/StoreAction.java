@@ -1,5 +1,6 @@
 package net.store.action;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
@@ -115,19 +116,10 @@ public class StoreAction {
 		
 		System.out.println(sbean);
 		
-		
-	
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+	}
+
+	public StoreBean getStoreNameByStoreNo(HttpServletRequest request, HttpServletResponse response, String storeNo) {
+		StoreDAO sDAO = new StoreDAO();
+		return sDAO.getStoreName(storeNo);
 	}
 }

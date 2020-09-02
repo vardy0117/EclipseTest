@@ -178,8 +178,65 @@ public class ReviewDAO {
 	   
    }
 
-	public void getMyReview(String customerNo) {
-		System.out.println("DAO까지 이동 성공 !!");
+	public ArrayList<ReviewBean> getMyReview(String customerNo,int pageNum) {
+		
+		ArrayList<ReviewBean> reviewList = new ArrayList<ReviewBean>();
+		ReviewBean rBean;
+		try {
+			con = getConnection();
+			sql="select * from review where customerNo=? order by date desc limit ?,6";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, customerNo);
+			pstmt.setInt(2, (pageNum-1)*6);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()){
+				rBean = new ReviewBean();
+				rBean.setReviewNo(rs.getString(1));
+				rBean.setOrderNo(rs.getString(2));
+				rBean.setCustomerNo(rs.getString(3));
+				rBean.setStoreNo(rs.getString(4));
+				rBean.setContents(rs.getString(5));
+				rBean.setPoints(rs.getString(6));
+				rBean.setImage(rs.getString(7));
+				rBean.setDate(rs.getTimestamp(8));
+				rBean.setComment(rs.getString(9));
+				reviewList.add(rBean);
+			}
+					
+		} catch (Exception e) {
+			System.out.println("getMyReview()내에서 예외 발생");
+			e.printStackTrace();
+		} finally {
+			resourceClose();
+		}
+		
+		return reviewList;
 	}
+
+	public int getAllReviewCount(String customerNo) {
+		int count = 0;
+		try {
+			con=getConnection();
+			sql = "select count(*) from review where customerNo=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, customerNo);
+			rs = pstmt.executeQuery();
+			if(rs.next()){
+				count=rs.getInt(1);
+			}
+		} catch (Exception e) {
+			System.out.println("getAllReviewCount() 내에서 예외발생");
+			e.printStackTrace();
+		} finally {
+			resourceClose();
+		}
+		
+		return count;
+	}
+	
+	
+	
+	
 	   
 }
