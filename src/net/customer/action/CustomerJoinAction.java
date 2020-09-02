@@ -14,38 +14,38 @@ public class CustomerJoinAction{
 	
 	private final static Logger log = Logger.getGlobal();
 	
-	public void customerJoin(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+	public void customerJoin(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		log.info("CustomerJoinAction execute()");
 		
-		req.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 		
 		CustomerBean cb =new CustomerBean();
 		
-		cb.setEmail(req.getParameter("emailId")+"@"+req.getParameter("emailServer"));
-		cb.setPassword(req.getParameter("password")); 
-		cb.setNickname(req.getParameter("nickname")); 
-		cb.setRoadAddress(req.getParameter("roadAddress"));
-		cb.setDetailAddress(req.getParameter("detailAddress"));
-		cb.setBname(req.getParameter("bname"));
-		cb.setPhone(req.getParameter("phoneFront")+req.getParameter("phone"));
-		cb.setSido(req.getParameter("sido"));
+		cb.setEmail(request.getParameter("emailId")+"@"+request.getParameter("emailServer"));
+		cb.setPassword(request.getParameter("password")); 
+		cb.setNickname(request.getParameter("nickname")); 
+		cb.setRoadAddress(request.getParameter("roadAddress"));
+		cb.setDetailAddress(request.getParameter("detailAddress"));
+		cb.setBname(request.getParameter("bname"));
+		cb.setPhone(request.getParameter("phoneFront")+request.getParameter("phone"));
+		cb.setSido(request.getParameter("sido"));
 		
 		
-		if(req.getParameter("agreeAD") == null) {
+		if(request.getParameter("agreeAD") == null) {
 			cb.setAgreeAD("F");
 		} else { 
 			cb.setAgreeAD("T");
 		}	
-		// 占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙
-		boolean result = false;
+		// result =0 이면 로그인 실패 회원가입 실패  
+		int result = 0;
 		
 		CustomerDAO cdao=new CustomerDAO();
 			
 		result = cdao.insertCustomer(cb);
 		
-		if(result == false){
-			log.info("customerLogin Fail!");
+		if(result == 0){
+			log.info("customerJoin 실패@@");
 		}
 		
 	} // method

@@ -220,6 +220,8 @@
 		</div>
 		<div class="display-none" id="japaneseDiv">
 		</div>
+		
+		<div style="clear:both;"></div>
 	</div>
 </body>
 </html>​
