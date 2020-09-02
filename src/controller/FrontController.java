@@ -800,8 +800,23 @@ public class FrontController extends HttpServlet {
 			// 세션에 있는 사용자번호
 			String customerNo = (String)request.getSession().getAttribute("customerNo");
 			CustomerReviewAction action = new CustomerReviewAction();
-			action.execute(request, response, customerNo);
+			ArrayList<ReviewBean> reviewList =  action.execute(request, response, customerNo);
+			request.setAttribute("reviewList",reviewList);
 			
+			// 나의 리뷰 페이지에서는 테이블에 닉네임이 아니라 가게이름을 띄워주려고한다
+			ArrayList<String> storeName=new ArrayList<String>();
+			String name="";
+			for(int i=0;i<reviewList.size();i++){
+				StoreAction action2 = new StoreAction();
+				name = action2.getStoreNameByStoreNo(request,response,reviewList.get(i).getStoreNo());
+				storeName.add(name);
+			}
+			
+			request.setAttribute("storeName", storeName);
+			
+			forward = new ActionForward();
+			forward.setView("index.jsp?center=member/myReview.jsp");
+			forward.execute(request, response);
 		}
 	
 		//deleteMenu
