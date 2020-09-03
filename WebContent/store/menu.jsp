@@ -230,7 +230,7 @@
 			} else {
 				element.innerText = '음료/주류 ▲';
 			}
-			$("drinkMenuTitle").toggle(500);
+			$("#drinkMenuDiv").toggle(500);
 			
 		}
 	}
@@ -281,7 +281,9 @@
 				
 			</c:if>
 		</c:forEach>
+		<c:if test="${setMenuExist eq 'true'}">
 					</div>
+		</c:if>
 		
 		<c:forEach var="menu" items="${requestScope.menuList}">
 			<c:if test="${menu.category == '주 메뉴'}">
@@ -320,7 +322,9 @@
 				</c:if>
 			</c:if>
 		</c:forEach>
+		<c:if test="${mainMenuExist eq 'true'}">
 					</div>
+		</c:if>
 		
 		<c:forEach var="menu" items="${requestScope.menuList}">
 			<c:if test="${menu.category == '사이드 메뉴'}">
@@ -359,7 +363,9 @@
 				</c:if>
 			</c:if>
 		</c:forEach>
+		<c:if test="${sideMenuExist eq 'true'}">
 					</div>
+		</c:if>
 		
 		<c:forEach var="menu" items="${requestScope.menuList}">
 			<c:if test="${menu.category == '음료/주류'}">
@@ -398,7 +404,9 @@
 				</c:if>
 			</c:if>
 		</c:forEach>
+		<c:if test="${drinkMenuExist eq 'true'}">
 					</div>
+		</c:if>
 	</div>
 	
 	<%-- <table border="1" id="menuTable">	
