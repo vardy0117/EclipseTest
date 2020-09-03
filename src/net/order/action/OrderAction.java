@@ -73,25 +73,52 @@ public class OrderAction {
 	public  void GetOrderDetail(HttpServletRequest request, HttpServletResponse response, String customerNo) throws Exception{
 
 		OrderListDAO odao = new OrderListDAO();
+		
+
+
+	 	
 		List<OrderJoinBean> orderlist = new ArrayList<OrderJoinBean>();
 
-		OrderJoinBean join = new OrderJoinBean();
+		OrderJoinBean join = new OrderJoinBean(); // 조인해서 결과물 가져오기
 		
-		orderlist = odao.GetOrderDetail(customerNo); // orderlist 테이블 
-	//	orderlist2 = odao.GetOrderStoreName("시발");
+		orderlist = odao.GetOrderList(customerNo); // orderlist 테이블 
 		
 		System.out.println("오더 액션 GetOrderDetail 서버 액션 겟스토어 네임 " + join.getStoreName());
 		
 		System.out.println("오더 액션 전달받은 고객 number : " + customerNo);
-		
-		request.setAttribute("orderlist", orderlist);		
-		System.out.println("join내용 : " + orderlist + "      ");
 
+		request.setAttribute("orderlist", orderlist);
+		// request.setAttribute("join", join);
+		// System.out.println("캐스팅 join " + join);
+		System.out.println("join내용 : " + orderlist + "      ");
+		
 
 		System.out.println("request getAttribute " + orderlist.toString() + "      ");
 		
 	}
 
+	
+	public  void GetOrderRealDetail(HttpServletRequest request, HttpServletResponse response, String customerNo, String orderNo) throws Exception{
+
+		
+		/*레알루 상세하게 보여줌*/
+		OrderListDAO odao = new OrderListDAO();
+	
+	 	
+		List<OrderJoinBean> OrderRealDetail = new ArrayList<OrderJoinBean>();
+
+		OrderJoinBean join = new OrderJoinBean(); // 조인해서 결과물 가져오기
+		
+		OrderRealDetail = odao.GetOrderRealDetails(customerNo, orderNo ); // orderlist 테이블 
+		
+		System.out.println("오더 액션 GetOrderDetail 서버 액션 겟스토어 네임 " + join.getStoreName());
+		
+		System.out.println("오더 액션 전달받은 고객 number : " + customerNo);
+		
+		request.setAttribute("OrderRealDetail", OrderRealDetail);		
+		System.out.println("OrderRealDetail내용 : " + OrderRealDetail + "      ");
+
+	}
 	// 리뷰작성 안된 주문목록 가져오기
 	public ArrayList<OrderListBean> getUnReviewOrder(HttpServletRequest request, HttpServletResponse response,String customerNo) {
 		OrderListDAO oDAO = new OrderListDAO();

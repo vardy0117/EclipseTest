@@ -945,6 +945,37 @@ public class FrontController extends HttpServlet {
 			forward.execute(request, response);
 
 		}
+		
+		if(command.equals("OrderRealDetail.do")){
+
+			String customerNo = (String) request.getSession().getAttribute("customerNo");// 세션에 있는 사용자번호
+		
+			OrderAction action = new OrderAction();
+			// int orderNo = Integer.parseInt(request.getParameter("orderNo"));
+			String orderNo = request.getParameter("orderNo");
+			System.out.println("ordernumber ---------------------------- : " + orderNo);
+			try {
+				System.out.println("OrderRealDetail.do 호출성공");
+				
+			/*	System.out.println("OrderRealDetail 컨트롤러 호출");
+				System.out.println("FrontController 전달받은 customerNo : " + customerNo);
+	
+				 action.GetOrderDetail(request, response, customerNo);
+*/
+				action.GetOrderRealDetail(request, response, customerNo, orderNo);
+				forward = new ActionForward();
+		
+				forward.setView("index.jsp?center=member/OrderListDetails.jsp");
+				forward.setRedirect(false);
+
+			} catch (Exception e) {
+				System.out.println("OrderRealDetail 오류" + e);
+				e.printStackTrace();
+			}
+			forward.execute(request, response);
+
+		}
+
 
 
 
