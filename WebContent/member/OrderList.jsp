@@ -93,7 +93,7 @@
   				<c:param name="orderNo" value="${orderlist.orderNo }"> </c:param>
 	  			</c:url>	">				   주문번호 : ${orderlist.orderNo} <br>
 								  		  주문했던 가게이름 : ${orderlist.name} <br>
-								        	가게이름 : ${orderlist.name} <br></a>
+								        	<%-- 가게이름 : ${orderlist.name} <br> --%></a>
 					
 						
 						

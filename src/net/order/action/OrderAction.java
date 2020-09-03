@@ -88,12 +88,10 @@ public class OrderAction {
 		System.out.println("오더 액션 전달받은 고객 number : " + customerNo);
 
 		request.setAttribute("orderlist", orderlist);
-		// request.setAttribute("join", join);
-		// System.out.println("캐스팅 join " + join);
 		System.out.println("join내용 : " + orderlist + "      ");
 		
 
-		System.out.println("request getAttribute " + orderlist.toString() + "      ");
+	
 		
 	}
 

@@ -139,45 +139,6 @@ public class OrderListDAO {
 	}
 	
 	
-	
-	/*public OrderJoinStoreBean  GetOrderList(String  number) {
-		StoreBean storeInfo = new StoreBean();
-		
-		try {
-			 con = getConnection();
-			 
-
-			 sql = "select a.orderNo, a.customerNo, a.storeNo, "
-			 		+ "b.name 'storeName' "
-			 		+ "from orderList a, store b "
-			 		+ "where b.name = (select name from store where storeNo = a.storeNo) "
-			 		+ "and customerNo = ?"
-			 		+ "order by a.orderNo desc ";
-			 
-			 pstmt = con.prepareStatement(sql);
-			 pstmt.setString(1, number);
-			 rs = pstmt.executeQuery();
-			 
-			 if(rs.next()){
-				storeInfo.setStoreNo(rs.getString("storeNo"));
-				storeInfo.setCeoNo(rs.getString("ceoNo"));
-				storeInfo.setName(rs.getString("name"));
-				storeInfo.setRoadAddress(rs.getString("roadAddress"));
-
-			 }
-			
-		} catch (Exception e) {
-			System.out.println("GetOrderList() Inner Error : " + e);
-			e.printStackTrace();
-		} finally {
-			resourceClose();
-		}
-		
-		return storeInfo;
-	}*/
-	
-
-
 	public   List<OrderJoinBean>  GetOrderRealDetails(String  customerNo, String orderNo) { 
 		 List<OrderJoinBean> orderlist = new ArrayList<OrderJoinBean>();		
 		OrderJoinBean join = null ;
