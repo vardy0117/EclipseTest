@@ -48,4 +48,41 @@
 		list-style-type : none;
 	}
 	
+	#setMenuTitle, #mainMenuTitle, #sideMenuTitle, #drinkMenuTitle {
+		text-align:center; 
+		font-size:1.5rem;
+		background-color: #e6e6e6;
+	}
+	#setMenuDiv table, #mainMenuDiv table, #sideMenuDiv table, #drinkMenuDiv table {
+		margin: 10px auto;
+		border-bottom: 1px solid #d9d9d9;
+		height: 110px;
+	}
+	
+	.textBox {
+		width: 150px;
+		height: 30px;
+		border-radius: 12px;
+		border: 2px solid gray;
+		padding-left: 15px;
+		font-family: Binggrae-Bold;
+		font-size: 1rem;
+	}
+	.btn {
+		background: linear-gradient( to right, hsl(98 100% 62%), hsl(204 100% 59%) );
+		font-family: Binggrae-Bold;
+		font-size: 1rem;
+		color: white;
+		border: none;
+		border-radius: 12px;
+		width: 120px;
+		height: 35px;
+		transition-duration: 1s;
+		opacity: 0.7;
+	}
+	.btn:hover {
+		cursor: pointer;
+		opacity: 1;
+	}
+	
 	

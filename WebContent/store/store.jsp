@@ -207,6 +207,8 @@
 		document.getElementById("infoLink").setAttribute("class", "clicked");
 		document.getElementById("reviewLink").setAttribute("class", "unclicked");
 		document.getElementById("menuLink").setAttribute("class", "unclicked");
+		map.relayout();
+		map.setCenter(coords);
 	});
 	
 	document.addEventListener("scroll", function() {

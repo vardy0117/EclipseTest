@@ -129,6 +129,7 @@
 		width : 100%;
 		min-height: 80px;
 		display : table;
+		padding-top: 10px;
 	}
 	
 	.emptyCart{
