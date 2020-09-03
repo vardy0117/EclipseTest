@@ -167,7 +167,7 @@
 						'<div class="priceQty">'+
 							'<div class="priceQty-Group">'+
 								'<div class="left">'+
-									'<a class="btn del-menu" onclick="delOrderItem(this)" style="cursor:pointer">X</a>'+
+									'<a class="del-menu" onclick="delOrderItem(this)" style="cursor:pointer">X</a>'+
 									'&nbsp;'+
 									'<span class="price">'+
 										cart[i]["price"]+" 원"+
@@ -194,11 +194,214 @@
 			$(".cartTotalSpan").html("합 계 : "+totalPrice+ " 원");
 		}
 	}
+	
+	function toggleDiv(element) {
+		if(element.id == 'setMenuTitle') {
+			
+			if(element.innerText == '세트 메뉴 ▲') {
+				element.innerText = '세트 메뉴 ▼';
+			} else {
+				element.innerText = '세트 메뉴 ▲';
+			}
+			$("#setMenuDiv").toggle(500);
+			
+		} else if(element.id == 'mainMenuTitle') {
 
+			if(element.innerText == '주 메뉴 ▲') {
+				element.innerText = '주 메뉴 ▼';
+			} else {
+				element.innerText = '주 메뉴 ▲';
+			}
+			$("#mainMenuDiv").toggle(500);
+			
+		} else if(element.id == 'sideMenuTitle') {
+
+			if(element.innerText == '사이드 메뉴 ▲') {
+				element.innerText = '사이드 메뉴 ▼';
+			} else {
+				element.innerText = '사이드 메뉴 ▲';
+			}
+			$("#sideMenuDiv").toggle(500);
+			
+		} else if(element.id == 'drinkMenuTitle') {
+
+			if(element.innerText == '음료/주류 ▲') {
+				element.innerText = '음료/주류 ▼';
+			} else {
+				element.innerText = '음료/주류 ▲';
+			}
+			$("drinkMenuTitle").toggle(500);
+			
+		}
+	}
 </script>
 </head>
 <body>
-	<table border="1" id="menuTable">	
+	<div style="margin-top: 15px;">
+		<c:set var="setMenuExist" value="false"/>
+		<c:set var="mainMenuExist" value="false"/>
+		<c:set var="sideMenuExist" value="false"/>
+		<c:set var="drinkMenuExist" value="false"/>
+		
+		<c:forEach var="menu" items="${requestScope.menuList}">
+			<c:if test="${menu.category == '세트 메뉴'}">
+				<c:if test="${setMenuExist eq 'false'}">
+					<c:set var="setMenuExist" value="true"/>
+					<div id="setMenuTitle" onclick="toggleDiv(this);">세트 메뉴 ▲</div>
+					<div id="setMenuDiv">
+						<table>
+							<tr>
+								<td rowspan="3">
+									<img src="upload/store/${menu.image}" width="120" height="90" style="border-radius: 12px;">
+								</td>
+								<td style="padding-left: 15px; font-size:1.2rem;">
+									${menu.name }
+								</td>
+								<td rowspan="3" style="text-align:center; line-height: 3;">
+									<input type="hidden" class="name" value="${menu.name}"> 
+									<input type="hidden" class="price" value="${menu.price}"> 
+									<a onclick=" modifyQty(this, 1)" style="cursor: pointer">+</a> 
+									<input type="text" id="quantity" name="quantity" class="qty textBox" min="0" value="1" style="width:20px;"> 
+									<a onclick=" modifyQty(this, -1)" style="cursor: pointer">-</a>
+									<br> 
+									<input class="btn" type="button" id="tbtn" value="주문표에 추가" onclick="addToCartStorage(this)">
+								</td>
+							</tr>
+							<tr>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td style="padding-left: 15px; font-size:1.2rem; width:60%;">
+									${menu.price }원
+								</td>
+							</tr>
+						</table>
+				</c:if>
+				
+			</c:if>
+		</c:forEach>
+					</div>
+		
+		<c:forEach var="menu" items="${requestScope.menuList}">
+			<c:if test="${menu.category == '주 메뉴'}">
+				<c:if test="${mainMenuExist eq 'false'}">
+					<c:set var="mainMenuExist" value="true"/>
+					<div id="mainMenuTitle" onclick="toggleDiv(this);">주 메뉴 ▲</div>
+					<div id="mainMenuDiv">
+						<table>
+							<tr>
+								<td rowspan="3">
+									<img src="upload/store/${menu.image}" width="120" height="90" style="border-radius: 12px;">
+								</td>
+								<td style="padding-left: 15px; font-size:1.2rem;">
+									${menu.name }
+								</td>
+								<td rowspan="3" style="text-align:center; line-height: 3;">
+									<input type="hidden" class="name" value="${menu.name}"> 
+									<input type="hidden" class="price" value="${menu.price}"> 
+									<a onclick=" modifyQty(this, 1)" style="cursor: pointer">+</a> 
+									<input type="text" id="quantity" name="quantity" class="qty textBox" min="0" value="1" style="width:20px;"> 
+									<a onclick=" modifyQty(this, -1)" style="cursor: pointer">-</a>
+									<br> 
+									<input class="btn" type="button" id="tbtn" value="주문표에 추가" onclick="addToCartStorage(this)">
+								</td>
+							</tr>
+							<tr>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td style="padding-left: 15px; font-size:1.2rem; width:60%;">
+									${menu.price }원
+								</td>
+							</tr>
+						</table>
+				</c:if>
+			</c:if>
+		</c:forEach>
+					</div>
+		
+		<c:forEach var="menu" items="${requestScope.menuList}">
+			<c:if test="${menu.category == '사이드 메뉴'}">
+				<c:if test="${sideMenuExist eq 'false'}">
+					<c:set var="sideMenuExist" value="true"/>
+					<div id="sideMenuTitle" onclick="toggleDiv(this);">사이드 메뉴 ▲</div>
+					<div id="sideMenuDiv">
+						<table>
+							<tr>
+								<td rowspan="3">
+									<img src="upload/store/${menu.image}" width="120" height="90" style="border-radius: 12px;">
+								</td>
+								<td style="padding-left: 15px; font-size:1.2rem;">
+									${menu.name }
+								</td>
+								<td rowspan="3" style="text-align:center; line-height: 3;">
+									<input type="hidden" class="name" value="${menu.name}"> 
+									<input type="hidden" class="price" value="${menu.price}"> 
+									<a onclick=" modifyQty(this, 1)" style="cursor: pointer">+</a> 
+									<input type="text" id="quantity" name="quantity" class="qty textBox" min="0" value="1" style="width:20px;"> 
+									<a onclick=" modifyQty(this, -1)" style="cursor: pointer">-</a>
+									<br> 
+									<input class="btn" type="button" id="tbtn" value="주문표에 추가" onclick="addToCartStorage(this)">
+								</td>
+							</tr>
+							<tr>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td style="padding-left: 15px; font-size:1.2rem; width:60%;">
+									${menu.price }원
+								</td>
+							</tr>
+						</table>
+				</c:if>
+			</c:if>
+		</c:forEach>
+					</div>
+		
+		<c:forEach var="menu" items="${requestScope.menuList}">
+			<c:if test="${menu.category == '음료/주류'}">
+				<c:if test="${drinkMenuExist eq 'false'}">
+					<c:set var="drinkMenuExist" value="true"/>
+					<div id="drinkMenuTitle" onclick="toggleDiv(this);">음료/주류 ▲</div>
+					<div id="drinkMenuDiv">
+						<table>
+							<tr>
+								<td rowspan="3">
+									<img src="upload/store/${menu.image}" width="120" height="90" style="border-radius: 12px;">
+								</td>
+								<td style="padding-left: 15px; font-size:1.2rem;">
+									${menu.name }
+								</td>
+								<td rowspan="3" style="text-align:center; line-height: 3;">
+									<input type="hidden" class="name" value="${menu.name}"> 
+									<input type="hidden" class="price" value="${menu.price}"> 
+									<a onclick=" modifyQty(this, 1)" style="cursor: pointer">+</a> 
+									<input type="text" id="quantity" name="quantity" class="qty textBox" min="0" value="1" style="width:20px;"> 
+									<a onclick=" modifyQty(this, -1)" style="cursor: pointer">-</a>
+									<br> 
+									<input class="btn" type="button" id="tbtn" value="주문표에 추가" onclick="addToCartStorage(this)">
+								</td>
+							</tr>
+							<tr>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td style="padding-left: 15px; font-size:1.2rem; width:60%;">
+									${menu.price }원
+								</td>
+							</tr>
+						</table>
+				</c:if>
+			</c:if>
+		</c:forEach>
+					</div>
+	</div>
+	
+	<%-- <table border="1" id="menuTable">	
 		<c:forEach var="categorys" items="${requestScope.categoryList}">
 			<c:choose>
 				<c:when test="${categorys eq '세트 메뉴'}">
@@ -226,32 +429,32 @@
 			
 			<tbody>	
 			<c:forEach var="menu" items="${requestScope.menuList}">
-			<%-- <fmt:parseNumber var="num" value="${menu.level div 10}" type="number" integerOnly="true"/> --%>
-			<c:if test="${menu.category==categorys}">
-			
-			<tr class="${category}">
-				<td>
-					<div class="menuImg">
-						<span><img src="upload/store/${menu.image}"></span> | 
-					</div>
-					<div class="menuName">					
-					<span class="name">${menu.name}</span>
-					</div>
-				</td>
-				<td  class="basePrice">${menu.price}</td>
-				<td>
-					<%-- <input type="hidden" name="level" value="${menu.level}"> --%>
-					<input type="hidden" class="name" value="${menu.name}"> 
-					<input type="hidden" class="price" value="${menu.price}"> 
-					<a onclick=" modifyQty(this, 1)" style="cursor: pointer">+</a> 
-						<input type="number" id="quantity" name="quantity" class="qty" min="0" value="1" style="width:50px;"> 
-					<a onclick=" modifyQty(this, -1)" style="cursor: pointer">-</a> 
-						<input type="button" type="button" id="tbtn" value="주문표에 추가" onclick="addToCartStorage(this)">
-				</td>
-			</c:if>
+			<fmt:parseNumber var="num" value="${menu.level div 10}" type="number" integerOnly="true"/>
+				<c:if test="${menu.category==categorys}">
+				
+				<tr class="${category}">
+					<td>
+						<div class="menuImg">
+							<span><img src="upload/store/${menu.image}"></span> | 
+						</div>
+						<div class="menuName">					
+						<span class="name">${menu.name}</span>
+						</div>
+					</td>
+					<td  class="basePrice">${menu.price}</td>
+					<td>
+						<input type="hidden" name="level" value="${menu.level}">
+						<input type="hidden" class="name" value="${menu.name}"> 
+						<input type="hidden" class="price" value="${menu.price}"> 
+						<a onclick=" modifyQty(this, 1)" style="cursor: pointer">+</a> 
+							<input type="number" id="quantity" name="quantity" class="qty" min="0" value="1" style="width:50px;"> 
+						<a onclick=" modifyQty(this, -1)" style="cursor: pointer">-</a> 
+							<input type="button" type="button" id="tbtn" value="주문표에 추가" onclick="addToCartStorage(this)">
+					</td>
+				</c:if>
 			</c:forEach>
 			</tbody>
 		</c:forEach>
-	</table>
+	</table> --%>
 </body>
 </html>
