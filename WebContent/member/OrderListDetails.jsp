@@ -63,21 +63,22 @@
 	<div id="mainDiv">
 		<c:set var="length" value="${fn:length(orderlist) }" />
 		<%-- <font color="black" size="5"> 고객번호 : ${customerNo} <br> --%>
-		<font color="black" size="5"> ${nickname}님의 주문내역 입니다
+		<font color="black" size="5"> ${nickname}님의 상세주문내역 입니다 
+		</font>  <br> <br>
+		주문번호 :  ${param.orderNo }
+		<br> <br>
 		
-		</font> <br> <br>
 
-		<c:forEach var="orderlistarray" items="${orderlist}"
-			varStatus="status">
+		<c:forEach var="orderlist" items="${OrderRealDetail}" varStatus="status">
 			<div id="storeBox">
 				<table>
 					<tr>
 						<td>
-							스토어 이름 : ${orderlistarray.storeName} <br>
-						     주문번호 : ${orderlistarray.orderNo} <br>
-						     주문했던메뉴 : ${orderlistarray.name} <br> 가격 : ${orderlistarray.price} <br>
-							스토어 번호 ${orderlistarray.storeNo } <br>
 							
+						     가게 이름 : ${orderlist.storeName} <br>
+						     주문했던메뉴 : ${orderlist.name} <br> 
+						     가격 : ${orderlist.price} <br>
+							수량 : ${orderlist.ea}EA
 
 						</td>
 					</tr>
@@ -86,14 +87,14 @@
 		</c:forEach>
 
 
-		<c:if test="${length eq 0 }">
+	<%-- 	<c:if test="${length eq 0 }">
 			<font color="black" size="10"> 당신의 주문이 존재하지 않습니다 ^^ <br>주문하러 가시겠어요? <br><br>
 			<a href="./SearchStore.do">클릭</a>
 			</font>
-		</c:if>
+		</c:if> --%>
 	</div>
 	
-	<div id="more">하단</div>
+	<div id="more"></div>
 	
 <!-- <div id="buttonDiv" style="clear:both; text-align: center; padding: 20px;"><button onclick="getStoreList(\'한식\', ' + koreanStartNo + ');">더 보기</button></div> -->
 

@@ -4,19 +4,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-
-import java.sql.Timestamp;
-
-
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import net.orderMenu.db.OrderMenuBean;
 import net.store.db.StoreBean;
 
 public class OrderListDAO {
@@ -87,20 +82,27 @@ public class OrderListDAO {
 	
 	
 	
-	public   List<OrderJoinBean>  GetOrderDetail(String  number) { 
+	public   List<OrderJoinBean>  GetOrderList(String  number) { 
 		 List<OrderJoinBean> orderlist = new ArrayList<OrderJoinBean>();		
 		OrderJoinBean join = null ;
 		
 		try {
 			 getConnection();
 			 
-			sql = "select a.orderNo, a.customerNo, a.storeNo, b.name, b.price, c.name 'storename' "
+			/*sql = "select a.orderNo, a.customerNo, a.storeNo, b.name, b.price, c.name 'storename' "
 					+ "from orderList a, orderMenu b, store c "
 					+ "where a.orderNo = b.orderNo and customerNo = ? and "
-					+ "c.storeNo =  (select storeNo from store where storeNo = a.storeNo)";
+					+ "c.storeNo =  (select storeNo from store where storeNo = a.storeNo) and a.orderNo=1";
 
 			 
-
+*/
+			 sql = "select a.orderNo, a.customerNo, a.storeNo, "
+			 		+ "b.name 'storeName' "
+			 		+ "from orderList a, store b "
+			 		+ "where b.name = (select name from store where storeNo = a.storeNo) "
+			 		+ "and customerNo = ? "
+			 		+ "order by a.orderNo desc ";
+			 
 			 pstmt = con.prepareStatement(sql);
 			 
 			 pstmt.setString(1, number);
@@ -111,12 +113,12 @@ public class OrderListDAO {
 			 while(rs.next()) {
 				 join = new OrderJoinBean();
 				 
-				 join.setOrderNo(rs.getString(1));
+				  join.setOrderNo(rs.getString(1));
 				 join.setCustomerNo(rs.getString(2));
 				 join.setStoreNo(rs.getString(3));
 				 join.setName(rs.getString(4));
-				 join.setPrice(rs.getString(5));
-				 join.setStoreName(rs.getString(6));
+			//	 join.setPrice(rs.getString(5));
+			//	 join.setStoreName(rs.getString(6));
 				 orderlist.add(join);
 	 
 			 }
@@ -136,6 +138,104 @@ public class OrderListDAO {
 		
 	}
 	
+	
+	
+	/*public OrderJoinStoreBean  GetOrderList(String  number) {
+		StoreBean storeInfo = new StoreBean();
+		
+		try {
+			 con = getConnection();
+			 
+
+			 sql = "select a.orderNo, a.customerNo, a.storeNo, "
+			 		+ "b.name 'storeName' "
+			 		+ "from orderList a, store b "
+			 		+ "where b.name = (select name from store where storeNo = a.storeNo) "
+			 		+ "and customerNo = ?"
+			 		+ "order by a.orderNo desc ";
+			 
+			 pstmt = con.prepareStatement(sql);
+			 pstmt.setString(1, number);
+			 rs = pstmt.executeQuery();
+			 
+			 if(rs.next()){
+				storeInfo.setStoreNo(rs.getString("storeNo"));
+				storeInfo.setCeoNo(rs.getString("ceoNo"));
+				storeInfo.setName(rs.getString("name"));
+				storeInfo.setRoadAddress(rs.getString("roadAddress"));
+
+			 }
+			
+		} catch (Exception e) {
+			System.out.println("GetOrderList() Inner Error : " + e);
+			e.printStackTrace();
+		} finally {
+			resourceClose();
+		}
+		
+		return storeInfo;
+	}*/
+	
+
+
+	public   List<OrderJoinBean>  GetOrderRealDetails(String  customerNo, String orderNo) { 
+		 List<OrderJoinBean> orderlist = new ArrayList<OrderJoinBean>();		
+		OrderJoinBean join = null ;
+		
+		try {
+			 getConnection();
+		/*	 
+			sql = "select a.orderNo, a.customerNo, a.storeNo, b.name, b.price, c.name 'storename' "
+					+ "from orderList a, orderMenu b, store c "
+					+ "where a.orderNo = b.orderNo and customerNo = ? and "
+					+ "c.storeNo =  (select storeNo from store where storeNo = a.storeNo) and a.orderNo=1";
+
+			 */
+
+			 sql = "select a.orderNo, a.customerNo, a.storeNo, "
+			 		+ "b.name 'menu' , b.quantity 'ea', b.price, "
+			 		+ "c.name 'storename' from orderList a, "
+			 		+ "orderMenu b, store c where a.orderNo = "
+			 		+ "b.orderNo and a.customerNo = ? and "
+			 		+ "c.storeNo =  (select storeNo from store "
+			 		+ "where storeNo=a.storeNo) and a.orderNo = ?";
+			 
+			 pstmt = con.prepareStatement(sql);
+			 
+			 pstmt.setString(1, customerNo);
+			 pstmt.setString(2, orderNo);
+			 System.out.println("GetOrderRealDetails에 SELECT에 가지고온 customerNo : " + customerNo);
+
+			 rs = pstmt.executeQuery();
+			
+			 while(rs.next()) {
+				 join = new OrderJoinBean();
+				 
+				  join.setOrderNo(rs.getString(1));
+				 join.setCustomerNo(rs.getString(2));
+				 join.setStoreNo(rs.getString(3));
+				 join.setName(rs.getString(4));
+				 join.setEa(rs.getString(5));
+				 join.setPrice(rs.getString(6));
+				 join.setStoreName(rs.getString(7));
+				 orderlist.add(join);
+	 
+			 }
+			 
+				
+			
+			
+		} catch (Exception e){
+			System.out.println("GetOrderDetail Error : " + e);
+		} finally {
+			resourceClose();
+		}
+		
+		
+		
+		return orderlist  ;
+		
+	}
 
 
 	// 리뷰작성 안된 주문목록 가져오기

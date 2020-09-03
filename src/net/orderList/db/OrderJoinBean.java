@@ -10,9 +10,23 @@ public class OrderJoinBean {
 	String storeNo;
 	String name; // 메뉴 이름
 	String price;
-	String storeName; 
+	String storeName; // alias해서 나오는 컬럼
+	String ea, menu;
 	
 	
+	
+	public String getEa() {
+		return ea;
+	}
+	public void setEa(String ea) {
+		this.ea = ea;
+	}
+	public String getMenu() {
+		return menu;
+	}
+	public void setMenu(String menu) {
+		this.menu = menu;
+	}
 	public String getStoreName() {
 		return storeName;
 	}
@@ -52,8 +66,9 @@ public class OrderJoinBean {
 	@Override
 	public String toString() {
 		return "OrderJoinBean [orderNo=" + orderNo + ", customerNo=" + customerNo + ", storeNo=" + storeNo + ", name="
-				+ name + ", price=" + price + ", storeName=" + storeName + "]";
+				+ name + ", price=" + price + ", storeName=" + storeName + ", ea=" + ea + ", menu=" + menu + "]";
 	}
+
 
 
 }

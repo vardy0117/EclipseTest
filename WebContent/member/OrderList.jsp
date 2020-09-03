@@ -55,9 +55,14 @@
 		    padding: 20px;
 		    clear:both;
 	}
+	a{
+	cursor: pointer;
+	}
 	
 	
 </style>
+
+
 <body>
 
 	<div id="mainDiv">
@@ -67,26 +72,43 @@
 		
 		</font> <br> <br>
 		
-<c:if test="${orderlistarray.orderNo eq orderlistarray.orderNo}">
-<c:set var="order" value="${orderlist}"/>
 
-		<c:forEach var="orderlistarray" items="${orderlist}"
+
+
+
+
+
+	<c:forEach var="orderlist" items="${orderlist}"
 			varStatus="status">
+
 			<div id="storeBox">
+			
 				<table>
 					<tr>
 						<td>
-						<a href="#">
-						    주문번호 : ${orderlistarray.orderNo} <br>
-							주문했던 가게 : ${orderlistarray.storeName }
-						</a>
+					
+				<a href="
+				
+				<c:url value="OrderRealDetail.do" >         
+  				<c:param name="orderNo" value="${orderlist.orderNo }"> </c:param>
+	  			</c:url>	">				   주문번호 : ${orderlist.orderNo} <br>
+								  		  주문했던 가게이름 : ${orderlist.name} <br>
+								        	가게이름 : ${orderlist.name} <br></a>
+					
+						
+						
 						</td>
+					
 					</tr>
 				</table>
-			</div>
-		</c:forEach>
-	</c:if>
+			
+			</div>	
+			
+</c:forEach>
+	
+
 		
+			
 		
 		<c:if test="${length eq 0 }">
 			<font color="black" size="10"> 당신의 주문이 존재하지 않습니다 ^^ <br>주문하러 가시겠어요? <br><br>
@@ -95,7 +117,7 @@
 		</c:if>
 	</div>
 	
-	<div id="more">하단</div>
+	<div id="more"></div>
 	
 <!-- <div id="buttonDiv" style="clear:both; text-align: center; padding: 20px;"><button onclick="getStoreList(\'한식\', ' + koreanStartNo + ');">더 보기</button></div> -->
 
