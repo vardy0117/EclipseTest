@@ -52,6 +52,11 @@
 		text-align:center; 
 		font-size:1.5rem;
 		background-color: #e6e6e6;
+		cursor:pointer;
+	}
+	#setMenuTitle:hover, #mainMenuTitle:hover, #sideMenuTitle:hover, #drinkMenuTitle:hover {
+		text-decoration: underline;
+		color: #4e4e4e;
 	}
 	#setMenuDiv table, #mainMenuDiv table, #sideMenuDiv table, #drinkMenuDiv table {
 		margin: 10px auto;
