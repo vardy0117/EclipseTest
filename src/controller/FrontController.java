@@ -633,13 +633,28 @@ public class FrontController extends HttpServlet {
 			
 			MenuDAO menuDAO = new MenuDAO();
 			List<MenuBean> menuList = menuDAO.getStoreMenu(storeNo);
+
+			
+			ReviewDAO reviewDAO = new ReviewDAO();
+			ArrayList<ReviewBean> reviewList = reviewDAO.getStoreReview(storeNo);
+			
+			CustomerDAO cDAO = new CustomerDAO();
+			ArrayList<CustomerBean> customerList = new ArrayList<CustomerBean>();
+			for(int i =0;i<reviewList.size();i++){
+				CustomerBean cBean = cDAO.getCustomer(reviewList.get(i).getCustomerNo());
+				customerList.add(cBean);
+			}
+			request.setAttribute("customerList", customerList);
+
 					
 			OrderAction orderAction = new OrderAction();
 			orderAction.getOrderListByStoreNo(request, response, storeNo);
+
 			
 			
 			request.setAttribute("storeBean", storeBean);
 			request.setAttribute("menuList", menuList);
+			request.setAttribute("reviewList", reviewList);
 			
 			forward.setView("ceoIndex.jsp?center=ceoStore/ceoStore.jsp");
 			forward.execute(request, response);
@@ -981,7 +996,33 @@ public class FrontController extends HttpServlet {
 			forward.execute(request, response);
 
 		}
-
+		
+		// ceoStore.jsp에서 해당 리뷰에 사장님이 댓글 다는 작업
+		if(command.equals("writeComment.do")){
+			// 해당 리뷰의 글 번호
+			String reviewNo = request.getParameter("reviewNo");
+			// 사장님의 댓글
+			String comment = request.getParameter("comment");
+			
+			ReviewDAO rDAO = new ReviewDAO();
+			int result = rDAO.updateCommentByReview(reviewNo,comment);
+			if(result==1){
+				response.setContentType("text/html;charset=UTF-8"); 
+				PrintWriter out = response.getWriter();
+				out.print(result);
+			}
+			
+		}
+		if(command.equals("deleteComment.do")){
+			String reviewNo = request.getParameter("reviewNo");
+			ReviewDAO rDAO = new ReviewDAO();
+			int result = rDAO.deleteComment(reviewNo);
+			if(result==1){
+				response.setContentType("text/html;charset=UTF-8"); 
+				PrintWriter out = response.getWriter();
+				out.print(result);
+			}
+		}
 
 
 		

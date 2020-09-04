@@ -77,6 +77,43 @@ public class ReviewDAO {
    }
    
    
+   
+   // storeNo에 해당하는 모든 리뷰 정보를 가져오는 메소드
+   public ArrayList<ReviewBean> getStoreReview(int storeNo){
+	      ArrayList<ReviewBean> list = new ArrayList<ReviewBean>();
+	      ReviewBean rBean;
+	      
+	      try {
+	         con = getConnection();
+	         sql = "select * from review where storeNo=? order by date desc";
+	         pstmt=con.prepareStatement(sql);
+	         pstmt.setInt(1, storeNo);
+	         rs = pstmt.executeQuery();
+	         while(rs.next()){
+	        	rBean = new ReviewBean();
+	            rBean.setReviewNo(rs.getString(1));
+	            rBean.setOrderNo(rs.getString(2));
+	            rBean.setCustomerNo(rs.getString(3));
+	            rBean.setStoreNo(rs.getString(4));
+	            rBean.setContents(rs.getString(5));
+	            rBean.setPoints(rs.getString(6));
+	            rBean.setImage(rs.getString(7));
+	            rBean.setDate(rs.getTimestamp(8));
+	            rBean.setComment(rs.getString(9));
+	            list.add(rBean);
+	         }
+	               
+	      } catch (Exception e) {
+	         System.out.println("getStoreReview() 내에서 예외 발생 : "+e);
+	         e.printStackTrace();
+	      } finally {
+	         resourceClose();
+	      }
+	      
+	      return list;
+	   }
+   
+   
    // **************limit으로 2개씩 리뷰 리스트를 가져오는 쿼리문**************
 
    public JSONArray getReview(int storeNo,int startNum){
@@ -233,6 +270,47 @@ public class ReviewDAO {
 		}
 		
 		return count;
+	}
+
+	// ceoStore.jsp에서 해당 리뷰에 사장님의 댓글을 추가하는 작업
+	public int updateCommentByReview(String reviewNo, String comment) {
+		int result = 0;
+		try {
+			con=getConnection();
+			sql="update review set comment=? where reviewNo=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, comment);
+			pstmt.setString(2, reviewNo);
+			result = pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			System.out.println("insertCommentByReview() 내에서 예외 발생");
+			e.printStackTrace();
+		} finally {
+			resourceClose();
+		}
+		
+		return result;
+		
+	}
+
+	public int deleteComment(String reviewNo) {
+		int result = 0;
+		try {
+			con=getConnection();
+			sql="update review set comment=null where reviewNo=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, reviewNo);
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("deleteComment() 내에서 예외발생 : "+e);
+			e.printStackTrace();
+		} finally {
+			
+			resourceClose();
+		}
+		
+		return result;
 	}
 	
 	

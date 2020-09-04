@@ -1,12 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <style>
 	div {
 		box-sizing: border-box;
@@ -103,6 +107,37 @@
 	#orderDiv table tbody th:hover {
 		background: #8080801c;
 		cursor:pointer;
+	}
+	
+	.commentOk textArea{
+		margin-left: 10px;
+		border: 0px;
+		background-color: lightGray;	
+	}
+	.commentNo textArea{
+	
+	}
+	#reviewTable {
+		width: 700px;
+	}
+	#reviewTable textarea {
+	    width: 610px;
+	    height: 130px;
+	    resize: none;
+	    border: 2px black solid;
+	    border-radius: 12px;
+	    padding-left: 10px;
+	    padding-top: 5px;
+	    font-family: 'Binggrae-Bold';
+	    font-size: 1rem;
+	    outline: none;
+	    margin-left: 20px;
+	    margin-bottom: 10px;
+	}
+	textarea.commentOk {
+		background: #e2e2e2;
+		cursor: default;
+		border: 0px !important;
 	}
 </style>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -275,9 +310,78 @@
 		
 		
 		
+		<!---------------------------------- Review----------------------------------->
 		
 		<div class="contentDiv" id="reviewDiv">
-			reviewDiv
+			<c:forEach items="${requestScope.reviewList }" var="review" varStatus="status">
+			<c:set value="${status.index }" var="i"/>
+				<table id="reviewTable">
+					<tr>
+						<td>${requestScope.customerList[i].nickname }님이 작성한 리뷰</td>
+						<c:set var="date" value="${review.date}"/>
+						<td>${fn:substring(date,0,11) }</td>
+					</tr>
+					<tr>
+						<c:set var="star" value="☆☆☆☆☆"/>
+						<c:if test="${review.points eq 0 }">
+							<c:set var="star" value="☆☆☆☆☆"/>
+						</c:if>
+						<c:if test="${review.points eq 1 }">
+							<c:set var="star" value="★☆☆☆☆"/>
+						</c:if>
+						<c:if test="${review.points eq 2 }">
+							<c:set var="star" value="★★☆☆☆"/>
+						</c:if>
+						<c:if test="${review.points eq 3 }">
+							<c:set var="star" value="★★★☆☆"/>
+						</c:if>
+						<c:if test="${review.points eq 4 }">
+							<c:set var="star" value="★★★★☆"/>
+						</c:if>
+						<c:if test="${review.points eq 5 }">
+							<c:set var="star" value="★★★★★"/>
+						</c:if>
+						<td colspan="2">${star }</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<c:choose>
+								<c:when test="${review.image ne null }">
+									<img src="./images/${review.image }"> 
+								</c:when>
+								<c:when test="${review.image eq null}">
+									
+								</c:when>
+							</c:choose>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">${review.contents }</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<c:choose>
+								<c:when test="${review.comment eq null }">
+									<textarea id="commentArea_${review.reviewNo}"></textarea>
+									<br>
+									<input type="button" value="댓글쓰기" onclick="writeComment(${review.reviewNo })">
+								</c:when>
+								<c:when test="${review.comment ne null }">
+									<textarea class="commentOk" id="commentArea_${review.reviewNo}" readonly="readonly">${review.comment}</textarea>
+									<br>
+									<input type="button" value="댓글삭제" onclick="deleteComment(${review.reviewNo})">
+									<input type="button" value="댓글수정" onclick="updateComment(${review.reviewNo})">
+								</c:when>
+							</c:choose>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							리뷰번호(확인용 나중에 지울거임) : ${review.reviewNo }
+						</td>
+					</tr>				
+				</table>
+			</c:forEach>
 		</div>
 		
 		<div class="contentDiv" id="orderDiv">
@@ -337,7 +441,66 @@
 		location.href = 'updateMenu.do?menuNo='+menuNo;
 	}
 	
-	
+	function writeComment(reviewNo){
+		var comment = $("#commentArea_"+reviewNo).val();
+		
+		$.ajax({
+			type : "post",
+			async : false,
+			url : "./writeComment.do",
+			data : {"comment":comment,"reviewNo":reviewNo},
+			dataType : "text",
+			success : function(data,textStatus){
+				if(data==1){
+					alert("댓글등록완료");
+					document.getElementById("commentArea_"+reviewNo).classList.add("commentOk");
+					$("#commentArea_"+reviewNo).parent('td').children('input').remove();
+					var elements = '<input type="button" value="댓글삭제" onclick="deleteComment(' + reviewNo + ')"><input type="button" value="댓글수정" onclick="updateComment(' + reviewNo + ')">';
+					$("#commentArea_"+reviewNo).parent('td').append(elements);
+					$("#commentArea_"+reviewNo).html(comment);
+					$("#commentArea_"+reviewNo).attr("readonly",true);
+					
+				}else{
+					alert("댓글등록실패");
+				}
+			},error:function(data,textStatus){
+				alert("writeComment Ajax Error : "+textStatus);
+			}
+			
+		});//ajax 끝
+	}
+	function deleteComment(reviewNo){
+		$.ajax({
+			type : "post",
+			async : false,
+			url : "./deleteComment.do",
+			data : {"reviewNo":reviewNo},
+			dataType : "text",
+			success : function(data,textStatus){
+				if(data==1){
+					alert("댓글삭제완료");
+					$("#commentArea_"+reviewNo).html("");
+					document.getElementById("commentArea_"+reviewNo).classList.remove("commentOk");
+					$("#commentArea_"+reviewNo).parent('td').children('input').remove();
+					var elements ='<input type="button" value="댓글쓰기" onclick="writeComment('+reviewNo+')">'; 
+					$("#commentArea_"+reviewNo).parent('td').append(elements);
+					$("#commentArea_"+reviewNo).removeAttr("readonly");
+				}else{
+					alert("댓글삭제실패");
+				}
+			},error: function(data,textStatus){
+				alert("댓글삭제 에러발생 : "+textStatus);
+			}
+			
+		});
+	}
+	function updateComment(reviewNo){
+		$("#commentArea_"+reviewNo).removeAttr("readonly");
+		document.getElementById("commentArea_"+reviewNo).classList.remove("commentOk");
+		$("#commentArea_"+reviewNo).parent('td').children('input').remove();
+		var elements = '<input type="button" value="댓글수정" onclick="writeComment('+reviewNo+')">';
+		$("#commentArea_"+reviewNo).parent('td').append(elements);
+	}
 	
 	
 </script>
