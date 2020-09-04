@@ -111,8 +111,8 @@
 			
 		
 		<c:if test="${length eq 0 }">
-			<font color="black" size="10"> 당신의 주문이 존재하지 않습니다 ^^ <br>주문하러 가시겠어요? <br><br>
-			 <a href="./SearchStore.do">클릭</a>
+			<font color="black" size="10"> 당신의 주문이 존재하지 않습니다 ^^ <br>주문을 해주세요 <br><br>
+			<!--  <a href="./SearchStore.do">클릭</a> 파라미터값 같이 넘겨야 되서 잠시 보류-->
 			</font>
 		</c:if>
 	</div>

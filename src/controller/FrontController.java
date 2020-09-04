@@ -977,6 +977,40 @@ public class FrontController extends HttpServlet {
 			forward.execute(request, response);
 
 		}
+
+
+
+		
+		if(command.equals("receipt.do")){ // 영수증 
+
+			String customerNo = (String) request.getSession().getAttribute("customerNo");// 세션에 있는 사용자번호
+		
+			OrderAction action = new OrderAction();
+			String orderNo = request.getParameter("orderNo");
+			
+			try {
+				
+				System.out.println("receipt 컨트롤러 호출");
+				System.out.println("영수증 컨트롤러 호출 주문번호 : " + orderNo);
+				System.out.println("FrontController 전달받은 customerNo : " + customerNo);
+	
+				 action.Getreceipt(request, response, customerNo,orderNo);
+				 
+				forward = new ActionForward();
+		
+				forward.setView("member/receipt.jsp"); // 영수증 단독이라 center값이랑 index.jsp 안줌
+				forward.setRedirect(false);
+
+			} catch (Exception e) {
+				System.out.println("receipt 오류" + e);
+				e.printStackTrace();
+			}
+			forward.execute(request, response);
+
+		}
+		
+
+
 		
 		if(command.equals("UncheckedOrder.do")){
 			ceoOrderAction action = new ceoOrderAction();
@@ -985,6 +1019,7 @@ public class FrontController extends HttpServlet {
 			PrintWriter out = response.getWriter();
 			out.print(count);
 		}
+
 
 	}
 				
