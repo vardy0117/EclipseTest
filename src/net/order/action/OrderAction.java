@@ -124,13 +124,18 @@ public class OrderAction {
 
 		OrderListDAO odao = new OrderListDAO();
 		
-
-
-	 	
-
-
+/*영수증 들어갈때 한번더 정보가 필요해서 넣음 */
 		
 		StoreBean storereceipt = new StoreBean();
+		List<OrderJoinBean> OrderRealDetail = new ArrayList<OrderJoinBean>();
+		OrderRealDetail = odao.GetOrderRealDetails(customerNo, orderNo ); // orderlist 테이블 
+		
+
+		
+		System.out.println("오더 액션 전달받은 고객 number : " + customerNo);
+		
+		request.setAttribute("OrderRealDetail", OrderRealDetail);	// 영수증에 표시할 전용 에트리뷰트
+		
 		storereceipt = odao.GetReciptCeoInformation(customerNo, orderNo); // 오버번호 테이블 
 	
 

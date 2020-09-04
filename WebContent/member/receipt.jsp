@@ -114,26 +114,26 @@ body {text-align:center; margin:20px auto;}
       <th>품목</th>
       <th>수량</th>
       <th>단가</th>
-      <th>공급대가(금액)</th>
+<!--       <th>공급대가(금액)</th> -->
     </tr>
  
-  <%--  <c:forEach var="orderdetail" items="${OrderRealDetail}" varStatus="status" > --%>
+   <c:forEach var="orderdetail" items="${OrderRealDetail}" varStatus="status" > 
     <tr>
      
-      <td class="item">준비중</td>
+      <td class="item">${orderdetail.name }</td>
       <td class="article">2</td>
-      <td class="price">1,000,000</td>
-      <td class="sum">1,050,000</td>
+      <td class="price">${orderdetail.price }</td>
+      <!-- <td class="sum">보류</td> -->
     </tr>
- 	<tr>
+<!--  	<tr>
       <td class="item">준비중</td>
       <td class="article">&nbsp;</td>
       <td class="price">&nbsp;</td>
       <td class="sum">2,500</td>
       
-     </tr> 
+     </tr>  -->
 
-<%--    </c:forEach> --%>
+ </c:forEach> 
  	
   </table>
   
