@@ -256,4 +256,42 @@ public class OrderListDAO {
 		return count;
 	}
 
+	public List<OrderListBean> getOrderListByStoreNo(int storeNo) {
+		List<OrderListBean> list = new ArrayList<>();
+			
+		try {
+			con =getConnection();
+			sql="SELECT * FROM orderList where storeNo =? order by orderNo desc";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, storeNo);
+			rs=pstmt.executeQuery();
+			
+			while(rs.next()){
+				OrderListBean obean = new OrderListBean();
+				obean.setOrderNo(rs.getString(1));
+				obean.setCustomerNo(rs.getString(2));
+				obean.setStoreNo(rs.getString(3));
+				obean.setRoadAddress(rs.getString(4));
+				obean.setDetailAddress(rs.getString(5));
+				obean.setPhone(rs.getString(6));
+				obean.setPayment(rs.getString(7));
+				obean.setRequest(rs.getString(8));
+				obean.setOrderTime(rs.getTimestamp(9));
+				obean.setOrderCheck(rs.getString(10));
+				obean.setPrepareTime(rs.getString(11));
+				obean.setDeliveryCheck(rs.getNString(12));
+				obean.setCouponNo(rs.getString(13));
+				list.add(obean);
+			}
+			
+		} catch (Exception e) {
+			System.out.println("getOrderListByStoreNo inner error :"+e);
+		}finally {
+			resourceClose();
+		}
+		return list ;
+		
+		
+	}
+
 }

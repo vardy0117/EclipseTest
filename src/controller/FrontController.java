@@ -631,6 +631,9 @@ public class FrontController extends HttpServlet {
 			
 			MenuDAO menuDAO = new MenuDAO();
 			List<MenuBean> menuList = menuDAO.getStoreMenu(storeNo);
+			
+			OrderAction orderAction = new OrderAction();
+			orderAction.getOrderListByStoreNo(request, response, storeNo);
 					
 			
 			request.setAttribute("storeBean", storeBean);
@@ -977,11 +980,28 @@ public class FrontController extends HttpServlet {
 		}
 
 
+		
+		//review
+		if(command.equals("reviewManage.do")) {
+			//System.out.println("프론트컨트롤러 getStoreListByCategory.do 요청");
+			request.setCharacterEncoding("utf-8");
+		
+			String storeNo= request.getParameter("storeNo");
+			
+			
+			forward = new ActionForward();
+						
+			forward.setView("ceoIndex.jsp?center=ceoStore/reviewManage.jsp");
+			forward.execute(request, response);
+			}
+		}
+		
+
 
 
 
 	}
 				
-}
+
 	
 

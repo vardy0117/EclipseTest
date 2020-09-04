@@ -135,6 +135,14 @@ public class OrderAction {
 		OrderListDAO oDAO = new OrderListDAO();
 		return oDAO.getUnAllReviewCount(customerNo);
 	}
+	
+	//주문내역 불러오기 
+	public void getOrderListByStoreNo(HttpServletRequest request, HttpServletResponse response, int storeNo){
+		
+		OrderListDAO odao = new OrderListDAO();
+		request.setAttribute("orderList", odao.getOrderListByStoreNo(storeNo));
+				
+	}
 
 
 }
