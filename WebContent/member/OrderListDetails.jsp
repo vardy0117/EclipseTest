@@ -58,6 +58,17 @@
 	
 	
 </style>
+
+<script>
+function receipt() {
+	  var orderNo = "${param.orderNo}";
+	alert("영수증 발행할 주문번호 " + orderNo);
+	// window.open("receipt.do", "a", "width=600, height=600, left=100, top=50");
+	window.open(location.href='receipt.do?='+orderNo, "a", "width=600, height=600, left=100, top=50");
+
+}
+
+</script>
 <body>
 
 	<div id="mainDiv">
@@ -89,7 +100,15 @@
 
 						
 		</c:forEach>
-		
+		<br><br>
+			<!-- window.open("receipt.do", "a", "width=600, height=600, left=100, top=50") -->
+			<a href="
+					" onclick="window.open('<c:url value="receipt.do" >         
+			  				<c:param name="orderNo" value="${param.orderNo}">명세서 발행 </c:param>
+			  				
+				  			</c:url>', 'a', 'width=600, height=600, left=100, top=50')"> - 명세서 발행하기	
+	  		</a>		  
+	  		
 		<br> <br>
 	
 	

@@ -117,6 +117,33 @@ public class OrderAction {
 		System.out.println("OrderRealDetail내용 : " + OrderRealDetail + "      ");
 
 	}
+	
+	
+
+	public  void Getreceipt(HttpServletRequest request, HttpServletResponse response, String customerNo, String orderNo) throws Exception{
+
+		OrderListDAO odao = new OrderListDAO();
+		
+
+
+	 	
+
+
+		
+		StoreBean storereceipt = new StoreBean();
+		storereceipt = odao.GetReciptCeoInformation(customerNo, orderNo); // 오버번호 테이블 
+	
+
+		request.setAttribute("storereceipt", storereceipt);
+		System.out.println("Getreceipt storebean 내용 : " + storereceipt.toString() + "      ");
+		
+
+	
+		
+	}
+
+	
+	
 	// 리뷰작성 안된 주문목록 가져오기
 	public ArrayList<OrderListBean> getUnReviewOrder(HttpServletRequest request, HttpServletResponse response,String customerNo) {
 		OrderListDAO oDAO = new OrderListDAO();
