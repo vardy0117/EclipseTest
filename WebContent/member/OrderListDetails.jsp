@@ -66,25 +66,45 @@
 		<font color="black" size="5"> ${nickname}님의 상세주문내역 입니다 
 		</font>  <br> <br>
 		주문번호 :  ${param.orderNo }
-		<br> <br>
 		
-
-		<c:forEach var="orderlist" items="${OrderRealDetail}" varStatus="status">
+		<c:forEach var="name" items="${OrderRealDetail}" begin="0" end="0">
+						<br> 주문했던 가게이름 :	${name.storeName }
+		</c:forEach>
+		
+		<c:forEach var="address" items="${OrderRealDetail}" begin="0" end="0">
+						<br> 주문했던 도로명 주소 :	${address.roadAddress }
+						<br> 상세 주소 :	${address.detailAddress }
+						
+		</c:forEach>
+		
+		<br> <br>
+	
+	
+							
+		<c:forEach var="orderdetail" items="${OrderRealDetail}" varStatus="status" >
 			<div id="storeBox">
 				<table>
 					<tr>
 						<td>
+						     주문했던메뉴 : ${orderdetail.name} <br> 
+						     가격 : ${orderdetail.price} <br>
+							수량 : ${orderdetail.ea}EA
+						
 							
-						     가게 이름 : ${orderlist.storeName} <br>
-						     주문했던메뉴 : ${orderlist.name} <br> 
-						     가격 : ${orderlist.price} <br>
-							수량 : ${orderlist.ea}EA
-
 						</td>
 					</tr>
 				</table>
 			</div>
+				
+	
+							
 		</c:forEach>
+
+
+	
+						
+							
+<%--begin="1" end="3" --%>
 
 
 	<%-- 	<c:if test="${length eq 0 }">

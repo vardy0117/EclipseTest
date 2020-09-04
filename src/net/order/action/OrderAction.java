@@ -109,7 +109,7 @@ public class OrderAction {
 		
 		OrderRealDetail = odao.GetOrderRealDetails(customerNo, orderNo ); // orderlist 테이블 
 		
-		System.out.println("오더 액션 GetOrderDetail 서버 액션 겟스토어 네임 " + join.getStoreName());
+
 		
 		System.out.println("오더 액션 전달받은 고객 number : " + customerNo);
 		
