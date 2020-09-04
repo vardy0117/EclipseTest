@@ -58,6 +58,17 @@
 	
 	
 </style>
+
+<script>
+function receipt() {
+	  var orderNo = "${param.orderNo}";
+	alert("영수증 발행할 주문번호 " + orderNo);
+	// window.open("receipt.do", "a", "width=600, height=600, left=100, top=50");
+	window.open(location.href='receipt.do?='+orderNo, "a", "width=600, height=600, left=100, top=50");
+
+}
+
+</script>
 <body>
 
 	<div id="mainDiv">
@@ -68,22 +79,36 @@
 		주문번호 :  ${param.orderNo }
 		
 		<c:forEach var="name" items="${OrderRealDetail}" begin="0" end="0">
-						<br> 주문했던 가게이름 :	${name.storeName }
+						<br> - 주문했던 가게이름 :	${name.storeName }
 		</c:forEach>
 		
 		<c:forEach var="address" items="${OrderRealDetail}" begin="0" end="0">
-						<br> 주문했던 도로명 주소 :	${address.roadAddress }
-						<br> 상세 주소 :	${address.detailAddress }
+						<br> - 주문했던 도로명 주소 :	${address.roadAddress }
+						<br> - 상세 주소 :	${address.detailAddress }
 						
 		</c:forEach>
 		
 		
 		<c:forEach var="message" items="${OrderRealDetail}" begin="0" end="0">
-						<br> 요청사항 :	${message.request}
+						<br> - 요청사항 :	${message.request}
 
 						
 		</c:forEach>
 		
+		<c:forEach var="time" items="${OrderRealDetail}" begin="0" end="0">
+						<br> - 주문날짜 & 시간 :	${time.orderTime}
+
+						
+		</c:forEach>
+		<br><br>
+			<!-- window.open("receipt.do", "a", "width=600, height=600, left=100, top=50") -->
+			<a href="
+					" onclick="window.open('<c:url value="receipt.do" >         
+			  				<c:param name="orderNo" value="${param.orderNo}">명세서 발행 </c:param>
+			  				
+				  			</c:url>', 'a', 'width=600, height=600, left=100, top=50')"> - 명세서 발행하기	
+	  		</a>		  
+	  		
 		<br> <br>
 	
 	
@@ -109,21 +134,10 @@
 
 
 	
-						
-							
-<%--begin="1" end="3" --%>
-
-
-	<%-- 	<c:if test="${length eq 0 }">
-			<font color="black" size="10"> 당신의 주문이 존재하지 않습니다 ^^ <br>주문하러 가시겠어요? <br><br>
-			<a href="./SearchStore.do">클릭</a>
-			</font>
-		</c:if> --%>
 	</div>
 	
 	<div id="more"></div>
 	
-<!-- <div id="buttonDiv" style="clear:both; text-align: center; padding: 20px;"><button onclick="getStoreList(\'한식\', ' + koreanStartNo + ');">더 보기</button></div> -->
 
 </body>
 </html>

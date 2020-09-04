@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -94,6 +95,18 @@
 		height: 35px;
 		cursor: pointer;
 		border: none;
+	}	
+	#orderDiv table th {
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+	
+	#orderDiv table thead th {
+	    background-color: #80808069;
+	}
+	#orderDiv table tbody th:hover {
+		background: #8080801c;
+		cursor:pointer;
 	}
 	
 	.commentOk textArea{
@@ -127,13 +140,40 @@
 		border: 0px !important;
 	}
 </style>
-
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
+	window.onload = function(){
+		realTimeOrder();
+	}
+
 	function showDiv(id, element) {
 		document.getElementById('menuDiv').classList.remove('display-on');
 		document.getElementById('reviewDiv').classList.remove('display-on');
 		document.getElementById('orderDiv').classList.remove('display-on');
 		document.getElementById(id).classList.add('display-on');
+	}
+	
+	function realTimeOrder(){
+		setInterval(function (){
+			var storeNo = "${param.storeNo}";
+			$.ajax({
+		         async : false,
+		         url : "UncheckedOrder.do?storeNo="+storeNo,
+		         success : function(count) {
+		     		  if(count != 0){
+		     			  var audio = new Audio();
+		     			  audio.src="./media/dnemho.mp3";
+		     			  console.log(audio);
+		     			  audio.play();
+		     			  $(".uncheckedOrders").html('<img src="./images/ICON/icons8-meal-50 (3).png">');
+		     			
+		     		  } else{
+		     			 $(".uncheckedOrders").empty();			  
+		     		  }
+		         }
+		   	});
+		}	
+		, 5000);	
 	}
 	
 </script>
@@ -143,7 +183,7 @@
 		<div id="navDiv">
 			<div onclick="showDiv('menuDiv',this);">메뉴관리</div>
 			<div onclick="showDiv('reviewDiv',this);">리뷰관리</div>
-			<div onclick="showDiv('orderDiv',this);">주문내역</div>
+			<div onclick="showDiv('orderDiv',this);">주문내역<span class="uncheckedOrders" style="vertical-align: middle;"></span></div>
 		</div>
 		
 		<div class="contentDiv display-on" id="menuDiv">
@@ -346,6 +386,42 @@
 		
 		<div class="contentDiv" id="orderDiv">
 			orderDiv
+			<table>
+				<thead>
+					<tr> 
+						<th>주문 번호 </th>
+						<th>주문 확인 </th>
+						<th>주문 시간 </th>
+						<th>배달 확인 </th>
+					</tr>
+				</thead>
+
+			<c:forEach items="${orderList}" var="order">
+				<tr onclick="location.href='ceoOrder.do?orderNo=${order.orderNo}'">
+					<th>${order.orderNo }</th>
+					<th>
+						<c:if test="${order.orderCheck eq 'F'}">
+							<span style="color:green;">주문 확인중</span>
+						</c:if>
+						<c:if test="${order.orderCheck eq 'T'}">
+							<span style="color:red;">수락</span>
+						</c:if>
+					</th>
+					<th><fmt:formatDate value="${order.orderTime }" type="both" pattern="yyyy년 MM월 dd일 hh:mm "/></th>
+					<th>
+						<c:if test="${order.orderCheck eq 'F' and order.deliveryCheck eq 'F'}">
+							<span style="color:green;">주문 확인중</span>
+						</c:if>
+						<c:if test="${order.orderCheck eq 'T' and order.deliveryCheck eq 'F'}">
+							<span style="color:blue;">배달 중</span>
+						</c:if>
+						<c:if test="${order.orderCheck eq 'T' and order.deliveryCheck eq 'T'}">
+							<span style="color:red;">배달 완료</span>
+						</c:if>
+					</th>
+				</tr>
+			</c:forEach>
+			</table>
 		</div>
 	</div>
 	

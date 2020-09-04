@@ -104,7 +104,7 @@ public class OrderAction {
 	 	
 		List<OrderJoinBean> OrderRealDetail = new ArrayList<OrderJoinBean>();
 
-		OrderJoinBean join = new OrderJoinBean(); // 조인해서 결과물 가져오기
+		// OrderJoinBean join = new OrderJoinBean(); // 조인해서 결과물 가져오기
 		
 		OrderRealDetail = odao.GetOrderRealDetails(customerNo, orderNo ); // orderlist 테이블 
 		
@@ -116,6 +116,38 @@ public class OrderAction {
 		System.out.println("OrderRealDetail내용 : " + OrderRealDetail + "      ");
 
 	}
+	
+	
+
+	public  void Getreceipt(HttpServletRequest request, HttpServletResponse response, String customerNo, String orderNo) throws Exception{
+
+		OrderListDAO odao = new OrderListDAO();
+		
+/*영수증 들어갈때 한번더 정보가 필요해서 넣음 */
+		
+		StoreBean storereceipt = new StoreBean();
+		List<OrderJoinBean> OrderRealDetail = new ArrayList<OrderJoinBean>();
+		OrderRealDetail = odao.GetOrderRealDetails(customerNo, orderNo ); // orderlist 테이블 
+		
+
+		
+		System.out.println("오더 액션 전달받은 고객 number : " + customerNo);
+		
+		request.setAttribute("OrderRealDetail", OrderRealDetail);	// 영수증에 표시할 전용 에트리뷰트
+		
+		storereceipt = odao.GetReciptCeoInformation(customerNo, orderNo); // 오버번호 테이블 
+	
+
+		request.setAttribute("storereceipt", storereceipt);
+		System.out.println("Getreceipt storebean 내용 : " + storereceipt.toString() + "      ");
+		
+
+	
+		
+	}
+
+	
+	
 	// 리뷰작성 안된 주문목록 가져오기
 	public ArrayList<OrderListBean> getUnReviewOrder(HttpServletRequest request, HttpServletResponse response,String customerNo) {
 		OrderListDAO oDAO = new OrderListDAO();
@@ -133,6 +165,12 @@ public class OrderAction {
 		
 		OrderListDAO oDAO = new OrderListDAO();
 		return oDAO.getUnAllReviewCount(customerNo);
+	}
+
+	public void getOrderListByStoreNo(HttpServletRequest request, HttpServletResponse response, int storeNo) {
+		OrderListDAO odao = new OrderListDAO();
+		request.setAttribute("orderList", odao.getOrderListByStoreNo(storeNo));
+		
 	}
 
 

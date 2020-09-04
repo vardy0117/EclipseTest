@@ -155,7 +155,7 @@ public class OrderListDAO {
 
 			 sql = "select a.orderNo, a.customerNo, a.storeNo, "
 			 		+ "b.name 'menu' , b.quantity 'ea', b.price, "
-			 		+ "c.name 'storename', a.roadAddress, a.detailAddress, a.request  from orderList a, "
+			 		+ "c.name 'storename', a.roadAddress, a.detailAddress, a.request, a.orderTime  from orderList a, "
 			 		+ "orderMenu b, store c where a.orderNo = "
 			 		+ "b.orderNo and a.customerNo = ? and "
 			 		+ "c.storeNo =  (select storeNo from store "
@@ -182,6 +182,7 @@ public class OrderListDAO {
 				 join.setRoadAddress(rs.getString(8));
 				 join.setDetailAddress(rs.getString(9));
 				 join.setRequest(rs.getString(10));
+				 join.setOrderTime(rs.getString(11));
 				 orderlist.add(join);
 	 
 			 }
@@ -202,6 +203,55 @@ public class OrderListDAO {
 	}
 
 
+	
+	public   StoreBean  GetReciptCeoInformation(String  customerNo, String orderNo) { // 고객이 주문했던 사업자 정보 가져오기 
+		StoreBean ReciptStoreInfo = new StoreBean();
+		
+		try {
+			 getConnection();
+	
+			sql = "select regNo, name 'storeName', "
+					+ "roadAddress, detailAddress, "
+					+ "category, phone "
+					+ "from store where "
+					+ "storeNo = ( select storeNo "
+					+ "from orderList	where customerNo = ? and orderNo = ? "
+					+ "order by orderNo desc);";
+			 
+			 pstmt = con.prepareStatement(sql);
+			 
+			 pstmt.setString(1, customerNo);
+			 pstmt.setString(2, orderNo);
+			 System.out.println("사업자 정보에 해당하는 영수증 함수 호출");
+
+			 rs = pstmt.executeQuery();
+			
+			 if(rs.next()){
+				 // regNo, name, roadAddress, detailAddress, category, phone
+				 ReciptStoreInfo.setRegNo(rs.getString("regNo"));
+				 ReciptStoreInfo.setName(rs.getString("storeName")); 
+				 ReciptStoreInfo.setRoadAddress(rs.getString("roadAddress"));
+				 ReciptStoreInfo.setDetailAddress(rs.getString("detailAddress"));
+				 
+				 ReciptStoreInfo.setCategory(rs.getString("category"));
+				 ReciptStoreInfo.setPhone(rs.getString("phone"));
+
+				 }
+				
+			
+			
+		} catch (Exception e){
+			System.out.println("GetOrderDeGetReciptCeoInformationtail Error : " + e);
+		} finally {
+			resourceClose();
+		}
+		
+		
+		
+		return ReciptStoreInfo  ;
+		
+	}
+	
 	// 리뷰작성 안된 주문목록 가져오기
 	public ArrayList<OrderListBean> getUnReviewOrder(String customerNo,int startNum) {
 		ArrayList<OrderListBean> list = new ArrayList<OrderListBean>();
@@ -257,6 +307,66 @@ public class OrderListDAO {
 		}
 		
 		return count;
+	}
+
+	public int uncheckedOrders(int storeNo) {
+		int count=0;
+		try {
+			con=getConnection();
+			sql="select count(*) from orderList where storeNo=? and orderCheck ='F'";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, storeNo);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()){
+				count = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			System.out.println("uncheckedOrders() 내에서 예외 발생");
+			e.printStackTrace();
+		} finally {
+			resourceClose();
+		}
+		
+		return count;
+	}
+
+	public List<OrderListBean> getOrderListByStoreNo(int storeNo) {
+		List<OrderListBean> list = new ArrayList<>();
+
+		try {
+			con =getConnection();
+			sql="SELECT * FROM orderList where storeNo =? order by orderNo desc";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, storeNo);
+			rs=pstmt.executeQuery();
+
+			while(rs.next()){
+				OrderListBean obean = new OrderListBean();
+				obean.setOrderNo(rs.getString(1));
+				obean.setCustomerNo(rs.getString(2));
+				obean.setStoreNo(rs.getString(3));
+				obean.setRoadAddress(rs.getString(4));
+				obean.setDetailAddress(rs.getString(5));
+				obean.setPhone(rs.getString(6));
+				obean.setPayment(rs.getString(7));
+				obean.setRequest(rs.getString(8));
+				obean.setOrderTime(rs.getTimestamp(9));
+				obean.setOrderCheck(rs.getString(10));
+				obean.setPrepareTime(rs.getString(11));
+				obean.setDeliveryCheck(rs.getNString(12));
+				obean.setCouponNo(rs.getString(13));
+				list.add(obean);
+			}
+
+		} catch (Exception e) {
+			System.out.println("getOrderListByStoreNo inner error :"+e);
+		}finally {
+			resourceClose();
+		}
+		return list ;
+
 	}
 
 }
