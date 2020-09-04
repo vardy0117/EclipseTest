@@ -104,7 +104,7 @@ public class OrderAction {
 	 	
 		List<OrderJoinBean> OrderRealDetail = new ArrayList<OrderJoinBean>();
 
-		OrderJoinBean join = new OrderJoinBean(); // 조인해서 결과물 가져오기
+		// OrderJoinBean join = new OrderJoinBean(); // 조인해서 결과물 가져오기
 		
 		OrderRealDetail = odao.GetOrderRealDetails(customerNo, orderNo ); // orderlist 테이블 
 		
