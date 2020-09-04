@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -90,6 +91,18 @@
 		height: 35px;
 		cursor: pointer;
 		border: none;
+	}
+	#orderDiv table th {
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+	
+	#orderDiv table thead th {
+	    background-color: #80808069;
+	}
+	#orderDiv table tbody th:hover {
+		background: #8080801c;
+		cursor:pointer;
 	}
 </style>
 
@@ -235,13 +248,47 @@
 		
 		
 		
-		
+		<!-- review 관리   -->
 		<div class="contentDiv" id="reviewDiv">
-			reviewDiv
 		</div>
 		
 		<div class="contentDiv" id="orderDiv">
-			orderDiv
+			<table>
+				<thead>
+					<tr> 
+						<th>주문 번호 </th>
+						<th>주문 확인 </th>
+						<th>주문 시간 </th>
+						<th>배달 확인 </th>
+					</tr>
+				</thead>
+		
+			<c:forEach items="${orderList}" var="order">
+				<tr onclick="location.href='ceoOrder.do?orderNo=${order.orderNo}'">
+					<th>${order.orderNo }</th>
+					<th>
+						<c:if test="${order.orderCheck eq 'F'}">
+							<span style="color:green;">주문 확인중</span>
+						</c:if>
+						<c:if test="${order.orderCheck eq 'T'}">
+							<span style="color:red;">수락</span>
+						</c:if>
+					</th>
+					<th><fmt:formatDate value="${order.orderTime }" type="both" pattern="yyyy년 MM월 dd일 hh:mm "/></th>
+					<th>
+						<c:if test="${order.orderCheck eq 'F' and order.deliveryCheck eq 'F'}">
+							<span style="color:green;">주문 확인중</span>
+						</c:if>
+						<c:if test="${order.orderCheck eq 'T' and order.deliveryCheck eq 'F'}">
+							<span style="color:blue;">배달 중</span>
+						</c:if>
+						<c:if test="${order.orderCheck eq 'T' and order.deliveryCheck eq 'T'}">
+							<span style="color:red;">배달 완료</span>
+						</c:if>
+					</th>
+				</tr>
+			</c:forEach>
+			</table>
 		</div>
 	</div>
 	
