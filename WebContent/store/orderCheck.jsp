@@ -71,7 +71,7 @@
 					
 					$("#myCouponList").html(tag);
 					
-					var cancelTag="<tr class='data'><td colspan='2'><a onclick='discountPrice(0, \"false\")' style='cursor:pointer;'>사용 안함</a></td></tr>";		
+					var cancelTag="<tr class='data'><td colspan='2'><a onclick='discountPrice(0, -1)' style='cursor:pointer;'>사용 안함</a></td></tr>";		
 					$("#myCouponList").append(cancelTag);
 				}
 			},		
@@ -99,6 +99,7 @@
 		
 		$("#couponNo").val(couponNo);
 		$("#payment").val((totalPrice+discountP));
+ 		console.log($("#couponNo").val());
 	}
 
 	function checkData(){
@@ -186,7 +187,7 @@
 				           phone:document.getElementById("phone").value,
 				           payment:document.getElementById("payment").value,
 				           request:document.getElementById("request").value,
-				           usedCoupon:document.getElementById("couponNo").value
+				           couponNo:document.getElementById("couponNo").value
 						  }
 		
 		deliveryInfo = JSON.stringify(deliveryInfoItem);
@@ -198,6 +199,8 @@
                url : "Order.do?storeNo="+storeNo,
                data : {"cart":cart,"deliveryInfo":deliveryInfo},
                success : function() {
+            	   var cart = null;
+           		   sessionStorage.clear();
             	   alert("주문이 완료되었습니다. 메인 페이지로 이동합니다.");
             	   location.href='./';
                }
@@ -309,7 +312,7 @@
 			</div>
 			<input type="hidden" id="payment" name="payment">
 			<input type="hidden" name="storeNo" class="storeNo">
-			<input type="hidden" id="couponNo" name="couponNo" value="false">		
+			<input type="hidden" id="couponNo" name="couponNo" value="-1">		
 			<button type="button" id="pbtn" onclick="doPayment()">결 제 하 기</button>
 		</div>	
 		</form>

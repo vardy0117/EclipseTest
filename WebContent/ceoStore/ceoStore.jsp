@@ -92,13 +92,37 @@
 		border: none;
 	}
 </style>
-
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
+	window.onload = function(){
+		realTimeOrder();
+	}
+
 	function showDiv(id, element) {
 		document.getElementById('menuDiv').classList.remove('display-on');
 		document.getElementById('reviewDiv').classList.remove('display-on');
 		document.getElementById('orderDiv').classList.remove('display-on');
 		document.getElementById(id).classList.add('display-on');
+	}
+	
+	function realTimeOrder(){
+		setInterval(function (){
+			var storeNo = "${param.storeNo}";
+			$.ajax({
+		         async : false,
+		         url : "UncheckedOrder.do?storeNo="+storeNo,
+		         success : function(count) {
+		     		  if(count != 0){
+		     			  $(".uncheckedOrders").html('<img src="./images/ICON/icons8-meal-50 (3).png">');
+		     			 
+		     			
+		     		  } else{
+		     			 $(".uncheckedOrders").empty();			  
+		     		  }
+		         }
+		   	});
+		}	
+		, 5000);	
 	}
 	
 </script>
@@ -108,7 +132,7 @@
 		<div id="navDiv">
 			<div onclick="showDiv('menuDiv',this);">메뉴관리</div>
 			<div onclick="showDiv('reviewDiv',this);">리뷰관리</div>
-			<div onclick="showDiv('orderDiv',this);">주문내역</div>
+			<div onclick="showDiv('orderDiv',this);">주문내역<span class="uncheckedOrders" style="vertical-align: middle;"></span></div>
 		</div>
 		
 		<div class="contentDiv display-on" id="menuDiv">

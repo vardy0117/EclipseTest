@@ -17,6 +17,7 @@ import org.json.simple.JSONArray;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+import com.sun.org.apache.xml.internal.serialize.Printer;
 
 import action.ActionForward;
 import action.AjaxAction;
@@ -26,6 +27,7 @@ import net.ceo.action.CeoLogoutAction;
 import net.ceo.action.CeoModifyAction;
 import net.ceo.db.CeoBean;
 import net.ceo.db.CeoDAO;
+import net.ceoorder.action.ceoOrderAction;
 import net.coupon.db.CouponBean;
 import net.customer.action.CustomerJoinAction;
 import net.customer.action.CustomerLoginAction;
@@ -977,6 +979,7 @@ public class FrontController extends HttpServlet {
 		}
 
 
+
 		
 		if(command.equals("receipt.do")){ // 영수증 
 
@@ -1007,6 +1010,15 @@ public class FrontController extends HttpServlet {
 		}
 		
 
+
+		
+		if(command.equals("UncheckedOrder.do")){
+			ceoOrderAction action = new ceoOrderAction();
+			int count = action.uncheckedOrders(request, response);
+			
+			PrintWriter out = response.getWriter();
+			out.print(count);
+		}
 
 
 	}

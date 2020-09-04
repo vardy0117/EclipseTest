@@ -44,21 +44,20 @@ public class OrderAction {
 		oBean.setRequest((String) deliveryInfo.get("request"));
 		oBean.setCouponNo((String) deliveryInfo.get("couponNo"));
 	
+		
 		OrderListDAO odao = new OrderListDAO();
 		int orderNo = odao.insertOrderList(oBean);
 		
 		
-		if(deliveryInfo.get("couponNo")!=null && !deliveryInfo.get("couponNo").equals("false")){
+		if(Integer.parseInt(oBean.getCouponNo())!=-1){
 			CouponDAO cdao = new CouponDAO();
-			int couponNo = Integer.parseInt((String) deliveryInfo.get("couponNo"));
-			
-			cdao.updateUsedCoupon(couponNo);
-		};
-		
+			cdao.updateUsedCoupon(Integer.parseInt(oBean.getCouponNo()));		
+		}
 		
 		return orderNo;
+		
 	}
-
+	
 	public void insertOrderMenu(HttpServletRequest req, HttpServletResponse resp, int orderNo) throws ParseException, JSONException{
 		JSONArray cart = new JSONArray(req.getParameter("cart"));
 
