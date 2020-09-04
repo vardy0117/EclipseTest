@@ -631,6 +631,9 @@ public class FrontController extends HttpServlet {
 			
 			MenuDAO menuDAO = new MenuDAO();
 			List<MenuBean> menuList = menuDAO.getStoreMenu(storeNo);
+			
+			OrderAction orderAction = new OrderAction();
+			orderAction.getOrderListByStoreNo(request, response, storeNo);
 					
 			
 			request.setAttribute("storeBean", storeBean);
@@ -977,7 +980,7 @@ public class FrontController extends HttpServlet {
 		}
 
 
-		
+
 		if(command.equals("receipt.do")){ // 영수증 
 
 			String customerNo = (String) request.getSession().getAttribute("customerNo");// 세션에 있는 사용자번호
@@ -1007,10 +1010,28 @@ public class FrontController extends HttpServlet {
 		}
 		
 
+		//review
+		if(command.equals("reviewManage.do")) {
+			//System.out.println("프론트컨트롤러 getStoreListByCategory.do 요청");
+			request.setCharacterEncoding("utf-8");
+		
+			String storeNo= request.getParameter("storeNo");
+			
+			
+			forward = new ActionForward();
+						
+			forward.setView("ceoIndex.jsp?center=ceoStore/reviewManage.jsp");
+			forward.execute(request, response);
+			}
+		}
+		
+
+
+
 
 
 	}
 				
-}
+
 	
 
