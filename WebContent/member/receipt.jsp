@@ -42,13 +42,36 @@ body {text-align:center; margin:20px auto;}
 
 .txt1 {font:bold 15px dotum;}
 </style>
+
+<script type="text/javascript">
+function printIt(printThis)
+{
+    var win = null;
+    win = window.open();
+    self.focus();
+    win.document.open();
+    win.document.write(printThis);
+    win.document.close();
+    win.print();
+    win.close();
+}
+
+
+
+
+</script>
+
 </head>
 
 
 
 <body>
+<div id="printme">
+<div id="printarea">
 <div id="Layout">
+
 <c:set var="info" value="${storereceipt}" />
+
  <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tblTop">
     <tr>
       <td>영 수 증</td>
@@ -56,7 +79,7 @@ body {text-align:center; margin:20px auto;}
   </table>
   <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tblTop2">
     <tr>
-      <td width="45%" class="noTd">주문번호. <span class="noStxt">${param.orderNo}</span></td>
+      <td width="45%" class="noTd">주문번호 <span class="noStxt">${param.orderNo}</span></td>
       <td class="name">${nickname}</td>
       <td width="15%">님귀하</td>
     </tr>
@@ -83,7 +106,7 @@ body {text-align:center; margin:20px auto;}
     </tr>
     <tr>
       <th>업태</th>
-      <td align="center">도소매</td>
+      <td align="center">외식업</td>
       <th>종목</th>
       <td align="center">${info.category }</td>
     </tr>
@@ -121,7 +144,7 @@ body {text-align:center; margin:20px auto;}
     <tr>
      
       <td class="item">${orderdetail.name }</td>
-      <td class="article"></td>
+      <td class="article">${orderdetail.ea}</td>
       <td class="price">${orderdetail.price }원</td>
       <!-- <td class="sum">보류</td> -->
     </tr>
@@ -157,3 +180,10 @@ body {text-align:center; margin:20px auto;}
  <div class="basicDiv">
    부가가치 세법시행규칙 제25조의 규정에 의하여 위 금액을 정히 영수함.</div>
 </div>
+</div>
+</div>
+<input type="button" value="출력하기" onclick="javascript:printIt(document.getElementById('printme').innerHTML)" />
+
+
+
+
