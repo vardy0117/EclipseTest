@@ -76,14 +76,14 @@ public class CouponDAO {
 			con = getConnection();
 			
 			sql = "update coupon "
-				+ "set used='F' "
+				+ "set used='T' "
 			    + "where couponNo=?";
 			
 			pstmt = con.prepareStatement(sql);
 			
 			pstmt.setInt(1, couponNo);
 			
-			rs = pstmt.executeQuery();
+			pstmt.executeUpdate();
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
