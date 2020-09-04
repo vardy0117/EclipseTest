@@ -97,7 +97,7 @@ public class OrderListDAO {
 			 
 */
 			 sql = "select a.orderNo, a.customerNo, a.storeNo, "
-			 		+ "b.name 'storeName' "
+			 		+ "b.name 'storeName', a.deliveryCheck "
 			 		+ "from orderList a, store b "
 			 		+ "where b.name = (select name from store where storeNo = a.storeNo) "
 			 		+ "and customerNo = ? "
@@ -117,8 +117,7 @@ public class OrderListDAO {
 				 join.setCustomerNo(rs.getString(2));
 				 join.setStoreNo(rs.getString(3));
 				 join.setName(rs.getString(4));
-			//	 join.setRoadAddress(rs.getString(5));
-			//	 join.setStoreName(rs.getString(6));
+				 join.setDeliveryCheck(rs.getString(5));
 				 orderlist.add(join);
 	 
 			 }

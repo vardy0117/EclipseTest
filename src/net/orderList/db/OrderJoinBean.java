@@ -16,8 +16,15 @@ public class OrderJoinBean {
 	String detailAddress; // 상세주소
 	String request; // 요청 사항
 	String orderTime; // 주문시간
+	String deliveryCheck; // 배달 여부
 	
 	
+	public String getDeliveryCheck() {
+		return deliveryCheck;
+	}
+	public void setDeliveryCheck(String deliveryCheck) {
+		this.deliveryCheck = deliveryCheck;
+	}
 	public String getRequest() {
 		return request;
 	}
@@ -95,7 +102,7 @@ public class OrderJoinBean {
 		return "OrderJoinBean [orderNo=" + orderNo + ", customerNo=" + customerNo + ", storeNo=" + storeNo + ", name="
 				+ name + ", price=" + price + ", storeName=" + storeName + ", ea=" + ea + ", menu=" + menu
 				+ ", roadAddress=" + roadAddress + ", detailAddress=" + detailAddress + ", request=" + request
-				+ ", orderTime=" + orderTime + "]";
+				+ ", orderTime=" + orderTime + ", deliveryCheck=" + deliveryCheck + "]";
 	}
 
 	
