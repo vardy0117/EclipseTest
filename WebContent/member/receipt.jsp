@@ -121,10 +121,11 @@ body {text-align:center; margin:20px auto;}
     <tr>
      
       <td class="item">${orderdetail.name }</td>
-      <td class="article">2</td>
-      <td class="price">${orderdetail.price }</td>
+      <td class="article"></td>
+      <td class="price">${orderdetail.price }원</td>
       <!-- <td class="sum">보류</td> -->
     </tr>
+        
 <!--  	<tr>
       <td class="item">준비중</td>
       <td class="article">&nbsp;</td>
@@ -134,6 +135,20 @@ body {text-align:center; margin:20px auto;}
      </tr>  -->
 
  </c:forEach> 
+ 
+ <tr>
+ <th>합계</th>
+ 	<td></td>
+ 	<td class="price">
+ 	
+ 	<c:forEach var="sum" items="${OrderRealDetail}" varStatus="status">
+			<c:set var="total" value="${total + sum.price}" />
+
+		</c:forEach>
+
+		 ${total}원
+ 	</td>
+ </tr>
  	
   </table>
   

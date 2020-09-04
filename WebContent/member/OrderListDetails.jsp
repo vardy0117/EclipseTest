@@ -132,8 +132,14 @@ function receipt() {
 							
 		</c:forEach>
 
+<!--합계계산 --------------------------------- -->
+		<c:forEach var="sum" items="${OrderRealDetail}" varStatus="status">
+			<c:set var="total" value="${total + sum.price}" />
 
-	
+		</c:forEach>
+
+		합계 : ${total}원
+<!--합계계산 --------------------------------- -->
 	</div>
 	
 	<div id="more"></div>

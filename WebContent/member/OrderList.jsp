@@ -93,11 +93,17 @@
   				<c:param name="orderNo" value="${orderlist.orderNo }"> </c:param>
 	  			</c:url>	">				   주문번호 : ${orderlist.orderNo} <br>
 								  		  주문했던 가게이름 : ${orderlist.name} <br>
-								        	<%-- 가게이름 : ${orderlist.name} <br> --%></a>
-					
-						
-						
-						</td>
+								  	
+								  	
+								<c:choose>
+
+									<c:when test="${orderlist.deliveryCheck eq 'T'}"> 배달여부 : 완료    </c:when>
+
+									<c:when test="${orderlist.deliveryCheck eq 'F'}"> 배달여부 : 미완료 </c:when>
+
+									<c:otherwise> 배달중 </c:otherwise>
+
+								</c:choose></td>
 					
 					</tr>
 				</table>
