@@ -12,7 +12,8 @@ public class OrderJoinBean {
 	String price;
 	String storeName; // alias해서 나오는 컬럼
 	String ea, menu;
-	
+	String roadAddress; // 앞에 도로명 
+	String detailAddress; // 상세주소
 	
 	
 	public String getEa() {
@@ -63,11 +64,25 @@ public class OrderJoinBean {
 	public void setPrice(String price) {
 		this.price = price;
 	}
+	public String getRoadAddress() {
+		return roadAddress;
+	}
+	public void setRoadAddress(String roadAddress) {
+		this.roadAddress = roadAddress;
+	}
+	public String getDetailAddress() {
+		return detailAddress;
+	}
+	public void setDetailAddress(String detailAddress) {
+		this.detailAddress = detailAddress;
+	}
 	@Override
 	public String toString() {
 		return "OrderJoinBean [orderNo=" + orderNo + ", customerNo=" + customerNo + ", storeNo=" + storeNo + ", name="
-				+ name + ", price=" + price + ", storeName=" + storeName + ", ea=" + ea + ", menu=" + menu + "]";
+				+ name + ", price=" + price + ", storeName=" + storeName + ", ea=" + ea + ", menu=" + menu
+				+ ", roadAddress=" + roadAddress + ", detailAddress=" + detailAddress + "]";
 	}
+
 
 
 
