@@ -14,8 +14,15 @@ public class OrderJoinBean {
 	String ea, menu;
 	String roadAddress; // 앞에 도로명 
 	String detailAddress; // 상세주소
+	String request; // 요청 사항
 	
 	
+	public String getRequest() {
+		return request;
+	}
+	public void setRequest(String request) {
+		this.request = request;
+	}
 	public String getEa() {
 		return ea;
 	}
@@ -80,8 +87,9 @@ public class OrderJoinBean {
 	public String toString() {
 		return "OrderJoinBean [orderNo=" + orderNo + ", customerNo=" + customerNo + ", storeNo=" + storeNo + ", name="
 				+ name + ", price=" + price + ", storeName=" + storeName + ", ea=" + ea + ", menu=" + menu
-				+ ", roadAddress=" + roadAddress + ", detailAddress=" + detailAddress + "]";
+				+ ", roadAddress=" + roadAddress + ", detailAddress=" + detailAddress + ", request=" + request + "]";
 	}
+	
 
 
 
