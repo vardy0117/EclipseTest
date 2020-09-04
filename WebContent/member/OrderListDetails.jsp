@@ -77,6 +77,13 @@
 						
 		</c:forEach>
 		
+		
+		<c:forEach var="message" items="${OrderRealDetail}" begin="0" end="0">
+						<br> 요청사항 :	${message.request}
+
+						
+		</c:forEach>
+		
 		<br> <br>
 	
 	
