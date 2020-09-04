@@ -41,6 +41,8 @@
 		color: white;
 	}
 </style>
+
+
 </head>
 <body>
 	<div id="topDiv">
@@ -56,8 +58,7 @@
 			</c:when>
 			<c:when test="${!empty sessionScope.email}">
 				<div id="loginAndJoin">
-					${sessionScope.email} 사장님 어서 오세요!(${sessionScope.ceoNo })
-					<a href="#"></a> | 
+					${sessionScope.email} 사장님 어서 오세요!(${sessionScope.ceoNo }) |
 					<a href="./CeoLogOut.do">logout</a> |	
 					<a href="./CeoModifyIntro.do">사장님 정보수정</a>
 				</div>

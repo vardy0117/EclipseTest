@@ -309,6 +309,7 @@ public class OrderListDAO {
 		return count;
 	}
 
+
 	public List<OrderListBean> getOrderListByStoreNo(int storeNo) {
 		List<OrderListBean> list = new ArrayList<>();
 			
@@ -342,9 +343,34 @@ public class OrderListDAO {
 		}finally {
 			resourceClose();
 		}
-		return list ;
+
+		return list;
 		
+	}	
+
+	public int uncheckedOrders(int storeNo) {
+		int count=0;
+		try {
+			con=getConnection();
+			sql="select count(*) from orderList where storeNo=? and orderCheck ='F'";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, storeNo);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()){
+				count = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			System.out.println("uncheckedOrders() 내에서 예외 발생");
+			e.printStackTrace();
+		} finally {
+			resourceClose();
+		}
 		
+		return count;
+
+
 	}
 
 }
