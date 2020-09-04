@@ -167,5 +167,11 @@ public class OrderAction {
 		return oDAO.getUnAllReviewCount(customerNo);
 	}
 
+	public void getOrderListByStoreNo(HttpServletRequest request, HttpServletResponse response, int storeNo) {
+		OrderListDAO odao = new OrderListDAO();
+		request.setAttribute("orderList", odao.getOrderListByStoreNo(storeNo));
+		
+	}
+
 
 }
