@@ -15,6 +15,7 @@ public class OrderJoinBean {
 	String roadAddress; // 앞에 도로명 
 	String detailAddress; // 상세주소
 	String request; // 요청 사항
+	String orderTime; // 주문시간
 	
 	
 	public String getRequest() {
@@ -83,12 +84,20 @@ public class OrderJoinBean {
 	public void setDetailAddress(String detailAddress) {
 		this.detailAddress = detailAddress;
 	}
+	public String getOrderTime() {
+		return orderTime;
+	}
+	public void setOrderTime(String orderTime) {
+		this.orderTime = orderTime;
+	}
 	@Override
 	public String toString() {
 		return "OrderJoinBean [orderNo=" + orderNo + ", customerNo=" + customerNo + ", storeNo=" + storeNo + ", name="
 				+ name + ", price=" + price + ", storeName=" + storeName + ", ea=" + ea + ", menu=" + menu
-				+ ", roadAddress=" + roadAddress + ", detailAddress=" + detailAddress + ", request=" + request + "]";
+				+ ", roadAddress=" + roadAddress + ", detailAddress=" + detailAddress + ", request=" + request
+				+ ", orderTime=" + orderTime + "]";
 	}
+
 	
 
 
