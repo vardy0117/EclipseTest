@@ -97,13 +97,17 @@
 								  	
 								<c:choose>
 
-									<c:when test="${orderlist.deliveryCheck eq 'T'}"> 배달여부 : 완료    </c:when>
+									<c:when test="${orderlist.deliveryCheck eq 'T'}">  <font color="green"> 배달여부 : 완료  </font>   </c:when>
 
-									<c:when test="${orderlist.deliveryCheck eq 'F'}"> 배달여부 : 미완료 </c:when>
+									<c:when test="${orderlist.deliveryCheck eq 'F'}">  <font color="red">배달여부 : 미완료 </font> </c:when>
 
-									<c:otherwise> 배달중 </c:otherwise>
+									<c:otherwise> <font color="green">배달중</font> </c:otherwise>
 
-								</c:choose></td>
+								</c:choose>
+								
+				</a>
+				
+				</td>
 					
 					</tr>
 				</table>

@@ -17,38 +17,7 @@ public class OrderJoinBean {
 	String request; // 요청 사항
 	String orderTime; // 주문시간
 	String deliveryCheck; // 배달 여부
-	
-	
-	public String getDeliveryCheck() {
-		return deliveryCheck;
-	}
-	public void setDeliveryCheck(String deliveryCheck) {
-		this.deliveryCheck = deliveryCheck;
-	}
-	public String getRequest() {
-		return request;
-	}
-	public void setRequest(String request) {
-		this.request = request;
-	}
-	public String getEa() {
-		return ea;
-	}
-	public void setEa(String ea) {
-		this.ea = ea;
-	}
-	public String getMenu() {
-		return menu;
-	}
-	public void setMenu(String menu) {
-		this.menu = menu;
-	}
-	public String getStoreName() {
-		return storeName;
-	}
-	public void setStoreName(String storeName) {
-		this.storeName = storeName;
-	}
+	String orderCheck;
 	public String getOrderNo() {
 		return orderNo;
 	}
@@ -79,6 +48,24 @@ public class OrderJoinBean {
 	public void setPrice(String price) {
 		this.price = price;
 	}
+	public String getStoreName() {
+		return storeName;
+	}
+	public void setStoreName(String storeName) {
+		this.storeName = storeName;
+	}
+	public String getEa() {
+		return ea;
+	}
+	public void setEa(String ea) {
+		this.ea = ea;
+	}
+	public String getMenu() {
+		return menu;
+	}
+	public void setMenu(String menu) {
+		this.menu = menu;
+	}
 	public String getRoadAddress() {
 		return roadAddress;
 	}
@@ -91,19 +78,39 @@ public class OrderJoinBean {
 	public void setDetailAddress(String detailAddress) {
 		this.detailAddress = detailAddress;
 	}
+	public String getRequest() {
+		return request;
+	}
+	public void setRequest(String request) {
+		this.request = request;
+	}
 	public String getOrderTime() {
 		return orderTime;
 	}
 	public void setOrderTime(String orderTime) {
 		this.orderTime = orderTime;
 	}
+	public String getDeliveryCheck() {
+		return deliveryCheck;
+	}
+	public void setDeliveryCheck(String deliveryCheck) {
+		this.deliveryCheck = deliveryCheck;
+	}
+	public String getOrderCheck() {
+		return orderCheck;
+	}
+	public void setOrderCheck(String orderCheck) {
+		this.orderCheck = orderCheck;
+	}
 	@Override
 	public String toString() {
 		return "OrderJoinBean [orderNo=" + orderNo + ", customerNo=" + customerNo + ", storeNo=" + storeNo + ", name="
 				+ name + ", price=" + price + ", storeName=" + storeName + ", ea=" + ea + ", menu=" + menu
 				+ ", roadAddress=" + roadAddress + ", detailAddress=" + detailAddress + ", request=" + request
-				+ ", orderTime=" + orderTime + ", deliveryCheck=" + deliveryCheck + "]";
+				+ ", orderTime=" + orderTime + ", deliveryCheck=" + deliveryCheck + ", orderCheck=" + orderCheck + "]";
 	}
+	
+	
 
 	
 

@@ -154,7 +154,8 @@ public class OrderListDAO {
 
 			 sql = "select a.orderNo, a.customerNo, a.storeNo, "
 			 		+ "b.name 'menu' , b.quantity 'ea', b.price, "
-			 		+ "c.name 'storename', a.roadAddress, a.detailAddress, a.request, a.orderTime  from orderList a, "
+			 		+ "c.name 'storename', a.roadAddress, a.detailAddress, a.request, a.orderTime,"
+			 		+ " a.deliveryCheck, a.orderCheck  from orderList a, "
 			 		+ "orderMenu b, store c where a.orderNo = "
 			 		+ "b.orderNo and a.customerNo = ? and "
 			 		+ "c.storeNo =  (select storeNo from store "
@@ -182,6 +183,8 @@ public class OrderListDAO {
 				 join.setDetailAddress(rs.getString(9));
 				 join.setRequest(rs.getString(10));
 				 join.setOrderTime(rs.getString(11));
+				 join.setDeliveryCheck(rs.getString(12));
+				 join.setOrderCheck(rs.getString(13));
 				 orderlist.add(join);
 	 
 			 }
