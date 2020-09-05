@@ -56,16 +56,48 @@
 		    clear:both;
 	}
 	
+	#cancelorder {
+	/* float: right; */
+	}
 	
+	.btn {
+	background: linear-gradient( to right, hsl(98 100% 62%), hsl(204 100% 59%) ); */
+    font-family: Binggrae-Bold;
+    font-size: 1rem;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    width: 270px;
+    height: 35px;
+    transition-duration: 1s;
+    opacity: 0.7;
+}
+		}
+		
 </style>
+
+<script>
+function receipt() {
+	  var orderNo = "${param.orderNo}";
+	alert("영수증 발행할 주문번호 " + orderNo);
+	// window.open("receipt.do", "a", "width=600, height=600, left=100, top=50");
+	window.open(location.href='receipt.do?='+orderNo, "a", "width=600, height=600, left=100, top=50");
+
+}
+
+</script>
 <body>
 
 	<div id="mainDiv">
 		<c:set var="length" value="${fn:length(orderlist) }" />
+		
+
 		<%-- <font color="black" size="5"> 고객번호 : ${customerNo} <br> --%>
 		<font color="black" size="5"> ${nickname}님의 상세주문내역 입니다 
 		</font>  <br> <br>
 		주문번호 :  ${param.orderNo }
+		
+		
 		
 		<c:forEach var="name" items="${OrderRealDetail}" begin="0" end="0">
 						<br> - 주문했던 가게이름 :	${name.storeName }
@@ -89,7 +121,15 @@
 
 						
 		</c:forEach>
-		
+		<br><br>
+			<!-- window.open("receipt.do", "a", "width=600, height=600, left=100, top=50") -->
+			<a href="
+					" onclick="window.open('<c:url value="receipt.do" >         
+			  				<c:param name="orderNo" value="${param.orderNo}">명세서 발행 </c:param>
+			  				
+				  			</c:url>', 'a', 'width=600, height=600, left=100, top=50')"> - 명세서 발행하기	
+	  		</a>		  
+	  		
 		<br> <br>
 	
 	
@@ -113,8 +153,34 @@
 							
 		</c:forEach>
 
+<!--합계계산 --------------------------------- -->
+		<c:forEach var="sum" items="${OrderRealDetail}" varStatus="status">
+			<c:set var="total" value="${total + sum.price}" />
 
-	
+		</c:forEach>
+
+		합계 : ${total}원
+<!--합계계산 --------------------------------- -->
+<br>
+<br>
+
+
+<!--고객 주문 취소 --------------------------------------- -->
+<c:forEach var="orderstatus" items="${OrderRealDetail}" begin="0" end="0">
+	<c:if test="${orderstatus.deliveryCheck ne 'T' && orderstatus.orderCheck ne 'T'}">
+		
+	<center>
+					<div id="cancelorder">
+						<form action="test.do" method="post">
+							<input class="btn" type="submit" value="주문취소">
+						</form>
+					</div>
+	</center>
+					
+	</c:if>	
+</c:forEach>	
+<!--고객 주문 취소 --------------------------------------- -->
+		
 	</div>
 	
 	<div id="more"></div>

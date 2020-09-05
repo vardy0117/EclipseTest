@@ -112,6 +112,13 @@ public class StoreBean {
 	public void setSido(String sido) {
 		this.sido = sido;
 	}
+	@Override
+	public String toString() {
+		return "StoreBean [storeNo=" + storeNo + ", ceoNo=" + ceoNo + ", name=" + name + ", roadAddress=" + roadAddress
+				+ ", detailAddress=" + detailAddress + ", category=" + category + ", phone=" + phone + ", storeHours="
+				+ storeHours + ", message=" + message + ", image=" + image + ", points=" + points + ", orderCount="
+				+ orderCount + ", deliveryArea=" + deliveryArea + ", regNo=" + regNo + ", sido=" + sido + "]";
+	}
 
 	
 	

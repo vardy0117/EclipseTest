@@ -93,11 +93,21 @@
   				<c:param name="orderNo" value="${orderlist.orderNo }"> </c:param>
 	  			</c:url>	">				   주문번호 : ${orderlist.orderNo} <br>
 								  		  주문했던 가게이름 : ${orderlist.name} <br>
-								        	<%-- 가게이름 : ${orderlist.name} <br> --%></a>
-					
-						
-						
-						</td>
+								  	
+								  	
+								<c:choose>
+
+									<c:when test="${orderlist.deliveryCheck eq 'T'}">  <font color="green"> 배달여부 : 완료  </font>   </c:when>
+
+									<c:when test="${orderlist.deliveryCheck eq 'F'}">  <font color="red">배달여부 : 미완료 </font> </c:when>
+
+									<c:otherwise> <font color="green">배달중</font> </c:otherwise>
+
+								</c:choose>
+								
+				</a>
+				
+				</td>
 					
 					</tr>
 				</table>
@@ -111,8 +121,8 @@
 			
 		
 		<c:if test="${length eq 0 }">
-			<font color="black" size="10"> 당신의 주문이 존재하지 않습니다 ^^ <br>주문하러 가시겠어요? <br><br>
-			 <a href="./SearchStore.do">클릭</a>
+			<font color="black" size="10"> 당신의 주문이 존재하지 않습니다 ^^ <br>주문을 해주세요 <br><br>
+			<!--  <a href="./SearchStore.do">클릭</a> 파라미터값 같이 넘겨야 되서 잠시 보류-->
 			</font>
 		</c:if>
 	</div>
