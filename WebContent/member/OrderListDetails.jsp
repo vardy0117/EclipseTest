@@ -172,7 +172,7 @@ function receipt() {
 	<center>
 					<div id="cancelorder">
 						<form action="test.do" method="post">
-							<input class="btn" type="submit" value="주문취소">
+							<input class="btn" type="submit" value="주문취소요청">
 						</form>
 					</div>
 	</center>

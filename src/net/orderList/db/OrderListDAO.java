@@ -371,4 +371,83 @@ public class OrderListDAO {
 
 	}
 
+	public boolean CeoDeleteOrder(int orderNo, String ceoNo) {
+		// int status = 0;
+		int check = 0;
+		boolean status = false;
+		
+		System.out.println("CeoDeleteOrder 함수 호출 ");
+		try {
+			con =getConnection();
+			sql="delete a from orderList a, store b "
+					+ "where a.storeNo = b.storeNo and "
+					+ "b.ceoNo = ? and a.orderNo = ?";
+			
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, ceoNo);
+			pstmt.setInt(2, orderNo);
+			
+			
+			System.out.println("CeoDeleteOrder 전달받은 ceo번호 : " + ceoNo);
+			System.out.println("CeoDeleteOrder 전달받은 orderNo번호 : " + orderNo);
+			
+			check = pstmt.executeUpdate();
+			
+			if (check == 0) {
+				status = false;
+				System.out.println("삭제 불가 check 반환 : " + check);
+			}else{
+				System.out.println("삭제 완료 " + check);
+				status = true;
+			}
+		
+		} catch (Exception e) {
+			System.out.println("CeoDeleteOrder inner error :"+e);
+		}finally {
+			resourceClose();
+		}
+		System.out.println("CeoDeleteOrder 리턴값 : " + status);
+		return status;
+	}
+
+	
+	
+	
+	
+	public boolean CouponBack(int orderNo) {
+		int check = 0;
+		boolean status = false;
+		
+		System.out.println("CouponBack 함수 호출 ");
+		try {
+			con =getConnection();
+			sql="UPDATE coupon b inner join orderList a SET b.used = 'F' "
+					+ "WHERE a.couponNo = "
+					+ "b.couponNo and a.orderNo = ?";
+			
+			pstmt=con.prepareStatement(sql);
+
+			pstmt.setInt(1, orderNo);
+			
+			
+			System.out.println("CouponBack 전달받은 orderNo번호 : " + orderNo);
+			
+			check = pstmt.executeUpdate();
+			System.out.println("쿠폰 쿼리 결과 " + check);
+			if (check == 0) {
+				status = false;
+				System.out.println("주문에 쿠폰항목이 존재하지 않음 : " + check);
+			}else{
+				System.out.println("사용자 쿠폰 원상복구 완료 " + check);
+				status = true;
+			}
+		
+		} catch (Exception e) {
+			System.out.println("CouponBack inner error :"+e);
+		}finally {
+			resourceClose();
+		}
+		System.out.println("CouponBack 리턴값 : " + status);
+		return status;
+	}
 }
