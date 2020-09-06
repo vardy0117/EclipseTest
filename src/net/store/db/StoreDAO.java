@@ -520,6 +520,38 @@ public class StoreDAO {
 		return sBean;
 		
 	}
+
+	public int CeoorderCheck(int orderNo, String ceoNo) {
+	
+		int result = 0;
+		try {
+			con=getConnection();
+			sql="UPDATE orderList a, store b SET "
+					+ "a.orderCheck = 'T'  "
+					+ "WHERE a.storeNo = b.storeNo and a.orderNo = ? "
+					+ "and a.storeNo = "
+					+ "(select storeNo from  (select distinct(a.storeNo) "
+					+ "from orderList a, store b where a.storeNo = "
+					+ "b.storeNo and b.ceoNo = ?) tmp)";
+			// 이미 T값으로 바뀌어있는 주문에 대해서는 별도의 처리 안함
+			// 계속해서 서브쿼리 사용해야 될시 별도로 함수에서 빼서 우선실행후 다음작업 되게하도록 할예정
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, orderNo);
+			pstmt.setString(2, ceoNo);
+			result = pstmt.executeUpdate();
+			System.out.println("Ceo주문체크 감지 결과 : " + result);
+
+		} catch (Exception e) {
+			System.out.println("CeoorderCheck() 내에서 예외 발생");
+			e.printStackTrace();
+		} finally {
+			resourceClose();
+		}
+		
+		return result;
+
+	}
 	
 	
 

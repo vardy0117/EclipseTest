@@ -6,7 +6,10 @@
 
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
 <html>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Ceo 주문내역 상세보기</title>
@@ -45,6 +48,34 @@ function deleteOrder(orderNo, ceoNo) {
 		
 	}
 }
+
+
+
+function orderCheck(orderNo){ // 사장전용 주문 체크
+	var comment = $("#ceoordercheck"+orderNo).val();
+	
+	$.ajax({
+		type : "post",
+		async : false,
+		/* url : "./writeComment.do", */
+		url : "./CeoorderCheck.do",
+		data : {"orderNo":orderNo,"orderNo":orderNo},
+		dataType : "text",
+		success : function(data,textStatus){
+			if(data==1){ 
+				alert("주문수락 완료 \n 이미 처리 완료된 주문에 대해서 별도의 처리 안되어 있음 (중복요청가능) ");
+				$("#ceoordercheck").text("주문수락완료");
+				$("#ceoordercheck").css("color", "green");
+				
+			}else{
+				alert("주문수락실패 잘못된 접근입니다");
+			}
+		},error:function(data,textStatus){
+			alert("Ajax 통신 Error : "+textStatus);
+		}
+		
+	});//ajax 끝
+}
 </script>
 </head>
 <body>
@@ -58,8 +89,17 @@ function deleteOrder(orderNo, ceoNo) {
 		주문 번호 : ${param.orderNo } <br>
 
 			 <form name="orderform" method="post" action="CeoDeleteOrder.do?orderNo=${param.orderNo }" onsubmit="return confirm();">
-				<input value="임시주문취소버튼" type="button" onclick="deleteOrder(${param.orderNo},${ceoNo})" >
+				<input value="임시주문삭제버튼" type="button" onclick="deleteOrder(${param.orderNo},${ceoNo})" >
 			</form> 
+			
+	
+			<div>
+			<input type="button" value="임시주문확인버튼" onclick="orderCheck(${param.orderNo })">
+	
+				<span id="ceoordercheck"></span>
+					
+			</div>
+	
 	</div>
 	
 
