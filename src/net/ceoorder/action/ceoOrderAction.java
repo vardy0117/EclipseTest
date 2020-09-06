@@ -25,7 +25,7 @@ public class ceoOrderAction{
 		OrderListDAO odao = new OrderListDAO();
 				
 		
-		boolean CouponBack = odao.CouponBack(orderNo); // 쿠폰 환불처리;
+		boolean CouponBack = odao.CouponBack(orderNo, ceoNo); // 쿠폰 환불처리;
 		System.out.println("쿠폰 쿼리 결과 : " + CouponBack);
 		
 		boolean Delete = odao.CeoDeleteOrder(orderNo,ceoNo);
