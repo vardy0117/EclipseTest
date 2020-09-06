@@ -85,6 +85,11 @@ function receipt() {
 
 }
 
+function cancelorder () {
+	alert("ceo에게 주문취소를 요청하는 기능입니다 \n넣을까 말까 생각중입니다");
+	
+}
+
 </script>
 <body>
 
@@ -92,7 +97,7 @@ function receipt() {
 		<c:set var="length" value="${fn:length(orderlist) }" />
 		
 
-		<%-- <font color="black" size="5"> 고객번호 : ${customerNo} <br> --%>
+
 		<font color="black" size="5"> ${nickname}님의 상세주문내역 입니다 
 		</font>  <br> <br>
 		주문번호 :  ${param.orderNo }
@@ -171,9 +176,7 @@ function receipt() {
 		
 	<center>
 					<div id="cancelorder">
-						<form action="test.do" method="post">
-							<input class="btn" type="submit" value="주문취소요청">
-						</form>
+						<input class="btn" type="submit" value="주문취소요청" onclick="cancelorder();">
 					</div>
 	</center>
 					
