@@ -1186,7 +1186,25 @@ public class FrontController extends HttpServlet {
 		
 
 		}
-	/***************************************************/	
+	/***************************************************/
+		
+		
+		if(command.equals("CeoorderCheck.do")){ //사장이 주문확인
+			String ceoNo = (String) request.getSession().getAttribute("ceoNo");// 세션에 있는 Ceo
+			int orderNo = Integer.parseInt(request.getParameter("orderNo"));
+			
+			StoreDAO storedao = new StoreDAO();
+			int result = storedao.CeoorderCheck(orderNo,ceoNo);
+			if(result==1){
+				response.setContentType("text/html;charset=UTF-8"); 
+				PrintWriter out = response.getWriter();
+				out.print(result);
+			}
+			
+		}
+		
+		/**************************************************************/
+		
 	}
 				
 }
