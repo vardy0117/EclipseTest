@@ -428,7 +428,7 @@ public class OrderListDAO {
 					+ "a.storeNo = (select distinct(a.storeNo) "
 					+ "from orderList a, store b where a.storeNo = "
 					+ "b.storeNo and b.ceoNo = ?)";
-			// 이미 F값으로 바뀌어있는 쿠폰에 대해서는 별도의 처리 안함
+			// 이미 F값으로 바뀌어있는 쿠폰에 대해서는 별도의 처리 안되어있음
 			// 계속해서 서브쿼리 사용해야 될시 별도로 함수에서 빼서 우선실행후 다음작업 되게하도록 할예정
 			
 			pstmt=con.prepareStatement(sql);
