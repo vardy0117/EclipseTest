@@ -1143,22 +1143,22 @@ public class FrontController extends HttpServlet {
 			 ceoOrderAction action = new ceoOrderAction();
 			
 			try {
-				boolean test;
+				boolean deleteorder;
 				System.out.println("DeleteOrder 컨트롤러 호출");
 				System.out.println("DeleteOrder FrontController 전달받은 ceo : " + ceoNo);
 				System.out.println("전달받은 DeleteOrder.do 주문 번호 : " + orderNo);
-				test = action.GetDeleteOrderAction(request, response, ceoNo, orderNo);
+				deleteorder = action.GetDeleteOrderAction(request, response, ceoNo, orderNo);
 
 				forward = new ActionForward();
 	
 				
 				// forward.setView("ceoIndex.jsp?center=ceoStore/orderlist.jsp");
-				System.out.println("action.getdeleteOrderAction값 : " +test);
+				System.out.println("action.getdeleteOrderAction값 : " +deleteorder);
 				
 			
 				response.setContentType("text/html; charset=UTF-8");
 				PrintWriter out = response.getWriter();
-				if (test != false) {
+				if (deleteorder != false) {
 					
 				//	out.print("<script>alert('삭제성공' " + orderNo + "); </script>");
 					
@@ -1195,6 +1195,23 @@ public class FrontController extends HttpServlet {
 			
 			StoreDAO storedao = new StoreDAO();
 			int result = storedao.CeoorderCheck(orderNo,ceoNo);
+			if(result==1){
+				response.setContentType("text/html;charset=UTF-8"); 
+				PrintWriter out = response.getWriter();
+				out.print(result);
+			}
+			
+		}
+		
+		/**************************************************************/
+		
+		
+		if(command.equals("DeliveryCheck.do")){ //사장이 주문확인
+			String ceoNo = (String) request.getSession().getAttribute("ceoNo");// 세션에 있는 Ceo
+			int orderNo = Integer.parseInt(request.getParameter("orderNo"));
+			
+			StoreDAO storedao = new StoreDAO();
+			int result = storedao.DeliveryCheck(orderNo,ceoNo);
 			if(result==1){
 				response.setContentType("text/html;charset=UTF-8"); 
 				PrintWriter out = response.getWriter();

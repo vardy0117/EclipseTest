@@ -5,9 +5,11 @@
 	auth="Container"
 	type="javax.sql.DataSource"
 	driverClassName="com.mysql.jdbc.Driver"
-	url="jdbc:mysql://59.20.215.149:3306/jspmodel2"
+	url="jdbc:mysql://m6ydz642.iptime.org:3306/jspmodel2"
 	username="jspmodel2"
 	password="jspmodel2"	
 	/>
+	<!-- 아이피 변경될까봐 유동아아피에 영향 안받는 iptime 도메인 적용 -->
+	<!-- 혹시나 도메인 적용오류로 접속 장애시 기존 아이피 59.20.215.149 로 다시 변경예정 -->
 
 </Context>

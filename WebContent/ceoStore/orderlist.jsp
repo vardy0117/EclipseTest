@@ -27,6 +27,20 @@ div {
 	position: relative;
 	padding-top: 30px;
 }
+
+.btn {
+		width: 245px;
+		background: linear-gradient( to bottom, hsl(0deg 0% 0%), hsl(0deg 0% 57%));
+		font-family: Binggrae-Bold;
+		font-size: 1rem;
+		color: white;
+		border: none;
+		border-radius: 12px;
+		width: 270px;
+		height: 35px;
+		transition-duration: 1s;
+		opacity: 0.7;
+	}
 </style>
 
 <script>
@@ -75,6 +89,35 @@ function orderCheck(orderNo){ // 사장전용 주문 체크
 		}
 		
 	});//ajax 끝
+	
+}
+
+
+function DeliveryCheck(orderNo){ // 배달완료처리
+	var comment = $("#deliverycheck"+orderNo).val();
+	
+	$.ajax({
+		type : "post",
+		async : false,
+		/* url : "./writeComment.do", */
+		url : "./DeliveryCheck.do",
+		data : {"orderNo":orderNo,"orderNo":orderNo},
+		dataType : "text",
+		success : function(data,textStatus){
+			if(data==1){ 
+				alert("배달수락 완료 \n 이미 처리 완료된 주문에 대해서 별도의 처리 안되어 있음 (중복요청가능) ");
+				$("#deliverycheck").text("배달처리완료");
+				$("#deliverycheck").css("color", "green");
+				
+			}else{
+				alert("배달수락실패 잘못된 접근입니다");
+			}
+		},error:function(data,textStatus){
+			alert("Ajax 통신 Error : "+textStatus);
+		}
+		
+	});//ajax 끝
+	
 }
 </script>
 </head>
@@ -82,23 +125,36 @@ function orderCheck(orderNo){ // 사장전용 주문 체크
 
 	<div id="mainDiv">버튼테스트 한다고 잠시만든 임시 페이지 <br>
 	
+	
 		<c:set var="ceoNo" value="${ceoNo}"/> 
 			<c:set var="store" value="${ceoStoreList}"/> 
 		
 		ceoNo = ${ceoNo} <br>
-		주문 번호 : ${param.orderNo } <br>
+		주문 번호 : ${param.orderNo } <br><br>
+
+			<font size="5">주문수락, 배달수락은 별도로 처리해서 여부에 상관없이 개별로 둠</font> 
+			<br><br>
 
 			 <form name="orderform" method="post" action="CeoDeleteOrder.do?orderNo=${param.orderNo }" onsubmit="return confirm();">
-				<input value="임시주문삭제버튼" type="button" onclick="deleteOrder(${param.orderNo},${ceoNo})" >
+				<input class="btn" value="임시주문삭제버튼" type="button" onclick="deleteOrder(${param.orderNo},${ceoNo})" >
 			</form> 
 			
-	
+				<br>
 			<div>
-			<input type="button" value="임시주문확인버튼" onclick="orderCheck(${param.orderNo })">
+			<input class="btn" type="button" value="임시주문확인처리버튼" onclick="orderCheck(${param.orderNo })">
 	
-				<span id="ceoordercheck"></span>
-					
+				<span id="ceoordercheck">상태 여부 안받아온 상태, 버튼만</span>
+				
 			</div>
+				<br>
+			
+				<input class="btn" type="button" value="임시배달완료처리버튼" onclick="DeliveryCheck(${param.orderNo })">
+				<span id="deliverycheck">상태 여부 안받아온 상태, 버튼만</span>
+					
+				
+			</div>
+			
+			
 	
 	</div>
 	
