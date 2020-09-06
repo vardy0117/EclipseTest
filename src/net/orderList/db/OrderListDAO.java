@@ -414,21 +414,28 @@ public class OrderListDAO {
 	
 	
 	
-	public boolean CouponBack(int orderNo) {
+	public boolean CouponBack(int orderNo, String ceoNo) {
 		int check = 0;
 		boolean status = false;
 		
 		System.out.println("CouponBack 함수 호출 ");
 		try {
 			con =getConnection();
-			sql="UPDATE coupon b inner join orderList a SET b.used = 'F' "
+			/*sql="UPDATE coupon b inner join orderList a SET b.used = 'F' "
 					+ "WHERE a.couponNo = "
-					+ "b.couponNo and a.orderNo = ?";
+					+ "b.couponNo and a.orderNo = ?";*/
+			
+			sql ="UPDATE coupon b, orderList a SET "
+					+ "b.used = 'F' WHERE a.couponNo = "
+					+ "b.couponNo and a.orderNo = ? and "
+					+ "a.storeNo = (select distinct(a.storeNo) "
+					+ "from orderList a, store b where a.storeNo = "
+					+ "b.storeNo and b.ceoNo = ?);";
 			
 			pstmt=con.prepareStatement(sql);
 
 			pstmt.setInt(1, orderNo);
-			
+			pstmt.setString(2, ceoNo);
 			
 			System.out.println("CouponBack 전달받은 orderNo번호 : " + orderNo);
 			
