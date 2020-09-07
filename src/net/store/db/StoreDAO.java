@@ -520,7 +520,112 @@ public class StoreDAO {
 		return sBean;
 		
 	}
+
+	public int CeoorderCheck(int orderNo, String ceoNo) {
 	
+		int result = 0;
+		try {
+			con=getConnection();
+			sql="UPDATE orderList a, store b SET "
+					+ "a.orderCheck = 'T'  "
+					+ "WHERE a.storeNo = b.storeNo and a.orderNo = ? "
+					+ "and a.storeNo = "
+					+ "(select storeNo from  (select distinct(a.storeNo) "
+					+ "from orderList a, store b where a.storeNo = "
+					+ "b.storeNo and b.ceoNo = ?) tmp)";
+			// 이미 T값으로 바뀌어있는 주문에 대해서는 별도의 처리 안되어있음
+			// 계속해서 서브쿼리 사용해야 될시 별도로 함수에서 빼서 우선실행후 다음작업 되게하도록 할예정
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, orderNo);
+			pstmt.setString(2, ceoNo);
+			result = pstmt.executeUpdate();
+			System.out.println("Ceo주문체크 감지 결과 : " + result);
+
+		} catch (Exception e) {
+			System.out.println("CeoorderCheck() 내에서 예외 발생");
+			e.printStackTrace();
+		} finally {
+			resourceClose();
+		}
+		
+		return result;
+
+	}
+	
+	
+	public int DeliveryCheck(int orderNo, String ceoNo) { // 배달 완료처리
+		
+		int result = 0;
+		try {
+			con=getConnection();
+			sql="UPDATE orderList a, store b SET "
+					+ "a.deliveryCheck = 'T'  "
+					+ "WHERE a.storeNo = b.storeNo and a.orderNo = ? "
+					+ "and a.storeNo = "
+					+ "(select storeNo from  (select distinct(a.storeNo) "
+					+ "from orderList a, store b where a.storeNo = "
+					+ "b.storeNo and b.ceoNo = ?) tmp)";
+			// 이미 T값으로 바뀌어있는 주문에 대해서는 별도의 처리 안되어있음
+			// 계속해서 서브쿼리 사용해야 될시 별도로 함수에서 빼서 우선실행후 다음작업 되게하도록 할예정
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, orderNo);
+			pstmt.setString(2, ceoNo);
+			result = pstmt.executeUpdate();
+			System.out.println("Ceo주문체크 감지 결과 : " + result);
+
+		} catch (Exception e) {
+			System.out.println("DeliveryCheck() 내에서 예외 발생");
+			e.printStackTrace();
+		} finally {
+			resourceClose();
+		}
+		
+		return result;
+
+	}
+/*****************************************************************************/
+	/*ceo번호가 접근하는 가게 번호에 대해서 ceo의 소유 것이 맞는지 확인하는 메서드*/
+	public boolean CheckCeo(int orderNo, String ceoNo) {
+	boolean checkceo = false;
+	try {
+		con = getConnection();
+/*		sql="select distinct(a.storeNo) from orderList a, store b "
+				+ "where a.storeNo =  b.storeNo and b.ceoNo = ?";*/
+		sql ="select a.orderNo, b.storeNo, b.ceoNo from orderList a, store b "
+				+ "where a.orderNo = ? and b.storeNo = a.storeNo and "
+				+ "b.storeNo =  "
+				+ "(select distinct(a.storeNo) from orderList a, "
+				+ "store b where a.storeNo =  b.storeNo and b.ceoNo = ? )";
+		
+		pstmt = con.prepareStatement(sql);
+		pstmt.setInt(1, orderNo);
+		pstmt.setString(2, ceoNo);
+		
+		
+		rs = pstmt.executeQuery();
+		if(rs.next()){
+			checkceo = true;
+			System.out.println("CheckCeo rs.next 여부 " + checkceo);
+		
+	
+		}else{
+			System.out.println("checkCeo 실패  " + checkceo);
+		}
+	} catch (Exception e) {
+		System.out.println("CheckCeo() 내에서 예외 발생 ");
+		e.printStackTrace();
+	} finally {
+		resourceClose();
+	}
+
+	
+	
+		return checkceo;
+	}
+	
+	/*****************************************************************************/
 	
 
 	

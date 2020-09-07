@@ -371,4 +371,101 @@ public class OrderListDAO {
 
 	}
 
+	public String CeoDeleteOrder(int orderNo, String ceoNo) {
+		// int status = 0;
+		int check = 0;
+		String status = "";
+		
+		System.out.println("CeoDeleteOrder 함수 호출 ");
+		try {
+			con =getConnection();
+/*			sql="delete a from orderList a, store b "
+					+ "where a.storeNo = b.storeNo and "
+					+ "b.ceoNo = ? and a.orderNo = ?";*/
+			
+			// N값으로 취소처리함
+			sql="UPDATE orderList a, store b SET "
+					+ "a.orderCheck = 'N', deliveryCheck ='N'  "
+					+ "WHERE a.storeNo = b.storeNo and a.orderNo = ? "
+					+ "and a.storeNo = "
+					+ "(select storeNo from  (select distinct(a.storeNo) "
+					+ "from orderList a, store b where a.storeNo = "
+					+ "b.storeNo and b.ceoNo = ?) tmp)";
+			// 이미 T값으로 바뀌어있는 주문에 대해서는 별도의 처리 안되어있음
+			
+			
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, orderNo);
+			pstmt.setString(2, ceoNo);
+		
+			
+			
+			System.out.println("CeoDeleteOrder 전달받은 ceo번호 : " + ceoNo);
+			System.out.println("CeoDeleteOrder 전달받은 orderNo번호 : " + orderNo);
+			
+			check = pstmt.executeUpdate();
+			
+			if (check == 0) {
+				status = "실패";
+				System.out.println("삭제 불가 check 반환 : " + check);
+			}else{
+				System.out.println("삭제 완료 " + check);
+				status = "완료";
+			}
+		
+		} catch (Exception e) {
+			System.out.println("CeoDeleteOrder inner error :"+e);
+		}finally {
+			resourceClose();
+		}
+		System.out.println("CeoDeleteOrder 리턴값 : " + status);
+		return status;
+	}
+
+	
+	
+	
+	
+	public boolean CouponBack(int orderNo, String ceoNo) {
+		int check = 0;
+		boolean status = false;
+		
+		System.out.println("CouponBack 함수 호출 ");
+		try {
+			con =getConnection();
+			
+			sql ="UPDATE coupon b, orderList a SET "
+					+ "b.used = 'F' WHERE a.couponNo = "
+					+ "b.couponNo and a.orderNo = ? and "
+					+ "a.storeNo = (select distinct(a.storeNo) "
+					+ "from orderList a, store b where a.storeNo = "
+					+ "b.storeNo and b.ceoNo = ?)";
+			// 이미 F값으로 바뀌어있는 쿠폰에 대해서는 별도의 처리 안되어있음
+			// 계속해서 서브쿼리 사용해야 될시 별도로 함수에서 빼서 우선실행후 다음작업 되게하도록 할예정
+			
+			pstmt=con.prepareStatement(sql);
+
+			pstmt.setInt(1, orderNo);
+			pstmt.setString(2, ceoNo);
+			
+			System.out.println("CouponBack 전달받은 orderNo번호 : " + orderNo);
+			
+			check = pstmt.executeUpdate();
+			System.out.println("쿠폰 쿼리 결과 " + check);
+			if (check == 0) {
+				status = false;
+				System.out.println("주문에 쿠폰항목이 존재하지 않음 : " + check);
+			}else{
+				System.out.println("사용자 쿠폰 원상복구 완료 " + check);
+				status = true;
+			}
+		
+		} catch (Exception e) {
+			System.out.println("CouponBack inner error :"+e);
+		}finally {
+			resourceClose();
+		}
+		System.out.println("CouponBack 리턴값 : " + status);
+		return status;
+	}
 }

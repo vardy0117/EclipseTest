@@ -10,6 +10,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.swing.plaf.synth.SynthSplitPaneUI;
 import javax.xml.bind.ParseConversionEvent;
 
 import org.apache.catalina.tribes.group.Response;
@@ -80,7 +82,7 @@ public class FrontController extends HttpServlet {
 		// command�� "hello.do"媛� ���λ�� 
 		String command = requestURI.substring(contextPath.length()+1);	
 		ActionForward forward = null;
-		
+		HttpSession session = request.getSession();
 		// forward���� view=�대�������댁�, redirect=由щ�ㅼ�대���몃갑���몄� ���ㅽ�⑥�諛⑹���몄�
 		// ----------------------------------------------------------------------
 		// login
@@ -154,9 +156,20 @@ public class FrontController extends HttpServlet {
 		
 		// >Login.jsp
 		if(command.equals("CustomerLogin.do")) {
+			
+			Object loginStatus = session.getAttribute("customerNo");
+			if (loginStatus == null) {
+				System.out.println("CustomerLogin.do 접근 세션 내역 : " + loginStatus + " 로그인 안된 상태임");
 			forward = new ActionForward();
 			forward.setView("index.jsp?center=member/customerLogin.jsp");
 			forward.execute(request, response);
+			}else{
+				System.out.println("CustomerLogin.do 잘못된 접근 감지 이미 로그인 상태 번호 : " + loginStatus);
+				 response.setContentType("text/html;charset=UTF-8"); 
+				 PrintWriter out = response.getWriter();
+				 out.print("<script>alert('잘못된 접근 입니다 \\n메인페이지로 이동 합니다'); location.href='index.jsp' </script>");
+			}
+			
 		}
 		
 		if(command.equals("CustomerLoginAction.do")) {
@@ -292,9 +305,19 @@ public class FrontController extends HttpServlet {
 		}
 				
 		if(command.equals("CeoLogin.do")) {
+			Object loginStatus = session.getAttribute("ceoNo");
+			if (loginStatus == null) {
+				System.out.println("CeoLogin.do 접근 세션 내역 : " + loginStatus + " 로그인 안된 상태임");
+				
 			forward = new ActionForward();
 			forward.setView("ceoIndex.jsp?center=member/ceoLogin.jsp");
 			forward.execute(request, response);
+			}else{
+				System.out.println("CeoLogin.do 잘못된 접근 감지 이미 로그인 상태 번호 : " + loginStatus);
+				 response.setContentType("text/html;charset=UTF-8"); 
+				 PrintWriter out = response.getWriter();
+				 out.print("<script>alert('잘못된 접근 입니다 \\n메인페이지로 이동 합니다');  location.href='ceoIndex.jsp' </script>");
+			}
 		}		
 	
 		if(command.equals("CeoLoginAction.do")) {
@@ -1078,8 +1101,121 @@ public class FrontController extends HttpServlet {
 			forward.execute(request, response);
 		}
 
+
+		/***************************************************/	
+		
+		if(command.equals("ceoOrder.do")){
+
+			String ceoNo = (String) request.getSession().getAttribute("ceoNo");// 세션에 있는 사용자번호
+			int orderNo = Integer.parseInt(request.getParameter("orderNo"));
+			boolean ceoCheck = false;
+			StoreDAO dao = new StoreDAO();
+			try {
+				
+				System.out.println("ceoOrder 컨트롤러 호출");
+				System.out.println("ceoOrder FrontController 전달받은 ceo : " + ceoNo);
+				System.out.println("전달받은 ceoOrder.do 주문 번호 : " + orderNo);
+				ceoCheck = dao.CheckCeo(orderNo, ceoNo);
+				if (ceoCheck) {
+				forward = new ActionForward();
+		
+				forward.setView("ceoIndex.jsp?center=ceoStore/orderlist.jsp");
+				forward.setRedirect(false);
+				forward.execute(request, response);
+
+				}else{
+					response.setContentType("text/html;charset=UTF-8"); 
+					PrintWriter out = response.getWriter();
+					 out.print("<script>  alert('귀하가 가지고 있는 가게가 아닙니다 ^^ '); history.back(); </script>");
+			
+				}
+				
+			} catch (Exception e) {
+				System.out.println("ceoOrder 오류" + e);
+				e.printStackTrace();
+			}
+		
+		}
+		
+		/***************************************************/	
+		
+		/***************************************************/
+		if(command.equals("CeoDeleteOrder.do")){
+
+			String ceoNo = (String) request.getSession().getAttribute("ceoNo");// 세션에 있는 사용자번호
+			int orderNo = Integer.parseInt(request.getParameter("orderNo"));
+			 
+			 // String customerNo = request.getParameter("customerNo");
+		
+			 ceoOrderAction action = new ceoOrderAction();
+			
+			try {
+				String deleteorder;
+				System.out.println("DeleteOrder 컨트롤러 호출");
+				System.out.println("DeleteOrder FrontController 전달받은 ceo : " + ceoNo);
+				System.out.println("전달받은 DeleteOrder.do 주문 번호 : " + orderNo);
+				deleteorder = action.GetDeleteOrderAction(request, response, ceoNo, orderNo);
+
+				forward = new ActionForward();
+	
+				
+				// forward.setView("ceoIndex.jsp?center=ceoStore/orderlist.jsp");
+				System.out.println("action.getdeleteOrderAction값 : " +deleteorder);
+				
+			
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = response.getWriter();
+				if (deleteorder != "실패") {
+				out.print(deleteorder);
+		
+				
+				}else{
+					
+					out.print(deleteorder);	
+				}
+
+			} catch (Exception e) {
+				System.out.println("DeleteOrder 오류" + e);
+				e.printStackTrace();
+			}
+		
+
+		}
+	/***************************************************/
 		
 		
+		if(command.equals("CeoorderCheck.do")){ //사장이 주문확인
+			String ceoNo = (String) request.getSession().getAttribute("ceoNo");// 세션에 있는 Ceo
+			int orderNo = Integer.parseInt(request.getParameter("orderNo"));
+			
+			StoreDAO storedao = new StoreDAO();
+			int result = storedao.CeoorderCheck(orderNo,ceoNo);
+			if(result==1){
+				response.setContentType("text/html;charset=UTF-8"); 
+				PrintWriter out = response.getWriter();
+				out.print(result);
+			}
+			
+		}
+		
+		/**************************************************************/
+		
+		
+		if(command.equals("DeliveryCheck.do")){ //사장이 주문확인
+			String ceoNo = (String) request.getSession().getAttribute("ceoNo");// 세션에 있는 Ceo
+			int orderNo = Integer.parseInt(request.getParameter("orderNo"));
+			
+			StoreDAO storedao = new StoreDAO();
+			int result = storedao.DeliveryCheck(orderNo,ceoNo);
+			if(result==1){
+				response.setContentType("text/html;charset=UTF-8"); 
+				PrintWriter out = response.getWriter();
+				out.print(result);
+			}
+			
+		}
+		
+		/**************************************************************/
 		
 	}
 				
