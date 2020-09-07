@@ -3,6 +3,8 @@ package net.orderMenu.db;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -66,5 +68,38 @@ public class OrderMenuDAO {
 	   }
 		
 	}
+   
+   public List<OrderMenuBean> getOrderMenuList(int orderNo){
+	   
+	   	List<OrderMenuBean> orderMenuList = new ArrayList<OrderMenuBean>();
+	   
+	   	try {
+		
+	   		con = getConnection();
+	   		sql="select * from orderMenu where orderNo=? ";
+	   		pstmt=con.prepareStatement(sql);
+	   		pstmt.setInt(1, orderNo);
+	   		
+	   		rs=pstmt.executeQuery();
+	   		while(rs.next()){
+	   			OrderMenuBean obean = new OrderMenuBean();
+	   			obean.setOrderNo(rs.getString(1));
+	   			obean.setName(rs.getString(2));
+	   			obean.setPrice(rs.getString(3));
+	   			obean.setQuantity(rs.getString(4));
+	   			obean.setTotalPrice(rs.getInt(5));
+	   			orderMenuList.add(obean);
+	   		}
+	   		
+	   		
+		} catch (Exception e) {
+			System.out.println("getOrderMenuList inner error : "+e);
+		} finally {
+			resourceClose();
+		}
+	   
+	   return orderMenuList;
+	 
+   }
 
 }

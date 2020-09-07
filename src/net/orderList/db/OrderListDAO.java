@@ -468,4 +468,45 @@ public class OrderListDAO {
 		System.out.println("CouponBack 리턴값 : " + status);
 		return status;
 	}
+	
+		
+	public OrderListBean getOrderList(int orderNo){
+	
+		OrderListBean orderListBean = new OrderListBean();
+		try {
+			con = getConnection();
+			sql="SELECT * FROM orderList where orderNo =?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, orderNo);
+			rs=pstmt.executeQuery();
+
+			if(rs.next()){
+				
+				orderListBean.setOrderNo(rs.getString(1));
+				orderListBean.setCustomerNo(rs.getString(2));
+				orderListBean.setStoreNo(rs.getString(3));
+				orderListBean.setRoadAddress(rs.getString(4));
+				orderListBean.setDetailAddress(rs.getString(5));
+				orderListBean.setPhone(rs.getString(6));
+				orderListBean.setPayment(rs.getString(7));
+				orderListBean.setRequest(rs.getString(8));
+				orderListBean.setOrderTime(rs.getTimestamp(9));
+				orderListBean.setOrderCheck(rs.getString(10));
+				orderListBean.setPrepareTime(rs.getString(11));
+				orderListBean.setDeliveryCheck(rs.getNString(12));
+				orderListBean.setCouponNo(rs.getString(13));
+			}
+			
+		} catch (Exception e) {
+			System.out.println("getOrderList 내부 : "+e);
+		}finally{
+			resourceClose();
+		}
+		return orderListBean;
+	}
+	
+	
+	
+	
+	
 }
