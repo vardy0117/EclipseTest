@@ -16,7 +16,6 @@
 		left: 0;
 		right: 0;
 		z-index: 1000;
-		
 		background: linear-gradient(
 			to right, 
 			hsl(98 100% 62%), 
@@ -135,4 +134,12 @@
 	</div>
 	
 </body>
+<script>
+var cartItem = JSON.parse(sessionStorage.getItem("cart"));
+if(cartItem==null){
+	$(".cartButton").css("display","none");
+} else {
+	$(".cartButton").css("display","block");
+}
+</script>
 </html>
