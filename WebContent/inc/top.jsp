@@ -135,4 +135,12 @@
 	</div>
 	
 </body>
+<script>
+var cartItem = JSON.parse(sessionStorage.getItem("cart"));
+if(cartItem==null){
+	$(".cartButton").css("display","none");
+} else {
+	$(".cartButton").css("display","block");
+}
+</script>
 </html>
