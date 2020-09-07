@@ -532,14 +532,16 @@ public class StoreDAO {
 					+ "and a.storeNo = "
 					+ "(select storeNo from  (select distinct(a.storeNo) "
 					+ "from orderList a, store b where a.storeNo = "
-					+ "b.storeNo and b.ceoNo = ?) tmp)";
+					+ "b.storeNo and b.ceoNo = ? and a.orderNo = ?) tmp)";
 			// 이미 T값으로 바뀌어있는 주문에 대해서는 별도의 처리 안되어있음
 			// 계속해서 서브쿼리 사용해야 될시 별도로 함수에서 빼서 우선실행후 다음작업 되게하도록 할예정
 			
 			pstmt = con.prepareStatement(sql);
+
 			pstmt.setInt(1, prepareTime);
 			pstmt.setInt(2, orderNo);
 			pstmt.setString(3, ceoNo);
+
 			result = pstmt.executeUpdate();
 			System.out.println("Ceo주문체크 감지 결과 : " + result);
 
@@ -566,13 +568,15 @@ public class StoreDAO {
 					+ "and a.storeNo = "
 					+ "(select storeNo from  (select distinct(a.storeNo) "
 					+ "from orderList a, store b where a.storeNo = "
-					+ "b.storeNo and b.ceoNo = ?) tmp)";
+					+ "b.storeNo and b.ceoNo = ? and a.orderNo= ? ) tmp)";
 			// 이미 T값으로 바뀌어있는 주문에 대해서는 별도의 처리 안되어있음
 			// 계속해서 서브쿼리 사용해야 될시 별도로 함수에서 빼서 우선실행후 다음작업 되게하도록 할예정
 			
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, orderNo);
 			pstmt.setString(2, ceoNo);
+			pstmt.setInt(3, orderNo);
+			
 			result = pstmt.executeUpdate();
 			System.out.println("Ceo주문체크 감지 결과 : " + result);
 
@@ -598,12 +602,12 @@ public class StoreDAO {
 				+ "where a.orderNo = ? and b.storeNo = a.storeNo and "
 				+ "b.storeNo =  "
 				+ "(select distinct(a.storeNo) from orderList a, "
-				+ "store b where a.storeNo =  b.storeNo and b.ceoNo = ? )";
+				+ "store b where a.storeNo =  b.storeNo and b.ceoNo = ? and a.orderNo =  ?)";
 		
 		pstmt = con.prepareStatement(sql);
 		pstmt.setInt(1, orderNo);
 		pstmt.setString(2, ceoNo);
-		
+		pstmt.setInt(3, orderNo);
 		
 		rs = pstmt.executeQuery();
 		if(rs.next()){
