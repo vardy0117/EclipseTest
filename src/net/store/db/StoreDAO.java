@@ -585,8 +585,47 @@ public class StoreDAO {
 		return result;
 
 	}
+/*****************************************************************************/
+	/*ceo번호가 접근하는 가게 번호에 대해서 ceo의 소유 것이 맞는지 확인하는 메서드*/
+	public boolean CheckCeo(int orderNo, String ceoNo) {
+	boolean checkceo = false;
+	try {
+		con = getConnection();
+/*		sql="select distinct(a.storeNo) from orderList a, store b "
+				+ "where a.storeNo =  b.storeNo and b.ceoNo = ?";*/
+		sql ="select a.orderNo, b.storeNo, b.ceoNo from orderList a, store b "
+				+ "where a.orderNo = ? and b.storeNo = a.storeNo and "
+				+ "b.storeNo =  "
+				+ "(select distinct(a.storeNo) from orderList a, "
+				+ "store b where a.storeNo =  b.storeNo and b.ceoNo = ? )";
+		
+		pstmt = con.prepareStatement(sql);
+		pstmt.setInt(1, orderNo);
+		pstmt.setString(2, ceoNo);
+		
+		
+		rs = pstmt.executeQuery();
+		if(rs.next()){
+			checkceo = true;
+			System.out.println("CheckCeo rs.next 여부 " + checkceo);
+		
+	
+		}else{
+			System.out.println("checkCeo 실패  " + checkceo);
+		}
+	} catch (Exception e) {
+		System.out.println("CheckCeo() 내에서 예외 발생 ");
+		e.printStackTrace();
+	} finally {
+		resourceClose();
+	}
+
 	
 	
+		return checkceo;
+	}
+	
+	/*****************************************************************************/
 	
 
 	
