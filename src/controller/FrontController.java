@@ -51,6 +51,7 @@ import net.order.action.GetStoreReviewAction;
 import net.order.action.OrderAction;
 import net.orderList.db.OrderListBean;
 import net.orderList.db.OrderListDAO;
+import net.orderMenu.db.OrderMenuDAO;
 import net.review.db.ReviewBean;
 
 import net.review.db.ReviewDAO;
@@ -672,7 +673,7 @@ public class FrontController extends HttpServlet {
 					
 			OrderAction orderAction = new OrderAction();
 			orderAction.getOrderListByStoreNo(request, response, storeNo);
-
+				
 			
 			
 			request.setAttribute("storeBean", storeBean);
@@ -1117,11 +1118,17 @@ public class FrontController extends HttpServlet {
 				System.out.println("전달받은 ceoOrder.do 주문 번호 : " + orderNo);
 				ceoCheck = dao.CheckCeo(orderNo, ceoNo);
 				if (ceoCheck) {
-				forward = new ActionForward();
-		
-				forward.setView("ceoIndex.jsp?center=ceoStore/orderlist.jsp");
-				forward.setRedirect(false);
-				forward.execute(request, response);
+					OrderMenuDAO orderMenuDAO = new OrderMenuDAO();
+					OrderListDAO orderListDAO = new OrderListDAO();
+					request.setAttribute("orderMenuList", orderMenuDAO.getOrderMenuList(orderNo));
+					request.setAttribute("orderList", orderListDAO.getOrderList(orderNo));
+					
+					
+					forward = new ActionForward();
+			
+					forward.setView("ceoIndex.jsp?center=ceoStore/orderlist.jsp");
+					forward.setRedirect(false);
+					forward.execute(request, response);
 
 				}else{
 					response.setContentType("text/html;charset=UTF-8"); 
@@ -1135,6 +1142,9 @@ public class FrontController extends HttpServlet {
 				e.printStackTrace();
 			}
 		
+			
+			
+			
 		}
 		
 		/***************************************************/	
@@ -1187,9 +1197,10 @@ public class FrontController extends HttpServlet {
 		if(command.equals("CeoorderCheck.do")){ //사장이 주문확인
 			String ceoNo = (String) request.getSession().getAttribute("ceoNo");// 세션에 있는 Ceo
 			int orderNo = Integer.parseInt(request.getParameter("orderNo"));
+			int prepareTime = Integer.parseInt(request.getParameter("prepareTime"));
 			
 			StoreDAO storedao = new StoreDAO();
-			int result = storedao.CeoorderCheck(orderNo,ceoNo);
+			int result = storedao.CeoorderCheck(orderNo,ceoNo,prepareTime);
 			if(result==1){
 				response.setContentType("text/html;charset=UTF-8"); 
 				PrintWriter out = response.getWriter();

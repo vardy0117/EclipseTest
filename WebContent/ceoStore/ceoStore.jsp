@@ -385,7 +385,6 @@
 		</div>
 		
 		<div class="contentDiv" id="orderDiv">
-			orderDiv
 			<table>
 				<thead>
 					<tr> 
