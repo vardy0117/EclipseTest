@@ -19,7 +19,7 @@ public class ceoOrderAction{
 		return count;
 	}
 
-	public boolean GetDeleteOrderAction(HttpServletRequest request, HttpServletResponse response, String ceoNo, int orderNo) {
+	public String GetDeleteOrderAction(HttpServletRequest request, HttpServletResponse response, String ceoNo, int orderNo) {
 		System.out.println("GetDeleteOrder 액션 호출");
 		
 		OrderListDAO odao = new OrderListDAO();
@@ -28,7 +28,7 @@ public class ceoOrderAction{
 		boolean CouponBack = odao.CouponBack(orderNo, ceoNo); // 쿠폰 환불처리;
 		System.out.println("쿠폰 쿼리 결과 : " + CouponBack);
 		
-		boolean Delete = odao.CeoDeleteOrder(orderNo,ceoNo);
+		String Delete = odao.CeoDeleteOrder(orderNo,ceoNo);
 		
 		System.out.println("주문 delete여부 : " + Delete);
 		
