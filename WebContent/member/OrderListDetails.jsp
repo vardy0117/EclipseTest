@@ -102,8 +102,6 @@ function cancelorder () {
 		</font>  <br> <br>
 		주문번호 :  ${param.orderNo }
 		
-		
-		
 		<c:forEach var="name" items="${OrderRealDetail}" begin="0" end="0">
 						<br> - 주문했던 가게이름 :	${name.storeName }
 		</c:forEach>
@@ -172,15 +170,28 @@ function cancelorder () {
 
 <!--고객 주문 취소 --------------------------------------- -->
 <c:forEach var="orderstatus" items="${OrderRealDetail}" begin="0" end="0">
-	<c:if test="${orderstatus.deliveryCheck ne 'T' && orderstatus.orderCheck ne 'T'}">
-		
 	<center>
-					<div id="cancelorder">
-						<input class="btn" type="submit" value="주문취소요청" onclick="cancelorder();">
-					</div>
-	</center>
-					
-	</c:if>	
+		<c:if test="${orderstatus.orderCheck eq 'F'}">
+			<div id="cancelorder">
+				상태 : 주문 확인 중!
+			</div>
+		</c:if>	
+		<c:if test="${orderstatus.orderCheck eq 'N'}">
+			<div id="cancelorder">
+				상태 : 주문 취소!
+			</div>
+		</c:if>
+		<c:if test="${orderstatus.orderCheck eq 'T' && orderstatus.deliveryCheck eq 'T'}">
+			<div id="cancelorder">
+				상태 : 배달 완료!
+			</div>
+		</c:if>	
+		<c:if test="${orderstatus.orderCheck eq 'T' && orderstatus.deliveryCheck eq 'F'}">
+			<div id="cancelorder">
+				상태 : 배달 중!
+			</div>
+		</c:if>					
+	</center>		
 </c:forEach>	
 <!--고객 주문 취소 --------------------------------------- -->
 		
