@@ -1108,26 +1108,33 @@ public class FrontController extends HttpServlet {
 
 			String ceoNo = (String) request.getSession().getAttribute("ceoNo");// 세션에 있는 사용자번호
 			int orderNo = Integer.parseInt(request.getParameter("orderNo"));
-			
-			
+			boolean ceoCheck = false;
+			StoreDAO dao = new StoreDAO();
 			try {
 				
 				System.out.println("ceoOrder 컨트롤러 호출");
 				System.out.println("ceoOrder FrontController 전달받은 ceo : " + ceoNo);
 				System.out.println("전달받은 ceoOrder.do 주문 번호 : " + orderNo);
-				
-
+				ceoCheck = dao.CheckCeo(orderNo, ceoNo);
+				if (ceoCheck) {
 				forward = new ActionForward();
 		
 				forward.setView("ceoIndex.jsp?center=ceoStore/orderlist.jsp");
 				forward.setRedirect(false);
+				forward.execute(request, response);
 
+				}else{
+					response.setContentType("text/html;charset=UTF-8"); 
+					PrintWriter out = response.getWriter();
+					 out.print("<script>  alert('귀하가 가지고 있는 가게가 아닙니다 ^^ '); history.back(); </script>");
+			
+				}
+				
 			} catch (Exception e) {
 				System.out.println("ceoOrder 오류" + e);
 				e.printStackTrace();
 			}
-			forward.execute(request, response);
-
+		
 		}
 		
 		/***************************************************/	
