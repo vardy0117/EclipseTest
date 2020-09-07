@@ -111,7 +111,6 @@
 		<c:choose>
 			<c:when test="${empty sessionScope.customerNo}">
 				<div id="loginAndJoin" style="	margin-top: 15px;">
-				
 					<a href="./CustomerLogin.do" onclick="createCart();">로그인</a> | 
 					<a href="./CustomerJoin.do">회원가입</a>
 				</div>
