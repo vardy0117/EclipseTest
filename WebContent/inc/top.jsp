@@ -57,6 +57,10 @@
 		cursor : pointer;
 	}
 	
+	button:focus{ 
+ 	outline: none; 
+	}
+	
 	#loginAndJoin a {
 		text-decoration: none;
 		color: white;
@@ -78,7 +82,6 @@
 </head>
 <script>
 		setInterval(function (){
-			console.log("야");
 			var cartItem = JSON.parse(sessionStorage.getItem("cart"));
 			if(cartItem==null){
 				$(".cartButton").css("display","none");
@@ -88,7 +91,7 @@
 		}, 1000);	
 	
 	function moveStore(){
-	var store = JSON.parse(sesssionStorage.getItem("store"));
+	var store = JSON.parse(sessionStorage.getItem("store"));
 	storeNo = store["storeNo"];
 	location.href="Store.do?storeNo="+storeNo;
 	}
@@ -118,7 +121,7 @@
 			<c:when test="${!empty sessionScope.customerNo}">
 				<div id="loginAndJoin">
 					<div class ="cartButton" style="display:none;">
-						<button type="button" class="cartIco"><img src="./images/ICON/icons8-meal-50 (3).png" width="40" height="40"></button>
+						<button type="button" class="cartIco" onclick="moveStore();"><img src="./images/ICON/icons8-meal-50 (3).png" width="40" height="40"></button>
 					</div>
 					<div id="loginAndJoin_sub">
 						${sessionScope.nickname} 회원님 어서 오세요! | 
