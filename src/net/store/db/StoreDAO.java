@@ -599,12 +599,12 @@ public class StoreDAO {
 				+ "where a.orderNo = ? and b.storeNo = a.storeNo and "
 				+ "b.storeNo =  "
 				+ "(select distinct(a.storeNo) from orderList a, "
-				+ "store b where a.storeNo =  b.storeNo and b.ceoNo = ? )";
+				+ "store b where a.storeNo =  b.storeNo and b.ceoNo = ? and a.orderNo =  ?)";
 		
 		pstmt = con.prepareStatement(sql);
 		pstmt.setInt(1, orderNo);
 		pstmt.setString(2, ceoNo);
-		
+		pstmt.setInt(3, orderNo);
 		
 		rs = pstmt.executeQuery();
 		if(rs.next()){
