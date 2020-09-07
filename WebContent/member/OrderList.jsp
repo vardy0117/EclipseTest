@@ -73,38 +73,41 @@
 		</font> <br> <br>
 		
 
-
-
-
-
-
 	<c:forEach var="orderlist" items="${orderlist}"
 			varStatus="status">
-
-			<div id="storeBox">
-			
+			<div id="storeBox">	
 				<table>
 					<tr>
-						<td>
-					
-				<a href="
-				
-				<c:url value="OrderRealDetail.do" >         
-  				<c:param name="orderNo" value="${orderlist.orderNo }"> </c:param>
-	  			</c:url>	">				   주문번호 : ${orderlist.orderNo} <br>
-								  		  주문했던 가게이름 : ${orderlist.name} <br>
-								        	<%-- 가게이름 : ${orderlist.name} <br> --%></a>
-					
-						
-						
-						</td>
-					
+						<td>	
+							<a href="
+							<c:url value="OrderRealDetail.do" >         
+			  				<c:param name="orderNo" value="${orderlist.orderNo }"> </c:param>
+				  			</c:url>">				  
+				  				 주문번호 : ${orderlist.orderNo} <br>
+								 주문했던 가게이름 : ${orderlist.name} <br>
+								<%-- 가게이름 : ${orderlist.name} <br> --%>
+								<c:choose>
+								<c:when test="${orderlist.orderCheck eq 'F'}">
+										상태 : 주문 확인 중!
+								</c:when>	
+								<c:when test="${orderlist.orderCheck eq 'N'}">
+										상태 : 주문 취소!
+								</c:when>
+								<c:when test="${orderlist.orderCheck eq 'T' && orderlist.deliveryCheck eq 'T'}">
+										상태 : 배달 완료!
+								</c:when>	
+								<c:when test="${orderlist.orderCheck eq 'T' && orderlist.deliveryCheck eq 'F'}">
+										상태 : 배달 중!
+								</c:when>
+								</c:choose>	
+								<br>
+							</a>													
+						</td>					
 					</tr>
 				</table>
 			
 			</div>	
-			
-</c:forEach>
+	</c:forEach>
 	
 
 		
