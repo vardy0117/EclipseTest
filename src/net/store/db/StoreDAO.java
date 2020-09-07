@@ -541,12 +541,14 @@ public class StoreDAO {
 			pstmt.setInt(1, prepareTime);
 			pstmt.setInt(2, orderNo);
 			pstmt.setString(3, ceoNo);
+			pstmt.setInt(4, orderNo);
+		
 
 			result = pstmt.executeUpdate();
 			System.out.println("Ceo주문체크 감지 결과 : " + result);
 
 		} catch (Exception e) {
-			System.out.println("CeoorderCheck() 내에서 예외 발생");
+			System.out.println("CeoorderCheck() 내에서 예외 발생 " + e);
 			e.printStackTrace();
 		} finally {
 			resourceClose();

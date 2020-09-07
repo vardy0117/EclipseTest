@@ -44,13 +44,7 @@ div {
 </style>
 
 <script>
-/* function deleteOrder(orderNo, ceoNo) {
-	if(confirm(" 주문을 삭제 하시겠습니까? ")==true){
-		  // location.href='deleteMenu.do?menuNo='+menuNo+'&storeNo='+storeNo;
-		  location.href ='CeoDeleteOrder.do?orderNo='+ orderNo + '&ceoNo=' + ceoNo;
-		  
-	}
-} */
+
 function deleteOrder(orderNo, ceoNo) {
 	if(confirm(" 주문을 삭제 하시겠습니까? ")==true){
 		orderform.submit();
@@ -201,10 +195,7 @@ function CancelOrder(orderNo){ // 주문 취소 처리 (배달도 같이 취소처리)
 		<br><br><br><br><br>
 		
 		
-			
-	
-	
-	버튼테스트 한다고 잠시만든 임시 페이지 <br>
+		
 	
 		<c:set var="ceoNo" value="${ceoNo}"/> 
 			<c:set var="store" value="${ceoStoreList}"/> 
