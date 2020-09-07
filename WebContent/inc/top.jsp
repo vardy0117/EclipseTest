@@ -24,7 +24,6 @@
 		);
 		
 	}
-
 	#topDiv #logo {
 		font-size: 2rem;
 		text-shadow: 4px 2px 2px gray;
@@ -38,6 +37,26 @@
 		color: white;
 		text-shadow: 2px 1px 1px gray;
 	}
+	
+	#loginAndJoin_sub {
+		margin-top: 15px;
+		float : right
+	}
+	
+	.cartButton {
+		float : left;
+		display: table;
+		padding : 5px;
+	}
+	
+	.cartIco {
+		display : table-cell;
+		border : 0;
+		margin-left : 10px;
+		background: none;
+		cursor : pointer;
+	}
+	
 	#loginAndJoin a {
 		text-decoration: none;
 		color: white;
@@ -53,20 +72,27 @@
 		width: 250px;
 	}
 	
-	cartButton {
-		display: table;
-	}
-	
-	.cartIco {
-		display : table-cell;
-		vertical-align:middle;
-		border : 0;
-		background: none;
-		cursor : pointer;
-	}
+
 </style>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>
 <script>
+		setInterval(function (){
+			console.log("야");
+			var cartItem = JSON.parse(sessionStorage.getItem("cart"));
+			if(cartItem==null){
+				$(".cartButton").css("display","none");
+			} else {
+				$(".cartButton").css("display","block");
+			}
+		}, 1000);	
+	
+	function moveStore(){
+	var store = JSON.parse(sesssionStorage.getItem("store"));
+	storeNo = store["storeNo"];
+	location.href="Store.do?storeNo="+storeNo;
+	}
+
 	function createCart(){
 		var cart = null;
 		sessionStorage.setItem("cart",cart);
@@ -84,7 +110,7 @@
 		</div>
 		<c:choose>
 			<c:when test="${empty sessionScope.customerNo}">
-				<div id="loginAndJoin">
+				<div id="loginAndJoin" style="	margin-top: 15px;">
 				
 					<a href="./CustomerLogin.do" onclick="createCart();">로그인</a> | 
 					<a href="./CustomerJoin.do">회원가입</a>
@@ -92,13 +118,15 @@
 			</c:when>
 			<c:when test="${!empty sessionScope.customerNo}">
 				<div id="loginAndJoin">
-					<!-- <span class ="cartButton">
-						<button type="button" class="cartIco" onclick=""><img src="./images/ICON/icons8-meal-50 (3).png" width="40" height="40"></button>
-					</span> -->
-					${sessionScope.nickname} 회원님 어서 오세요! | 
-					<a onclick = "logOut()" style="cursor:pointer;">logout</a> |	
-					<!-- <a href="./CustomerModifyIntro.do">회원수정</a> | -->
-					<a href="./MyPage.do">MyPage</a>
+					<div class ="cartButton" style="display:none;">
+						<button type="button" class="cartIco"><img src="./images/ICON/icons8-meal-50 (3).png" width="40" height="40"></button>
+					</div>
+					<div id="loginAndJoin_sub">
+						${sessionScope.nickname} 회원님 어서 오세요! | 
+						<a onclick = "logOut()" style="cursor:pointer;">logout</a> |	
+						<!-- <a href="./CustomerModifyIntro.do">회원수정</a> | -->
+						<a href="./MyPage.do">MyPage</a>
+					</div>
 				</div>
 			</c:when>
 		</c:choose>	
