@@ -1143,7 +1143,7 @@ public class FrontController extends HttpServlet {
 			 ceoOrderAction action = new ceoOrderAction();
 			
 			try {
-				boolean deleteorder;
+				String deleteorder;
 				System.out.println("DeleteOrder 컨트롤러 호출");
 				System.out.println("DeleteOrder FrontController 전달받은 ceo : " + ceoNo);
 				System.out.println("전달받은 DeleteOrder.do 주문 번호 : " + orderNo);
@@ -1158,25 +1158,13 @@ public class FrontController extends HttpServlet {
 			
 				response.setContentType("text/html; charset=UTF-8");
 				PrintWriter out = response.getWriter();
-				if (deleteorder != false) {
-					
-				//	out.print("<script>alert('삭제성공' " + orderNo + "); </script>");
-					
-				out.print("<script>alert('삭제성공'); "
-						+ "location.href='manageStore.do' </script> ");
-				
-			/*	forward.setView("manageStore.do");
-				forward.setRedirect(false);
-				forward.execute(request, response);
-		*/
-				
+				if (deleteorder != "실패") {
+				out.print(deleteorder);
+		
 				
 				}else{
-					out.print("<script>alert('주문번호 : ");
-					out.print(orderNo +" 잘못된 접근입니다 '); ");
-					out.print("history.back(); </script> ");
 					
-							
+					out.print(deleteorder);	
 				}
 
 			} catch (Exception e) {
