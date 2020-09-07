@@ -16,7 +16,6 @@
 		left: 0;
 		right: 0;
 		z-index: 1000;
-		
 		background: linear-gradient(
 			to right, 
 			hsl(98 100% 62%), 
