@@ -119,6 +119,33 @@ function DeliveryCheck(orderNo){ // 배달완료처리
 	});//ajax 끝
 	
 }
+
+
+function CancelOrder(orderNo){ // 주문 취소 처리 (배달도 같이 취소처리) 
+	var comment = $("#cancelorder"+orderNo).val();
+	
+	$.ajax({
+		type : "post",
+		async : false,
+		url : "./CeoDeleteOrder.do",
+		data : {"orderNo":orderNo,"orderNo":orderNo},
+		dataType : "text",
+		success : function(data,textStatus){
+			if(data == "완료"){  //  true false말고 숫자로 바꾸기
+				alert("배달, 주문 취소 완료 \n 이미 처리 완료된 주문에 대해서 별도의 처리 안되어 있음 (중복요청가능) ");
+				$("#cancelorder").text("배달, 주문 취소 완료");
+				$("#cancelorder").css("color", "green");
+				
+			}else{
+				alert("배달, 주문 취소 수락실패 잘못된 접근입니다");
+			}
+		},error:function(data,textStatus){
+			alert("Ajax 통신 Error : "+textStatus);
+		}
+		
+	});//ajax 끝
+	
+}
 </script>
 </head>
 <body>
@@ -135,9 +162,14 @@ function DeliveryCheck(orderNo){ // 배달완료처리
 			<font size="5">주문수락, 배달수락은 별도로 처리해서 여부에 상관없이 개별로 둠</font> 
 			<br><br>
 
-			 <form name="orderform" method="post" action="CeoDeleteOrder.do?orderNo=${param.orderNo }" onsubmit="return confirm();">
-				<input class="btn" value="임시주문삭제버튼" type="button" onclick="deleteOrder(${param.orderNo},${ceoNo})" >
-			</form> 
+			
+				<div>
+			<input class="btn" type="button" value="임시주문취소버튼" onclick="CancelOrder(${param.orderNo })">
+	
+				<span id="cancelorder">상태 여부 안받아온 상태, 버튼만</span>
+				
+			</div>
+			
 			
 				<br>
 			<div>

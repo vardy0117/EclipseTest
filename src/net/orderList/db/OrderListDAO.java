@@ -371,21 +371,33 @@ public class OrderListDAO {
 
 	}
 
-	public boolean CeoDeleteOrder(int orderNo, String ceoNo) {
+	public String CeoDeleteOrder(int orderNo, String ceoNo) {
 		// int status = 0;
 		int check = 0;
-		boolean status = false;
+		String status = "";
 		
 		System.out.println("CeoDeleteOrder 함수 호출 ");
 		try {
 			con =getConnection();
-			sql="delete a from orderList a, store b "
+/*			sql="delete a from orderList a, store b "
 					+ "where a.storeNo = b.storeNo and "
-					+ "b.ceoNo = ? and a.orderNo = ?";
+					+ "b.ceoNo = ? and a.orderNo = ?";*/
+			
+			// N값으로 취소처리함
+			sql="UPDATE orderList a, store b SET "
+					+ "a.orderCheck = 'N', deliveryCheck ='N'  "
+					+ "WHERE a.storeNo = b.storeNo and a.orderNo = ? "
+					+ "and a.storeNo = "
+					+ "(select storeNo from  (select distinct(a.storeNo) "
+					+ "from orderList a, store b where a.storeNo = "
+					+ "b.storeNo and b.ceoNo = ?) tmp)";
+			// 이미 T값으로 바뀌어있는 주문에 대해서는 별도의 처리 안되어있음
+			
 			
 			pstmt=con.prepareStatement(sql);
-			pstmt.setString(1, ceoNo);
-			pstmt.setInt(2, orderNo);
+			pstmt.setInt(1, orderNo);
+			pstmt.setString(2, ceoNo);
+		
 			
 			
 			System.out.println("CeoDeleteOrder 전달받은 ceo번호 : " + ceoNo);
@@ -394,11 +406,11 @@ public class OrderListDAO {
 			check = pstmt.executeUpdate();
 			
 			if (check == 0) {
-				status = false;
+				status = "실패";
 				System.out.println("삭제 불가 check 반환 : " + check);
 			}else{
 				System.out.println("삭제 완료 " + check);
-				status = true;
+				status = "완료";
 			}
 		
 		} catch (Exception e) {

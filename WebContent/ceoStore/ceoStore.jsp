@@ -406,6 +406,9 @@
 						<c:if test="${order.orderCheck eq 'T'}">
 							<span style="color:red;">수락</span>
 						</c:if>
+						<c:if test="${order.orderCheck eq 'N'}">
+							<span style="color:orange;">주문 취소 처리됨</span>
+						</c:if>
 					</th>
 					<th><fmt:formatDate value="${order.orderTime }" type="both" pattern="yyyy년 MM월 dd일 hh:mm "/></th>
 					<th>
@@ -417,6 +420,9 @@
 						</c:if>
 						<c:if test="${order.orderCheck eq 'T' and order.deliveryCheck eq 'T'}">
 							<span style="color:red;">배달 완료</span>
+						</c:if>
+						<c:if test="${order.orderCheck eq 'N' and order.deliveryCheck eq 'N'}">
+							<span style="color:orange;">배달 취소 처리됨</span>
 						</c:if>
 					</th>
 				</tr>
