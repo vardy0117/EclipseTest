@@ -82,20 +82,20 @@ public class OrderListDAO {
 	
 	
 	
-	public   List<OrderJoinBean>  GetOrderList(String  number) { 
+	/*public   List<OrderJoinBean>  GetOrderList(String  number) { 
 		 List<OrderJoinBean> orderlist = new ArrayList<OrderJoinBean>();		
 		OrderJoinBean join = null ;
 		
 		try {
 			 getConnection();
 			 
-			/*sql = "select a.orderNo, a.customerNo, a.storeNo, b.name, b.price, c.name 'storename' "
+			sql = "select a.orderNo, a.customerNo, a.storeNo, b.name, b.price, c.name 'storename' "
 					+ "from orderList a, orderMenu b, store c "
 					+ "where a.orderNo = b.orderNo and customerNo = ? and "
 					+ "c.storeNo =  (select storeNo from store where storeNo = a.storeNo) and a.orderNo=1";
 
 			 
-*/
+
 			 sql = "select a.orderNo, a.customerNo, a.storeNo, "
 			 		+ "b.name 'storeName', a.deliveryCheck, a.orderCheck "
 			 		+ "from orderList a, store b "
@@ -136,8 +136,60 @@ public class OrderListDAO {
 		
 		return orderlist  ;
 		
+	}*/
+	
+	
+	
+	public  List<OrderJoinBean>  GetOrderList(String  customerNo) { 
+	 List<OrderJoinBean> orderlist = new ArrayList<OrderJoinBean>();		
+	OrderJoinBean join = null ;
+	
+	try {
+		 getConnection();
+		 
+		sql = "select  a.orderNo, a.customerNo, a.storeNo, a.orderCheck, a.deliveryCheck, "
+				+ "b.name 'storeName' from orderList a, store b where a.storeNo = "
+				+ "b.storeNo and a.customerNo = ? ";
+				/*+ "and a.customerNo =  "
+				+ "(select customerNo from customer where customerNo = ?)";*/
+		
+
+		 
+		 pstmt = con.prepareStatement(sql);
+		 
+		 pstmt.setString(1, customerNo);
+		 System.out.println("OrderListDao에 SELECT에 가지고온 customerNo : " + customerNo);
+
+		 rs = pstmt.executeQuery();
+		
+		 while(rs.next()) {
+			 join = new OrderJoinBean();
+			 
+			 /*orderNo, customerNo, storeNo, orderCheck, deliveryCheck, storeName*/
+			  join.setOrderNo(rs.getString(1));
+			 join.setCustomerNo(rs.getString(2));
+			 join.setStoreNo(rs.getString(3));
+			 join.setOrderCheck(rs.getString(4));
+			 join.setDeliveryCheck(rs.getString(5));
+			 join.setName(rs.getString(6)); // storeName
+			 orderlist.add(join);
+
+		 }
+		 
+			
+		
+		
+	} catch (Exception e){
+		System.out.println("GetOrderDetail Error : " + e);
+	} finally {
+		resourceClose();
 	}
 	
+	
+	
+	return orderlist  ;
+	
+}
 	
 	public   List<OrderJoinBean>  GetOrderRealDetails(String  customerNo, String orderNo) { 
 		 List<OrderJoinBean> orderlist = new ArrayList<OrderJoinBean>();		
