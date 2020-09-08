@@ -79,15 +79,16 @@ public class ReviewDAO {
    
    
    // storeNo에 해당하는 모든 리뷰 정보를 가져오는 메소드
-   public ArrayList<ReviewBean> getStoreReview(int storeNo){
+   public ArrayList<ReviewBean> getStoreReview(int storeNo,int pageNum){
 	      ArrayList<ReviewBean> list = new ArrayList<ReviewBean>();
 	      ReviewBean rBean;
 	      
 	      try {
 	         con = getConnection();
-	         sql = "select * from review where storeNo=? order by date desc";
+	         sql = "select * from review where storeNo=? order by date desc limit ?,6";
 	         pstmt=con.prepareStatement(sql);
 	         pstmt.setInt(1, storeNo);
+	         pstmt.setInt(2, (pageNum-1)*6);
 	         rs = pstmt.executeQuery();
 	         while(rs.next()){
 	        	rBean = new ReviewBean();
@@ -111,6 +112,31 @@ public class ReviewDAO {
 	      }
 	      
 	      return list;
+	   }
+   
+   
+   public int getStoreReviewCount(int storeNo){
+	    int result = 0;  
+	   	ReviewBean rBean;
+	      
+	      try {
+	         con = getConnection();
+	         sql = "select count(*) from review where storeNo=?";
+	         pstmt=con.prepareStatement(sql);
+	         pstmt.setInt(1, storeNo);
+	         rs = pstmt.executeQuery();
+	         while(rs.next()){
+	        	 result = rs.getInt(1);
+	         }
+	               
+	      } catch (Exception e) {
+	         System.out.println("getStoreReviewCount() 내에서 예외 발생 : "+e);
+	         e.printStackTrace();
+	      } finally {
+	         resourceClose();
+	      }
+	      
+	      return result;
 	   }
    
    
