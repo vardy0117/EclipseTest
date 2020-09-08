@@ -986,7 +986,6 @@ public class FrontController extends HttpServlet {
 		if(command.equals("OrderDetail.do")){
 
 			String customerNo = (String) request.getSession().getAttribute("customerNo");// 세션에 있는 사용자번호
-		
 			OrderAction action = new OrderAction();
 			
 			try {
