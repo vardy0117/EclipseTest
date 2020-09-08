@@ -249,7 +249,7 @@
 			var reg_pw = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 			if(!reg_pw.test(document.fr.password.value)) {
 				console.log("비밀번호유효성");
-				$("#passwordChkMsg").text("6~12자리 이내의 암호를 입력해주세요.");
+				$("#passwordChkMsg").text("문자 및 숫자를 포함하는 8자리 이상 입력!");
 				$("#passwordChkMsg").css("color", "red");
 				return false;
 			}
