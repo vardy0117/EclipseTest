@@ -139,6 +139,28 @@
 		cursor: default;
 		border: 0px !important;
 	}
+	#star{
+		color: #ffa400;
+		margin-left: 40px;
+	}
+	#customerName{
+		color: #ffa400;
+	}
+	
+	#ceoReviewPageNo{
+		text-decoration: none;
+		font-size: 30px;
+		color: black;
+		margin-right: 5px;
+		text-align: center;
+	}
+	#ceoReviewPageNo:HOVER{
+		text-decoration: underline;
+	}
+	#page{
+		text-align: center;
+	}
+	
 </style>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
@@ -313,11 +335,14 @@
 		<!---------------------------------- Review----------------------------------->
 		
 		<div class="contentDiv" id="reviewDiv">
+			<c:if test="${requestScope.reviewList ne '[]' }">
+			
+			
 			<c:forEach items="${requestScope.reviewList }" var="review" varStatus="status">
 			<c:set value="${status.index }" var="i"/>
 				<table id="reviewTable">
 					<tr>
-						<td>${requestScope.customerList[i].nickname }님이 작성한 리뷰</td>
+						<td><i id="customerName">${requestScope.customerList[i].nickname }</i>님이 작성한 리뷰</td>
 						<c:set var="date" value="${review.date}"/>
 						<td>${fn:substring(date,0,11) }</td>
 					</tr>
@@ -341,7 +366,7 @@
 						<c:if test="${review.points eq 5 }">
 							<c:set var="star" value="★★★★★"/>
 						</c:if>
-						<td colspan="2">${star }</td>
+						<td colspan="2"><i id="star">${star }</i></td>
 					</tr>
 					<tr>
 						<td colspan="2">
@@ -375,14 +400,27 @@
 							</c:choose>
 						</td>
 					</tr>
-					<tr>
-						<td colspan="2">
-							리뷰번호(확인용 나중에 지울거임) : ${review.reviewNo }
-						</td>
-					</tr>				
 				</table>
 			</c:forEach>
+			</c:if>
+			<c:if test="${requestScope.reviewList eq '[]' }">
+				<h1 align="center">아직 리뷰가 없습니다.</h1>
+			</c:if>
+		
+		<div id="page">
+			<c:forEach var="i" begin="1" end="${(requestScope.ceoReviewCount-1)/6+1}">
+				<c:if test="${i == requestScope.ceoReviewPageNo }">
+					<a href="" id="ceoReviewPageNo" style="color: #ffa400;">${i}</a>			
+				</c:if>
+				<c:if test="${i != requestScope.ceoReviewPageNo }">
+					<a href="ceoStore.do?storeNo=${param.storeNo }&ceoReviewPageNo=${i}" id="ceoReviewPageNo">${i }</a>
+				</c:if>
+			</c:forEach>
 		</div>
+		</div>
+		
+		<!---------------------------------/Review---------------------------------------->
+		
 		
 		<div class="contentDiv" id="orderDiv">
 			orderDiv
@@ -429,6 +467,15 @@
 	
 </body>
 <script>
+	var ceoReviewPageNo = "${param.ceoReviewPageNo}";
+	if(ceoReviewPageNo != ""){
+		document.getElementById('menuDiv').classList.remove('display-on');
+		document.getElementById('reviewDiv').classList.remove('display-on');
+		document.getElementById('orderDiv').classList.remove('display-on');
+		document.getElementById('reviewDiv').classList.add('display-on');
+	}
+
+
 	function deleteMenu(menuNo, storeNo) {
 		if(confirm(" 메뉴를 삭제 하시겠습니까? ")==true){
 			  location.href='deleteMenu.do?menuNo='+menuNo+'&storeNo='+storeNo;

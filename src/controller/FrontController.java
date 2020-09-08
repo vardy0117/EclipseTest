@@ -649,6 +649,10 @@ public class FrontController extends HttpServlet {
 			request.setCharacterEncoding("utf-8");
 			int storeNo = Integer.parseInt(request.getParameter("storeNo"));
 			
+			// 페이징 작업
+			// 페이지 선택을 안했을때 무조건 1페이지
+			request.setAttribute("ceoReviewPageNo", request.getParameter("ceoReviewPageNo")==null?"1":request.getParameter("ceoReviewPageNo"));
+
 			forward = new ActionForward();
 			
 			StoreDAO storeDAO = new StoreDAO();
@@ -658,8 +662,23 @@ public class FrontController extends HttpServlet {
 			List<MenuBean> menuList = menuDAO.getStoreMenu(storeNo);
 
 			
+			
+			// 페이징 작업
 			ReviewDAO reviewDAO = new ReviewDAO();
-			ArrayList<ReviewBean> reviewList = reviewDAO.getStoreReview(storeNo);
+			//ArrayList<ReviewBean> reviewList = reviewDAO.getStoreReview(storeNo);
+			ArrayList<ReviewBean> reviewList = new ArrayList<ReviewBean>();
+			if(request.getParameter("ceoReviewPageNo")==null){
+				reviewList = reviewDAO.getStoreReview(storeNo,1);
+			}else{
+				reviewList = reviewDAO.getStoreReview(storeNo,Integer.parseInt(request.getParameter("ceoReviewPageNo")));
+			}
+			
+			
+			
+			
+			// 총 페이지 수를 구하는 메소드
+			int ceoReviewCount = reviewDAO.getStoreReviewCount(storeNo);
+			request.setAttribute("ceoReviewCount",ceoReviewCount);
 			
 			CustomerDAO cDAO = new CustomerDAO();
 			ArrayList<CustomerBean> customerList = new ArrayList<CustomerBean>();
@@ -706,7 +725,6 @@ public class FrontController extends HttpServlet {
 		if(command.equals("moreReview.do")){
 			int storeNo = Integer.parseInt(request.getParameter("storeNo"));   //글번호
 			int startNum = Integer.parseInt(request.getParameter("startNum")); //현재 보여지는 리뷰 수
-			
 			GetStoreReviewAction action = new GetStoreReviewAction();
 			action.getStoreReviewMore(request,response,storeNo,startNum);
 			
