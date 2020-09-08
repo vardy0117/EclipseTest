@@ -1245,6 +1245,17 @@ public class FrontController extends HttpServlet {
 		
 		/**************************************************************/
 		
+		if(command.equals("cancel.do")){//cancel버튼 클릭시
+			int orderNo = Integer.parseInt(request.getParameter("orderNo"));
+			
+			OrderAction action = new  OrderAction();
+			int result =action.customerOrderCancel(orderNo);
+			
+			PrintWriter out = response.getWriter();
+			out.print(result);
+			
+			
+		}
 	}
 				
 }

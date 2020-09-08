@@ -77,12 +77,16 @@
     font-family: Binggrae-Bold;
     font-size: 1rem;
     color: white;
-    border: none;
-    border-radius: 12px;
+    border: 0;
     width: 270px;
     height: 35px;
-    transition-duration: 1s;
     opacity: 0.7;
+    cursor: pointer;
+   
+}
+
+button :FOCUS{
+	outline: none;
 }
 		}
 		
@@ -97,8 +101,32 @@ function receipt() {
 
 }
 
-function cancelorder () {
-	alert("ceo에게 주문취소를 요청하는 기능입니다 \n넣을까 말까 생각중입니다");
+function cancelorder (orderNo) {
+	if(confirm("주문을 취소 하시겠습니까?")==true){
+	
+		$.ajax({
+			type : "get",
+			async : false,
+			url : "./cancel.do?orderNo="+orderNo,
+			dataType : "text",
+			success : function(data,textStatus){
+				if(data==1){ 
+					alert(" 주문 취소가 완료 되었습니다. ");
+					location.reload();
+				}else{
+					alert("주문 취소 실패 ! 주문상태를  확인해주세요 ");
+				}
+			},error:function(data,textStatus){
+				alert("Ajax 통신 Error : "+textStatus);
+			}
+			
+		});//ajax 끝
+		
+		
+		
+		
+		
+	}
 	
 }
 
@@ -155,8 +183,8 @@ function cancelorder () {
 					<tr>
 						<td>
 						     주문했던메뉴 : ${orderdetail.name} <br> 
-						     가격 : ${orderdetail.price} <br>
-							수량 : ${orderdetail.ea}EA
+						     가격 : ${orderdetail.price} 원<br>
+							수량 : ${orderdetail.ea} 개
 						
 							
 						</td>
@@ -188,7 +216,7 @@ function cancelorder () {
 				<font id="ordercheck" color="orange">상태 : 주문 확인 중!</font>
 				<br>
 				
-				<input class="btn" type="submit" value="주문취소요청" onclick="cancelorder();">
+				<input class="btn"  id="btn" type="submit" value="주문취소요청" onclick="cancelorder('${orderstatus.orderNo}');">
 			</div>
 		</c:if>	
 		<c:if test="${orderstatus.orderCheck eq 'N'}">
@@ -214,6 +242,7 @@ function cancelorder () {
 	
 	<div id="more"></div>
 	
-
+<div  style="clear : both; ">
+</div>
 </body>
 </html>
