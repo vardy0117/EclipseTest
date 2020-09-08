@@ -347,26 +347,26 @@
 						<td>${fn:substring(date,0,11) }</td>
 					</tr>
 					<tr>
-						<c:set var="star" value="☆☆☆☆☆"/>
-						<c:if test="${review.points eq 0 }">
-							<c:set var="star" value="☆☆☆☆☆"/>
-						</c:if>
-						<c:if test="${review.points eq 1 }">
-							<c:set var="star" value="★☆☆☆☆"/>
-						</c:if>
-						<c:if test="${review.points eq 2 }">
-							<c:set var="star" value="★★☆☆☆"/>
-						</c:if>
-						<c:if test="${review.points eq 3 }">
-							<c:set var="star" value="★★★☆☆"/>
-						</c:if>
-						<c:if test="${review.points eq 4 }">
-							<c:set var="star" value="★★★★☆"/>
-						</c:if>
-						<c:if test="${review.points eq 5 }">
-							<c:set var="star" value="★★★★★"/>
-						</c:if>
-						<td colspan="2"><i id="star">${star }</i></td>
+						<td colspan="2">
+							<c:if test="${review.points eq 0 }">
+								<span style="color: #ffa400"></span><span style="color: #e0e0e0">★★★★★</span>
+							</c:if>
+							<c:if test="${review.points eq 1 }">
+								<span style="color: #ffa400">★</span><span style="color: #e0e0e0">★★★★</span>
+							</c:if>
+							<c:if test="${review.points eq 2 }">
+								<span style="color: #ffa400">★★</span><span style="color: #e0e0e0">★★★</span>
+							</c:if>
+							<c:if test="${review.points eq 3 }">
+								<span style="color: #ffa400">★★★</span><span style="color: #e0e0e0">★★</span>
+							</c:if>
+							<c:if test="${review.points eq 4 }">
+								<span style="color: #ffa400">★★★★</span><span style="color: #e0e0e0">★</span>
+							</c:if>
+							<c:if test="${review.points eq 5 }">
+								<span style="color: #ffa400">★★★★★</span><span style="color: #e0e0e0"></span>
+							</c:if>
+						</td>
 					</tr>
 					<tr>
 						<td colspan="2">
@@ -410,7 +410,7 @@
 		<div id="page">
 			<c:forEach var="i" begin="1" end="${(requestScope.ceoReviewCount-1)/6+1}">
 				<c:if test="${i == requestScope.ceoReviewPageNo }">
-					<a href="" id="ceoReviewPageNo" style="color: #ffa400;">${i}</a>			
+					<a id="ceoReviewPageNo" style="color: #ffa400; cursor: pointer;">${i}</a>			
 				</c:if>
 				<c:if test="${i != requestScope.ceoReviewPageNo }">
 					<a href="ceoStore.do?storeNo=${param.storeNo }&ceoReviewPageNo=${i}" id="ceoReviewPageNo">${i }</a>
