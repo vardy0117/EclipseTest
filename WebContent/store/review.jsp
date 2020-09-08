@@ -35,6 +35,10 @@
 		font-family: none;
 		margin-left: 40px;
 	}
+	#commentFont{
+		font-size: 1em;
+		font-family: none;
+	}
 
 	#star{
 		color: #ffa400;
@@ -65,7 +69,16 @@
 	.moreTab:HOVER {
 		background-color: #4d4d4d;	
 	}
-
+	#comment{
+		background: #e2e2e2;
+		min-height: 150px;
+		border-radius: 20px;
+		padding-left: 1em;
+		padding-top: 1em;
+	}
+	#ceoNick{
+		font-size: 20px;
+	}
 
 
 </style>
@@ -169,9 +182,12 @@
 							<span id="content">${rBean.contents }</span>
 						</td>
 					</tr>
-				
+					<tr>
+						<td>
+							<div id="comment"><i id="ceoNick">사장님</i><br><i id="commentFont">${rBean.comment }</i></div>
+						</td>
+					</tr>
 				</table>
-				
 		</c:forEach>
 		<div id="appendDiv">
 			<!-- 비동기방식으로 리뷰가 들어갈 자리 -->		
@@ -189,7 +205,7 @@
 	<script type="text/javascript">
 	
 		function moreReview(storeNo) {
- 			var startNum = $("#table tr").length / 3;	// 현재 보여지는 게시글의 수
+ 			var startNum = $("#table tr").length / 4;	// 현재 보여지는 게시글의 수
  			var storeNo = storeNo	// 가게고유번호
 			
  			

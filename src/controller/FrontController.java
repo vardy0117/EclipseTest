@@ -51,6 +51,8 @@ import net.order.action.GetStoreReviewAction;
 import net.order.action.OrderAction;
 import net.orderList.db.OrderListBean;
 import net.orderList.db.OrderListDAO;
+import net.orderMenu.db.OrderMenuDAO;
+import net.review.action.writeReviewAction;
 import net.review.db.ReviewBean;
 
 import net.review.db.ReviewDAO;
@@ -649,6 +651,10 @@ public class FrontController extends HttpServlet {
 			request.setCharacterEncoding("utf-8");
 			int storeNo = Integer.parseInt(request.getParameter("storeNo"));
 			
+			// 페이징 작업
+			// 페이지 선택을 안했을때 무조건 1페이지
+			request.setAttribute("ceoReviewPageNo", request.getParameter("ceoReviewPageNo")==null?"1":request.getParameter("ceoReviewPageNo"));
+
 			forward = new ActionForward();
 			
 			StoreDAO storeDAO = new StoreDAO();
@@ -658,8 +664,23 @@ public class FrontController extends HttpServlet {
 			List<MenuBean> menuList = menuDAO.getStoreMenu(storeNo);
 
 			
+			
+			// 페이징 작업
 			ReviewDAO reviewDAO = new ReviewDAO();
-			ArrayList<ReviewBean> reviewList = reviewDAO.getStoreReview(storeNo);
+			//ArrayList<ReviewBean> reviewList = reviewDAO.getStoreReview(storeNo);
+			ArrayList<ReviewBean> reviewList = new ArrayList<ReviewBean>();
+			if(request.getParameter("ceoReviewPageNo")==null){
+				reviewList = reviewDAO.getStoreReview(storeNo,1);
+			}else{
+				reviewList = reviewDAO.getStoreReview(storeNo,Integer.parseInt(request.getParameter("ceoReviewPageNo")));
+			}
+			
+			
+			
+			
+			// 총 페이지 수를 구하는 메소드
+			int ceoReviewCount = reviewDAO.getStoreReviewCount(storeNo);
+			request.setAttribute("ceoReviewCount",ceoReviewCount);
 			
 			CustomerDAO cDAO = new CustomerDAO();
 			ArrayList<CustomerBean> customerList = new ArrayList<CustomerBean>();
@@ -672,7 +693,7 @@ public class FrontController extends HttpServlet {
 					
 			OrderAction orderAction = new OrderAction();
 			orderAction.getOrderListByStoreNo(request, response, storeNo);
-
+				
 			
 			
 			request.setAttribute("storeBean", storeBean);
@@ -706,7 +727,6 @@ public class FrontController extends HttpServlet {
 		if(command.equals("moreReview.do")){
 			int storeNo = Integer.parseInt(request.getParameter("storeNo"));   //글번호
 			int startNum = Integer.parseInt(request.getParameter("startNum")); //현재 보여지는 리뷰 수
-			
 			GetStoreReviewAction action = new GetStoreReviewAction();
 			action.getStoreReviewMore(request,response,storeNo,startNum);
 			
@@ -967,7 +987,6 @@ public class FrontController extends HttpServlet {
 		if(command.equals("OrderDetail.do")){
 
 			String customerNo = (String) request.getSession().getAttribute("customerNo");// 세션에 있는 사용자번호
-		
 			OrderAction action = new OrderAction();
 			
 			try {
@@ -1117,11 +1136,17 @@ public class FrontController extends HttpServlet {
 				System.out.println("전달받은 ceoOrder.do 주문 번호 : " + orderNo);
 				ceoCheck = dao.CheckCeo(orderNo, ceoNo);
 				if (ceoCheck) {
-				forward = new ActionForward();
-		
-				forward.setView("ceoIndex.jsp?center=ceoStore/orderlist.jsp");
-				forward.setRedirect(false);
-				forward.execute(request, response);
+					OrderMenuDAO orderMenuDAO = new OrderMenuDAO();
+					OrderListDAO orderListDAO = new OrderListDAO();
+					request.setAttribute("orderMenuList", orderMenuDAO.getOrderMenuList(orderNo));
+					request.setAttribute("orderList", orderListDAO.getOrderList(orderNo));
+					
+					
+					forward = new ActionForward();
+			
+					forward.setView("ceoIndex.jsp?center=ceoStore/orderlist.jsp");
+					forward.setRedirect(false);
+					forward.execute(request, response);
 
 				}else{
 					response.setContentType("text/html;charset=UTF-8"); 
@@ -1135,6 +1160,9 @@ public class FrontController extends HttpServlet {
 				e.printStackTrace();
 			}
 		
+			
+			
+			
 		}
 		
 		/***************************************************/	
@@ -1187,9 +1215,10 @@ public class FrontController extends HttpServlet {
 		if(command.equals("CeoorderCheck.do")){ //사장이 주문확인
 			String ceoNo = (String) request.getSession().getAttribute("ceoNo");// 세션에 있는 Ceo
 			int orderNo = Integer.parseInt(request.getParameter("orderNo"));
+			int prepareTime = Integer.parseInt(request.getParameter("prepareTime"));
 			
 			StoreDAO storedao = new StoreDAO();
-			int result = storedao.CeoorderCheck(orderNo,ceoNo);
+			int result = storedao.CeoorderCheck(orderNo,ceoNo,prepareTime);
 			if(result==1){
 				response.setContentType("text/html;charset=UTF-8"); 
 				PrintWriter out = response.getWriter();
@@ -1214,6 +1243,47 @@ public class FrontController extends HttpServlet {
 			}
 			
 		}
+		
+		if(command.equals("writeReview.do")){
+			forward=new ActionForward();
+			String storeNo = request.getParameter("storeNo"); // 리뷰작성 당할 가게 번호
+			String customerNo = (String)session.getAttribute("customerNo"); // 리뷰작성 할 회원 번호
+
+			
+			StoreDAO sDAO = new StoreDAO();
+			StoreBean sBean =  sDAO.getStoreName(storeNo);	// storeNo에 해당하는 가게 정보를 Bean에 저장
+			
+			CustomerDAO cDAO = new CustomerDAO();
+			CustomerBean cBean = cDAO.getCustomer(customerNo);	// customerNo에 해당하는 회원정보를 Bean에 저장
+			
+			request.setAttribute("storeBean", sBean);
+			request.setAttribute("customerBean", cBean);
+			
+			
+			
+			forward.setView("index.jsp?center=store/writeReview.jsp");
+			forward.setRedirect(false);
+			forward.execute(request, response);
+		}
+		if(command.equals("writeReviewAction.do")){
+			
+			
+			request.setCharacterEncoding("utf-8");
+			String realFolder = getServletContext().getRealPath("/upload/review");
+			int max = 1000 * 1024 * 1024;
+			MultipartRequest multi = new MultipartRequest(request, realFolder, max, "utf-8", new DefaultFileRenamePolicy());
+			
+			
+			writeReviewAction action = new writeReviewAction();
+			int result = action.insertReview(request, response,multi);
+			
+			if(result==1){
+				response.setContentType("text/html;charset=UTF-8"); 
+				PrintWriter out = response.getWriter();
+				out.print("<script>alert('리뷰작성이 완료되었습니다'); location.href='index.jsp' </script>");
+			}
+		}
+		
 		
 		/**************************************************************/
 		

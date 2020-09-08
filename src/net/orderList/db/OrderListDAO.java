@@ -82,22 +82,22 @@ public class OrderListDAO {
 	
 	
 	
-	public   List<OrderJoinBean>  GetOrderList(String  number) { 
+	/*public   List<OrderJoinBean>  GetOrderList(String  number) { 
 		 List<OrderJoinBean> orderlist = new ArrayList<OrderJoinBean>();		
 		OrderJoinBean join = null ;
 		
 		try {
 			 getConnection();
 			 
-			/*sql = "select a.orderNo, a.customerNo, a.storeNo, b.name, b.price, c.name 'storename' "
+			sql = "select a.orderNo, a.customerNo, a.storeNo, b.name, b.price, c.name 'storename' "
 					+ "from orderList a, orderMenu b, store c "
 					+ "where a.orderNo = b.orderNo and customerNo = ? and "
 					+ "c.storeNo =  (select storeNo from store where storeNo = a.storeNo) and a.orderNo=1";
 
 			 
-*/
+
 			 sql = "select a.orderNo, a.customerNo, a.storeNo, "
-			 		+ "b.name 'storeName', a.deliveryCheck "
+			 		+ "b.name 'storeName', a.deliveryCheck, a.orderCheck "
 			 		+ "from orderList a, store b "
 			 		+ "where b.name = (select name from store where storeNo = a.storeNo) "
 			 		+ "and customerNo = ? "
@@ -118,6 +118,7 @@ public class OrderListDAO {
 				 join.setStoreNo(rs.getString(3));
 				 join.setName(rs.getString(4));
 				 join.setDeliveryCheck(rs.getString(5));
+				 join.setOrderCheck(rs.getString(6));
 				 orderlist.add(join);
 	 
 			 }
@@ -135,8 +136,60 @@ public class OrderListDAO {
 		
 		return orderlist  ;
 		
+	}*/
+	
+	
+	
+	public  List<OrderJoinBean>  GetOrderList(String  customerNo) { 
+	 List<OrderJoinBean> orderlist = new ArrayList<OrderJoinBean>();		
+	OrderJoinBean join = null ;
+	
+	try {
+		 getConnection();
+		 
+		sql = "select  a.orderNo, a.customerNo, a.storeNo, a.orderCheck, a.deliveryCheck, "
+				+ "b.name 'storeName' from orderList a, store b where a.storeNo = "
+				+ "b.storeNo and a.customerNo = ? ";
+				/*+ "and a.customerNo =  "
+				+ "(select customerNo from customer where customerNo = ?)";*/
+		
+
+		 
+		 pstmt = con.prepareStatement(sql);
+		 
+		 pstmt.setString(1, customerNo);
+		 System.out.println("OrderListDao에 SELECT에 가지고온 customerNo : " + customerNo);
+
+		 rs = pstmt.executeQuery();
+		
+		 while(rs.next()) {
+			 join = new OrderJoinBean();
+			 
+			 /*orderNo, customerNo, storeNo, orderCheck, deliveryCheck, storeName*/
+			  join.setOrderNo(rs.getString(1));
+			 join.setCustomerNo(rs.getString(2));
+			 join.setStoreNo(rs.getString(3));
+			 join.setOrderCheck(rs.getString(4));
+			 join.setDeliveryCheck(rs.getString(5));
+			 join.setName(rs.getString(6)); // storeName
+			 orderlist.add(join);
+
+		 }
+		 
+			
+		
+		
+	} catch (Exception e){
+		System.out.println("GetOrderDetail Error : " + e);
+	} finally {
+		resourceClose();
 	}
 	
+	
+	
+	return orderlist  ;
+	
+}
 	
 	public   List<OrderJoinBean>  GetOrderRealDetails(String  customerNo, String orderNo) { 
 		 List<OrderJoinBean> orderlist = new ArrayList<OrderJoinBean>();		
@@ -390,14 +443,14 @@ public class OrderListDAO {
 					+ "and a.storeNo = "
 					+ "(select storeNo from  (select distinct(a.storeNo) "
 					+ "from orderList a, store b where a.storeNo = "
-					+ "b.storeNo and b.ceoNo = ?) tmp)";
+					+ "b.storeNo and b.ceoNo = ? and a.orderNo= ? ) tmp)";
 			// 이미 T값으로 바뀌어있는 주문에 대해서는 별도의 처리 안되어있음
 			
 			
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, orderNo);
 			pstmt.setString(2, ceoNo);
-		
+			pstmt.setInt(3, orderNo);
 			
 			
 			System.out.println("CeoDeleteOrder 전달받은 ceo번호 : " + ceoNo);
@@ -439,7 +492,7 @@ public class OrderListDAO {
 					+ "b.couponNo and a.orderNo = ? and "
 					+ "a.storeNo = (select distinct(a.storeNo) "
 					+ "from orderList a, store b where a.storeNo = "
-					+ "b.storeNo and b.ceoNo = ?)";
+					+ "b.storeNo and b.ceoNo = ? and a.orderNo = ?)";
 			// 이미 F값으로 바뀌어있는 쿠폰에 대해서는 별도의 처리 안되어있음
 			// 계속해서 서브쿼리 사용해야 될시 별도로 함수에서 빼서 우선실행후 다음작업 되게하도록 할예정
 			
@@ -447,6 +500,7 @@ public class OrderListDAO {
 
 			pstmt.setInt(1, orderNo);
 			pstmt.setString(2, ceoNo);
+			pstmt.setInt(3, orderNo);
 			
 			System.out.println("CouponBack 전달받은 orderNo번호 : " + orderNo);
 			
@@ -468,4 +522,45 @@ public class OrderListDAO {
 		System.out.println("CouponBack 리턴값 : " + status);
 		return status;
 	}
+	
+		
+	public OrderListBean getOrderList(int orderNo){
+	
+		OrderListBean orderListBean = new OrderListBean();
+		try {
+			con = getConnection();
+			sql="SELECT * FROM orderList where orderNo =?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, orderNo);
+			rs=pstmt.executeQuery();
+
+			if(rs.next()){
+				
+				orderListBean.setOrderNo(rs.getString(1));
+				orderListBean.setCustomerNo(rs.getString(2));
+				orderListBean.setStoreNo(rs.getString(3));
+				orderListBean.setRoadAddress(rs.getString(4));
+				orderListBean.setDetailAddress(rs.getString(5));
+				orderListBean.setPhone(rs.getString(6));
+				orderListBean.setPayment(rs.getString(7));
+				orderListBean.setRequest(rs.getString(8));
+				orderListBean.setOrderTime(rs.getTimestamp(9));
+				orderListBean.setOrderCheck(rs.getString(10));
+				orderListBean.setPrepareTime(rs.getString(11));
+				orderListBean.setDeliveryCheck(rs.getNString(12));
+				orderListBean.setCouponNo(rs.getString(13));
+			}
+			
+		} catch (Exception e) {
+			System.out.println("getOrderList 내부 : "+e);
+		}finally{
+			resourceClose();
+		}
+		return orderListBean;
+	}
+	
+	
+	
+	
+	
 }

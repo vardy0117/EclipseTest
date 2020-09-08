@@ -44,13 +44,7 @@ div {
 </style>
 
 <script>
-/* function deleteOrder(orderNo, ceoNo) {
-	if(confirm(" 주문을 삭제 하시겠습니까? ")==true){
-		  // location.href='deleteMenu.do?menuNo='+menuNo+'&storeNo='+storeNo;
-		  location.href ='CeoDeleteOrder.do?orderNo='+ orderNo + '&ceoNo=' + ceoNo;
-		  
-	}
-} */
+
 function deleteOrder(orderNo, ceoNo) {
 	if(confirm(" 주문을 삭제 하시겠습니까? ")==true){
 		orderform.submit();
@@ -66,20 +60,19 @@ function deleteOrder(orderNo, ceoNo) {
 
 
 function orderCheck(orderNo){ // 사장전용 주문 체크
-	var comment = $("#ceoordercheck"+orderNo).val();
-	
+	var prepareTime = document.getElementById("prepareTime").value;	
 	$.ajax({
 		type : "post",
 		async : false,
-		/* url : "./writeComment.do", */
 		url : "./CeoorderCheck.do",
-		data : {"orderNo":orderNo,"orderNo":orderNo},
+		data : {"orderNo":orderNo,"prepareTime":prepareTime},
 		dataType : "text",
 		success : function(data,textStatus){
 			if(data==1){ 
 				alert("주문수락 완료 \n 이미 처리 완료된 주문에 대해서 별도의 처리 안되어 있음 (중복요청가능) ");
 				$("#ceoordercheck").text("주문수락완료");
 				$("#ceoordercheck").css("color", "green");
+				location.reload();
 				
 			}else{
 				alert("주문수락실패 잘못된 접근입니다");
@@ -150,8 +143,59 @@ function CancelOrder(orderNo){ // 주문 취소 처리 (배달도 같이 취소처리)
 </head>
 <body>
 
-	<div id="mainDiv">버튼테스트 한다고 잠시만든 임시 페이지 <br>
-	
+	<div id="mainDiv">
+		<table>
+			<tr>
+				<td>주문번호 </td>
+				<td>${orderList.orderNo}</td>
+			</tr>
+			<tr>
+				<td>주소</td>
+				<td>${orderList.roadAddress} ${orderList.detailAddress }</td>
+			</tr>
+			<tr>
+				<td>연락처 </td>
+				<td>${orderList.phone}</td>
+			</tr>
+			<tr>
+				<td>요청사항 </td>
+				<td>${orderList.request}</td>
+			</tr>
+		</table>
+		
+		<table>
+			<tr>
+				<th>메뉴</th>
+				<th>가격</th>
+				<th>갯수</th>
+			</tr>
+			<c:set var="totalPrice" value="0" />
+			<c:forEach items="${orderMenuList}" var="orderMenu">
+				<c:set var="totalPrice" value="${totalPrice+(orderMenu.price*orderMenu.quantity)}" />
+				<tr>
+					<td>${orderMenu.name }</td>
+					<td>${orderMenu.price }</td>
+					<td>${orderMenu.quantity }</td>
+				</tr>
+			</c:forEach>
+		</table>
+		<br>
+		합계 : ${totalPrice }<br>
+		
+		<c:if test="${orderList.orderCheck=='F' }">
+			<select  id="prepareTime">
+				<option value="20">20분</option>
+				<option value="30">30분</option>
+				<option value="40">40분</option>
+				<option value="50">50분</option>
+				<option value="60">60분</option>
+			</select>
+			<input class="btn" type="button" value="임시주문확인처리버튼" onclick="orderCheck(${param.orderNo })">
+		</c:if>
+		<br><br><br><br><br>
+		
+		
+		
 	
 		<c:set var="ceoNo" value="${ceoNo}"/> 
 			<c:set var="store" value="${ceoStoreList}"/> 

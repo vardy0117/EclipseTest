@@ -8,16 +8,41 @@
 </head>
 <style>
 	#mainDiv{
+
+		width: 1000px;
+		min-height: 600px;
+		margin: 0 auto;
 		margin-top: 80px;
-		width:1000px;
-		min-height:600px;
+		position: relative;
+		padding-top: 30px;
+		
 	}
 	#mainDiv li{
-		list-style: none;
+/* 		list-style: none;
 		float: left;
 		border: 1px solid blue;
-		margin-right: 50px;
+		margin-right: 50px; */
+		
+		border: 1px solid blue;
+		list-style: none;
+		float: left;
+		width: 25.33333%;
+		height: 50px;
+    	line-height: 50px;
+		border: 1px solid #d9d9d9;
+		text-align: center;
+		cursor: pointer;
 	}
+	
+	#mainDiv li{
+	
+	box-sizing: border-box;}
+	
+	#mainDiv li:hover {
+		cursor: pointer;
+		opacity: 1;
+	}
+	
 
 </style>
 <body>

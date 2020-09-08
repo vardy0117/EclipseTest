@@ -79,15 +79,16 @@ public class ReviewDAO {
    
    
    // storeNo에 해당하는 모든 리뷰 정보를 가져오는 메소드
-   public ArrayList<ReviewBean> getStoreReview(int storeNo){
+   public ArrayList<ReviewBean> getStoreReview(int storeNo,int pageNum){
 	      ArrayList<ReviewBean> list = new ArrayList<ReviewBean>();
 	      ReviewBean rBean;
 	      
 	      try {
 	         con = getConnection();
-	         sql = "select * from review where storeNo=? order by date desc";
+	         sql = "select * from review where storeNo=? order by date desc limit ?,6";
 	         pstmt=con.prepareStatement(sql);
 	         pstmt.setInt(1, storeNo);
+	         pstmt.setInt(2, (pageNum-1)*6);
 	         rs = pstmt.executeQuery();
 	         while(rs.next()){
 	        	rBean = new ReviewBean();
@@ -111,6 +112,31 @@ public class ReviewDAO {
 	      }
 	      
 	      return list;
+	   }
+   
+   
+   public int getStoreReviewCount(int storeNo){
+	    int result = 0;  
+	   	ReviewBean rBean;
+	      
+	      try {
+	         con = getConnection();
+	         sql = "select count(*) from review where storeNo=?";
+	         pstmt=con.prepareStatement(sql);
+	         pstmt.setInt(1, storeNo);
+	         rs = pstmt.executeQuery();
+	         while(rs.next()){
+	        	 result = rs.getInt(1);
+	         }
+	               
+	      } catch (Exception e) {
+	         System.out.println("getStoreReviewCount() 내에서 예외 발생 : "+e);
+	         e.printStackTrace();
+	      } finally {
+	         resourceClose();
+	      }
+	      
+	      return result;
 	   }
    
    
@@ -312,6 +338,40 @@ public class ReviewDAO {
 		
 		return result;
 	}
+
+	// 리뷰 작성하는 메소드 (INSERT)
+	public int insertReview(ReviewBean rBean) {
+		int result = 0;
+		try {
+			con = getConnection();
+			sql="insert into review(orderNo,customerNo,storeNo,contents,points,image,date) values(?,?,?,?,?,?,now())";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, rBean.getOrderNo());
+			pstmt.setString(2, rBean.getCustomerNo());
+			pstmt.setString(3, rBean.getStoreNo());
+			pstmt.setString(4, rBean.getContents());
+			pstmt.setString(5, rBean.getPoints());
+			pstmt.setString(6, rBean.getImage());
+			result= pstmt.executeUpdate();
+			if(result>0){
+				sql="update store set reviewCount=reviewCount+1,points=points+? where storeNo=?";
+				pstmt=con.prepareStatement(sql);
+				pstmt.setInt(1, Integer.parseInt(rBean.getPoints()));
+				pstmt.setString(2, rBean.getStoreNo());
+				pstmt.executeUpdate();
+			}
+		} catch (Exception e) {
+			System.out.println("insertReview() 내에서 예외 발생  :");
+			e.printStackTrace();
+		} finally {
+			resourceClose();
+		}
+		
+		
+		
+		return result;
+	}
+	
 	
 	
 	

@@ -138,7 +138,7 @@
 						<span class="storeName">${unReviewStoreNameList[i].name}</span>
 					</td>
 					<td>
-						<button onclick="location.href='#'" id="btnReview">리뷰쓰기</button>
+						<button onclick="location.href='writeReview.do?storeNo=${unReviewStoreNameList[i].storeNo}&orderNo=${unReviewOrder.orderNo }'" id="btnReview">리뷰쓰기</button>
 					</td>
 				</tr>
 				<tr>
@@ -223,7 +223,7 @@
 						</c:if>
 						<c:if test="${rBean.image ne null}">
 							<td>
-									<center><img src="./images/${rBean.image }" style="width: 100%; height: 300px;"></center> 
+									<center><img src="./upload/review/${rBean.image }" style="width: 100%; height: 300px;"></center> 
 							</td>
 						</c:if>
 					</tr>

@@ -1,15 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c" %>
-       <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
        
-    
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>마이페이지 주문내역</title>
 </head>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+/* setInterval(function(){
+	  $("#ordercheck").toggle();
+	}, 250); */
+
+
+</script>
 <style>
 
 	div {
@@ -73,38 +83,41 @@
 		</font> <br> <br>
 		
 
-
-
-
-
-
 	<c:forEach var="orderlist" items="${orderlist}"
 			varStatus="status">
-
-			<div id="storeBox">
-			
+			<div id="storeBox">	
 				<table>
 					<tr>
-						<td>
-					
-				<a href="
-				
-				<c:url value="OrderRealDetail.do" >         
-  				<c:param name="orderNo" value="${orderlist.orderNo }"> </c:param>
-	  			</c:url>	">				   주문번호 : ${orderlist.orderNo} <br>
-								  		  주문했던 가게이름 : ${orderlist.name} <br>
-								        	<%-- 가게이름 : ${orderlist.name} <br> --%></a>
-					
-						
-						
-						</td>
-					
+						<td>	
+							<a href="
+							<c:url value="OrderRealDetail.do" >         
+			  				<c:param name="orderNo" value="${orderlist.orderNo }"> </c:param>
+				  			</c:url>">				  
+				  				 주문번호 : ${orderlist.orderNo} <br>
+								 주문했던 가게이름 : ${orderlist.name} <br>
+								<%-- 가게이름 : ${orderlist.name} <br> --%>
+								<c:choose>
+								<c:when test="${orderlist.orderCheck eq 'F'}">
+										<font id="ordercheck" color="orange">상태 : 주문 확인 중!</font>
+								</c:when>	
+								<c:when test="${orderlist.orderCheck eq 'N'}">
+										<font color="red">상태 : 주문 취소!</font>
+								</c:when>
+								<c:when test="${orderlist.orderCheck eq 'T' && orderlist.deliveryCheck eq 'T'}">
+										<font color="green">상태 : 배달 완료!</font>
+								</c:when>	
+								<c:when test="${orderlist.orderCheck eq 'T' && orderlist.deliveryCheck eq 'F'}">
+										<font color="blue">상태 : 배달 중!</font>
+								</c:when>
+								</c:choose>	
+								<br>
+							</a>													
+						</td>					
 					</tr>
 				</table>
 			
 			</div>	
-			
-</c:forEach>
+	</c:forEach>
 	
 
 		
