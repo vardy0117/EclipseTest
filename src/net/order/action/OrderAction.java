@@ -173,5 +173,13 @@ public class OrderAction {
 		
 	}
 
+	public int customerOrderCancel(int orderNo) {
+		
+		OrderListDAO oDAO = new OrderListDAO();
+		int result =oDAO.customerOrederCancel(orderNo);
+		
+		return result;
+	}
+
 
 }

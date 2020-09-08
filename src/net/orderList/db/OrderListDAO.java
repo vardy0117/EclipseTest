@@ -558,9 +558,27 @@ public class OrderListDAO {
 		}
 		return orderListBean;
 	}
-	
-	
-	
-	
+
+	//cancel
+	public int customerOrederCancel(int orderNo) {
+		int result =0;
+		try {
+			con = getConnection();
+		
+			sql="update orderList set orderCheck = 'N' where orderNo=? and orderCheck != 'T'";
+			pstmt=con.prepareStatement(sql);
+			
+			pstmt.setInt(1, orderNo);
+			
+			result =pstmt.executeUpdate();
+			
+
+			}catch (Exception e) {
+				System.out.println("orederCancel inner error : " +e);
+			}finally {
+				resourceClose();
+			}
+		return result;
+	}
 	
 }
