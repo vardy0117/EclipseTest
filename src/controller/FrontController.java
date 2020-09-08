@@ -16,6 +16,7 @@ import javax.xml.bind.ParseConversionEvent;
 
 import org.apache.catalina.tribes.group.Response;
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
@@ -1322,11 +1323,27 @@ public class FrontController extends HttpServlet {
 				action.updateDeliveryCheck(orderNo);
 				//action2.getDeliveryInfo(request, response, dbean);
 				
-				forward.setView("deliveryIndex.jsp");
+				forward.setView("deliveryIndex.jsp?orderNo="+orderNo);
 				forward.execute(request, response);
 			/*}*/
 		}
 		
+		
+		if(command.equals("getdelivery.do")){
+			
+			DeliveryAction action= new DeliveryAction();
+			String orderNo=request.getParameter("orderNo");
+			
+			JSONObject jobj = new JSONObject();
+			
+			jobj=action.getDeliveryInfo(request, response, orderNo);
+		
+			response.setCharacterEncoding("utf-8");
+			
+			PrintWriter out = response.getWriter();
+			out.print(jobj);
+			
+		}
 	}
 				
 }

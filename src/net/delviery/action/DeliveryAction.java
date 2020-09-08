@@ -6,6 +6,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONObject;
+
 import net.delivery.db.DeliveryBean;
 import net.delivery.db.DeliveryDAO;
 import net.orderList.db.OrderListBean;
@@ -27,6 +29,14 @@ public class DeliveryAction {
 		
 		request.setAttribute("list", list);
 		
+	}
+
+	public JSONObject getDeliveryInfo(HttpServletRequest request, HttpServletResponse response, String orderNo) {
+		DeliveryDAO ddao = new DeliveryDAO();
+		JSONObject jobj = new JSONObject();
+		jobj = ddao.getDeliveryInfo(orderNo);
+		
+		return jobj;
 	}
 
 }

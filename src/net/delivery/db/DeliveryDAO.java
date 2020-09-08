@@ -10,6 +10,8 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import org.json.simple.JSONObject;
+
 import net.orderList.db.OrderListBean;
 
 public class DeliveryDAO {
@@ -95,5 +97,46 @@ public class DeliveryDAO {
 		return list;
 		
 		
+	}
+
+	public JSONObject  getDeliveryInfo(String orderNo) {
+		DeliveryBean dbean = new DeliveryBean();
+		
+		JSONObject jsonObj = new JSONObject();
+		
+		try {
+			con = getConnection();
+			sql="select * from delivery where orderNo=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, Integer.parseInt(orderNo));
+			rs= pstmt.executeQuery();
+		
+			if(rs.next()){
+		
+			
+			jsonObj.put("storeNo",rs.getString("storeNo"));
+			jsonObj.put("orderNo",rs.getString("orderNo" ));
+			jsonObj.put("roadAddress", rs.getString("roadAddress"));
+			jsonObj.put("detailAddress", rs.getString("detailAddress"));
+			jsonObj.put("customerPhone",rs.getString("customerPhone" ));
+			jsonObj.put("departureTime", rs.getTimestamp("departureTime"));
+			jsonObj.put("arrivalTime", rs.getTimestamp("arrivalTime"));
+			jsonObj.put("DelivengersNo",rs.getString("DelivengersNo"));
+		
+					
+			
+			}
+			
+			
+			}catch (Exception e) {
+				System.out.println("getDeliveryInfo inner error : " +e);
+			}finally {
+				resourceClose();
+			}
+	
+		return jsonObj;
+		
+		
+	
 	}
 }

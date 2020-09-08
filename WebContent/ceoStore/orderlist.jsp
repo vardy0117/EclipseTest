@@ -196,7 +196,7 @@ function CancelOrder(orderNo){ // 주문 취소 처리 (배달도 같이 취소처리)
 		
 		<c:if test="${orderList.deliveryCheck eq 'F' && orderList.orderCheck eq 'T'}">
 			<div class="right">
-				 <div id="qrcode"></div>
+				 <div id="qrcode" onclick="location.href='InsertAndGetDeliveryInfo.do?orderNo=${param.orderNo}';"></div>
 			</div>
 		</c:if>
 		
