@@ -164,7 +164,25 @@
 </style>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
+
 	window.onload = function(){
+		var storeNo = "${param.storeNo}";
+		$.ajax({
+	         async : false,
+	         url : "UncheckedOrder.do?storeNo="+storeNo,
+	         success : function(count) {
+	     		  if(count != 0){
+	     			  var audio = new Audio();
+	     			  audio.src="./media/dnemho.mp3";
+	     			  console.log(audio);
+	     			  audio.play();
+	     			  $(".uncheckedOrders").html('<img src="./images/ICON/icons8-meal-50 (3).png">');
+	     			
+	     		  } else{
+	     			 $(".uncheckedOrders").empty();			  
+	     		  }
+	         }
+	   	});
 		realTimeOrder();
 	}
 

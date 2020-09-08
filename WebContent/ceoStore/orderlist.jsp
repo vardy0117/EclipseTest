@@ -53,6 +53,7 @@ div.right {
 </style>
 
 <script>
+	setTimeout("location.reload()",5000);
 
 function deleteOrder(orderNo, ceoNo) {
 	if(confirm(" 주문을 삭제 하시겠습니까? ")==true){
@@ -193,9 +194,11 @@ function CancelOrder(orderNo){ // 주문 취소 처리 (배달도 같이 취소처리)
 		합계 : ${totalPrice } 원<br>
 		</div>
 		
-		<div class="right">
-			 <div id="qrcode"></div>
-		</div>
+		<c:if test="${orderList.deliveryCheck eq 'F' && orderList.orderCheck eq 'T'}">
+			<div class="right">
+				 <div id="qrcode"></div>
+			</div>
+		</c:if>
 		
 		<div style="clear:both;"></div>
 		
