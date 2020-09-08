@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Insert title here</title>
-<link href="./css/subpage.css" rel="stylesheet" type="text/css">
+<!-- <link href="./css/subpage.css" rel="stylesheet" type="text/css"> -->
 <style>
 	#mainDiv {
 		width: 1000px;
@@ -97,7 +97,7 @@
 </style>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script src="/Delivengers/js/member/join.js"></script>
+<!-- <script src="/Delivengers/js/member/join.js"></script> -->
 </head>
 <body>
 <script>
@@ -120,8 +120,31 @@
 	    	return false;
 	 	}
 		
+		var reg_email = /^([0-9a-zA-Z_\.-]+)$/;
+	    if(!reg_email.test(document.fr.emailId.value)) {
+	    	$("#emailChkMsg").text("올바른 email 형식이 아닙니다.1");
+			$("#emailChkMsg").css("color","red");
+	    	document.fr.emailId.focus();
+			return false;         
+		}
+	    reg_email = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+	    if(!reg_email.test(document.fr.emailServer.value)) {
+	    	$("#emailChkMsg").text("올바른 email 형식이 아닙니다.2");
+			$("#emailChkMsg").css("color","red");
+	    	document.fr.emailServer.focus();
+			return false;         
+		}
+		
 		if($("#emailChkMsg").text() != usableMsg){
 			document.fr.emailId.focus();
+			return false;
+		}
+		var reg_pw = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+		if(!reg_pw.test(document.fr.password.value)) {
+			console.log("비밀번호유효성");
+			$("#passwordChkMsg").text("6~12자리 이내의 암호를 입력해주세요.");
+			$("#passwordChkMsg").css("color", "red");
+			document.fr.password.focus();
 			return false;
 		}
 		
@@ -223,6 +246,13 @@
 		   	return false;
 		   	
 		} else if(document.fr.password.value !=""){
+			var reg_pw = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+			if(!reg_pw.test(document.fr.password.value)) {
+				console.log("비밀번호유효성");
+				$("#passwordChkMsg").text("6~12자리 이내의 암호를 입력해주세요.");
+				$("#passwordChkMsg").css("color", "red");
+				return false;
+			}
 			$("#passwordChkMsg").text("");
 			if(document.fr.password2.value ==""){
 				$("#password2ChkMsg").text("비밀번호를 한 번 더 입력해주세요!");
