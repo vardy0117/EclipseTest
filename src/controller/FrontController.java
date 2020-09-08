@@ -41,6 +41,8 @@ import net.customer.action.CustomerReviewAction;
 import net.customer.action.GetCouponAction;
 import net.customer.db.CustomerBean;
 import net.customer.db.CustomerDAO;
+import net.delivery.db.DeliveryBean;
+import net.delviery.action.DeliveryAction;
 import net.manage.action.updateAction;
 import net.menu.action.MenuAction;
 import net.menu.db.MenuBean;
@@ -1296,8 +1298,33 @@ public class FrontController extends HttpServlet {
 			PrintWriter out = response.getWriter();
 			out.print(result);
 			
-			
 		}
+		
+		if(command.equals("InsertAndGetDeliveryInfo.do")){//cancel버튼 클릭시
+			forward=new ActionForward();
+			String delivengersNo = (String)session.getAttribute("delivengersNo");
+			
+			/*if(delivengersNo == null ){
+				PrintWriter out = response.getWriter();
+				out.print("<script>alert('delivenger 로그인을 하세요'); location.href='delivengerIndex.jsp' </script>");
+			} else {*/
+				
+				String orderNo = request.getParameter("orderNo");
+				
+				OrderAction action = new OrderAction();
+				DeliveryBean dbean = new DeliveryBean();
+				dbean = action.getOrderInfo(orderNo);
+				dbean.setDelivengersNo(delivengersNo);
+				
+				DeliveryAction action2 = new DeliveryAction();
+				action2.insertDelvieryInfo(dbean);
+				//action2.getDeliveryInfo(request, response, dbean);
+				
+				forward.setView("deliveryIndex.jsp");
+				forward.execute(request, response);
+			/*}*/
+		}
+		
 	}
 				
 }

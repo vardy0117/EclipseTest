@@ -10,6 +10,7 @@
 <html>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript" src="qrcode.js"></script>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Ceo 주문내역 상세보기</title>
@@ -41,6 +42,14 @@ div {
 		transition-duration: 1s;
 		opacity: 0.7;
 	}
+	
+div.left {
+	float : left;
+}	
+
+div.right {
+	float : right;
+}
 </style>
 
 <script>
@@ -144,6 +153,7 @@ function CancelOrder(orderNo){ // 주문 취소 처리 (배달도 같이 취소처리)
 <body>
 
 	<div id="mainDiv">
+		<div class=left>
 		<table>
 			<tr>
 				<td>주문번호 </td>
@@ -180,7 +190,14 @@ function CancelOrder(orderNo){ // 주문 취소 처리 (배달도 같이 취소처리)
 			</c:forEach>
 		</table>
 		<br>
-		합계 : ${totalPrice }<br>
+		합계 : ${totalPrice } 원<br>
+		</div>
+		
+		<div class="right">
+			 <div id="qrcode"></div>
+		</div>
+		
+		<div style="clear:both;"></div>
 		
 		<c:if test="${orderList.orderCheck=='F' }">
 			<select  id="prepareTime">
@@ -236,4 +253,14 @@ function CancelOrder(orderNo){ // 주문 취소 처리 (배달도 같이 취소처리)
 	
 
 </body>
+<script type="text/javascript">
+    var qrcode = new QRCode(document.getElementById("qrcode"), {
+        text: "http://192.168.6.229/GitTest/InsertAndGetDeliveryInfo.do?orderNo=${param.orderNo}",
+        width: 128,
+        height: 128,
+        colorDark : "#000000",
+        colorLight : "#ffffff",
+        correctLevel : QRCode.CorrectLevel.H
+    });
+</script>
 </html>

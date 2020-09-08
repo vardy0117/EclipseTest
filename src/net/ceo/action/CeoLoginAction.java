@@ -69,6 +69,7 @@ public class CeoLoginAction {
 				System.out.println("사장님 세션 등록 완료 ");
 				// 페이지 이동 설정 (이동 방식, 경로)
 				
+				session.setAttribute("delivengersNo", cb.getPhone());
 			
 		}else{
 			
