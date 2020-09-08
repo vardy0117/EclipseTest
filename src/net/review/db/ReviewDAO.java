@@ -338,6 +338,40 @@ public class ReviewDAO {
 		
 		return result;
 	}
+
+	// 리뷰 작성하는 메소드 (INSERT)
+	public int insertReview(ReviewBean rBean) {
+		int result = 0;
+		try {
+			con = getConnection();
+			sql="insert into review(orderNo,customerNo,storeNo,contents,points,image,date) values(?,?,?,?,?,?,now())";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, rBean.getOrderNo());
+			pstmt.setString(2, rBean.getCustomerNo());
+			pstmt.setString(3, rBean.getStoreNo());
+			pstmt.setString(4, rBean.getContents());
+			pstmt.setString(5, rBean.getPoints());
+			pstmt.setString(6, rBean.getImage());
+			result= pstmt.executeUpdate();
+			if(result>0){
+				sql="update store set reviewCount=reviewCount+1,points=points+? where storeNo=?";
+				pstmt=con.prepareStatement(sql);
+				pstmt.setInt(1, Integer.parseInt(rBean.getPoints()));
+				pstmt.setString(2, rBean.getStoreNo());
+				pstmt.executeUpdate();
+			}
+		} catch (Exception e) {
+			System.out.println("insertReview() 내에서 예외 발생  :");
+			e.printStackTrace();
+		} finally {
+			resourceClose();
+		}
+		
+		
+		
+		return result;
+	}
+	
 	
 	
 	

@@ -52,6 +52,7 @@ import net.order.action.OrderAction;
 import net.orderList.db.OrderListBean;
 import net.orderList.db.OrderListDAO;
 import net.orderMenu.db.OrderMenuDAO;
+import net.review.action.writeReviewAction;
 import net.review.db.ReviewBean;
 
 import net.review.db.ReviewDAO;
@@ -1242,6 +1243,47 @@ public class FrontController extends HttpServlet {
 			}
 			
 		}
+		
+		if(command.equals("writeReview.do")){
+			forward=new ActionForward();
+			String storeNo = request.getParameter("storeNo"); // 리뷰작성 당할 가게 번호
+			String customerNo = (String)session.getAttribute("customerNo"); // 리뷰작성 할 회원 번호
+
+			
+			StoreDAO sDAO = new StoreDAO();
+			StoreBean sBean =  sDAO.getStoreName(storeNo);	// storeNo에 해당하는 가게 정보를 Bean에 저장
+			
+			CustomerDAO cDAO = new CustomerDAO();
+			CustomerBean cBean = cDAO.getCustomer(customerNo);	// customerNo에 해당하는 회원정보를 Bean에 저장
+			
+			request.setAttribute("storeBean", sBean);
+			request.setAttribute("customerBean", cBean);
+			
+			
+			
+			forward.setView("index.jsp?center=store/writeReview.jsp");
+			forward.setRedirect(false);
+			forward.execute(request, response);
+		}
+		if(command.equals("writeReviewAction.do")){
+			
+			
+			request.setCharacterEncoding("utf-8");
+			String realFolder = getServletContext().getRealPath("/upload/review");
+			int max = 1000 * 1024 * 1024;
+			MultipartRequest multi = new MultipartRequest(request, realFolder, max, "utf-8", new DefaultFileRenamePolicy());
+			
+			
+			writeReviewAction action = new writeReviewAction();
+			int result = action.insertReview(request, response,multi);
+			
+			if(result==1){
+				response.setContentType("text/html;charset=UTF-8"); 
+				PrintWriter out = response.getWriter();
+				out.print("<script>alert('리뷰작성이 완료되었습니다'); location.href='index.jsp' </script>");
+			}
+		}
+		
 		
 		/**************************************************************/
 		
