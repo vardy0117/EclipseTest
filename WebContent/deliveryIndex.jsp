@@ -8,8 +8,14 @@
 <title>Insert title here</title>
 </head>
 <body>
-야 너 들어왔냐
+<!-- 큐알 코드 찍은 페이지  -->
 	<table>
+		
+		
+		
+		
+		
+		
 		
 	</table>
 </body>

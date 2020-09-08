@@ -191,5 +191,15 @@ public class OrderAction {
 		return dbean;
 	}
 
+	public void updateDeliveryCheck(String orderNo) {
+		
+		
+		OrderListDAO oDAO = new OrderListDAO();
+		oDAO.updateDeliveryCheck(orderNo);
+		
+		
+		
+	}
+
 
 }

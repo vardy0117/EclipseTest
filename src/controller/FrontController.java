@@ -1318,6 +1318,8 @@ public class FrontController extends HttpServlet {
 				
 				DeliveryAction action2 = new DeliveryAction();
 				action2.insertDelvieryInfo(dbean);
+				
+				action.updateDeliveryCheck(orderNo);
 				//action2.getDeliveryInfo(request, response, dbean);
 				
 				forward.setView("deliveryIndex.jsp");
