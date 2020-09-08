@@ -17,6 +17,7 @@ import org.json.simple.parser.ParseException;
 
 import javafx.beans.binding.StringExpression;
 import net.coupon.db.CouponDAO;
+import net.delivery.db.DeliveryBean;
 import net.orderList.db.OrderJoinBean;
 import net.orderList.db.OrderListBean;
 import net.orderList.db.OrderListDAO;
@@ -179,6 +180,15 @@ public class OrderAction {
 		int result =oDAO.customerOrederCancel(orderNo);
 		
 		return result;
+	}
+
+	public DeliveryBean getOrderInfo(String orderNo) {
+		
+		OrderListDAO oDAO = new OrderListDAO();
+		DeliveryBean dbean = new DeliveryBean();
+		dbean = oDAO.getOrderInfo(orderNo);
+	
+		return dbean;
 	}
 
 

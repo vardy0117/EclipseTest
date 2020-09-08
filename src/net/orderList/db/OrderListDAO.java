@@ -12,6 +12,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import net.delivery.db.DeliveryBean;
 import net.store.db.StoreBean;
 
 public class OrderListDAO {
@@ -579,6 +580,36 @@ public class OrderListDAO {
 				resourceClose();
 			}
 		return result;
+	}
+
+	public DeliveryBean getOrderInfo(String orderNo) {
+		DeliveryBean dbean = new DeliveryBean();
+		try {
+			con = getConnection();
+		
+			sql="select * from orderList where orderNo=?";
+			pstmt=con.prepareStatement(sql);
+			
+			pstmt.setInt(1, Integer.parseInt(orderNo));
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()){
+				dbean.setOrderNo(rs.getString("orderNo"));
+				dbean.setStoreNo(rs.getString("storeNo"));
+				dbean.setRoadAddress(rs.getString("roadAddress"));
+				dbean.setDetailAddress(rs.getString("detailAddress"));
+				dbean.setCustomerPhone(rs.getString("phone"));
+			}
+			
+			}catch (Exception e) {
+				System.out.println("orederCancel inner error : " +e);
+			}finally {
+				resourceClose();
+			}
+		
+		return dbean;
+		
 	}
 	
 }
