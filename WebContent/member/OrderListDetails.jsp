@@ -3,13 +3,25 @@
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c" %>
        <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
        
+
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>마이페이지 주문내역</title>
 </head>
+
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+setInterval(function(){
+	  $("#ordercheck").toggle();
+	}, 250);
+
+
+</script>
+
+
 <style>
 
 	div {
@@ -173,22 +185,22 @@ function cancelorder () {
 	<center>
 		<c:if test="${orderstatus.orderCheck eq 'F'}">
 			<div id="cancelorder">
-				상태 : 주문 확인 중!
+				<font id="ordercheck" color="orange">상태 : 주문 확인 중!</font>
 			</div>
 		</c:if>	
 		<c:if test="${orderstatus.orderCheck eq 'N'}">
 			<div id="cancelorder">
-				상태 : 주문 취소!
+				 <font color="red">상태 : 주문 취소! </font>
 			</div>
 		</c:if>
 		<c:if test="${orderstatus.orderCheck eq 'T' && orderstatus.deliveryCheck eq 'T'}">
 			<div id="cancelorder">
-				상태 : 배달 완료!
+				<font color="green">상태 : 배달 완료!</font>
 			</div>
 		</c:if>	
 		<c:if test="${orderstatus.orderCheck eq 'T' && orderstatus.deliveryCheck eq 'F'}">
 			<div id="cancelorder">
-				상태 : 배달 중!
+				<font color="blue">상태 : 배달 중!</font>
 			</div>
 		</c:if>					
 	</center>		
