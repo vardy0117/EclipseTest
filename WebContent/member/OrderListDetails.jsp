@@ -186,6 +186,9 @@ function cancelorder () {
 		<c:if test="${orderstatus.orderCheck eq 'F'}">
 			<div id="cancelorder">
 				<font id="ordercheck" color="orange">상태 : 주문 확인 중!</font>
+				<br>
+				
+				<input class="btn" type="submit" value="주문취소요청" onclick="cancelorder();">
 			</div>
 		</c:if>	
 		<c:if test="${orderstatus.orderCheck eq 'N'}">
