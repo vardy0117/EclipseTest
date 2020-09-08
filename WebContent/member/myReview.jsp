@@ -44,6 +44,10 @@
 		color: #ffa400;
 		margin-left: 40px;
 	}
+	
+	#unStar{
+		color: #e0e0e0;
+	}
 	#avgStar{
 		color: #ffa400;
 		font-size: 2em;
@@ -138,7 +142,7 @@
 						<span class="storeName">${unReviewStoreNameList[i].name}</span>
 					</td>
 					<td>
-						<button onclick="location.href='writeReview.do?storeNo=${unReviewStoreNameList[i].storeNo}&orderNo=${unReviewOrder.orderNo }'" id="btnReview">리뷰쓰기</button>
+						<button onclick="location.href='writeReview.do?storeNo=${unReviewStoreNameList[i].storeNo}&orderNo=${unReviewOrder.orderNo }'" id="btnReview" style="cursor: pointer;">리뷰쓰기</button>
 					</td>
 				</tr>
 				<tr>
@@ -197,19 +201,19 @@
 					<tr>
 						<td>
 							<c:if test="${rBean.points eq 0 }">
-								<i id="star">☆☆☆☆☆</i>
+								<i id="star"></i><i id="unStar">★★★★★</i>
 							</c:if>
 							<c:if test="${rBean.points eq 1 }">
-								<i id="star">★☆☆☆☆</i>
+								<i id="star">★</i><i id="unStar">★★★★</i>
 							</c:if>
 							<c:if test="${rBean.points eq 2 }">
-								<i id="star">★★☆☆☆</i>
+								<i id="star">★★</i><i id="unStar">★★★</i>
 							</c:if>
 							<c:if test="${rBean.points eq 3 }">
-								<i id="star">★★★☆☆</i>
+								<i id="star">★★★</i><i id="unStar">★★</i>
 							</c:if>
 							<c:if test="${rBean.points eq 4 }">
-								<i id="star">★★★★☆</i>
+								<i id="star">★★★★</i><i id="unStar">★</i>
 							</c:if>
 							<c:if test="${rBean.points eq 5 }">
 								<i id="star">★★★★★</i>

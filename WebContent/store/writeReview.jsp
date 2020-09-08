@@ -81,7 +81,7 @@
 				<input type="hidden" value="${sBean.name }" name="storeName">
 				<input type="hidden" value="${cBean.nickname }" name="nickname">
 				<input type="hidden" value="${param.orderNo }" name="orderNo">
-				<input type="hidden" name="points" class="pointsResult">
+				<input type="hidden" name="points" class="pointsResult" value="0">
 				
 				
 				<tr>
