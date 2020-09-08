@@ -10,6 +10,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>마이페이지 주문내역</title>
 </head>
+
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+/* setInterval(function(){
+	  $("#ordercheck").toggle();
+	}, 250); */
+
+
+</script>
+
 <style>
 
 	div {
