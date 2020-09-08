@@ -7,51 +7,77 @@
 <title>Insert title here</title>
 </head>
 <style>
+	div {
+		box-sizing: border-box;
+	}
 	#mainDiv{
-
 		width: 1000px;
 		min-height: 600px;
 		margin: 0 auto;
 		margin-top: 80px;
 		position: relative;
-		padding-top: 30px;
+		padding-top: 100px;
 		
 	}
-	#mainDiv li{
-/* 		list-style: none;
+	#customerModifyDiv, #myOrderDiv, #myReviewDiv {
+		width: 30%;
+		height: 400px;
 		float: left;
-		border: 1px solid blue;
-		margin-right: 50px; */
-		
-		border: 1px solid blue;
-		list-style: none;
-		float: left;
-		width: 25.33333%;
-		height: 50px;
-    	line-height: 50px;
-		border: 1px solid #d9d9d9;
+		margin: 0 1%;
 		text-align: center;
-		cursor: pointer;
+		border: 1px solid hsl(98 100% 62% / 43%);
+   	 	box-shadow: 0 0 20px 0 hsl(98 100% 62% / 25%), 0 5px 5px 0 hsl(204 100% 59% / 25%);
+	    border-radius: 15px;
+	    transition-duration: 0.4s;
 	}
-	
-	#mainDiv li{
-	
-	box-sizing: border-box;}
-	
-	#mainDiv li:hover {
-		cursor: pointer;
-		opacity: 1;
+	#customerModifyDiv:hover, #myOrderDiv:hover, #myReviewDiv:hover {
+		box-shadow: 0 0 20px 0 hsl(98 100% 62%), 0 5px 5px 0 hsl(204 100% 59%);
+		background: hsl(98 100% 62%);
+    	color: white;
+    	text-shadow: 2px 1px 1px grey;
+    }
+	#mainDiv a {
+		color: #000000a3;
+		text-decoration: none;
 	}
-	
-
+	#mainDiv h2 {
+		margin-top: 40px;
+		font-size: 2rem;
+	}
+	#customerModifyDiv img, #myOrderDiv img, #myReviewDiv img {
+		width: 90%;
+	}
 </style>
+<script>
+	function hover(element) {
+		var hoverFileName = element.querySelector('img').src.replace('gradient', 'white');
+		element.querySelector('img').setAttribute('src', hoverFileName);
+	}
+	function unhover(element) {
+		var unhoverFileName = element.querySelector('img').src.replace('white', 'gradient');
+		element.querySelector('img').setAttribute('src', unhoverFileName);
+	}
+</script>
 <body>
 		<div id="mainDiv">
-			<ul>
-				<li><a href="./CustomerModifyIntro.do">회원수정</a></li>
-				<li><a href="./OrderDetail.do">나의 주문</a></li>
-				<li><a href="./MyReview.do">나의 리뷰</a></li>
-			</ul>
+			<a href="./CustomerModifyIntro.do" onmouseover="hover(this);" onmouseout="unhover(this);">
+				<div id="customerModifyDiv" style="margin-left: 3%;">
+					<h2>회원 수정</h2>
+					<img src="images/customerModify_gradient.svg">
+				</div>
+			</a>
+			<a href="./OrderDetail.do" onmouseover="hover(this);" onmouseout="unhover(this);">
+				<div id="myOrderDiv">
+					<h2>나의 주문</h2>
+					<img src="images/myOrder_gradient.svg">
+				</div>
+			</a>
+			<a href="./MyReview.do" onmouseover="hover(this);" onmouseout="unhover(this);">
+				<div id="myReviewDiv">
+					<h2>나의 리뷰</h2>
+					<img src="images/myReview_gradient.svg">
+				</div>
+			</a>
 		</div>
 </body>
 </html>

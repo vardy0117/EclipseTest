@@ -48,7 +48,7 @@
 	<c:set var="info" value="${requestScope.storeInfo}" />
 	<c:set var="star" value="${requestScope.storereview}" />
 
-	<div id="infoDiv">
+	<!-- <div id="infoDiv"> -->
 		<img src="${pageContext.request.contextPath }/images/확성기.svg" height="50" width="50" alt="사장님알림"> <font size="6">사장님 알림</font> <br>
 		<hr>
 		<div style="padding-left:15px; margin-bottom: 15px;">
@@ -131,7 +131,7 @@
 		누적주문수 : ${info.orderCount} <br>
 		<br> --%>
 
-	</div>
+	<!-- </div> -->
 
 	<img src="${pageContext.request.contextPath }/images/위치.svg" height="50" width="50" alt="업체위치"><font size="6">업체위치 </font>
 	<hr>
