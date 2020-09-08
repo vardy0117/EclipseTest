@@ -14,9 +14,9 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
-setInterval(function(){
+/* setInterval(function(){
 	  $("#ordercheck").toggle();
-	}, 250);
+	}, 250); */
 
 
 </script>
