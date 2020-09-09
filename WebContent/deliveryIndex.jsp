@@ -16,16 +16,12 @@
 		async : false,
 		url : "./getdelivery.do?orderNo="+orderNo,
 		success : function(data,textStatus){
-			console.log(type)
-		
-				
-				console.log("jjjjjjjj");
+			var obj = JSON.parse(data);
+			console.log(obj.orderNo);
+			console.log(obj.roadAddress);
+			console.log(obj.detailAddress);
+			console.log(obj.customerPhone);
 			
-						console.log(data);
-		//console.log("랄라라"+JSON.parse(data)["orderNo"]);
-			//console.log(JSON.parse(data)["orderNo"]);
-			var obj = data;
-			console.log(obj["orderNo"]);
 		},error:function(data,textStatus){
 			alert("Ajax 통신 Error : "+textStatus);
 		}

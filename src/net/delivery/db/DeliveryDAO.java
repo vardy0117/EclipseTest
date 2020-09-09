@@ -119,8 +119,8 @@ public class DeliveryDAO {
 			jsonObj.put("roadAddress", rs.getString("roadAddress"));
 			jsonObj.put("detailAddress", rs.getString("detailAddress"));
 			jsonObj.put("customerPhone",rs.getString("customerPhone" ));
-			jsonObj.put("departureTime", rs.getTimestamp("departureTime"));
-			jsonObj.put("arrivalTime", rs.getTimestamp("arrivalTime"));
+			jsonObj.put("departureTime", "\""+rs.getTimestamp("departureTime")+"\"");
+			jsonObj.put("arrivalTime", "\""+rs.getTimestamp("arrivalTime")+"\"");
 			jsonObj.put("DelivengersNo",rs.getString("DelivengersNo"));
 		
 					
