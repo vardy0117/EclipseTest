@@ -106,7 +106,8 @@ public class DeliveryDAO {
 		
 			sql="select o.orderNo, o.storeNo, o.roadAddress, o.detailAddress, o.phone, o.request, "
 			   +"d.departureTime, d.arrivalTime, o.deliveryCheck "
-			   +"from delivery d , orderList o "
+			   +"from delivery d join orderList o "
+			   +"on d.orderNo = o.orderNo "
 			   +"where d.delivengersNo = ? "
 			   +"order by o.deliveryCheck, d.departureTime";
 		
@@ -137,8 +138,8 @@ public class DeliveryDAO {
 				jsonObj.put("detailAddress", rs.getString("o.detailAddress"));
 				jsonObj.put("customerPhone",rs.getString("o.phone" ));
 				jsonObj.put("request", rs.getString("o.request"));
-				jsonObj.put("departureTime", "\""+rs.getTimestamp("d.departureTime")+"\"");
-				jsonObj.put("arrivalTime", "\""+rs.getTimestamp("d.arrivalTime")+"\"");
+				jsonObj.put("departureTime",rs.getTimestamp("d.departureTime").toString());
+				jsonObj.put("arrivalTime", rs.getTimestamp("d.arrivalTime").toString());
 				jsonObj.put("deliveryCheck", rs.getString("o.deliveryCheck"));
 				
 				array.add(jsonObj);

@@ -92,6 +92,10 @@
 		cursor: pointer;
 		opacity: 1;
 	}
+	
+	tr.deliveryInfo{
+		border-bottom: 1px solid black;
+	}
 </style>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
@@ -99,32 +103,34 @@
 
 <script type="text/javascript">
 	var orderNo="${param.orderNo}";
+	var tag = "";
 	$.ajax({
 		type : "get",
-		async : false,
+		async : true,
 		url : "./InsertDeliveryInfo.do?orderNo="+orderNo,
 		success : function(data,textStatus){
-			console.log(data);
 			if(data==0){
 				alert("이미 배차한 주문 입니다.");
 				location.href="./deliveryIndex.jsp";
 			} else {
-				for(var i=0; i<data.length; i++)
-				var tag = '<tr>'
-						+ 	'<td>'+data.list[i].orderNo+'</td>'
-						+ 	'<td>'+data.list[i].roadAddress+'&nbsp;'+obj.detailAddress+'</td>'
-						+ 	'<td>'+data.list[i].customerPhone+'</td>'
-						+ 	'<td>'+data.list[i].request+'</td>'
-						+ 	'<td>'+data.list[i].departureTime+'</td>';
-						
-					if(data.list[i].deliveryCheck=='D'){
-						tag	+= 	'<tr><button type="button" onclick="deliveryFinish();">배달 완료 확인!</button></td>'
-						    + '</tr>';	
-					}else{
-						tag	+= 	'<td>배달 완료!</td>'
-						    + '</tr>';
-					}	
+				var obj=JSON.parse(data);
+				for(var i=0; i<obj.list.length; i++){
+					tag += '<tr class="deliveryInfo">'
+						+ 	'<td>'+obj.list[i]["orderNo"]+'</td>'
+						+ 	'<td>'+obj.list[i]["roadAddress"]+'&nbsp;'+obj.list[i]["detailAddress"]+'</td>'
+						+ 	'<td>'+obj.list[i]["customerPhone"]+'</td>'
+						+ 	'<td>'+obj.list[i]["request"]+'</td>'
+
+					if(obj.list[i]["deliveryCheck"]=='D'){
+						tag	+= 	'<td><button type="button" onclick="deliveryFinish();">배달 완료 확인!</button></td>';	
+					}else if(obj.list[i]["deliveryCheck"]=='T'){
+						tag	+= 	'<td>'+obj.list[i]["departureTime"]+'</td>';
+					}
+				}	
+				console.log(tag);
+				$("#deliveryList").append(tag);
 			}						
+			
 		},error:function(data,textStatus){
 			alert("Ajax 통신 Error : "+textStatus);
 		}
@@ -201,7 +207,8 @@
 				</form>
 			</div> 
 	</c:when>
-	<c:when test="${!empty sessionScope.delivengersNo}">
+	</c:choose>
+<%-- 	<c:when test="${!empty sessionScope.delivengersNo}"> --%>
 		<!--  <span onclick="action_app_instagram('intent://instagram.com/#Intent;package=com.instagram.android;scheme=https;end', 'instagram://media', 'https://itunes.apple.com/kr/app/instagram/id389801252?mt=8')"> -->
 		<!--            App 실행  -->
 		<!--         </span> -->
@@ -212,15 +219,15 @@
 		<!-- <h1> 아이폰 전용 버튼</h1>
 		<a href="instagram://media" target="blank">아이폰 전용 버튼 (인스타 그램으로 연결 됨)</a>
 		-->
-		<table>
-			<tr> 
+		<table id="deliveryList">
+			<tr style="text-align:center;"> 
 				<td>주문 번호</td> <td>배달 장소</td> <td>연락처 </td> <td>요청 사항</td> <td>배달 완료</td> 
 			</tr>
+			
+			
 		</table>
 		
-	</c:when>
-	</c:choose>
-	
+	<%-- </c:when> --%>
 </div>
 </body>
 </html>
