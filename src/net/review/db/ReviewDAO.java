@@ -314,6 +314,9 @@ public class ReviewDAO {
 	// ceoStore.jsp에서 해당 리뷰에 사장님의 댓글을 추가하는 작업
 	public int updateCommentByReview(String reviewNo, String comment) {
 		int result = 0;
+		
+		//String com = comment.replace("<br>", "\\n"); 필요없음
+		
 		try {
 			con=getConnection();
 			sql="update review set comment=? where reviewNo=?";
@@ -383,6 +386,27 @@ public class ReviewDAO {
 		
 		
 		return result;
+	}
+
+	public int getAllReviewCountByStoreNo(int storeNo) {
+		int count = 0;
+		try {
+			con=getConnection();
+			sql="select count(*) from review where storeNo=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, Integer.toString(storeNo));
+			rs = pstmt.executeQuery();
+			if(rs.next()){
+				count = rs.getInt(1);
+			}
+			
+		} catch (Exception e) {
+			System.out.println("getAllReviewCountByStoreNo() 내에서 예외 발생");
+			e.printStackTrace();
+		} finally {
+			resourceClose();
+		}
+		return count;
 	}
 	
 	

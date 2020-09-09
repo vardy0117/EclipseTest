@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<% pageContext.setAttribute("newLineChar", "\n"); %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -260,18 +261,19 @@
 					</tr>
 					<tr>
 						<td>
-							<span id="orderMenu">${requestScope.menusList[i]}</span>
+							<span id="orderMenu">${requestScope.menusList2[i]}</span>
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<span id="content">${rBean.contents }</span>
+							<div id="content">${fn:replace(rBean.contents, newLineChar, "<br/>")}</div>
+							<%-- <span id="content">${rBean.contents }</span> --%>
 						</td>
 					</tr>
 					<c:if test="${rBean.comment ne null }">
 						<tr>
 							<td>
-								<div id="comment"><i id="ceoNick">사장님</i> <br><i id="commentFont">${rBean.comment }</i></div>
+								<div id="comment"><i id="ceoNick">사장님</i> <br><i id="commentFont">${fn:replace(rBean.comment, newLineChar, "<br/>")}</i></div>
 							</td>
 						</tr>	
 					</c:if>

@@ -4,6 +4,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Insert title here</title>
 <style>
 	#topDiv{
@@ -40,6 +42,45 @@
 		text-decoration: underline;
 		color: white;
 	}
+	
+	
+	
+ /*************************************************/   
+@media (max-width: 900px) and (min-width:400px)   {
+
+    
+   h2 {
+    float: left;
+    width: 60%;
+    font-size: 35px;
+
+}
+   #loginAndJoin {
+		position: absolute;
+		right: 10px;
+		top: 10px;
+
+	}
+	#loginAndJoin a {
+		text-decoration: none;
+		color: white;
+      margin: auto 0;   
+    
+	}
+	#loginAndJoin a:hover {
+		text-decoration: underline;
+		color: white;
+	}
+            
+            #topDiv {
+    
+                height: 110px;
+    }
+    
+    }
+/************************************************ */
+
+
 </style>
 <script>
 	window.onload = function(){
@@ -51,7 +92,7 @@
 </head>
 <body>
 	<div id="topDiv">
-		<h2 id="logo"><a href="delivengersIndex.jsp">Delivengers 배달원 페이지</a></h2>
+		<h2 id="logo"><a href="deliveryIndex.jsp">Delivengers 배달원 페이지</a></h2>
 		<c:choose>
 			<c:when test="${!empty sessionScope.delivengersNo}">
 				<div id="loginAndJoin">

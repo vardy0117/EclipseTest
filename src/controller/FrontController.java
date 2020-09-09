@@ -396,7 +396,7 @@ public class FrontController extends HttpServlet {
 					
 				GetStoreReviewAction action3 = new GetStoreReviewAction();
 					action3.getStoreReview(request, response, storeNo);
-					
+				
 				forward = new ActionForward();
 				forward.setView("index.jsp?center=store/store.jsp");
 
@@ -918,13 +918,23 @@ public class FrontController extends HttpServlet {
 				unReviewStoreNameList.add(sBean2);
 			}
 			
-			// orderMenu를 띄워주자!!
+			// 리뷰작성가능한 가게 리뷰쓰기에 orderMenu를 띄워주자!!
+			ArrayList<OrderListBean> menuList = action3.getUnReviewOrder(request, response, customerNo);
 			OrderMenuDAO omDAO = new OrderMenuDAO();
-			ArrayList<String> menusList=new ArrayList<String>();
-			for(int i =0;i<reviewList.size();i++){
-				menusList.add(omDAO.getMenusToString(reviewList.get(i).getOrderNo()));
+			ArrayList<String> menusList = new ArrayList<String>();
+			String menus="";
+			for(int i=0;i<menuList.size();i++){
+				menus = omDAO.getMenusToString(menuList.get(i).getOrderNo());
+				menusList.add(menus);
 			}
 			request.setAttribute("menusList", menusList);
+			
+			// 내가 작성한 리뷰에 orderMenu를 띄워주자!!
+			ArrayList<String> menusList2=new ArrayList<String>();
+			for(int i =0;i<reviewList.size();i++){
+				menusList2.add(omDAO.getMenusToString(reviewList.get(i).getOrderNo()));
+			}
+			request.setAttribute("menusList2", menusList2);
 			
 			
 			//---------------------- request.setAttribute -------------------------
@@ -981,7 +991,7 @@ public class FrontController extends HttpServlet {
 			menuAction.insertMenu(request, response, multi, Integer.parseInt(multi.getParameter("storeNo")));
 			
 			forward = new ActionForward();
-			forward.setView("ceoStore.do?storeNo="+multi.getParameter("storeNo"));
+			forward.setView("ceo?storeNo="+multi.getParameter("storeNo"));
 			forward.setRedirect(true);
 			forward.execute(request, response);
 			
@@ -1063,8 +1073,7 @@ public class FrontController extends HttpServlet {
 			// 해당 리뷰의 글 번호
 			String reviewNo = request.getParameter("reviewNo");
 			// 사장님의 댓글
-			String comment = request.getParameter("comment");
-			
+			String comment = request.getParameter("comment").replace("<br>", "\\n");
 			ReviewDAO rDAO = new ReviewDAO();
 			int result = rDAO.updateCommentByReview(reviewNo,comment);
 			if(result==1){

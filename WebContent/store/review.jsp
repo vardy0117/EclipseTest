@@ -4,7 +4,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-
+<% pageContext.setAttribute("newLineChar", "\n"); %>
+<% pageContext.setAttribute("crlf", "\n"); %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -91,7 +92,6 @@
 	}
 </style>
 
-	<!-- 주문한 메뉴 review.jsp로 가져오기는 일단 보류 - 이태우 - --> 	
 	
 	
 <!-- ---------------------------------	평균 별점  --------------------------------------------->
@@ -192,13 +192,13 @@
 					</tr>
 					<tr>
 						<td>
-							<span id="content">${rBean.contents }</span>
+							<div id="content">${fn:replace(rBean.contents, newLineChar, "<br/>")}</div>
 						</td>
 					</tr>
 					<c:if test="${rBean.comment ne null }">
 						<tr>
 							<td>
-								<div id="comment"><i id="ceoNick">사장님</i><br><i id="commentFont">${rBean.comment }</i></div>
+								<div id="comment"><i id="ceoNick">사장님</i><br><i id="commentFont">${fn:replace(rBean.comment, newLineChar, "<br/>")}</i></div>
 							</td>
 						</tr>
 					</c:if>
@@ -208,10 +208,14 @@
 		<div class="appendDiv">
 			<!-- 비동기방식으로 리뷰가 들어갈 자리 -->		
 		</div>
-	
-		<div class="moreTab" onclick="moreReview(${requestScope.storeNo})">
-			<a class="more">더보기</a>
-		</div>
+		
+		<!-- 리뷰를 2개씩 보여주기때문에 더보기 버튼은 리뷰가 3개 이상일때만 보여준다 -->
+		<!-- 더보기 버튼 클릭했을때 남아있는 리뷰수와 전체 리뷰수를 비교해서 더보기 버튼을 지워줄지 판단하기위해서 매개변수로 전체 리뷰수 넘겨줌 -->
+		<c:if test="${requestScope.count>2 }">
+			<div class="moreTab" onclick="moreReview(${requestScope.storeNo},${requestScope.count })">
+				<a class="more">더보기</a>
+			</div>
+		</c:if>
 	</c:if>	
 	
 	
@@ -219,16 +223,15 @@
 
 	<script type="text/javascript">
 		var startNum = 0;
-		function moreReview(storeNo) {
+		function moreReview(storeNo,count) {
 			//2개씩 뿌려줄거다
 			
  			//var startNum = $("#table tr").length / 4;	// 현재 보여지는 게시글의 수 (기존) 2->4->6 이렇게 2씩 커져야함
  			//var startNum = $(".reviewT").length;	// 현재 보여지는 게시글의 수
  			//var startNum = $("#table table").length;	// 현재 보여지는 게시글의 수
  			startNum += 2;
- 			var storeNo = storeNo	// 가게고유번호
-			
- 			console.log(startNum);
+ 			var storeNo = storeNo;	// 가게고유번호
+			var count = count; 		// 전체 리뷰 수
 			$.ajax({
 				type : "post",
 				async : false,
@@ -238,10 +241,18 @@
 				success : function(data,textStatus){
 					var jsonData = JSON.parse(data);
 					if(jsonData != null){
-						
 						var stars;
 						var unStars;
 						for(var i = 0; i<jsonData.length; i++){
+							
+							// 줄바꿈 처리
+							//var contents = jsonData[i].contents.replace('\n','<br>');	
+							var contents = jsonData[i].contents;
+							contents = contents.replace(/(?:\r\n|\r|\n)/g, '<br />');
+							
+							var comment = jsonData[i].comment;
+							comment = comment.replace(/(?:\r\n|\r|\n)/g, '<br />');
+							
 							// image가 null이 아닐때
 							if(jsonData[i].image != null){
 								if(jsonData[i].points==0){
@@ -271,15 +282,15 @@
 										 "<br><i id='star'>"+stars+"</i><i id='unStar'>"+unStars+"</i></td></tr>"+
 										 "<tr><td><center><img src='./images/"+jsonData[i].image+"' style='width: 656px; height: 400px;' class='image'></center></td></tr>"+
 										 "<tr><td><span id='orderMenu'>"+jsonData[i].orderMenu+"</span></td></tr>"+
-										 "<tr><td><span id='content'>"+jsonData[i].contents+"</span></td></tr></table>");
+										 "<tr><td><div id='content'>"+contents+"</div></td></tr></table>");
 								}else{
 									$(".appendDiv").append("<table class='appendT'><tr><td><span class='nickname'>"+jsonData[i].nickname+"님 </span> &nbsp&nbsp"+
 											 "<span class='date'>"+jsonData[i].date.substring(0,10)+"</span>"+
 											 "<br><i id='star'>"+stars+"</i><i id='unStar'>"+unStars+"</i></td></tr>"+
 											 "<tr><td><center><img src='./images/"+jsonData[i].image+"' style='width: 656px; height: 400px;' class='image'></center></td></tr>"+
 											 "<tr><td><span id='orderMenu'>"+jsonData[i].orderMenu+"</span></td></tr>"+
-											 "<tr><td><span id='content'>"+jsonData[i].contents+"</span></td></tr>"+
-											 "<tr><td><div id='comment'><i id='ceoNick'>사장님</i><br><i id='commentFont'>"+jsonData[i].comment+"</i></div></td></tr></table>");
+											 "<tr><td><div id='content'>"+contents+"</div></td></tr>"+
+											 "<tr><td><div id='comment'><i id='ceoNick'>사장님</i><br><div id='commentFont'>"+comment+"</div></div></td></tr></table>");
 								}
 							// image가 null일때
 							}else{
@@ -302,37 +313,44 @@
 									stars = "★★★★★";
 									unStars="";
 								}
+								
 								if(jsonData[i].comment == null){
 									$(".appendDiv").append("<table class='appendT'><tr><td><span class='nickname'>"+jsonData[i].nickname+"님 </span> &nbsp&nbsp"+
 										 "<span class='date'>"+jsonData[i].date.substring(0,10)+"</span>"+
 										 "<br><i id='star'>"+stars+"</i><i id='unStar'>"+unStars+"</i></td></tr>"+
 										 "<tr><td><span id='orderMenu'>"+jsonData[i].orderMenu+"</span></td></tr>"+
-										 "<tr><td><span id='content'>"+jsonData[i].contents+"</span></td></tr></table>");
+										 //"<tr><td><span id='content'>"+jsonData[i].contents+"</span></td></tr></table>");
+										 "<tr><td><div id='content'>"+contents+"</div></td></tr></table>");
 								}else{
 									$(".appendDiv").append("<table class='appendT'><tr><td><span class='nickname'>"+jsonData[i].nickname+"님 </span> &nbsp&nbsp"+
 											 "<span class='date'>"+jsonData[i].date.substring(0,10)+"</span>"+
 											 "<br><i id='star'>"+stars+"</i><i id='unStar'>"+unStars+"</i></td></tr>"+
 											 "<tr><td><span id='orderMenu'>"+jsonData[i].orderMenu+"</span></td></tr>"+
-											 "<tr><td><span id='content'>"+jsonData[i].contents+"</span></td></tr>"+
-											 "<tr><td><div id='comment'><i id='ceoNick'>사장님</i><br><i id='commentFont'>"+jsonData[i].comment+"</i></div></td></tr></table>");
+											 //"<tr><td><div id='content'>"+jsonData[i].contents.replace('\n','<br>')+"</div></td></tr>"+
+											 "<tr><td><div id='content'>"+contents+"</div></td></tr>"+
+											 "<tr><td><div id='comment'><i id='ceoNick'>사장님</i><br><div id='commentFont'>"+comment+"</div></div></td></tr></table>");
 								}
-								
-								
-								
 							}
+						
 						}
-						if(jsonData.length==0){
-							alert("남은 리뷰가 없습니다.");
+						
+						var showReview = $(".appendDiv table").length+2;	// 지금까지 보여진 리뷰 수
+						if(showReview==count){	// 총 리뷰수와 지금까지 보여준 리뷰수가 같으면 [더보기]탭 제거
 							$("div").remove(".moreTab");
 						}
+						
 					}						
 				}
 				,error:function(data,textStatus){
 					alert("moreReview에러발생 : "+textStatus)
 				}
 				
-			});
-		}
+			});// moreReview ajax 끝
+		
+		}// moreReview 끝
+		
+		
+		
 	</script>
 </body>
 </html>

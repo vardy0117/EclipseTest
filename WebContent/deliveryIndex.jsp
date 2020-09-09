@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 @font-face {
 		font-family: 'BMEULJIRO';
@@ -27,8 +28,9 @@
 	
 	#mainDiv{
 		margin : 0 auto;
-		margin-Top:100px;
+		margin-Top:120px;
 	}
+
 	
 	div {
 		box-sizing: border-box;
@@ -92,10 +94,16 @@
 		cursor: pointer;
 		opacity: 1;
 	}
-	
-	tr.deliveryInfo{
-		border-bottom: 1px solid black;
-	}
+	    @media (max-width: 900px)and (min-width:400px)     {
+
+    
+    .left {
+        float: left;
+        width: 100%;
+        background-color: aqua;
+        
+        }
+    }   
 </style>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
@@ -205,10 +213,16 @@
 					</table>
 				</form>
 			</div> 
+			
+			
+			<center>
+				<img src="images/배달.jpg" alt="사진이 읎네" width="300" height="300"/>
+			</center>
 	</c:when>
 	</c:choose>
 <%-- 	<c:when test="${!empty sessionScope.delivengersNo}"> --%>
 		<!--  <span onclick="action_app_instagram('intent://instagram.com/#Intent;package=com.instagram.android;scheme=https;end', 'instagram://media', 'https://itunes.apple.com/kr/app/instagram/id389801252?mt=8')"> -->
+<
 		<!--            App 실행  -->
 		<!--         </span> -->
 		<!-- playstore로 연결 (안드로이드 전용) -->
@@ -218,7 +232,25 @@
 		<!-- <h1> 아이폰 전용 버튼</h1>
 		<a href="instagram://media" target="blank">아이폰 전용 버튼 (인스타 그램으로 연결 됨)</a>
 		-->
-		<table id="deliveryList">
+
+	<div class="row">
+	
+	   <div class="left"> 
+	   
+<h1> QR코드 연결 안드로이드 전용 버튼 (컴퓨터에서 안됨)</h1>
+<a href="intent://paxi.site#Intent;package=com.kitkats.qrscanner;scheme=https;end" target="blank">qr코드 안드로이드 전용 버튼 </a>
+<!-- playstore로 연결 (안드로이드 전용) -->
+<br>
+<br>
+
+<h1> 아이폰 전용 버튼 (컴퓨터에서 안됨)</h1>
+<a href="instagram://media" target="blank">아이폰 전용 버튼 (인스타 그램으로 연결 됨)</a>
+<!--인스타그램으로 연결 아이폰 전용 버튼 -->
+	
+
+    </div>
+    </div>	
+			<table id="deliveryList">
 			<tr style="text-align:center;"> 
 				<td>주문 번호</td> <td>배달 장소</td> <td>연락처 </td> <td>요청 사항</td> <td>배달 완료</td> 
 			</tr>
@@ -228,5 +260,13 @@
 		
 	<%-- </c:when> --%>
 </div>
+
+<!--            App 실행  -->
+<!--         </span> -->
+	
+
+
+	</div>
+
 </body>
 </html>
