@@ -102,4 +102,30 @@ public class OrderMenuDAO {
 	 
    }
 
+	public String getMenusToString(String orderNo) {
+		String menus="";
+		try {
+			con=getConnection();
+			sql ="select name from orderMenu where orderNo=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, orderNo);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()){
+				menus+=rs.getString(1);
+			}
+			while(rs.next()){
+				menus+="+"+rs.getString(1);
+			}
+		} catch (Exception e) {
+			System.out.println("getMenusToString() 내에서 예외 발생");
+			e.printStackTrace();
+		} finally {
+			resourceClose();
+		}
+		
+		
+		return menus;
+	}
+
 }

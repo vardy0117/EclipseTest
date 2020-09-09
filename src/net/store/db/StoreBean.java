@@ -17,8 +17,15 @@ public class StoreBean {
 	private String deliveryArea;
 	private String regNo;
 	private String sido;
+	private String reviewCount;
 	
 	
+	public String getReviewCount() {
+		return reviewCount;
+	}
+	public void setReviewCount(String reviewCount) {
+		this.reviewCount = reviewCount;
+	}
 	public String getStoreNo() {
 		return storeNo;
 	}
@@ -117,9 +124,10 @@ public class StoreBean {
 		return "StoreBean [storeNo=" + storeNo + ", ceoNo=" + ceoNo + ", name=" + name + ", roadAddress=" + roadAddress
 				+ ", detailAddress=" + detailAddress + ", category=" + category + ", phone=" + phone + ", storeHours="
 				+ storeHours + ", message=" + message + ", image=" + image + ", points=" + points + ", orderCount="
-				+ orderCount + ", deliveryArea=" + deliveryArea + ", regNo=" + regNo + ", sido=" + sido + "]";
+				+ orderCount + ", deliveryArea=" + deliveryArea + ", regNo=" + regNo + ", sido=" + sido
+				+ ", reviewCount=" + reviewCount + "]";
 	}
-
+	
 	
 	
 	

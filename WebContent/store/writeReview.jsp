@@ -36,6 +36,9 @@
 	#pointsInfo{
 		font-family: none;
 	}
+	.pointsClick i{
+		font-size: 2.5em;
+	}
 	.points{
 		color: lightgray;
 		cursor: pointer;
@@ -51,6 +54,38 @@
 		cursor: pointer;
 		color: white;
 		background-color: black;
+	}
+	#evaluation{
+		color: #BDBDBD;
+	}
+	input[type="submit"]{
+		color: white;
+		background-color: red;
+		border: 1px solid red;
+		font-size: 15px;
+		font-weight: 800; 
+		padding: 0.8em;
+	}
+	
+	/* input="file" 숨기기 */
+	input[type="file"]{
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		border: 0;
+	}
+	/* file태그를 대신한 label 태그 */
+	#fakeFile{
+		color: white;
+		background-color: red;
+		border: 1px solid red;
+		font-size: 15px;
+		font-weight: 800; 
+		padding: 0.8em;
 	}
 </style>	
 	<%-- 전달받은 customerBean --%>
@@ -85,13 +120,14 @@
 				
 				
 				<tr>
-					<td colspan="2"><div id="storeName">${sBean.name }</div></td>
+					<td colspan="2" align="center"><div id="storeName">${sBean.name }</div></td>
 				</tr>
 				<tr>
-					<td colspan="2">${cBean.nickname }</td>
+					<%-- <td colspan="2">${cBean.nickname }</td> --%>
+					<td><div align="center" id="evaluation">이 음식점에 대한 상세한 평가를 해주세요.</div></td>
 				</tr>
 				<tr>
-					<td><i id="pointsInfo">별점을 주세요! </i>
+					<td align="center">
 						<div class="pointsClick">
 							<i class="points">★</i>
 							<i class="points">★</i>
@@ -101,16 +137,17 @@
 							&nbsp;
 							<span id="zeroPoints">0점주기</span>
 						</div>
-						</td>
+					</td>
 				</tr>
 				<tr>
-					<td><input type="file" name="image"></td>
+					<td><label for="file" id="fakeFile">업로드</label></td>
+					<td><input type="file" name="image" id="file"></td>
 				</tr>
 				<tr>
 					<td colspan="2"><textarea id="contents" name="contents"></textarea></td>
 				</tr>
 				<tr>
-					<td colspan="2"><input type="submit" value="리뷰쓰기"></td>
+					<td colspan="2"><input type="submit" value="등록완료"></td>
 				</tr>
 			</table>
 		</form>

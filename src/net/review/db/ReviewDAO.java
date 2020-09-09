@@ -177,6 +177,19 @@ public class ReviewDAO {
 	        		jsonObj.put("nickname", rs2.getString(1));
 	        	}
 	        	
+	        	sql="select name from orderMenu where orderNo=?";
+	        	pstmt=con.prepareStatement(sql);
+	        	pstmt.setString(1, rs.getString(2));
+	        	ResultSet rs3;
+	        	String menus="";
+	        	rs3 = pstmt.executeQuery();
+	        	if(rs3.next()){
+					menus+=rs3.getString(1);
+				}
+				while(rs3.next()){
+					menus+="+"+rs3.getString(1);
+				}
+				jsonObj.put("orderMenu", menus);
 	        	
 	        	
 //	            rBean.setReviewNo(rs.getString(1));

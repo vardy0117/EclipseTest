@@ -160,7 +160,10 @@
 	#page{
 		text-align: center;
 	}
-	
+	#orderMenu{
+		font-size: 12px;
+		color: #d1bca4;
+	}
 </style>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
@@ -396,6 +399,11 @@
 									
 								</c:when>
 							</c:choose>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<span id="orderMenu">${requestScope.orderMenu[i] }</span>
 						</td>
 					</tr>
 					<tr>

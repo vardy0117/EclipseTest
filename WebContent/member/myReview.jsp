@@ -123,6 +123,29 @@
 		float: left;
 		width: 49%;
 	}
+	#orderMenu{
+		margin-left: 40px;
+		font-size: 12px;
+		color: #d1bca4;
+	}
+	#orderMenuUnReview{
+		font-size: 12px;
+		color: #d1bca4;
+	}
+	#comment{
+		background: #e2e2e2;
+		min-height: 150px;
+		border-radius: 20px;
+		padding-left: 1em;
+		padding-top: 1em;
+	}
+	#ceoNick{
+		font-size: 20px;
+	}
+	#commentFont{
+		font-size: 1em;
+		font-family: none;
+	}
 </style>
 
 
@@ -135,14 +158,18 @@
 			<table id="unReviewTable">
 				<tr>
 					<td rowspan="3">
-					<%--<img src="./images/${unReviewStoreNameList[i].image}" id="storeImg">  --%>
-						<img src="./images/house.jpg" id="storeImg">
+						<img src="./upload/store/${unReviewStoreNameList[i].image}" id="storeImg"> 
 					</td>
 					<td>
 						<span class="storeName">${unReviewStoreNameList[i].name}</span>
 					</td>
 					<td>
 						<button onclick="location.href='writeReview.do?storeNo=${unReviewStoreNameList[i].storeNo}&orderNo=${unReviewOrder.orderNo }'" id="btnReview" style="cursor: pointer;">리뷰쓰기</button>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span id="orderMenuUnReview">${requestScope.menusList[i]}</span>
 					</td>
 				</tr>
 				<tr>
@@ -233,9 +260,21 @@
 					</tr>
 					<tr>
 						<td>
+							<span id="orderMenu">${requestScope.menusList[i]}</span>
+						</td>
+					</tr>
+					<tr>
+						<td>
 							<span id="content">${rBean.contents }</span>
 						</td>
-					</tr>	
+					</tr>
+					<c:if test="${rBean.comment ne null }">
+						<tr>
+							<td>
+								<div id="comment"><i id="ceoNick">사장님</i> <br><i id="commentFont">${rBean.comment }</i></div>
+							</td>
+						</tr>	
+					</c:if>
 				</table>		
 			</c:forEach> 
 		</div>
