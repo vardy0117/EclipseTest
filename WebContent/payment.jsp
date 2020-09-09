@@ -8,8 +8,9 @@
 </head>
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<script type="text/javascript" src="WEB-INF/lib/lib/quagga.js"></script>
 <script>
-	IMP.init('imp93100667');
+/* 	IMP.init('imp93100667');
 	
 	IMP.request_pay({
 	    pg : 'inicis', // version 1.1.0부터 지원.
@@ -34,9 +35,31 @@
 	        msg += '에러내용 : ' + rsp.error_msg;
 	    }
 	    alert(msg);
-	});
+	}); */
+	
+	
+	
 </script>
 <body>
-
+  <button onclick="cancelPay()">환불하기</button>
+  <script>
+  Quagga.init({
+	    inputStream : {
+	      name : "Live",
+	      type : "LiveStream",
+	      target: document.querySelector('#yourElement')    // Or '#yourElement' (optional)
+	    },
+	    decoder : {
+	      readers : ["code_128_reader"]
+	    }
+	  }, function(err) {
+	      if (err) {
+	          console.log(err);
+	          return
+	      }
+	      console.log("Initialization finished. Ready to start");
+	      Quagga.start();
+	  });
+  </script>
 </body>
 </html>
