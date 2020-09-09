@@ -979,7 +979,7 @@ public class FrontController extends HttpServlet {
 			menuAction.insertMenu(request, response, multi, Integer.parseInt(multi.getParameter("storeNo")));
 			
 			forward = new ActionForward();
-			forward.setView("ceoStore.do?storeNo="+multi.getParameter("storeNo"));
+			forward.setView("ceo?storeNo="+multi.getParameter("storeNo"));
 			forward.setRedirect(true);
 			forward.execute(request, response);
 			
@@ -1061,8 +1061,7 @@ public class FrontController extends HttpServlet {
 			// 해당 리뷰의 글 번호
 			String reviewNo = request.getParameter("reviewNo");
 			// 사장님의 댓글
-			String comment = request.getParameter("comment");
-			
+			String comment = request.getParameter("comment").replace("<br>", "\\n");
 			ReviewDAO rDAO = new ReviewDAO();
 			int result = rDAO.updateCommentByReview(reviewNo,comment);
 			if(result==1){
