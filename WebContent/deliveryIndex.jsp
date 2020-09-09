@@ -5,15 +5,40 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style>
+@font-face {
+		font-family: 'BMEULJIRO';
+		src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/BMEULJIRO.woff') format('woff');
+		font-weight: normal;
+		font-style: normal;
+	}
+	@font-face {
+    	font-family: 'Binggrae-Bold';
+		src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Binggrae-Bold.woff') format('woff');
+		font-weight: normal;
+		font-style: normal;
+	}
+	
+            
+	body {
+		margin: 0 0;
+		font-family: 'Binggrae-Bold';
+	}
+	
+	#mainDiv{
+		margin-Top:100px;
+	}
+</style>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 <title>Insert title here</title>
+
 <script type="text/javascript">
 	var orderNo= ${param.orderNo};
 	$.ajax({
 		type : "get",
 		async : false,
-		url : "./getdelivery.do?orderNo="+orderNo,
+		url : "./InsertDeliveryInfo.do?orderNo="+orderNo,
 		success : function(data,textStatus){
 			var obj = JSON.parse(data);
 			var tag = '<tr>'
@@ -22,7 +47,7 @@
 					+ '</tr>'
 					+ '<tr>'
 					+ 	'<td>주 소</td>'
-					+ 	'<td>'+obj.roadAddress+' '+obj.detailAddress'</td>'
+					+ 	'<td>'+obj.roadAddress+'&nbsp;'+obj.detailAddress+'</td>'
 					+ '</tr>'
 					+ 	'<td>연락처 </td>'
 					+ 	'<td>'+obj.orderNo+'</td>'
@@ -42,12 +67,13 @@
 			alert("Ajax 통신 Error : "+textStatus);
 		}
 		
-	});//ajax 끝
+	});//ajax 끝 */
 </script>
 </head>
 <body>	
-	<c:set  var="center" value="${param.center}"/>
 	<jsp:include page="/inc/deliveryTop.jsp"/>
-
+	<div id=mainDiv>
+	<h1>야야양야</h1>
+	</div>
 </body>
 </html>

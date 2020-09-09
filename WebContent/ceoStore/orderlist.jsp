@@ -196,7 +196,7 @@ function CancelOrder(orderNo){ // 주문 취소 처리 (배달도 같이 취소처리)
 		</div>
 		
 		<div class="right">
-			<div id="qrcode" onclick="location.href='InsertAndGetDeliveryInfo.do?orderNo=${param.orderNo}';"></div>
+			<div id="qrcode" onclick="location.href='MoveDeliveryIndex.do?orderNo=${param.orderNo}';"></div>
 		</div>
 		
 		<div style="clear:both;"></div>
@@ -257,7 +257,7 @@ function CancelOrder(orderNo){ // 주문 취소 처리 (배달도 같이 취소처리)
 </body>
 <script type="text/javascript">
     var qrcode = new QRCode(document.getElementById("qrcode"), {
-        text: "http://192.168.6.229/GitTest/moveDeliveryIndex.do?orderNo=${param.orderNo}"/* "http://192.168.6.229/GitTest/InsertAndGetDeliveryInfo.do?orderNo=${param.orderNo}" */,
+        text: "http://192.168.6.229/GitTest/MoveDeliveryIndex.do?orderNo=${param.orderNo}"/* "http://192.168.6.229/GitTest/InsertAndGetDeliveryInfo.do?orderNo=${param.orderNo}" */,
         width: 128,
         height: 128,
         colorDark : "#000000",
