@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import action.ActionForward;
 import net.customer.db.CustomerBean;
 import net.customer.db.CustomerDAO;
+import net.event.db.EventDAO;
 
 
 
@@ -79,10 +80,14 @@ public class CustomerLoginAction {
 				cdao.deleteLastCouponsAfterLogin(Integer.parseInt(a.getCustomerNo()));
 				System.out.println("유효기간 지난 쿠폰 삭제");
 				// 페이지 이동 설정 (이동 방식, 경로)
+				
+				System.out.println("룰렛 응모권 지급 로직");
+				EventDAO eventDAO = new EventDAO();
+				eventDAO.giveEventTicketAfterLogin(Integer.parseInt(a.getCustomerNo()));
 			
 		}else{
 			
-		System.out.println("고갱님 로그인 실패됨");
+			System.out.println("고갱님 로그인 실패됨");
 			
 			
 		

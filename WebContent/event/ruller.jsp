@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -158,13 +159,59 @@ function turnPlate(target) {
 		
 		$('.roulPan').css("transition-duration", "3s");
 		$(".roulPan").rotate(angle);
+		
+		setTimeout(function() {
+			if(target == 1) alert("10% 할인 쿠폰 당첨입니다!\n축하합니다.");
+			else if(target == 2) alert("30% 할인 쿠폰 당첨입니다!\n축하합니다.");
+			else if(target == 3) alert("20% 할인 쿠폰 당첨입니다!\n축하합니다.");
+			else if(target == 4) alert("아쉽지만 꽝 입니다...\n내일 도전해주세요!");
+			else if(target == 5) alert("5% 할인 쿠폰 당첨입니다!\n축하합니다.");
+			else if(target == 6) alert("대박!! 대박!!\n50% 할인 쿠폰 당첨입니다!\n축하합니다.");
+		}, 3000);
 	}, 50);
+}
+
+function goRoulette() {
+	var ticket = '${requestScope.ticket}';
+	if(ticket == 'true') {
+		$.ajax({
+			url: './rouletteAjax.do',
+			type: 'post',
+			data: {'customerNo': '${sessionScope.customerNo}'},
+			dataType: 'text',
+			success: function(data) {
+				if(data == 1) turnPlate(1);
+				else if(data == 2) turnPlate(2);
+				else if(data == 3) turnPlate(3);
+				else if(data == 4) turnPlate(4);
+				else if(data == 5) turnPlate(5);
+				else if(data == 6) turnPlate(6);
+				else if(data == -1 || data == 'noTicket') alert("사용가능한 룰렛 응모권이 없습니다!\n내일 도전하세요!");
+			}
+		});
+	} else {
+		alert("사용가능한 룰렛 응모권이 없습니다!\n내일 도전하세요!");
+	}
 }
 
 </script>
 <style>
+	div {
+		box-sizing: border-box;
+	}
+	#mainDiv {
+		width: 1000px;
+		min-height: 600px;
+		margin: 0 auto;
+		margin-top: 80px;
+		position: relative;
+	}
+	#rouletteDiv {
+		width: 500px;
+		margin: 0 auto;
+	}
 	.roulPan {
-		background: url('./turningPlate2.png');
+		background: url('./event/turningPlate.png');
 		width: 500px;
 		height: 500px;
 		background-size: 500px;
@@ -172,27 +219,60 @@ function turnPlate(target) {
 		cursor:pointer;
 	}
 	#cursorImg {
-		width: 50px;
+		width: 70px;
 	    position: relative;
-	    left: 222px;
+	    left: 214px;
 	    top: 20px;
 	    z-index: 500;
+	    transform: rotate(90deg);
+	}
+	#rouletteBtnDiv {
+		text-align: center;
+		margin: 30px auto;
+	}
+	#rouletteBtnDiv button {
+		background: linear-gradient(to right, hsl(98 100% 62%), hsl(204 100% 59%));
+		font-family: Binggrae-Bold;
+		font-size: 1rem;
+		color: white;
+		border: none;
+		border-radius: 12px;
+		width: 270px;
+		height: 35px;
+		transition-duration: 1s;
+		opacity: 0.7;
+		cursor: pointer;
+	}
+	#rouletteBtnDiv button:hover {
+		opacity: 1;
 	}
 </style>
 <body>
-	<br><br><br>
-	<div>
-		<img id="cursorImg" src="./arrowDownCursor.svg">
-		<div class="roulPan" onclick="turnPlate(parseInt(Math.random()*6+1));">
-			
+	<div id="mainDiv">
+		<h2 style="line-height: 10px; margin-top: 100px; text-align: center;">룰렛을 돌려 할인 쿠폰 받아가세요~</h2>
+		<h2 style="line-height: 10px; text-align: center;">룰렛 이용권은 로그인시 하루 1회 지급됩니다.</h2>
+		<h2 style="line-height: 10px; text-align: center;">지급된 룰렛 이용권은 최대 1개로 누적 되지 않습니다.</h2>
+		<div id="rouletteDiv">
+			<img id="cursorImg" src="./event/arrow.svg">
+			<div class="roulPan">
+				<div style="width: 50px;font-size: 2rem;position: relative;top: 370px;left: 290px;transform: rotate(135deg);">꽝</div>
+				<div style="width: 50px;font-size: 2rem;position: relative;top: 190px;left: 390px;transform: rotate(90deg);">5%</div>
+				<div style="width: 50px;font-size: 2rem;position: relative;top: 0px;left: 140px;transform: rotate(335deg);">10%</div>
+				<div style="width: 50px;font-size: 2rem;position: relative;top: 230px;left: 150px;transform: rotate(215deg);">20%</div>
+				<div style="width: 50px;font-size: 2rem;position: relative;top: 50px;left: 60px;transform: rotate(270deg);">30%</div>
+				<div style="width: 50px;font-size: 2rem;position: relative;top: -140px;left: 280px;transform: rotate(35deg);">50%</div>
+			</div>
 		</div>
+		
+		<div id="rouletteBtnDiv">
+			<c:if test="${requestScope.ticket == 'true' }">
+				<button type="button" onclick="goRoulette();">룰렛 돌리기</button>
+			</c:if>
+			<c:if test="${requestScope.ticket != 'true' }">
+				<button type="button" disabled>이용권이 없습니다.</button>
+			</c:if>
+		</div>
+		
 	</div>
-	<br><br><br>
-	<button type="button" onclick="turnPlate(1);">1번당첨</button>
-	<button type="button" onclick="turnPlate(2);">2번당첨</button>
-	<button type="button" onclick="turnPlate(3);">3번당첨</button>
-	<button type="button" onclick="turnPlate(4);">4번당첨</button>
-	<button type="button" onclick="turnPlate(5);">5번당첨</button>
-	<button type="button" onclick="turnPlate(6);">6번당첨</button>
 </body>
 </html>

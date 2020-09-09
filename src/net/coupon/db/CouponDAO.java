@@ -93,5 +93,22 @@ public class CouponDAO {
 		}
 		
 	}
+	
+	public void insertCoupon(CouponBean couponBean) {
+		try {
+			con = getConnection();
+			sql = "insert into coupon (customerNo, name, discount, expDate) values (?, ?, ?, curdate()+3)";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, Integer.parseInt(couponBean.getCustomerNo()));
+			pstmt.setString(2, couponBean.getName());
+			pstmt.setInt(3, couponBean.getDiscount());
+			
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("CouponDAO 내부 insertCoupon 메소드 내 에러 : " + e);
+		} finally {
+			resourceClose();
+		}
+	}
 
 }
