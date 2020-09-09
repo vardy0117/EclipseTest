@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 @font-face {
 		font-family: 'BMEULJIRO';
@@ -29,6 +30,7 @@
 		margin : 0 auto;
 		margin-Top:100px;
 	}
+
 	
 	div {
 		box-sizing: border-box;
@@ -92,6 +94,21 @@
 		cursor: pointer;
 		opacity: 1;
 	}
+
+/*****************************************************/
+	    @media (max-width: 900px)and (min-width:400px)     {
+
+    
+    .left {
+        float: left;
+        width: 100%;
+        background-color: aqua;
+        
+        }
+    }
+/*****************************************************/    
+    
+
 </style>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
@@ -203,6 +220,7 @@
 	</c:when>
 	<c:when test="${!empty sessionScope.delivengersNo}">
 		<!--  <span onclick="action_app_instagram('intent://instagram.com/#Intent;package=com.instagram.android;scheme=https;end', 'instagram://media', 'https://itunes.apple.com/kr/app/instagram/id389801252?mt=8')"> -->
+<
 		<!--            App 실행  -->
 		<!--         </span> -->
 		<!-- playstore로 연결 (안드로이드 전용) -->
@@ -222,5 +240,29 @@
 	</c:choose>
 	
 </div>
+
+<!--            App 실행  -->
+<!--         </span> -->
+	<div class="row">
+	
+	   <div class="left"> 
+	   
+<h1> QR코드 연결 안드로이드 전용 버튼 (컴퓨터에서 안됨)</h1>
+<a href="intent://paxi.site#Intent;package=com.kitkats.qrscanner;scheme=https;end" target="blank">qr코드 안드로이드 전용 버튼 </a>
+<!-- playstore로 연결 (안드로이드 전용) -->
+<br>
+<br>
+
+<h1> 아이폰 전용 버튼 (컴퓨터에서 안됨)</h1>
+<a href="instagram://media" target="blank">아이폰 전용 버튼 (인스타 그램으로 연결 됨)</a>
+<!--인스타그램으로 연결 아이폰 전용 버튼 -->
+	
+
+    </div>
+    </div>
+
+
+	</div>
+
 </body>
 </html>
