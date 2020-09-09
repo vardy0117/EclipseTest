@@ -36,6 +36,5 @@
 	<jsp:include page="/inc/ceoTop.jsp"/>
 	<jsp:include page="${center }"/>
 	<jsp:include page="/inc/ceoBottom.jsp"></jsp:include>
-	
 </body>
 </html>
