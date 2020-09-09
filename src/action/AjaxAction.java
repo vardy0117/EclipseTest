@@ -97,6 +97,7 @@ public class AjaxAction {
 			jsonObj.put("deliveryArea", storeList.get(i).getDeliveryArea());
 			jsonObj.put("regNo", storeList.get(i).getRegNo());
 			jsonObj.put("sido", storeList.get(i).getSido());
+			jsonObj.put("reviewCount", storeList.get(i).getReviewCount());
 			
 			jsonArr.put(jsonObj);
 		}
