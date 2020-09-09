@@ -98,7 +98,6 @@ public class DeliveryDAO {
 	}
 	
 	public JSONArray getDeliveryList(String delivengersNo) {
-		/*List<DeliveryBean> list = new ArrayList<DeliveryBean>();*/
 		JSONArray array= new JSONArray();
 		
 		try {
@@ -106,7 +105,8 @@ public class DeliveryDAO {
 		
 			sql="select o.orderNo, o.storeNo, o.roadAddress, o.detailAddress, o.phone, o.request, "
 			   +"d.departureTime, d.arrivalTime, o.deliveryCheck "
-			   +"from delivery d , orderList o "
+			   +"from delivery d join orderList o "
+			   +"on d.orderNo = o.orderNo "
 			   +"where d.delivengersNo = ? "
 			   +"order by o.deliveryCheck, d.departureTime";
 		
@@ -115,20 +115,7 @@ public class DeliveryDAO {
 			// pstmt.setInt(2, Integer.parseInt(dbean.getDelivengersNo());
 			
 			rs=pstmt.executeQuery(); 
-			while(rs.next()){
-				/*DeliveryBean dbean = new DeliveryBean();
-				dbean.setDelivengersNo(delivengersNo);
-				dbean.setOrderNo(rs.getString("o.orderNo"));
-				dbean.setStoreNo(rs.getString("o.storeNo"));
-				dbean.setRoadAddress(rs.getString("o.roadAddress"));
-				dbean.setDetailAddress(rs.getString("o.detailAddress"));
-				dbean.setCustomerPhone(rs.getString("o.phone"));
-				dbean.setRequest(rs.getString("o.request"));
-				dbean.setDepartureTime(rs.getTimestamp("departureTime"));
-				dbean.setArrivalTime(rs.getTimestamp("arrivalTime"));
-				
-				list.add(dbean);*/
-				
+			while(rs.next()){				
 				JSONObject jsonObj = new JSONObject();
 				jsonObj.put("delivengerNo", delivengersNo);
 				jsonObj.put("storeNo",rs.getString("o.storeNo"));
@@ -137,8 +124,8 @@ public class DeliveryDAO {
 				jsonObj.put("detailAddress", rs.getString("o.detailAddress"));
 				jsonObj.put("customerPhone",rs.getString("o.phone" ));
 				jsonObj.put("request", rs.getString("o.request"));
-				jsonObj.put("departureTime", "\""+rs.getTimestamp("d.departureTime")+"\"");
-				jsonObj.put("arrivalTime", "\""+rs.getTimestamp("d.arrivalTime")+"\"");
+				jsonObj.put("departureTime",rs.getTimestamp("d.departureTime").toString());
+				jsonObj.put("arrivalTime", rs.getTimestamp("d.arrivalTime").toString());
 				jsonObj.put("deliveryCheck", rs.getString("o.deliveryCheck"));
 				
 				array.add(jsonObj);
