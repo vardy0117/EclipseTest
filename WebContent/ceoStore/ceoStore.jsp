@@ -4,6 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<% pageContext.setAttribute("newLineChar", "\n"); %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -407,7 +408,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td colspan="2">${review.contents }</td>
+						<td colspan="2">${fn:replace(review.contents, newLineChar, "<br/>")}</td>
 					</tr>
 					<tr>
 						<td colspan="2">
@@ -418,7 +419,8 @@
 									<input type="button" value="댓글쓰기" onclick="writeComment(${review.reviewNo })">
 								</c:when>
 								<c:when test="${review.comment ne null }">
-									<textarea class="commentOk" id="commentArea_${review.reviewNo}" readonly="readonly">${review.comment}</textarea>
+									<textarea class="commentOk" id="commentArea_${review.reviewNo}" readonly="readonly" >${fn:replace(review.comment, newline, "<br/>")}</textarea>
+									<%-- <textarea class="commentOk" id="commentArea_${review.reviewNo}" readonly="readonly" >${review.comment }</textarea> --%>
 									<br>
 									<input type="button" value="댓글삭제" onclick="deleteComment(${review.reviewNo})">
 									<input type="button" value="댓글수정" onclick="updateComment(${review.reviewNo})">

@@ -314,6 +314,9 @@ public class ReviewDAO {
 	// ceoStore.jsp에서 해당 리뷰에 사장님의 댓글을 추가하는 작업
 	public int updateCommentByReview(String reviewNo, String comment) {
 		int result = 0;
+		
+		//String com = comment.replace("<br>", "\\n"); 필요없음
+		
 		try {
 			con=getConnection();
 			sql="update review set comment=? where reviewNo=?";

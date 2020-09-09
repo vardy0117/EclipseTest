@@ -4,7 +4,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-
+<% pageContext.setAttribute("newLineChar", "\n"); %>
+<% pageContext.setAttribute("crlf", "\n"); %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -192,13 +193,13 @@
 					</tr>
 					<tr>
 						<td>
-							<span id="content">${rBean.contents }</span>
+							<div id="content">${fn:replace(rBean.contents, newLineChar, "<br/>")}</div>
 						</td>
 					</tr>
 					<c:if test="${rBean.comment ne null }">
 						<tr>
 							<td>
-								<div id="comment"><i id="ceoNick">사장님</i><br><i id="commentFont">${rBean.comment }</i></div>
+								<div id="comment"><i id="ceoNick">사장님</i><br><i id="commentFont">${fn:replace(rBean.comment, newLineChar, "<br/>")}</i></div>
 							</td>
 						</tr>
 					</c:if>
@@ -208,7 +209,7 @@
 		<div class="appendDiv">
 			<!-- 비동기방식으로 리뷰가 들어갈 자리 -->		
 		</div>
-	
+		
 		<div class="moreTab" onclick="moreReview(${requestScope.storeNo})">
 			<a class="more">더보기</a>
 		</div>
@@ -227,7 +228,7 @@
  			//var startNum = $("#table table").length;	// 현재 보여지는 게시글의 수
  			startNum += 2;
  			var storeNo = storeNo	// 가게고유번호
-			
+
  			console.log(startNum);
 			$.ajax({
 				type : "post",
@@ -241,7 +242,18 @@
 						
 						var stars;
 						var unStars;
+						
+						
 						for(var i = 0; i<jsonData.length; i++){
+							
+							// 줄바꿈 처리
+							//var contents = jsonData[i].contents.replace('\n','<br>');	
+							var contents = jsonData[i].contents
+							contents = contents.replace(/(?:\r\n|\r|\n)/g, '<br />');
+							
+							var comment = jsonData[i].comment
+							comment = comment.replace(/(?:\r\n|\r|\n)/g, '<br />');
+							
 							// image가 null이 아닐때
 							if(jsonData[i].image != null){
 								if(jsonData[i].points==0){
@@ -271,15 +283,15 @@
 										 "<br><i id='star'>"+stars+"</i><i id='unStar'>"+unStars+"</i></td></tr>"+
 										 "<tr><td><center><img src='./images/"+jsonData[i].image+"' style='width: 656px; height: 400px;' class='image'></center></td></tr>"+
 										 "<tr><td><span id='orderMenu'>"+jsonData[i].orderMenu+"</span></td></tr>"+
-										 "<tr><td><span id='content'>"+jsonData[i].contents+"</span></td></tr></table>");
+										 "<tr><td><div id='content'>"+contents+"</div></td></tr></table>");
 								}else{
 									$(".appendDiv").append("<table class='appendT'><tr><td><span class='nickname'>"+jsonData[i].nickname+"님 </span> &nbsp&nbsp"+
 											 "<span class='date'>"+jsonData[i].date.substring(0,10)+"</span>"+
 											 "<br><i id='star'>"+stars+"</i><i id='unStar'>"+unStars+"</i></td></tr>"+
 											 "<tr><td><center><img src='./images/"+jsonData[i].image+"' style='width: 656px; height: 400px;' class='image'></center></td></tr>"+
 											 "<tr><td><span id='orderMenu'>"+jsonData[i].orderMenu+"</span></td></tr>"+
-											 "<tr><td><span id='content'>"+jsonData[i].contents+"</span></td></tr>"+
-											 "<tr><td><div id='comment'><i id='ceoNick'>사장님</i><br><i id='commentFont'>"+jsonData[i].comment+"</i></div></td></tr></table>");
+											 "<tr><td><div id='content'>"+contents+"</div></td></tr>"+
+											 "<tr><td><div id='comment'><i id='ceoNick'>사장님</i><br><div id='commentFont'>"+comment+"</div></div></td></tr></table>");
 								}
 							// image가 null일때
 							}else{
@@ -302,25 +314,29 @@
 									stars = "★★★★★";
 									unStars="";
 								}
+								
 								if(jsonData[i].comment == null){
 									$(".appendDiv").append("<table class='appendT'><tr><td><span class='nickname'>"+jsonData[i].nickname+"님 </span> &nbsp&nbsp"+
 										 "<span class='date'>"+jsonData[i].date.substring(0,10)+"</span>"+
 										 "<br><i id='star'>"+stars+"</i><i id='unStar'>"+unStars+"</i></td></tr>"+
 										 "<tr><td><span id='orderMenu'>"+jsonData[i].orderMenu+"</span></td></tr>"+
-										 "<tr><td><span id='content'>"+jsonData[i].contents+"</span></td></tr></table>");
+										 //"<tr><td><span id='content'>"+jsonData[i].contents+"</span></td></tr></table>");
+										 "<tr><td><div id='content'>"+contents+"</div></td></tr></table>");
 								}else{
 									$(".appendDiv").append("<table class='appendT'><tr><td><span class='nickname'>"+jsonData[i].nickname+"님 </span> &nbsp&nbsp"+
 											 "<span class='date'>"+jsonData[i].date.substring(0,10)+"</span>"+
 											 "<br><i id='star'>"+stars+"</i><i id='unStar'>"+unStars+"</i></td></tr>"+
 											 "<tr><td><span id='orderMenu'>"+jsonData[i].orderMenu+"</span></td></tr>"+
-											 "<tr><td><span id='content'>"+jsonData[i].contents+"</span></td></tr>"+
-											 "<tr><td><div id='comment'><i id='ceoNick'>사장님</i><br><i id='commentFont'>"+jsonData[i].comment+"</i></div></td></tr></table>");
+											 //"<tr><td><div id='content'>"+jsonData[i].contents.replace('\n','<br>')+"</div></td></tr>"+
+											 "<tr><td><div id='content'>"+contents+"</div></td></tr>"+
+											 "<tr><td><div id='comment'><i id='ceoNick'>사장님</i><br><div id='commentFont'>"+comment+"</div></div></td></tr></table>");
 								}
 								
 								
 								
 							}
 						}
+						//if(jsonData.length<2){	// 남은 보여줄 개수가 2 미만일때 0,1
 						if(jsonData.length==0){
 							alert("남은 리뷰가 없습니다.");
 							$("div").remove(".moreTab");

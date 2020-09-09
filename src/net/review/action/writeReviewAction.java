@@ -12,20 +12,17 @@ import net.review.db.ReviewDAO;
 
 public class writeReviewAction {
 	public int insertReview(HttpServletRequest request, HttpServletResponse response,MultipartRequest multi) {
-//		reviewNo
-//		orderNo
-//		customerNo
-//		storeNo
-//		contents
-//		points
-//		image
-//		date
-//		comment
+
+		//String contents = multi.getParameter("contents").replace("<br>", "\\n");	필요없음
+		
 		ReviewBean rBean = new ReviewBean();
 		rBean.setOrderNo(multi.getParameter("orderNo"));
 		rBean.setCustomerNo(multi.getParameter("customerNo"));
 		rBean.setStoreNo(multi.getParameter("storeNo"));
 		rBean.setContents(multi.getParameter("contents"));
+		
+		//rBean.setContents(contents);	필요없음
+		
 		rBean.setPoints(multi.getParameter("points"));
 		rBean.setImage(multi.getFilesystemName("image"));
 		
