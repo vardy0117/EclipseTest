@@ -25,6 +25,9 @@ public class GetStoreReviewAction {
 		ReviewDAO rdao = new ReviewDAO();
 		reviewList = rdao.getReview(storeNo);
 		
+		// 모든 리뷰의 개수를 가져옴
+		int count = rdao.getAllReviewCountByStoreNo(storeNo);
+		request.setAttribute("count", count);
 		
 		// 닉네임을 가져와서 리뷰에 뿌려줌
 		List<String> nickNameList = new ArrayList<String>();
