@@ -12,6 +12,7 @@ public class DeliveryBean {
 	String roadAddress;
 	String detailAddress;
 	String customerPhone;
+	String request;
 	
 	public String getDelivengersNo() {
 		return delivengersNo;
@@ -66,6 +67,12 @@ public class DeliveryBean {
 	}
 	public void setCustomerPhone(String customerPhone) {
 		this.customerPhone = customerPhone;
+	}
+	public String getRequest() {
+		return request;
+	}
+	public void setRequest(String request) {
+		this.request = request;
 	}
 	
 }

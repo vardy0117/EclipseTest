@@ -9,7 +9,6 @@
 
 <title>Insert title here</title>
 <script type="text/javascript">
-
 	var orderNo= ${param.orderNo};
 	$.ajax({
 		type : "get",
@@ -17,46 +16,38 @@
 		url : "./getdelivery.do?orderNo="+orderNo,
 		success : function(data,textStatus){
 			var obj = JSON.parse(data);
-			console.log(obj.orderNo);
-			console.log(obj.roadAddress);
-			console.log(obj.detailAddress);
-			console.log(obj.customerPhone);
-			
+			var tag = '<tr>'
+					+ 	'<td>주문번호 </td>'
+					+ 	'<td>'+obj.orderNo+'</td>'
+					+ '</tr>'
+					+ '<tr>'
+					+ 	'<td>주 소</td>'
+					+ 	'<td>'+obj.roadAddress+' '+obj.detailAddress'</td>'
+					+ '</tr>'
+					+ 	'<td>연락처 </td>'
+					+ 	'<td>'+obj.orderNo+'</td>'
+					+ '</tr>'
+					+ 	'<td>요청사항 </td>'
+					+ 	'<td>'+obj.request+'</td>'
+					+ '</tr>'
+					+ '</tr>'
+					+ 	'<td>출발시각 </td>'
+					+ 	'<td>'+obj.departureTime+'</td>'
+					+ '</tr>'
+					+ '</tr>'
+					+ 	'<td>도착시각 </td>'
+					+ 	'<td onclick = >배달완료 클릭!</td>'
+					+ '</tr>';			
 		},error:function(data,textStatus){
 			alert("Ajax 통신 Error : "+textStatus);
 		}
 		
 	});//ajax 끝
-	
-
-
-
-
 </script>
 </head>
-<body>
-<!-- 큐알 코드 찍은 페이지  -->\delivengersNo, storeNo, orderNo, roadAddress, detailAddress, customerPhone, departureTime, arrivalTime, deliveryCheck, storeNo, orderNo, roadAddress, detailAddress, customerPhone, departureTime, arrivalTime, deliveryCheck
-	<table>
-
-			<tr>
-				<td>주문번호 </td>
-				<td>${orderList.orderNo}</td>
-			</tr>
-			<tr>
-				<td>주소</td>
-				<td>${orderList.roadAddress} ${orderList.detailAddress }</td>
-			</tr>
-			<tr>
-				<td>연락처 </td>
-				<td>${orderList.phone}</td>
-			</tr>
-			<tr>
-				<td>요청사항 </td>
-				<td>${orderList.request}</td>
-			</tr>
-		</table>
-		
-		
+<body>	
+	<c:set  var="center" value="${param.center}"/>
+	<jsp:include page="/inc/deliveryTop.jsp"/>
 
 </body>
 </html>
