@@ -1382,6 +1382,7 @@ public class FrontController extends HttpServlet {
 					
 					PrintWriter out = response.getWriter();
 					out.print(list);
+				
 				} else {
 					int result=0;
 					DeliveryBean dbean = new DeliveryBean();

@@ -127,7 +127,6 @@
 						tag	+= 	'<td>'+obj.list[i]["departureTime"]+'</td>';
 					}
 				}	
-				console.log(tag);
 				$("#deliveryList").append(tag);
 			}						
 			
