@@ -28,7 +28,7 @@
 	
 	#mainDiv{
 		margin : 0 auto;
-		margin-Top:100px;
+		margin-Top:120px;
 	}
 
 	
@@ -217,6 +217,11 @@
 					</table>
 				</form>
 			</div> 
+			
+			
+			<center>
+				<img src="images/배달.jpg" alt="사진이 읎네" width="300" height="300"/>
+			</center>
 	</c:when>
 	<c:when test="${!empty sessionScope.delivengersNo}">
 		<!--  <span onclick="action_app_instagram('intent://instagram.com/#Intent;package=com.instagram.android;scheme=https;end', 'instagram://media', 'https://itunes.apple.com/kr/app/instagram/id389801252?mt=8')"> -->
@@ -230,19 +235,7 @@
 		<!-- <h1> 아이폰 전용 버튼</h1>
 		<a href="instagram://media" target="blank">아이폰 전용 버튼 (인스타 그램으로 연결 됨)</a>
 		-->
-		<table>
-			<tr> 
-				<td>주문 번호</td> <td>배달 장소</td> <td>연락처 </td> <td>요청 사항</td> <td>배달 완료</td> 
-			</tr>
-		</table>
 		
-	</c:when>
-	</c:choose>
-	
-</div>
-
-<!--            App 실행  -->
-<!--         </span> -->
 	<div class="row">
 	
 	   <div class="left"> 
@@ -259,7 +252,21 @@
 	
 
     </div>
-    </div>
+    </div>	
+		<table>
+			<tr> 
+				<td>주문 번호</td> <td>배달 장소</td> <td>연락처 </td> <td>요청 사항</td> <td>배달 완료</td> 
+			</tr>
+		</table>
+		
+	</c:when>
+	</c:choose>
+	
+</div>
+
+<!--            App 실행  -->
+<!--         </span> -->
+	
 
 
 	</div>
