@@ -51,17 +51,12 @@
 </head>
 <body>
 	<div id="topDiv">
-		<h2 id="logo"><a href="./ceoIndex.jsp">Delivengers 배달원 페이지</a></h2>
-		
+		<h2 id="logo"><a href="delivengersIndex.jsp">Delivengers 배달원 페이지</a></h2>
 		<c:choose>
-			<c:when test="${empty sessionScope.ceoNo}">
+			<c:when test="${!empty sessionScope.delivengersNo}">
 				<div id="loginAndJoin">
-					<a href="./deliveryLogin.do">로그인</a> | 
-				</div>
-			</c:when>
-			<c:when test="${!empty sessionScope.email}">
-				<div id="loginAndJoin">
-					<a href="./deliveryLogOut.do">logout</a> |	
+					${sessionScope.delivengersNo} 배달원님 어서 오세요! |
+					<a href="./DelivengersLogOut.do">logout</a> |	
 				</div>
 			</c:when>
 		</c:choose>	

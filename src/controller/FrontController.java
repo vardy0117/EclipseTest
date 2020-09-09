@@ -44,6 +44,7 @@ import net.customer.db.CustomerBean;
 import net.customer.db.CustomerDAO;
 import net.delivery.db.DeliveryBean;
 import net.delviery.action.DeliveryAction;
+import net.delviery.action.DeliveryLoginAction;
 import net.manage.action.updateAction;
 import net.menu.action.MenuAction;
 import net.menu.db.MenuBean;
@@ -68,7 +69,8 @@ import net.store.db.StoreDAO;
 
 @WebServlet("*.do")
 public class FrontController extends HttpServlet {
-       
+    String projectURL="http://paxi.site/GitTest/";  
+	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doProcesss(request,response);
@@ -1317,6 +1319,41 @@ public class FrontController extends HttpServlet {
 			
 		}
 		
+		if(command.equals("DeliveryLoginAction.do")){
+			DeliveryLoginAction action = new DeliveryLoginAction() ;
+			boolean result = false;
+			try {
+				 forward = new ActionForward();
+				 result = action.execute(request, response);
+				 if(result){
+					 forward.setRedirect(true);
+					 forward.setView("deliveryIndex.jsp"); // 사장님 전용페이지가 없어서 일단 여기로 했습니당
+				 } else {
+					 response.setContentType("text/html;charset=UTF-8"); 
+					 PrintWriter out = response.getWriter();
+									
+					 out.println("<script>"); 
+					 out.println("alert('로그인에 실패하셨습니다. \\n 아이디와 비밀번호 확인 후 다시 로그인해주세요.');"); 
+					 out.println("history.back();"); 
+					// out.println("location.href= 'CustomerLogin.do' "); 
+					 out.println("</script>");
+				 }
+
+				forward.execute(request, response);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}	
+		
+		if(command.equals("DelivengersLogOut.do")){
+				session.invalidate();
+				forward=new ActionForward();
+				
+				forward.setView("deliveryIndex.jsp");
+				forward.execute(request, response);
+		}	
+		
 		if(command.equals("MoveDeliveryIndex.do")){
 			forward=new ActionForward();
 			String orderNo = request.getParameter("orderNo");
@@ -1330,28 +1367,48 @@ public class FrontController extends HttpServlet {
 			String delivengersNo = (String)session.getAttribute("delivengersNo");
 			String orderNo = request.getParameter("orderNo");
 			
-			DeliveryAction dAction = new DeliveryAction();
+			response.setContentType("text/html; charset=UTF-8");
 			
-			if(orderNo == null ){
+			if(delivengersNo==null){
 				PrintWriter out = response.getWriter();
+				out.print("<script>alert('잘못된 접근 입니다 \\n메인페이지로 이동 합니다'); location.href='"+projectURL+"' </script>");
+			}else{
+				String list="";
+				DeliveryAction dAction = new DeliveryAction();
 				
-			} else {
+				if(orderNo == null || orderNo.equals("")){
+					
+					list = dAction.getDeliveryList(request, response, delivengersNo);	
+					
+					PrintWriter out = response.getWriter();
+					out.print(list);
+				} else {
+					int result=0;
+					DeliveryBean dbean = new DeliveryBean();
+					dbean.setDelivengersNo(delivengersNo);
+					dbean.setOrderNo(orderNo);
+					
+					result=dAction.insertDelvieryInfo(dbean);
+					
+					if(result==0){
+						PrintWriter out = response.getWriter();
+						out.print(result);
+					} else {
 
-				DeliveryBean dbean = new DeliveryBean();
-				dbean.setDelivengersNo(delivengersNo);
-				dbean.setOrderNo(orderNo);
-				
-				dAction.insertDelvieryInfo(dbean);
-				
-				OrderAction oAction = new OrderAction();
-				oAction.updateDeliveryCheck(orderNo);
-				dAction.getDeliveryInfo(request, response, dbean);
-				
+						OrderAction oAction = new OrderAction();
+						oAction.updateDeliveryCheck(orderNo);
+
+						list = dAction.getDeliveryList(request, response, delivengersNo);	
+						
+						PrintWriter out = response.getWriter();
+						out.print(list);
+					}
+				}
 			}
 		}
 		
 		
-		if(command.equals("getdelivery.do")){
+		if(command.equals("getdeliveryOne.do")){
 			
 			DeliveryAction action= new DeliveryAction();
 			String orderNo=request.getParameter("orderNo");
