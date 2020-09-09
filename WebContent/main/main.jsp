@@ -89,10 +89,22 @@
 		opacity: 1;
 	}
 	input:focus { outline: none; }
+	#MARQUEEDiv a {
+		text-decoration: none;
+		color: black;
+	}
+	#MARQUEEDiv a:hover {
+		text-decoration: underline;
+	}
 </style>
 </head>
 <body>
 	<div id="mainDiv">
+		<div id="MARQUEEDiv">
+			<MARQUEE style="font-size: 1.3rem;">
+				<a href="./rouletteEvent.do">📣진행중인 룰렛이벤트 바로가기</a>
+			</MARQUEE>
+		</div>
 		<!-- <h1 style="text-align: center;">main.jsp</h1>
 		<h2 style="text-align: center;">session에 customerNo를 이용해서 ajax통신해 회원주소를 가져와 default값으로 지정</h2> -->
 		<div id="searchDiv">

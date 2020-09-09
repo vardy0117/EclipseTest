@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +33,7 @@ import net.ceo.db.CeoBean;
 import net.ceo.db.CeoDAO;
 import net.ceoorder.action.ceoOrderAction;
 import net.coupon.db.CouponBean;
+import net.coupon.db.CouponDAO;
 import net.customer.action.CustomerJoinAction;
 import net.customer.action.CustomerLoginAction;
 import net.customer.action.CustomerLogoutAction;
@@ -44,6 +46,7 @@ import net.customer.db.CustomerBean;
 import net.customer.db.CustomerDAO;
 import net.delivery.db.DeliveryBean;
 import net.delviery.action.DeliveryAction;
+import net.event.db.EventDAO;
 import net.manage.action.updateAction;
 import net.menu.action.MenuAction;
 import net.menu.db.MenuBean;
@@ -165,9 +168,9 @@ public class FrontController extends HttpServlet {
 			Object loginStatus = session.getAttribute("customerNo");
 			if (loginStatus == null) {
 				System.out.println("CustomerLogin.do 접근 세션 내역 : " + loginStatus + " 로그인 안된 상태임");
-			forward = new ActionForward();
-			forward.setView("index.jsp?center=member/customerLogin.jsp");
-			forward.execute(request, response);
+				forward = new ActionForward();
+				forward.setView("index.jsp?center=member/customerLogin.jsp");
+				forward.execute(request, response);
 			}else{
 				System.out.println("CustomerLogin.do 잘못된 접근 감지 이미 로그인 상태 번호 : " + loginStatus);
 				 response.setContentType("text/html;charset=UTF-8"); 
@@ -1365,6 +1368,57 @@ public class FrontController extends HttpServlet {
 			out.print(jobj);
 			
 		}
+		
+		if(command.equals("rouletteEvent.do")) {
+			if(request.getSession().getAttribute("customerNo") == null) {
+				response.setContentType("text/html;charset=UTF-8"); 
+				PrintWriter out = response.getWriter();
+				out.print("<script>alert('로그인이 필요한 서비스 입니다. \\n로그인 페이지로 이동 합니다.'); location.href='CustomerLogin.do' </script>");
+			} else {
+				EventDAO eventDAO = new EventDAO();
+				
+				if((String)request.getSession().getAttribute("customerNo") != null && eventDAO.getTicket(Integer.parseInt((String)request.getSession().getAttribute("customerNo")))) {
+					request.setAttribute("ticket", "true");
+				} else {
+					request.setAttribute("ticket", "false");
+				}
+				
+				forward = new ActionForward();
+				forward.setView("index.jsp?center=event/ruller.jsp");
+				forward.execute(request, response);
+			}
+		}
+		
+		if(command.equals("rouletteAjax.do")) {
+			response.setContentType("text/html;charset=UTF-8"); 
+			PrintWriter out = response.getWriter();
+			
+			int customerNo = Integer.parseInt(request.getParameter("customerNo"));
+			EventDAO eventDAO = new EventDAO();
+			//티켓이 있는지 한번더 검사
+			if(eventDAO.hasUsableTicket(customerNo)) {
+				int ticketResult = eventDAO.useTicket(customerNo);
+				if(ticketResult >= 1 && ticketResult <= 6 && ticketResult != 4) {
+					CouponBean couponBean = new CouponBean();
+					
+					if(ticketResult == 1) couponBean.setDiscount(10);
+					else if(ticketResult == 2) couponBean.setDiscount(30);
+					else if(ticketResult == 3) couponBean.setDiscount(20);
+					else if(ticketResult == 5) couponBean.setDiscount(5);
+					else if(ticketResult == 6) couponBean.setDiscount(50);
+					
+					couponBean.setCustomerNo(Integer.toString(customerNo));
+					couponBean.setName("룰렛이벤트 " + couponBean.getDiscount() + "% 할인 쿠폰");
+					
+					CouponDAO couponDAO = new CouponDAO();
+					couponDAO.insertCoupon(couponBean);
+				}
+				out.print(ticketResult);
+			} else {
+				out.print("noTicket");
+			}
+		}
+			
 	}
 				
 }
