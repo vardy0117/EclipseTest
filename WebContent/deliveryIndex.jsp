@@ -68,12 +68,77 @@
 		}
 		
 	});//ajax 끝 */
+	
+	
+	
+	function mo_chk(){
+
+		var os;
+
+		var mobile = (/iphone|ipad|ipod|android/i.test(navigator.userAgent.toLowerCase()));	 
+
+		if (mobile) {
+			var userAgent = navigator.userAgent.toLowerCase();
+			if (userAgent.search("android") > -1){
+				return os = "android";
+			}else if ((userAgent.search("iphone") > -1) || (userAgent.search("ipod") > -1) || (userAgent.search("ipad") > -1)){
+				return os = "ios";
+			}else{
+				return os = "otehr";
+			}
+
+		} else {
+			return os = "pc";
+		}
+	}
+
+
+	function action_app_instagram(android_url , ios_url , ios_appstore_url){
+		var result_mo_chk = mo_chk();
+
+		if(result_mo_chk!="pc"){
+			if(result_mo_chk == "ios"){
+
+				setTimeout( function() {
+					window.open(ios_appstore_url);
+				}, 1500);
+
+				location.href = ios_url;
+			}else{
+				location.href = android_url;
+			}
+		}
+	}
+	
+	
+	
 </script>
 </head>
 <body>	
 	<jsp:include page="/inc/deliveryTop.jsp"/>
+	
+	
+	
 	<div id=mainDiv>
-	<h1>야야양야</h1>
+		
+		<!--  <span onclick="action_app_instagram('intent://instagram.com/#Intent;package=com.instagram.android;scheme=https;end', 'instagram://media', 'https://itunes.apple.com/kr/app/instagram/id389801252?mt=8')"> -->
+<!--            App 실행  -->
+<!--         </span> -->
+
+<h1> QR코드 연결 안드로이드 전용 버튼 (컴퓨터에서 안됨)</h1>
+<a href="intent://paxi.site#Intent;package=com.kitkats.qrscanner;scheme=https;end" target="blank">qr코드 안드로이드 전용 버튼 </a>
+<!-- playstore로 연결 (안드로이드 전용) -->
+<br>
+<br>
+
+<h1> 아이폰 전용 버튼 (컴퓨터에서 안됨)</h1>
+<a href="instagram://media" target="blank">아이폰 전용 버튼 (인스타 그램으로 연결 됨)</a>
+<!--인스타그램으로 연결 아이폰 전용 버튼 -->
+	
+
+
+
+
 	</div>
 </body>
 </html>
