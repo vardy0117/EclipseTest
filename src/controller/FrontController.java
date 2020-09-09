@@ -1321,7 +1321,7 @@ public class FrontController extends HttpServlet {
 			forward=new ActionForward();
 			String orderNo = request.getParameter("orderNo");
 			
-			forward.setView("delvieryIndex.jsp?orderNo="+orderNo);
+			forward.setView("deliveryIndex.jsp?orderNo="+orderNo);
 			forward.execute(request, response);
 		}
 		

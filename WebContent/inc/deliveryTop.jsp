@@ -51,7 +51,7 @@
 </head>
 <body>
 	<div id="topDiv">
-		<h2 id="logo"><a href="./ceoIndex.jsp">Delivengers 사장님 페이지</a></h2>
+		<h2 id="logo"><a href="./ceoIndex.jsp">Delivengers 배달원 페이지</a></h2>
 		
 		<c:choose>
 			<c:when test="${empty sessionScope.ceoNo}">
