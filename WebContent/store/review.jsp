@@ -35,10 +35,7 @@
 		font-family: none;
 		margin-left: 40px;
 	}
-	#commentFont{
-		font-size: 1em;
-		font-family: none;
-	}
+	
 
 	#star{
 		color: #ffa400;
@@ -82,8 +79,16 @@
 	#ceoNick{
 		font-size: 20px;
 	}
+	#commentFont{
+		font-size: 1em;
+		font-family: none;
+	}
 
-
+	#orderMenu{
+		margin-left: 40px;
+		font-size: 12px;
+		color: #d1bca4;
+	}
 </style>
 
 	<!-- 주문한 메뉴 review.jsp로 가져오기는 일단 보류 - 이태우 - --> 	
@@ -182,6 +187,11 @@
 					</tr>
 					<tr>
 						<td>
+							<span id="orderMenu">${requestScope.menuListInReview[i] }</span>
+						</td>
+					</tr>
+					<tr>
+						<td>
 							<span id="content">${rBean.contents }</span>
 						</td>
 					</tr>
@@ -260,12 +270,14 @@
 										 "<span class='date'>"+jsonData[i].date.substring(0,10)+"</span>"+
 										 "<br><i id='star'>"+stars+"</i><i id='unStar'>"+unStars+"</i></td></tr>"+
 										 "<tr><td><center><img src='./images/"+jsonData[i].image+"' style='width: 656px; height: 400px;' class='image'></center></td></tr>"+
+										 "<tr><td><span id='orderMenu'>"+jsonData[i].orderMenu+"</span></td></tr>"+
 										 "<tr><td><span id='content'>"+jsonData[i].contents+"</span></td></tr></table>");
 								}else{
 									$(".appendDiv").append("<table class='appendT'><tr><td><span class='nickname'>"+jsonData[i].nickname+"님 </span> &nbsp&nbsp"+
 											 "<span class='date'>"+jsonData[i].date.substring(0,10)+"</span>"+
 											 "<br><i id='star'>"+stars+"</i><i id='unStar'>"+unStars+"</i></td></tr>"+
 											 "<tr><td><center><img src='./images/"+jsonData[i].image+"' style='width: 656px; height: 400px;' class='image'></center></td></tr>"+
+											 "<tr><td><span id='orderMenu'>"+jsonData[i].orderMenu+"</span></td></tr>"+
 											 "<tr><td><span id='content'>"+jsonData[i].contents+"</span></td></tr>"+
 											 "<tr><td><div id='comment'><i id='ceoNick'>사장님</i><br><i id='commentFont'>"+jsonData[i].comment+"</i></div></td></tr></table>");
 								}
@@ -294,11 +306,13 @@
 									$(".appendDiv").append("<table class='appendT'><tr><td><span class='nickname'>"+jsonData[i].nickname+"님 </span> &nbsp&nbsp"+
 										 "<span class='date'>"+jsonData[i].date.substring(0,10)+"</span>"+
 										 "<br><i id='star'>"+stars+"</i><i id='unStar'>"+unStars+"</i></td></tr>"+
+										 "<tr><td><span id='orderMenu'>"+jsonData[i].orderMenu+"</span></td></tr>"+
 										 "<tr><td><span id='content'>"+jsonData[i].contents+"</span></td></tr></table>");
 								}else{
 									$(".appendDiv").append("<table class='appendT'><tr><td><span class='nickname'>"+jsonData[i].nickname+"님 </span> &nbsp&nbsp"+
 											 "<span class='date'>"+jsonData[i].date.substring(0,10)+"</span>"+
 											 "<br><i id='star'>"+stars+"</i><i id='unStar'>"+unStars+"</i></td></tr>"+
+											 "<tr><td><span id='orderMenu'>"+jsonData[i].orderMenu+"</span></td></tr>"+
 											 "<tr><td><span id='content'>"+jsonData[i].contents+"</span></td></tr>"+
 											 "<tr><td><div id='comment'><i id='ceoNick'>사장님</i><br><i id='commentFont'>"+jsonData[i].comment+"</i></div></td></tr></table>");
 								}

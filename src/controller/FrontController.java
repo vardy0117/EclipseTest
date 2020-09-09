@@ -391,7 +391,7 @@ public class FrontController extends HttpServlet {
 					
 				GetStoreReviewAction action3 = new GetStoreReviewAction();
 					action3.getStoreReview(request, response, storeNo);
-				
+					
 				forward = new ActionForward();
 				forward.setView("index.jsp?center=store/store.jsp");
 
@@ -651,6 +651,15 @@ public class FrontController extends HttpServlet {
 			request.setCharacterEncoding("utf-8");
 			int storeNo = Integer.parseInt(request.getParameter("storeNo"));
 			
+			// 주문목록을 ceoStore.jsp의 리뷰관리에 띄워주자!!!
+			OrderListDAO olDAO = new OrderListDAO();
+			List<OrderListBean> orderList = olDAO.getOrderListByStoreNo(storeNo);
+			ArrayList<String> orderMenu = new ArrayList<String>();
+			OrderMenuDAO omDAO = new OrderMenuDAO();
+			for(int i = 0;i<orderList.size();i++){
+				orderMenu.add(omDAO.getMenusToString(orderList.get(i).getOrderNo()));
+			}
+			request.setAttribute("orderMenu", orderMenu);
 			// 페이징 작업
 			// 페이지 선택을 안했을때 무조건 1페이지
 			request.setAttribute("ceoReviewPageNo", request.getParameter("ceoReviewPageNo")==null?"1":request.getParameter("ceoReviewPageNo"));
@@ -904,8 +913,13 @@ public class FrontController extends HttpServlet {
 				unReviewStoreNameList.add(sBean2);
 			}
 			
-			
-			
+			// orderMenu를 띄워주자!!
+			OrderMenuDAO omDAO = new OrderMenuDAO();
+			ArrayList<String> menusList=new ArrayList<String>();
+			for(int i =0;i<reviewList.size();i++){
+				menusList.add(omDAO.getMenusToString(reviewList.get(i).getOrderNo()));
+			}
+			request.setAttribute("menusList", menusList);
 			
 			
 			//---------------------- request.setAttribute -------------------------
@@ -1248,7 +1262,9 @@ public class FrontController extends HttpServlet {
 			forward=new ActionForward();
 			String storeNo = request.getParameter("storeNo"); // 리뷰작성 당할 가게 번호
 			String customerNo = (String)session.getAttribute("customerNo"); // 리뷰작성 할 회원 번호
-
+			
+			// 메뉴정보를 가져오자!!
+			// 보류
 			
 			StoreDAO sDAO = new StoreDAO();
 			StoreBean sBean =  sDAO.getStoreName(storeNo);	// storeNo에 해당하는 가게 정보를 Bean에 저장
