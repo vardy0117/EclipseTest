@@ -10,6 +10,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import net.orderList.db.OrderListBean;
@@ -38,7 +39,8 @@ public class DeliveryDAO {
 		}
 	} // resourceClose()
 	
-	public void insertDelveryInfo(DeliveryBean dbean) {
+	public int insertDelveryInfo(DeliveryBean dbean) {
+		int result=0;
 		try {
 			con = getConnection();
 		
@@ -48,7 +50,7 @@ public class DeliveryDAO {
 			pstmt.setInt(1, Integer.parseInt(dbean.getDelivengersNo()));
 			pstmt.setInt(2, Integer.parseInt(dbean.getOrderNo()));
 			
-			pstmt.executeUpdate();
+			result=pstmt.executeUpdate();
 
 			}catch (Exception e) {
 				System.out.println("insertDelveryInfo inner error : " +e);
@@ -56,43 +58,7 @@ public class DeliveryDAO {
 				resourceClose();
 			}
 		
-	}
-
-	public List<DeliveryBean> getDeliveryInfo(DeliveryBean dbean) {
-		List<DeliveryBean> list = new ArrayList<DeliveryBean>();
-		try {
-			con = getConnection();
-		
-			sql="select* from delivery where storeNo=? and deliveryCheck='F'"; // and delivengersNo=?
-		
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, Integer.parseInt(dbean.getStoreNo()));	
-			// pstmt.setInt(2, Integer.parseInt(dbean.getDelivengersNo());
-			
-			rs=pstmt.executeQuery();
-			
-			while(rs.next()){
-				DeliveryBean dBean = new DeliveryBean();
-				dBean.setDelivengersNo(/*rs.getString("delivengersNo")*/ "1");
-				dBean.setStoreNo(rs.getString("storeNo"));
-				dBean.setOrderNo(rs.getString("orderNo"));
-				dBean.setRoadAddress(rs.getString("roadAddress"));
-				dBean.setDetailAddress(rs.getString("detailAddress"));
-				dBean.setCustomerPhone(rs.getString("customerPhone"));
-				dBean.setDepartureTime(rs.getTimestamp("departureTime"));
-				dBean.setArrivalTime(rs.getTimestamp("arrivalTime"));
-				
-				list.add(dBean);
-			}
-			
-			}catch (Exception e) {
-				System.out.println("getDeliveryInfo inner error : " +e);
-			}finally {
-				resourceClose();
-			}
-		return list;
-		
-		
+			return result;
 	}
 
 	public JSONObject  getDeliveryInfo(String orderNo) {
@@ -119,8 +85,6 @@ public class DeliveryDAO {
 			jsonObj.put("arrivalTime", "\""+rs.getTimestamp("arrivalTime")+"\"");
 			jsonObj.put("DelivengersNo",rs.getString("DelivengersNo"));
 		
-					
-			
 			}
 			
 			
@@ -131,8 +95,49 @@ public class DeliveryDAO {
 			}
 	
 		return jsonObj;
-		
-		
+	}
 	
+	public JSONArray getDeliveryList(String delivengersNo) {
+		JSONArray array= new JSONArray();
+		
+		try {
+			con = getConnection();
+		
+			sql="select o.orderNo, o.storeNo, o.roadAddress, o.detailAddress, o.phone, o.request, "
+			   +"d.departureTime, d.arrivalTime, o.deliveryCheck "
+			   +"from delivery d join orderList o "
+			   +"on d.orderNo = o.orderNo "
+			   +"where d.delivengersNo = ? "
+			   +"order by o.deliveryCheck, d.departureTime";
+		
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, Integer.parseInt(delivengersNo));	
+			// pstmt.setInt(2, Integer.parseInt(dbean.getDelivengersNo());
+			
+			rs=pstmt.executeQuery(); 
+			while(rs.next()){				
+				JSONObject jsonObj = new JSONObject();
+				jsonObj.put("delivengerNo", delivengersNo);
+				jsonObj.put("storeNo",rs.getString("o.storeNo"));
+				jsonObj.put("orderNo",rs.getString("o.orderNo" ));
+				jsonObj.put("roadAddress", rs.getString("o.roadAddress"));
+				jsonObj.put("detailAddress", rs.getString("o.detailAddress"));
+				jsonObj.put("customerPhone",rs.getString("o.phone" ));
+				jsonObj.put("request", rs.getString("o.request"));
+				jsonObj.put("departureTime",rs.getTimestamp("d.departureTime").toString());
+				jsonObj.put("arrivalTime", rs.getTimestamp("d.arrivalTime").toString());
+				jsonObj.put("deliveryCheck", rs.getString("o.deliveryCheck"));
+				
+				array.add(jsonObj);
+			}
+			
+			}catch (Exception e) {
+				System.out.println("getDeliveryList inner error : " +e);
+			}finally {
+				resourceClose();
+			}
+		
+		return array;
+		
 	}
 }

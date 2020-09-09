@@ -261,7 +261,7 @@
 					</tr>
 					<tr>
 						<td>
-							<span id="orderMenu">${requestScope.menusList[i]}</span>
+							<span id="orderMenu">${requestScope.menusList2[i]}</span>
 						</td>
 					</tr>
 					<tr>

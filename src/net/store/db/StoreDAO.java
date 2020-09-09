@@ -469,7 +469,7 @@ public class StoreDAO {
 				storeBean.setDeliveryArea(rs.getString(13));
 				storeBean.setRegNo(rs.getString(14));
 				storeBean.setSido(rs.getString(15));
-				
+				storeBean.setReviewCount(rs.getString(16));
 				storeList.add(storeBean);
 			}
 		} catch (Exception e) {

@@ -614,27 +614,19 @@ public class OrderListDAO {
 	}
 
 	public void updateDeliveryCheck(String orderNo) {
-		
 		try {
 			con = getConnection();
 		
 			sql="update orderList set deliveryCheck = 'D' where orderNo =?";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, Integer.parseInt(orderNo));
-			pstmt.executeUpdate();
-		
 			
+			pstmt.executeUpdate();
 			}catch (Exception e) {
 				System.out.println("updateDeliveryCheck inner error : " +e);
 			}finally {
 				resourceClose();
 			}
-		
-		
-		
-		
-		
-		
 	}
 	
 }

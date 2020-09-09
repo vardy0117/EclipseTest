@@ -193,11 +193,8 @@ public class OrderAction {
 
 	public void updateDeliveryCheck(String orderNo) {
 		
-		
 		OrderListDAO oDAO = new OrderListDAO();
-		oDAO.updateDeliveryCheck(orderNo);
-		
-		
+		oDAO.updateDeliveryCheck(orderNo);		
 		
 	}
 

@@ -92,7 +92,6 @@
 	}
 </style>
 
-	<!-- 주문한 메뉴 review.jsp로 가져오기는 일단 보류 - 이태우 - --> 	
 	
 	
 <!-- ---------------------------------	평균 별점  --------------------------------------------->
@@ -210,9 +209,13 @@
 			<!-- 비동기방식으로 리뷰가 들어갈 자리 -->		
 		</div>
 		
-		<div class="moreTab" onclick="moreReview(${requestScope.storeNo})">
-			<a class="more">더보기</a>
-		</div>
+		<!-- 리뷰를 2개씩 보여주기때문에 더보기 버튼은 리뷰가 3개 이상일때만 보여준다 -->
+		<!-- 더보기 버튼 클릭했을때 남아있는 리뷰수와 전체 리뷰수를 비교해서 더보기 버튼을 지워줄지 판단하기위해서 매개변수로 전체 리뷰수 넘겨줌 -->
+		<c:if test="${requestScope.count>2 }">
+			<div class="moreTab" onclick="moreReview(${requestScope.storeNo},${requestScope.count })">
+				<a class="more">더보기</a>
+			</div>
+		</c:if>
 	</c:if>	
 	
 	
@@ -220,16 +223,15 @@
 
 	<script type="text/javascript">
 		var startNum = 0;
-		function moreReview(storeNo) {
+		function moreReview(storeNo,count) {
 			//2개씩 뿌려줄거다
 			
  			//var startNum = $("#table tr").length / 4;	// 현재 보여지는 게시글의 수 (기존) 2->4->6 이렇게 2씩 커져야함
  			//var startNum = $(".reviewT").length;	// 현재 보여지는 게시글의 수
  			//var startNum = $("#table table").length;	// 현재 보여지는 게시글의 수
  			startNum += 2;
- 			var storeNo = storeNo	// 가게고유번호
-
- 			console.log(startNum);
+ 			var storeNo = storeNo;	// 가게고유번호
+			var count = count; 		// 전체 리뷰 수
 			$.ajax({
 				type : "post",
 				async : false,
@@ -239,19 +241,16 @@
 				success : function(data,textStatus){
 					var jsonData = JSON.parse(data);
 					if(jsonData != null){
-						
 						var stars;
 						var unStars;
-						
-						
 						for(var i = 0; i<jsonData.length; i++){
 							
 							// 줄바꿈 처리
 							//var contents = jsonData[i].contents.replace('\n','<br>');	
-							var contents = jsonData[i].contents
+							var contents = jsonData[i].contents;
 							contents = contents.replace(/(?:\r\n|\r|\n)/g, '<br />');
 							
-							var comment = jsonData[i].comment
+							var comment = jsonData[i].comment;
 							comment = comment.replace(/(?:\r\n|\r|\n)/g, '<br />');
 							
 							// image가 null이 아닐때
@@ -331,24 +330,27 @@
 											 "<tr><td><div id='content'>"+contents+"</div></td></tr>"+
 											 "<tr><td><div id='comment'><i id='ceoNick'>사장님</i><br><div id='commentFont'>"+comment+"</div></div></td></tr></table>");
 								}
-								
-								
-								
 							}
+						
 						}
-						//if(jsonData.length<2){	// 남은 보여줄 개수가 2 미만일때 0,1
-						if(jsonData.length==0){
-							alert("남은 리뷰가 없습니다.");
+						
+						var showReview = $(".appendDiv table").length+2;	// 지금까지 보여진 리뷰 수
+						if(showReview==count){	// 총 리뷰수와 지금까지 보여준 리뷰수가 같으면 [더보기]탭 제거
 							$("div").remove(".moreTab");
 						}
+						
 					}						
 				}
 				,error:function(data,textStatus){
 					alert("moreReview에러발생 : "+textStatus)
 				}
 				
-			});
-		}
+			});// moreReview ajax 끝
+		
+		}// moreReview 끝
+		
+		
+		
 	</script>
 </body>
 </html>

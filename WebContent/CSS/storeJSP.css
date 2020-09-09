@@ -327,3 +327,6 @@
 	#topMenu a,#topMenu li{
 		height: 46px;
 	} */
+	#count{
+		font-size: 0.8em;
+	}
