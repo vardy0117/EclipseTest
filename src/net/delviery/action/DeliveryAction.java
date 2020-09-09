@@ -17,7 +17,6 @@ public class DeliveryAction {
 
 	public void insertDelvieryInfo(DeliveryBean dbean) {
 		DeliveryDAO ddao = new DeliveryDAO();
-		
 		ddao.insertDelveryInfo(dbean);
 	}
 
@@ -38,5 +37,4 @@ public class DeliveryAction {
 		
 		return jobj;
 	}
-
 }

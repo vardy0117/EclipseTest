@@ -600,6 +600,7 @@ public class OrderListDAO {
 				dbean.setRoadAddress(rs.getString("roadAddress"));
 				dbean.setDetailAddress(rs.getString("detailAddress"));
 				dbean.setCustomerPhone(rs.getString("phone"));
+				dbean.setRequest(rs.getString("request"));
 			}
 			
 			}catch (Exception e) {

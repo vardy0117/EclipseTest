@@ -42,15 +42,11 @@ public class DeliveryDAO {
 		try {
 			con = getConnection();
 		
-			sql="insert into delivery(delivengersNo, storeNo, orderNo, roadAddress, detailAddress, customerPhone) value(?,?,?,?,?,?)";
+			sql="insert into delivery(delivengersNo, orderNo) value(?,?)";
 		
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, /*Integer.parseInt(dbean.getDelivengersNo())*/ 1);
-			pstmt.setInt(2, Integer.parseInt(dbean.getStoreNo()));
-			pstmt.setInt(3, Integer.parseInt(dbean.getOrderNo()));
-			pstmt.setString(4, dbean.getRoadAddress());
-			pstmt.setString(5, dbean.getDetailAddress());
-			pstmt.setString(6, dbean.getCustomerPhone());
+			pstmt.setInt(1, Integer.parseInt(dbean.getDelivengersNo()));
+			pstmt.setInt(2, Integer.parseInt(dbean.getOrderNo()));
 			
 			pstmt.executeUpdate();
 

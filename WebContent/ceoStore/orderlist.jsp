@@ -45,10 +45,11 @@ div {
 	
 div.left {
 	float : left;
+	margin-right: 50px;
 }	
 
 div.right {
-	float : right;
+	margin-top : 20px;
 }
 </style>
 
@@ -194,11 +195,9 @@ function CancelOrder(orderNo){ // 주문 취소 처리 (배달도 같이 취소처리)
 		합계 : ${totalPrice } 원<br>
 		</div>
 		
-		<c:if test="${orderList.deliveryCheck eq 'F' && orderList.orderCheck eq 'T'}">
-			<div class="right">
-				 <div id="qrcode" onclick="location.href='InsertAndGetDeliveryInfo.do?orderNo=${param.orderNo}';"></div>
-			</div>
-		</c:if>
+		<div class="right">
+			<div id="qrcode" onclick="location.href='InsertAndGetDeliveryInfo.do?orderNo=${param.orderNo}';"></div>
+		</div>
 		
 		<div style="clear:both;"></div>
 		
@@ -258,7 +257,7 @@ function CancelOrder(orderNo){ // 주문 취소 처리 (배달도 같이 취소처리)
 </body>
 <script type="text/javascript">
     var qrcode = new QRCode(document.getElementById("qrcode"), {
-        text: "http://192.168.6.229/GitTest/InsertAndGetDeliveryInfo.do?orderNo=${param.orderNo}",
+        text: "http://192.168.6.229/GitTest/moveDeliveryIndex.do?orderNo=${param.orderNo}"/* "http://192.168.6.229/GitTest/InsertAndGetDeliveryInfo.do?orderNo=${param.orderNo}" */,
         width: 128,
         height: 128,
         colorDark : "#000000",

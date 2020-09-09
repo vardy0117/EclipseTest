@@ -1317,31 +1317,37 @@ public class FrontController extends HttpServlet {
 			
 		}
 		
-		if(command.equals("InsertAndGetDeliveryInfo.do")){//cancel버튼 클릭시
+		if(command.equals("MoveDeliveryIndex.do")){
+			forward=new ActionForward();
+			String orderNo = request.getParameter("orderNo");
+			
+			forward.setView("delvieryIndex.jsp?orderNo="+orderNo);
+			forward.execute(request, response);
+		}
+		
+		if(command.equals("InsertDeliveryInfo.do")){//cancel버튼 클릭시
 			forward=new ActionForward();
 			String delivengersNo = (String)session.getAttribute("delivengersNo");
+			String orderNo = request.getParameter("orderNo");
 			
-			/*if(delivengersNo == null ){
+			DeliveryAction dAction = new DeliveryAction();
+			
+			if(orderNo == null ){
 				PrintWriter out = response.getWriter();
-				out.print("<script>alert('delivenger 로그인을 하세요'); location.href='delivengerIndex.jsp' </script>");
-			} else {*/
 				
-				String orderNo = request.getParameter("orderNo");
-				
-				OrderAction action = new OrderAction();
+			} else {
+
 				DeliveryBean dbean = new DeliveryBean();
-				dbean = action.getOrderInfo(orderNo);
 				dbean.setDelivengersNo(delivengersNo);
+				dbean.setOrderNo(orderNo);
 				
-				DeliveryAction action2 = new DeliveryAction();
-				action2.insertDelvieryInfo(dbean);
+				dAction.insertDelvieryInfo(dbean);
 				
-				action.updateDeliveryCheck(orderNo);
-				//action2.getDeliveryInfo(request, response, dbean);
+				OrderAction oAction = new OrderAction();
+				oAction.updateDeliveryCheck(orderNo);
+				dAction.getDeliveryInfo(request, response, dbean);
 				
-				forward.setView("deliveryIndex.jsp?orderNo="+orderNo);
-				forward.execute(request, response);
-			/*}*/
+			}
 		}
 		
 		
