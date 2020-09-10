@@ -139,4 +139,25 @@ public class AdminDao {
 		
 	}
 	
+	
+	public int updateCeo(String ceoNo){
+		int result = 0;
+		try {
+			con = getConnection();
+			sql="update ceo set permission = 'T' where ceoNo = ?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, ceoNo);
+			System.out.println("update ceo no " + ceoNo );
+	
+			
+			result = pstmt.executeUpdate();
+			
+			System.out.println("update ceo result : " + result );
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			resourceClose();
+		}
+		return result;
+	}
 }
