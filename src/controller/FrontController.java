@@ -20,6 +20,7 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import action.ActionForward;
 import action.AjaxAction;
+import net.admin.action.AdminDao;
 import net.admin.action.adminAction;
 import net.adminlogin.action.AdminLoginAction;
 import net.ceo.action.CeoJoinAction;
@@ -952,6 +953,19 @@ public class FrontController extends HttpServlet {
 			forward.setView("index.jsp?center=member/myReview.jsp");
 			forward.execute(request, response);
 		}
+		
+		if(command.equals("MyCoupon.do")){
+			String customerNo = (String)session.getAttribute("customerNo");
+			
+			CouponDAO cDAO = new CouponDAO();
+			List<CouponBean> unUsedCouponList = cDAO.getCoupons(customerNo);
+			
+			request.setAttribute("unUsedCouponList", unUsedCouponList);
+			forward = new ActionForward();
+			forward.setView("index.jsp?center=member/myCoupon.jsp");
+			forward.execute(request, response);
+		}
+		
 	
 		//deleteMenu
 		if(command.equals("deleteMenu.do")){
@@ -1535,9 +1549,59 @@ public class FrontController extends HttpServlet {
 				PrintWriter out = response.getWriter();
 				out.print(jsonObj);
 				System.out.println(" admincustomerlist가져옴 : " + jsonObj);
+
+			}	
+			
+			/******************************************************************************/		
+			
+			if(command.equals("ceopermission.do")) {
+				AdminDao dao = new AdminDao();
+				
+				String ceoNo = (String) request.getParameter("ceoNo");
+				
+				 int result = dao.updateCeo(ceoNo);
+
+				 response.setContentType("text/html; charset=UTF-8");
+				 PrintWriter out = response.getWriter();
+				 
+				if(result==1){
+					// out.print("<script>alert('ceo권한 수정이 완료 되었습니다.'); </script>");
+					out.print(result);
+
+				}else{
+					// out.print("<script>alert('ceo권한수정에 실패하였습니다.'); </script>");
+					out.print(result);
+				}
+			
+				System.out.println("ceopermission 호출 :  " + result);
+			}	
+	/******************************************************************************/		
+
 			}					
 
 		
+
+		if(command.equals("CheckAjax.do")){
+			
+			int orderNo = Integer.parseInt(request.getParameter("orderNo"));
+			
+			OrderListDAO orderListDAO = new OrderListDAO();
+			OrderListBean orderListBean = orderListDAO.getOrderList(orderNo);
+			
+			JSONObject jsonObj = new JSONObject();
+			jsonObj.put("orderCheck", orderListBean.getOrderCheck());
+			jsonObj.put("deliveryCheck", orderListBean.getDeliveryCheck());
+			
+			if(orderListBean.getDeliveryCheck().equals("A")) {
+				orderListDAO.setTwhereA(orderNo);
+			}
+			
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			//System.out.println(jsonObj.toJSONString());
+			out.print(jsonObj.toJSONString());
+    }
+
 		if(command.equals("deleveryTrue.do")){
 			DeliveryAction action = new DeliveryAction();
 			action.updateArrivalTime(request,response);
@@ -1552,6 +1616,7 @@ public class FrontController extends HttpServlet {
 			forward= new ActionForward();
 			forward.setView("MoveDeliveryIndex.do?orderNo=0");
 			forward.execute(request, response);
+
 		}
 
 	if(command.equals("AdminLoginAction.do")){
@@ -1564,6 +1629,7 @@ public class FrontController extends HttpServlet {
 				 forward.setRedirect(true);
 				 forward.setView("admin.jsp"); 
 	
+
 			 } else {
 				 response.setContentType("text/html;charset=UTF-8"); 
 				 PrintWriter out = response.getWriter();
@@ -1585,6 +1651,7 @@ public class FrontController extends HttpServlet {
 		
 		
 	}
+
 
 	}
 				

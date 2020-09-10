@@ -76,9 +76,40 @@ table {
 
 
 
-function Finish(test) {
-	alert("공사중입니다 전달받은 ceo번호 : " + test);
-	// ajax로 다시 보내기
+function Finish(ceoNo) {
+
+	alert("권한 허가 요청 ceoNo : " + ceoNo);
+	$.ajax({
+		type : "get",
+		async : true,
+		url : "./ceopermission.do",
+		data: {ceoNo:ceoNo},
+		success : function(data, textStatus) {
+			console.log("ceoNo : " + ceoNo );
+			
+			if(data == 1){
+				alert("변경되었습니다");
+				 $("tr#storelist"+ceoNo).text("T");
+	
+
+				return;
+			} else {
+				$("#storelist_").text("F");
+				alert("실패");
+
+				return;
+			}
+			
+		},
+		error : function(data, textStatus) {
+			alert("Ajax 통신 Error : " + textStatus);
+			
+		}
+
+	
+		
+
+	});
 }
 
 $(document).ready(function(){
@@ -97,7 +128,7 @@ $(document).ready(function(){
 
 					  	   for (var i = 0; i <obj.adminstorelist.length; i++) {  
 					  		  
-							tag += '<tr id="storelist">'
+							tag += '<tr id="storelist_' + obj.adminstorelist[i]['storeNo'] + '">'
 							tag += '<th>' + obj.adminstorelist[i]["storeNo"] +'</th>' 
 							tag += '<th>' + obj.adminstorelist[i]["storeName"] +'</th>'
 							tag += '<th>' + obj.adminstorelist[i]["ceoNo"] +'</th>'
@@ -105,7 +136,11 @@ $(document).ready(function(){
 							tag += '<th>' + obj.adminstorelist[i]["permission"] +'</th>'
 		
 	
-							tag += '<td><button type="button" onclick=Finish('+obj.adminstorelist[i]["storeNo"] + '); >완료처리</button></td>';
+							
+							tag += '<td><button type="button" onclick=Finish('+obj.adminstorelist[i]["ceoNo"] + '); >완료처리</button></td>';
+							// document.querySelector("tr#storelist_"+132).querySelectorAll("th")[4].innerText="T";
+							
+							
 							
 							'</tr>'
 						 }  

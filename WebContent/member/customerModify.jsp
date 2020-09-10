@@ -46,11 +46,12 @@
 	}
 	.btn {
 		width: 25px;
-		background: linear-gradient(
+		/* background: linear-gradient(
 			to right, 
 			hsl(98 100% 62%), 
 			hsl(204 100% 59%)
-		);
+		); */
+		background-color:#19ce60;
 		font-family: Binggrae-Bold;
 		font-size: 1rem;
 		color: white;
@@ -110,7 +111,7 @@
 
 	<div id="mainDiv">
 		<div id="formDiv">
-			<h1 style="text-align: center;">회원 정보 수정</h1>
+			<h1 style="text-align: center;">회원정보 수정</h1>
 			<form action="./CustomerModifyAction.do" id="modify" method="post" name="fr">
 				<table>
 					<tr>

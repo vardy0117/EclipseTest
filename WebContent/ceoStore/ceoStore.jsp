@@ -235,31 +235,44 @@
 		     		  }
 		         }
 		   	});
-			
-			$.ajax({
-		         async : false,
-		         url : "deliveryFinCheck.do?storeNo="+storeNo,
-		         success : function(data){
-		        	 if(data!=""){
-			        	 var obj = JSON.parse(data);		        	 
-		        	 	if(obj.list.length!=0){
-		        	 		$.ajax({
-				     			async : false,
-				     			url : "deliveryFinish.do?orderNo="+orderNo,		
-								success : function (){				     		  
-				        	 		for(var i=0; i<obj.list.length; i++){
-					     			  var audio = new Audio();
-					     			  audio.src="./media/delivery_Voice.mp3";
-					     			  console.log(audio);
-					     			  audio.play();
-				        	 		} 
-				        	 	}	  
-		        	 		});
-		        	 	}		
-		         
-		        	 }
-		         }	 
-		   	});
+			var trList = document.getElementById("orderDiv").querySelectorAll("tbody tr");
+			for(let i=0; i<trList.length; i++) {
+				let id = trList[i].id;
+				let checkOrderNo = id.substr(id.indexOf("_")+1);
+				$.ajax({
+					url : "CheckAjax.do",
+					data : {"orderNo" : checkOrderNo},
+					dataType : "json",
+					success : function(jsonData) {
+						let thList = document.getElementById(id).querySelectorAll('th');
+						if(jsonData.orderCheck == 'F') {
+							thList[1].innerHTML = '<span style="color:green;">주문 확인중</span>';
+						} else if(jsonData.orderCheck == 'T') {
+							thList[1].innerHTML = '<span style="color:red;">수락</span>';
+						} else if(jsonData.orderCheck == 'N') {
+							thList[1].innerHTML = '<span style="color:orange;">주문 취소 처리됨</span>';
+						}
+						
+						if(jsonData.orderCheck == 'F') {
+							thList[3].innerHTML = '<span style="color:green;">주문 확인중</span>';
+						} else if(jsonData.orderCheck == 'T' && jsonData.deliveryCheck == 'F') {
+							thList[3].innerHTML = '<span style="color:blue;">배달 준비 중</span>';
+						} else if(jsonData.orderCheck == 'T' && jsonData.deliveryCheck == 'D') {
+							thList[3].innerHTML = '<span style="color:blue;">배달 중</span>';
+						} else if(jsonData.orderCheck == 'T' && jsonData.deliveryCheck == 'T') {
+							thList[3].innerHTML = '<span style="color:red;">배달 완료</span>';
+						} else if(jsonData.orderCheck == 'T' && jsonData.deliveryCheck == 'A') {
+							thList[3].innerHTML = '<span style="color:red;">배달 완료</span>';
+							var audio = new Audio();
+			     			audio.src="./media/delivery_Voice.mp3";
+							audio.play();
+							console.log(audio);
+						} else if(jsonData.orderCheck == 'N') {
+							thList[3].innerHTML = '<span style="color:orange;">배달 취소 처리됨</span>';
+						}
+					},
+				});
+			}
 		}, 3000);	
 	}
 	
@@ -505,7 +518,7 @@
 				</thead>
 
 			<c:forEach items="${orderList}" var="order">
-				<tr onclick="location.href='ceoOrder.do?orderNo=${order.orderNo}'">
+				<tr id="orderListTr_${order.orderNo}" onclick="location.href='ceoOrder.do?orderNo=${order.orderNo}'">
 					<th>${order.orderNo }</th>
 					<th>
 						<c:if test="${order.orderCheck eq 'F'}">
