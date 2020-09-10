@@ -27,7 +27,7 @@
 		box-sizing: border-box;
 	}
 	
-		#mainDiv {
+	#mainDiv {
 		width: 1000px;
 		min-height: 600px;
 		margin: 0 auto;
@@ -35,21 +35,25 @@
 		position: relative;
 		padding-top: 30px;
 	}
-	#mainDiv li{
-		list-style: none;
-		float: left;
-		border: 1px solid blue;
-		margin-right: 50px;
-	}
 	
 	#storeBox {
 		float: left;
-		width: 49%;
-		border: 1px solid #d9d9d9;
-		border-radius: 12px;
+		width: 31.33%;
 		/* cursor: pointer; */
 		margin-right: 10px;
+		margin-left: 10px;
 		margin-bottom: 10px;
+	}
+	#storeBox table {
+		border: 1px solid #d9d9d9;
+		width: 100%;
+	}
+	#storeBox th {
+		padding-left: 5px;
+		padding-right: 5px;
+		background: #19ce60;
+		width: 30%;
+		color: white;
 	}
 	
 	#storeBox td {
@@ -57,7 +61,7 @@
 	}
 	
 	
-		.display-none {
+	.display-none {
 		display: none;
 	}
 	
@@ -67,7 +71,13 @@
 		    clear:both;
 	}
 	a{
-	cursor: pointer;
+		cursor: pointer;
+		text-decoration: none;
+		color: black;
+	}
+	a:hover {
+		text-decoration: underline;
+		color: gray;
 	}
 	
 	
@@ -79,45 +89,49 @@
 	<div id="mainDiv">
 		<c:set var="length" value="${fn:length(orderlist) }" />
 		<%-- <font color="black" size="5"> 고객번호 : ${customerNo} <br> --%>
-		<font color="black" size="5"> ${nickname}님의 주문내역 입니다
+		<h2 style="text-align: center; border-bottom: 1px solid #d9d9d9;padding-bottom: 20px;">${nickname}님의 주문내역 입니다</h2>
 		
-		</font> <br> <br>
+		<br> <br>
 		
 
 	<c:forEach var="orderlist" items="${orderlist}"
 			varStatus="status">
-			<div id="storeBox">	
-				<table>
-					<tr>
-						<td>	
-							<a href="
-							<c:url value="OrderRealDetail.do" >         
-			  				<c:param name="orderNo" value="${orderlist.orderNo }"> </c:param>
-				  			</c:url>">				  
-				  				 주문번호 : ${orderlist.orderNo} <br>
-								 주문했던 가게이름 : ${orderlist.name} <br>
-								<%-- 가게이름 : ${orderlist.name} <br> --%>
+			<div id="storeBox">
+				<a href="
+				<c:url value="OrderRealDetail.do" >         
+	 				<c:param name="orderNo" value="${orderlist.orderNo }"> </c:param>
+	  			</c:url>">	
+					<table>
+						<tr>
+							<th>주문번호</th>
+							<td>${orderlist.orderNo }</td>
+						</tr>
+						<tr>
+							<th>가게명</th>
+							<td>${orderlist.name }</td>
+						</tr>
+						<tr>
+							<th>주문상태</th>
+							<td>
 								<c:choose>
 								<c:when test="${orderlist.orderCheck eq 'F'}">
-										상태 : 주문 확인 중!
+										<span style="color:green;">주문 확인 중!</span>
 								</c:when>	
 								<c:when test="${orderlist.orderCheck eq 'N'}">
-										상태 : 주문 취소!
+										<span style="color:red;">주문 취소!</span>
 								</c:when>
 								<c:when test="${orderlist.orderCheck eq 'T' && orderlist.deliveryCheck eq 'T'}">
-										상태 : 배달 완료!
+										<span style="color:orange;">배달 완료!</span>
 								</c:when>	
 								<c:when test="${orderlist.orderCheck eq 'T' && orderlist.deliveryCheck eq 'F'}">
-										상태 : 배달 중!
+										<span style="color:blue;">배달 중!</span>
 								</c:when>
 								
 								</c:choose>	
-								<br>
-							</a>													
-						</td>					
-					</tr>
-				</table>
-			
+							</td>
+						</tr>
+					</table>
+				</a>
 			</div>	
 	</c:forEach>
 	
