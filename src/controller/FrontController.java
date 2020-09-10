@@ -1536,8 +1536,25 @@ public class FrontController extends HttpServlet {
 			}					
 
 		
-		if(command.equals("deliveryFinCheck.do")){
+		if(command.equals("CheckAjax.do")){
 			
+			int orderNo = Integer.parseInt(request.getParameter("orderNo"));
+			
+			OrderListDAO orderListDAO = new OrderListDAO();
+			OrderListBean orderListBean = orderListDAO.getOrderList(orderNo);
+			
+			JSONObject jsonObj = new JSONObject();
+			jsonObj.put("orderCheck", orderListBean.getOrderCheck());
+			jsonObj.put("deliveryCheck", orderListBean.getDeliveryCheck());
+			
+			if(orderListBean.getDeliveryCheck().equals("A")) {
+				orderListDAO.setTwhereA(orderNo);
+			}
+			
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			//System.out.println(jsonObj.toJSONString());
+			out.print(jsonObj.toJSONString());
 		}
 
 	

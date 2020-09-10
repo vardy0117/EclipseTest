@@ -650,6 +650,22 @@ public class OrderListDAO {
 		}
 		return result;
 	}
+
+	public void setTwhereA(int orderNo) {
+		
+		try {
+			con = getConnection();
+			sql = "update orderList set deliveryCheck = 'T' where orderNo = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, orderNo);
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			resourceClose();
+		}
+		
+	}
 	
 	
 }
