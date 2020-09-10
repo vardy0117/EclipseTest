@@ -44,11 +44,19 @@ public class OrderAction {
 		oBean.setPayment((String) deliveryInfo.get("payment"));
 		oBean.setRequest((String) deliveryInfo.get("request"));
 		oBean.setCouponNo((String) deliveryInfo.get("couponNo"));
+		
+		String storeNo = request.getParameter("storeNo");
 	
+		System.out.println("orderAction 구매한 가게 번호 : " + storeNo );
 		
 		OrderListDAO odao = new OrderListDAO();
 		int orderNo = odao.insertOrderList(oBean);
-		
+		if (orderNo != 0) {
+			System.out.println("주문 번호 : " + orderNo);
+			odao.UpdateOrderCount(storeNo);
+		}else{
+			System.out.println("insertOrderList메서드로 부터 insert제대로 안됨 결과 : " + orderNo);
+		}
 		
 		if(Integer.parseInt(oBean.getCouponNo())!=-1){
 			CouponDAO cdao = new CouponDAO();

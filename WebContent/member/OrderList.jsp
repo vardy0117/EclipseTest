@@ -126,7 +126,7 @@
 			
 		
 		<c:if test="${length eq 0 }">
-			<font color="black" size="10"> 당신의 주문이 존재하지 않습니다 ^^ <br>주문하러 가시겠어요? <br><br>
+			<font color="black" size="10"> 고객님의 주문이 존재하지 않습니다 ^^ <br>주문하러 가시겠어요? <br><br>
 <!-- 			 <a href="./SearchStore.do">클릭</a> -->
 			</font>
 		</c:if>

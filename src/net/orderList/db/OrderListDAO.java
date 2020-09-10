@@ -12,6 +12,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import net.customer.db.CustomerBean;
 import net.delivery.db.DeliveryBean;
 import net.store.db.StoreBean;
 
@@ -150,7 +151,7 @@ public class OrderListDAO {
 		 
 		sql = "select  a.orderNo, a.customerNo, a.storeNo, a.orderCheck, a.deliveryCheck, "
 				+ "b.name 'storeName' from orderList a, store b where a.storeNo = "
-				+ "b.storeNo and a.customerNo = ? ";
+				+ "b.storeNo and a.customerNo = ? order by a.orderTime desc";
 				/*+ "and a.customerNo =  "
 				+ "(select customerNo from customer where customerNo = ?)";*/
 		
@@ -628,5 +629,27 @@ public class OrderListDAO {
 				resourceClose();
 			}
 	}
+	
+	
+	
+	
+	public int UpdateOrderCount(String storeNo){ // 주문시 해당 가게에 주문횟수 증가
+		int result = 0;
+		try {
+			con = getConnection();
+			sql="update store set orderCount = orderCount + 1 where storeNo = ?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, Integer.parseInt(storeNo));
+	
+			result = pstmt.executeUpdate();
+			System.out.println("가게 주문횟수 증가 성공 : " + result);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			resourceClose();
+		}
+		return result;
+	}
+	
 	
 }

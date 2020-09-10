@@ -10,8 +10,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="CSS/ceoStoreJSP.css">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <style>
 	div {
 		box-sizing: border-box;
@@ -233,8 +235,32 @@
 		     		  }
 		         }
 		   	});
-		}	
-		, 5000);	
+			
+			$.ajax({
+		         async : false,
+		         url : "deliveryFinCheck.do?storeNo="+storeNo,
+		         success : function(data){
+		        	 if(data!=""){
+			        	 var obj = JSON.parse(data);		        	 
+		        	 	if(obj.list.length!=0){
+		        	 		$.ajax({
+				     			async : false,
+				     			url : "deliveryFinish.do?orderNo="+orderNo,		
+								success : function (){				     		  
+				        	 		for(var i=0; i<obj.list.length; i++){
+					     			  var audio = new Audio();
+					     			  audio.src="./media/delivery_Voice.mp3";
+					     			  console.log(audio);
+					     			  audio.play();
+				        	 		} 
+				        	 	}	  
+		        	 		});
+		        	 	}		
+		         
+		        	 }
+		         }	 
+		   	});
+		}, 3000);	
 	}
 	
 </script>
@@ -494,16 +520,22 @@
 					</th>
 					<th><fmt:formatDate value="${order.orderTime }" type="both" pattern="yyyy년 MM월 dd일 hh:mm "/></th>
 					<th>
-						<c:if test="${order.orderCheck eq 'F' and order.deliveryCheck eq 'F'}">
+						<c:if test="${order.orderCheck eq 'F'}">
 							<span style="color:green;">주문 확인중</span>
 						</c:if>
 						<c:if test="${order.orderCheck eq 'T' and order.deliveryCheck eq 'F'}">
+							<span style="color:blue;">배달 준비 중</span>
+						</c:if>
+						<c:if test="${order.orderCheck eq 'T' and order.deliveryCheck eq 'D'}">
 							<span style="color:blue;">배달 중</span>
 						</c:if>
 						<c:if test="${order.orderCheck eq 'T' and order.deliveryCheck eq 'T'}">
 							<span style="color:red;">배달 완료</span>
 						</c:if>
-						<c:if test="${order.orderCheck eq 'N' and order.deliveryCheck eq 'N'}">
+						<c:if test="${order.orderCheck eq 'T' and order.deliveryCheck eq 'A'}">
+							<span style="color:red;">배달 완료</span>
+						</c:if>
+						<c:if test="${order.orderCheck eq 'N'}">
 							<span style="color:orange;">배달 취소 처리됨</span>
 						</c:if>
 					</th>
