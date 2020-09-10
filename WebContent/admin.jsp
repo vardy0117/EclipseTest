@@ -29,13 +29,21 @@
 </style>
 </head>
 <body>
-	<c:set  var="center" value="${param.center}"/>
-	<c:if test="${center==null}">
-		<c:set var="center" value="/main/adminMain.jsp" />
-	</c:if>
-	<jsp:include page="/inc/top.jsp"/>
-	<jsp:include page="${center }"/>
+	<jsp:include page="/inc/adminTop.jsp"/>
+	<c:choose>
+	<c:when test="${empty sessionScope.adminNo}">
+		
+	</c:when>
+	<c:when test="${!empty sessionScope.adminNo}">
+		<c:set  var="center" value="${param.center}"/>
+		
+		<c:if test="${center==null}">
+			<c:set var="center" value="/main/adminMain.jsp" />
+		</c:if>
+		
+		<jsp:include page="${center }"/>
+	</c:when>
+	</c:choose>
 	<jsp:include page="/inc/bottom.jsp"></jsp:include>
-	
 </body>
 </html>
