@@ -1386,7 +1386,7 @@ public class FrontController extends HttpServlet {
 				String list="";
 				DeliveryAction dAction = new DeliveryAction();
 				
-				if(orderNo == null || orderNo.equals("")){
+				if(orderNo == null || orderNo.equals("") || orderNo == ("0")){
 					
 					list = dAction.getDeliveryList(request, response, delivengersNo);	
 					
@@ -1394,6 +1394,7 @@ public class FrontController extends HttpServlet {
 					out.print(list);
 				
 				} else {
+					
 					int result=0;
 					DeliveryBean dbean = new DeliveryBean();
 					dbean.setDelivengersNo(delivengersNo);
@@ -1536,6 +1537,7 @@ public class FrontController extends HttpServlet {
 			}					
 
 		
+
 		if(command.equals("CheckAjax.do")){
 			
 			int orderNo = Integer.parseInt(request.getParameter("orderNo"));
@@ -1555,6 +1557,23 @@ public class FrontController extends HttpServlet {
 			PrintWriter out = response.getWriter();
 			//System.out.println(jsonObj.toJSONString());
 			out.print(jsonObj.toJSONString());
+    }
+
+		if(command.equals("deleveryTrue.do")){
+			DeliveryAction action = new DeliveryAction();
+			action.updateArrivalTime(request,response);
+			
+			OrderAction oaction = new OrderAction();
+			oaction.updateDeliveryCheckA(request,response);
+			
+			/*PrintWriter out = response.getWriter();
+			out.print("<script> alert('배달 완료!!') </script>");
+			*/
+			
+			forward= new ActionForward();
+			forward.setView("MoveDeliveryIndex.do?orderNo=0");
+			forward.execute(request, response);
+
 		}
 
 	

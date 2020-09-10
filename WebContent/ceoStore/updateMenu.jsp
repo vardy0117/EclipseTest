@@ -115,7 +115,7 @@
 							<input type="hidden" value="${menuBean.menuNo }" name="menuNo">
 							<input type="hidden" value="false" id="imageflag" name="imageflag">
 							<input type="hidden" value="${menuBean.image }" name="before_image">
-							
+							 
 							<!--  onclick="setParentText()"> -->
 						</th>
 					</tr>
