@@ -22,6 +22,7 @@ import action.ActionForward;
 import action.AjaxAction;
 import net.admin.action.AdminDao;
 import net.admin.action.adminAction;
+import net.adminlogin.action.AdminLoginAction;
 import net.ceo.action.CeoJoinAction;
 import net.ceo.action.CeoLoginAction;
 import net.ceo.action.CeoLogoutAction;
@@ -1576,10 +1577,6 @@ public class FrontController extends HttpServlet {
 			}	
 	/******************************************************************************/		
 
-							
-
-		
-
 		if(command.equals("CheckAjax.do")){
 			
 			int orderNo = Integer.parseInt(request.getParameter("orderNo"));
@@ -1618,7 +1615,39 @@ public class FrontController extends HttpServlet {
 
 		}
 
+	if(command.equals("AdminLoginAction.do")){
+		
+		AdminLoginAction action = new AdminLoginAction();
+		try {
+			 forward = new ActionForward();
+			int result = action.execute(request, response);
+			 if(result==1){
+				 forward.setRedirect(true);
+				 forward.setView("admin.jsp"); 
 	
+
+			 } else {
+				 response.setContentType("text/html;charset=UTF-8"); 
+				 PrintWriter out = response.getWriter();
+								
+				 out.println("<script>"); 
+				 out.println("alert('사업자 로그인에 실패하셨습니다. \\n 아이디와 비밀번호 확인 후 다시 로그인해주세요.');"); 
+				  out.println("history.back();"); 
+				 out.println("</script>");
+			 }
+
+			forward.execute(request, response);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+		
+	}
+
 
 	}
 				
