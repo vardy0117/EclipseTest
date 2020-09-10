@@ -13,6 +13,7 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 <script type="text/javascript">
+
 	var orderNo = "${param.orderNo}";
 	var tag = "";
 		$.ajax({
@@ -35,8 +36,8 @@
 									+ '</td>'
 
 							if (obj.list[i]["deliveryCheck"] == 'D') {
-								tag += '<td><button type="button" onclick="deliveryFinish();">배달 완료 확인!</button></td>';
-							} else if (obj.list[i]["deliveryCheck"] == 'T') {
+								tag += '<td><button type="button" onclick="deliveryFinish('+obj.list[i]["orderNo"]+');">배달 완료 확인!</button></td>';
+							} else if (obj.list[i]["deliveryCheck"] == 'T' || obj.list[i]["deliveryCheck"] == 'A') {
 								tag += '<td>' + obj.list[i]["departureTime"]
 										+ '</td>';
 							}
@@ -50,6 +51,13 @@
 				}
 
 			});//ajax 끝 */
+			
+			function deliveryFinish(orderNo){
+				
+				if(confirm(orderNo+"번  배달완료 하시겠습니까?")==true){
+				location.href='deleveryTrue.do?orderNo='+orderNo;
+				}
+			}
 
 	function mo_chk() {
 

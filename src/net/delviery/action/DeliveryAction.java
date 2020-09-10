@@ -49,4 +49,10 @@ public class DeliveryAction {
 		return list;
 		
 	}
+
+	public void updateArrivalTime(HttpServletRequest request, HttpServletResponse response) {
+		String orderNo= request.getParameter("orderNo");
+		DeliveryDAO ddao= new DeliveryDAO();
+		ddao.updateArrivalTime(orderNo);
+	}
 }
