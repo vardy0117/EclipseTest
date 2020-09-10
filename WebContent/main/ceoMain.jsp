@@ -60,7 +60,7 @@
 </style>
 </head>
 <body>
-${sessionScope.permission}
+
 	<c:choose>
 	<c:when test="${sessionScope.permission eq 'T' }">
 		<div id="mainDiv">
