@@ -16,11 +16,12 @@
 		left: 0;
 		right: 0;
 		z-index: 1000;
-		background: linear-gradient(
+		/* background: linear-gradient(
 			to right, 
 			hsl(98 100% 62%), 
 			hsl(204 100% 59%)
-		);
+		); */
+		background-color: #19ce60;
 		
 	}
 	#topDiv #logo {
