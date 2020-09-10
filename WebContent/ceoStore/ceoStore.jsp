@@ -13,6 +13,177 @@
 <link rel="stylesheet" href="CSS/ceoStoreJSP.css">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<style>
+	div {
+		box-sizing: border-box;
+	}
+	#mainDiv {
+		width: 1000px;
+		min-height: 600px;
+		margin: 0 auto;
+		margin-top: 90px;
+		position: relative;
+	}
+	#navDiv {
+		width: 100%;
+		height: 80px;
+		border-radius: 12px;
+    	border: 2px solid #0000009c;
+	}
+	#navDiv > div {
+		width: 33.3333333%;
+		height: 100%;
+		float: left;
+		text-align: center;
+		font-size: 1.5rem;
+		line-height: 80px;
+		cursor: pointer;
+		background-color: #80808021;
+		border-left: 1px solid #0000009c;
+		border-right: 1px solid #0000009c;
+	}
+	.btn-on {
+		background-color: #80808054;
+	}
+	#navDiv > div:hover {
+		background-color: #80808054;
+	}
+	.contentDiv {
+		width:100%;
+		display: none;
+		padding: 50px;
+	}
+	.contentDiv table {
+		margin: 10px auto;
+		border: 2px solid #c7c7c7;
+		border-radius: 15px;
+		box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+		padding: 20px;
+	}
+	.contentDiv table img {
+		border-radius: 12px;
+	}
+	.display-on {
+		display: block;
+	}
+	#updateBtn {
+		background: url("images/setting_black.svg") no-repeat;
+		background-size: 32px;
+		width: 35px;
+		height: 35px;
+		cursor: pointer;
+		border: none;
+	}
+	#updateBtn:hover {
+		background: url("images/setting_gray.svg") no-repeat;
+		background-size: 32px;
+	}
+	#deleteBtn {
+		background: url("images/delete_black.svg") no-repeat;
+		background-size: 32px;
+		width: 35px;
+		height: 35px;
+		cursor: pointer;
+		border: none;
+	}
+	#deleteBtn:hover {
+		background: url("images/delete_gray.svg") no-repeat;
+		background-size: 32px;
+	}
+	#addBtn {
+		background: url("images/addBtn.svg") no-repeat;
+		background-size: 32px;
+		width: 35px;
+		height: 35px;
+		cursor: pointer;
+		border: none;
+	}	
+	#orderDiv table th {
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+	
+	#orderDiv table thead th {
+	    background-color: #80808069;
+	}
+	#orderDiv table tbody th:hover {
+		background: #8080801c;
+		cursor:pointer;
+	}
+	
+	.commentOk textArea{
+		margin-left: 10px;
+		border: 0px;
+		background-color: lightGray;	
+	}
+	.commentNo textArea{
+	
+	}
+	#reviewTable {
+		width: 700px;
+	}
+	#reviewTable textarea {
+	    width: 610px;
+	    height: 130px;
+	    resize: none;
+	    border: 2px black solid;
+	    border-radius: 12px;
+	    padding-left: 10px;
+	    padding-top: 5px;
+	    font-family: 'Binggrae-Bold';
+	    font-size: 1rem;
+	    outline: none;
+	    margin-left: 20px;
+	    margin-bottom: 10px;
+	}
+	#reviewTable input[type='button'] {
+		background: black;
+	    font-family: Binggrae-Bold;
+	    font-size: 1rem;
+	    color: white;
+	    border: none;
+	    border-radius: 12px;
+	    width: 150px;
+	    height: 35px;
+	    transition-duration: 1s;
+	    opacity: 0.7;
+	    cursor: pointer;
+	}
+	#reviewTable input[type='button']:hover {
+		opacity: 1;
+	}
+	textarea.commentOk {
+		background: #e2e2e2;
+		cursor: default;
+		border: 0px !important;
+	}
+	#star{
+		color: #ffa400;
+		margin-left: 40px;
+	}
+	#customerName{
+		color: #ffa400;
+	}
+	
+	#ceoReviewPageNo{
+		text-decoration: none;
+		font-size: 30px;
+		color: black;
+		margin-right: 5px;
+		text-align: center;
+	}
+	#ceoReviewPageNo:HOVER{
+		text-decoration: underline;
+	}
+	#page{
+		text-align: center;
+	}
+	#orderMenu{
+		font-size: 12px;
+		color: #d1bca4;
+	}
+</style>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
 
@@ -25,7 +196,7 @@
 	     		  if(count != 0){
 	     			  var audio = new Audio();
 	     			  audio.src="./media/order_Voice.mp3";
-	     			  console.log(audio);
+	     			  //console.log(audio);
 	     			  audio.play();
 	     			  $(".uncheckedOrders").html('<img src="./images/ICON/icons8-meal-50 (3).png">');
 	     			
@@ -55,7 +226,7 @@
 		     		  if(count != 0){
 		     			  var audio = new Audio();
 		     			  audio.src="./media/order_Voice.mp3";
-		     			  console.log(audio);
+		     			  //console.log(audio);
 		     			  audio.play();
 		     			  $(".uncheckedOrders").html('<img src="./images/ICON/icons8-meal-50 (3).png">');
 		     			
@@ -97,9 +268,9 @@
 <body>
 	<div id="mainDiv">
 		<div id="navDiv">
-			<div onclick="showDiv('menuDiv',this);">메뉴관리</div>
+			<div onclick="showDiv('menuDiv',this);" style="border-left: 0px;">메뉴관리</div>
 			<div onclick="showDiv('reviewDiv',this);">리뷰관리</div>
-			<div onclick="showDiv('orderDiv',this);">주문내역<span class="uncheckedOrders" style="vertical-align: middle;"></span></div>
+			<div onclick="showDiv('orderDiv',this);" style="border-right: 0px;">주문내역<span class="uncheckedOrders" style="vertical-align: middle;"></span></div>
 		</div>
 		
 		<div class="contentDiv display-on" id="menuDiv">
@@ -283,7 +454,7 @@
 						<td colspan="2">${fn:replace(review.contents, newLineChar, "<br/>")}</td>
 					</tr>
 					<tr>
-						<td colspan="2">
+						<td colspan="2" style="text-align: center;">
 							<c:choose>
 								<c:when test="${review.comment eq null }">
 									<textarea id="commentArea_${review.reviewNo}"></textarea>
@@ -413,7 +584,7 @@
 					alert("댓글등록완료");
 					document.getElementById("commentArea_"+reviewNo).classList.add("commentOk");
 					$("#commentArea_"+reviewNo).parent('td').children('input').remove();
-					var elements = '<input type="button" value="댓글삭제" onclick="deleteComment(' + reviewNo + ')"><input type="button" value="댓글수정" onclick="updateComment(' + reviewNo + ')">';
+					var elements = '<input type="button" value="댓글삭제" onclick="deleteComment(' + reviewNo + ')"> <input type="button" value="댓글수정" onclick="updateComment(' + reviewNo + ')">';
 					$("#commentArea_"+reviewNo).parent('td').append(elements);
 					$("#commentArea_"+reviewNo).html(comment);
 					$("#commentArea_"+reviewNo).attr("readonly",true);

@@ -20,16 +20,18 @@
 
 <style>
 	.reviewT{
-		border: 1px solid gray;
+		border-bottom: 1px solid #d9d9d9;
 		padding: 0;
 		margin: 0 auto;
 		width: 100%;
+		padding-bottom: 15px;
 	}
 	.appendT{
-		border: 1px solid gray;
+		border-bottom: 1px solid #d9d9d9;
 		padding: 0;
 		margin: 0 auto;
 		width: 100%;
+		padding-bottom: 15px;
 	}
 	#content{
 		font-size: 1em;
@@ -76,6 +78,8 @@
 		border-radius: 20px;
 		padding-left: 1em;
 		padding-top: 1em;
+		width: 90%;
+		margin: 5px auto;
 	}
 	#ceoNick{
 		font-size: 20px;
@@ -251,7 +255,9 @@
 							contents = contents.replace(/(?:\r\n|\r|\n)/g, '<br />');
 							
 							var comment = jsonData[i].comment;
-							comment = comment.replace(/(?:\r\n|\r|\n)/g, '<br />');
+							if(comment != null) {
+								comment = comment.replace(/(?:\r\n|\r|\n)/g, '<br />');
+							}
 							
 							// image가 null이 아닐때
 							if(jsonData[i].image != null){
