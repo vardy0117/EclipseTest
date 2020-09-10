@@ -48,40 +48,16 @@
 </head>
 <body>
 	<div id="topDiv">
-		<h2 id="logo"><a href="./ceoIndex.jsp">Delivengers 사장님 페이지</a></h2>
+		<h2 id="logo"><a href="./ceoIndex.jsp">Delivengers 운영자 페이지</a></h2>
 		
-		<c:choose>
-			<c:when test="${empty sessionScope.ceoNo}">
-				<div id="formDiv">
-					<h1 style="text-align: center;">운영자 로그인</h1>
-					<form action="./adminLoginAction.do" method="post">
-						<table>
-							<tr>
-								<td class="td_right"><input class="inputData" type="text"
-									name="delivengersNo" id="adminNo" placeholder="운영자ID" /></td>
-							</tr>
-							<tr>
-								<td class="td_right"><input class="inputData"
-									type="password" name="password" id="password"
-									placeholder="비밀번호" /></td>
-							</tr>
-							<tr>
-								<td class="td_right"><input class="btn" type="submit"
-									value="로그인" /></td>
-							</tr>
-						</table>
-					</form>
-				</div>	
-			</c:when>
-			<c:when test="${!empty sessionScope.email}">
+			<c:if test="${!empty sessionScope.adminNo}">
 				<div id="loginAndJoin">
-					${sessionScope.email} 사장님 어서 오세요!(${sessionScope.ceoNo }) |
-					<a href="./CeoLogOut.do">logout</a> |	
-					<a href="./CeoModifyIntro.do">사장님 정보수정</a>
+					${sessionScope.adminNo} (${sessionScope.adminNo }) |
+					<a href="./AdminLogout.do">logout</a> |	
+					
 				</div>
-			</c:when>
-		</c:choose>	
-	
+			</c:if>
+
 	</div>
 	
 	
