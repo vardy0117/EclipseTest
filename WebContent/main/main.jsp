@@ -34,13 +34,13 @@
 		box-sizing: border-box;
 	}
 	#mainDiv {
-		width: 1000px;
+		width: 100%;
 		min-height: 600px;
 		margin: 0 auto;
 		margin-top: 80px;
 		position: relative;
 	}
-	#searchDiv {
+	#searchDiv  {
 		width: 450px;
 		height: 300px;
 		position: absolute;

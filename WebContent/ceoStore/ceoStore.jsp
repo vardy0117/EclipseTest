@@ -10,162 +10,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="CSS/ceoStoreJSP.css">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<style>
-	div {
-		box-sizing: border-box;
-	}
-	#mainDiv {
-		width: 1000px;
-		min-height: 600px;
-		margin: 0 auto;
-		margin-top: 90px;
-		position: relative;
-	}
-	#navDiv {
-		width: 100%;
-		height: 80px;
-		border-radius: 12px;
-    	border: 2px solid #0000009c;
-	}
-	#navDiv > div {
-		width: 33.3333333%;
-		height: 100%;
-		float: left;
-		text-align: center;
-		font-size: 1.5rem;
-		line-height: 80px;
-		cursor: pointer;
-		background-color: #80808021;
-		border-left: 1px solid #0000009c;
-		border-right: 1px solid #0000009c;
-	}
-	.btn-on {
-		background-color: #80808054;
-	}
-	#navDiv > div:hover {
-		background-color: #80808054;
-	}
-	.contentDiv {
-		width:100%;
-		display: none;
-		padding: 50px;
-	}
-	.contentDiv table {
-		margin: 10px auto;
-		border: 2px solid #c7c7c7;
-		border-radius: 15px;
-		box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
-		padding: 20px;
-	}
-	.contentDiv table img {
-		border-radius: 12px;
-	}
-	.display-on {
-		display: block;
-	}
-	#updateBtn {
-		background: url("images/setting_black.svg") no-repeat;
-		background-size: 32px;
-		width: 35px;
-		height: 35px;
-		cursor: pointer;
-		border: none;
-	}
-	#updateBtn:hover {
-		background: url("images/setting_gray.svg") no-repeat;
-		background-size: 32px;
-	}
-	#deleteBtn {
-		background: url("images/delete_black.svg") no-repeat;
-		background-size: 32px;
-		width: 35px;
-		height: 35px;
-		cursor: pointer;
-		border: none;
-	}
-	#deleteBtn:hover {
-		background: url("images/delete_gray.svg") no-repeat;
-		background-size: 32px;
-	}
-	#addBtn {
-		background: url("images/addBtn.svg") no-repeat;
-		background-size: 32px;
-		width: 35px;
-		height: 35px;
-		cursor: pointer;
-		border: none;
-	}	
-	#orderDiv table th {
-		padding-left: 10px;
-		padding-right: 10px;
-	}
-	
-	#orderDiv table thead th {
-	    background-color: #80808069;
-	}
-	#orderDiv table tbody th:hover {
-		background: #8080801c;
-		cursor:pointer;
-	}
-	
-	.commentOk textArea{
-		margin-left: 10px;
-		border: 0px;
-		background-color: lightGray;	
-	}
-	.commentNo textArea{
-	
-	}
-	#reviewTable {
-		width: 700px;
-	}
-	#reviewTable textarea {
-	    width: 610px;
-	    height: 130px;
-	    resize: none;
-	    border: 2px black solid;
-	    border-radius: 12px;
-	    padding-left: 10px;
-	    padding-top: 5px;
-	    font-family: 'Binggrae-Bold';
-	    font-size: 1rem;
-	    outline: none;
-	    margin-left: 20px;
-	    margin-bottom: 10px;
-	}
-	textarea.commentOk {
-		background: #e2e2e2;
-		cursor: default;
-		border: 0px !important;
-	}
-	#star{
-		color: #ffa400;
-		margin-left: 40px;
-	}
-	#customerName{
-		color: #ffa400;
-	}
-	
-	#ceoReviewPageNo{
-		text-decoration: none;
-		font-size: 30px;
-		color: black;
-		margin-right: 5px;
-		text-align: center;
-	}
-	#ceoReviewPageNo:HOVER{
-		text-decoration: underline;
-	}
-	#page{
-		text-align: center;
-	}
-	#orderMenu{
-		font-size: 12px;
-		color: #d1bca4;
-	}
-</style>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
 
@@ -217,8 +64,32 @@
 		     		  }
 		         }
 		   	});
-		}	
-		, 5000);	
+			
+			$.ajax({
+		         async : false,
+		         url : "deliveryFinCheck.do?storeNo="+storeNo,
+		         success : function(data){
+		        	 if(data!=""){
+			        	 var obj = JSON.parse(data);		        	 
+		        	 	if(obj.list.length!=0){
+		        	 		$.ajax({
+				     			async : false,
+				     			url : "deliveryFinish.do?orderNo="+orderNo,		
+								success : function (){				     		  
+				        	 		for(var i=0; i<obj.list.length; i++){
+					     			  var audio = new Audio();
+					     			  audio.src="./media/delivery_Voice.mp3";
+					     			  console.log(audio);
+					     			  audio.play();
+				        	 		} 
+				        	 	}	  
+		        	 		});
+		        	 	}		
+		         
+		        	 }
+		         }	 
+		   	});
+		}, 3000);	
 	}
 	
 </script>
@@ -478,16 +349,22 @@
 					</th>
 					<th><fmt:formatDate value="${order.orderTime }" type="both" pattern="yyyy년 MM월 dd일 hh:mm "/></th>
 					<th>
-						<c:if test="${order.orderCheck eq 'F' and order.deliveryCheck eq 'F'}">
+						<c:if test="${order.orderCheck eq 'F'}">
 							<span style="color:green;">주문 확인중</span>
 						</c:if>
 						<c:if test="${order.orderCheck eq 'T' and order.deliveryCheck eq 'F'}">
+							<span style="color:blue;">배달 준비 중</span>
+						</c:if>
+						<c:if test="${order.orderCheck eq 'T' and order.deliveryCheck eq 'D'}">
 							<span style="color:blue;">배달 중</span>
 						</c:if>
 						<c:if test="${order.orderCheck eq 'T' and order.deliveryCheck eq 'T'}">
 							<span style="color:red;">배달 완료</span>
 						</c:if>
-						<c:if test="${order.orderCheck eq 'N' and order.deliveryCheck eq 'N'}">
+						<c:if test="${order.orderCheck eq 'T' and order.deliveryCheck eq 'A'}">
+							<span style="color:red;">배달 완료</span>
+						</c:if>
+						<c:if test="${order.orderCheck eq 'N'}">
 							<span style="color:orange;">배달 취소 처리됨</span>
 						</c:if>
 					</th>

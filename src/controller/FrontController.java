@@ -327,6 +327,7 @@ public class FrontController extends HttpServlet {
 				 forward = new ActionForward();
 				 result = action.execute(request, response);
 				 if(result){
+					 action.getPermission(request,response);
 					 forward.setRedirect(true);
 					 forward.setView("ceoIndex.jsp"); // 사장님 전용페이지가 없어서 일단 여기로 했습니당
 					 System.out.println("사장님 로그인 리다이렉트 작동 " + forward.getView());
@@ -1373,7 +1374,7 @@ public class FrontController extends HttpServlet {
 			
 			if(delivengersNo==null){
 				PrintWriter out = response.getWriter();
-				out.print("<script>alert('잘못된 접근 입니다 \\n메인페이지로 이동 합니다'); location.href='"+projectURL+"' </script>");
+				out.print("<script>alert('Delivengers 메인페이지로 이동합니다'); location.href='"+projectURL+"/deliveryIndex.jsp' </script>");
 			}else{
 				String list="";
 				DeliveryAction dAction = new DeliveryAction();
@@ -1476,6 +1477,7 @@ public class FrontController extends HttpServlet {
 				out.print("noTicket");
 			}
 		}
+
 		/********************************************************/
 		// 어드민 영역
 			if(command.equals("admin.do")) {
@@ -1523,11 +1525,15 @@ public class FrontController extends HttpServlet {
 				response.setContentType("text/html; charset=UTF-8");
 				PrintWriter out = response.getWriter();
 				out.print(jsonObj);
-				
-			
 				System.out.println(" admincustomerlist가져옴 : " + jsonObj);
-			}	
-	/******************************************************************************/		
+			}					
+
+		
+		if(command.equals("deliveryFinCheck.do")){
+			
+		}
+
+	
 	}
 				
 }
