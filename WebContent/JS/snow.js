@@ -82,15 +82,17 @@ return (document.compatMode && document.compatMode!="BackCompat")? document.docu
 
 	  if (ie4up||ns6up) {
 		  if (i == 0) {
-			  document.write("<div id=\"dot"+ i +"\" style=\"POSITION: absolute; Z-INDEX: "+ i +"; VISIBILITY: visible; TOP: 15px; LEFT: 15px;\"><img style='width:30px;' src='"+snowsrc+"' border=\"0\"><\/div>");
+			  document.write("<div onclick='reset(this);' id=\"dot"+ i +"\" style=\" cursor:pointer; POSITION: absolute; Z-INDEX: "+ i +"; VISIBILITY: visible; TOP: 15px; LEFT: 15px;\"><img style='width:100px;' src='"+snowsrc+"' border=\"0\"><\/div>");
 		  } else {
-			  document.write("<div id=\"dot"+ i +"\" style=\"POSITION: absolute; Z-INDEX: "+ i +"; VISIBILITY: visible; TOP: 15px; LEFT: 15px;\"><img style='width:30px;' src='"+snowsrc+"' border=\"0\"><\/div>");
+			  document.write("<div onclick='reset(this);' id=\"dot"+ i +"\" style=\"cursor:pointer; POSITION: absolute; Z-INDEX: "+ i +"; VISIBILITY: visible; TOP: 15px; LEFT: 15px;\"><img style='width:100px;' src='"+snowsrc+"' border=\"0\"><\/div>");
 		  }
     }
 
   }
 
-
+  function reset(element) {
+	  element.style.top = doc_height+"px"s;
+  }
 
 
   function snowIE_NS6() {  // IE and NS6 main animation function

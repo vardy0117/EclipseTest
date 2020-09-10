@@ -46,14 +46,7 @@ body {text-align:center; margin:20px auto;}
 <script type="text/javascript">
 function printIt(printThis)
 {
-    var win = null;
-    win = window.open();
-    self.focus();
-    win.document.open();
-    win.document.write(printThis);
-    win.document.close();
-    win.print();
-    win.close();
+    window.print();
 }
 
 

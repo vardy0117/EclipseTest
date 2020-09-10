@@ -1576,7 +1576,7 @@ public class FrontController extends HttpServlet {
 			}	
 	/******************************************************************************/		
 
-			}					
+							
 
 		
 
@@ -1599,7 +1599,7 @@ public class FrontController extends HttpServlet {
 			PrintWriter out = response.getWriter();
 			//System.out.println(jsonObj.toJSONString());
 			out.print(jsonObj.toJSONString());
-    }
+		}
 
 		if(command.equals("deleveryTrue.do")){
 			DeliveryAction action = new DeliveryAction();

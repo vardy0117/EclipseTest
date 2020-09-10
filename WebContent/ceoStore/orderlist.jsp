@@ -244,7 +244,7 @@
 </body>
 <script type="text/javascript">
     var qrcode = new QRCode(document.getElementById("qrcode"), {
-        text: "http://192.168.6.229/GitTest/MoveDeliveryIndex.do?orderNo=${param.orderNo}",
+        text: "./MoveDeliveryIndex.do?orderNo=${param.orderNo}",
         width: 128,
         height: 128,
         colorDark : "#000000",

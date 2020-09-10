@@ -199,7 +199,6 @@
 	     			  //console.log(audio);
 	     			  audio.play();
 	     			  $(".uncheckedOrders").html('<img src="./images/ICON/icons8-meal-50 (3).png">');
-	     			
 	     		  } else{
 	     			 $(".uncheckedOrders").empty();			  
 	     		  }
