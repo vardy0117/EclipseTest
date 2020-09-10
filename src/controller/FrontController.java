@@ -2,7 +2,6 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,19 +11,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.swing.plaf.synth.SynthSplitPaneUI;
-import javax.xml.bind.ParseConversionEvent;
 
-import org.apache.catalina.tribes.group.Response;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
-import com.sun.org.apache.xml.internal.serialize.Printer;
 
 import action.ActionForward;
 import action.AjaxAction;
+import net.admin.action.adminAction;
 import net.ceo.action.CeoJoinAction;
 import net.ceo.action.CeoLoginAction;
 import net.ceo.action.CeoLogoutAction;
@@ -38,20 +34,14 @@ import net.customer.action.CustomerJoinAction;
 import net.customer.action.CustomerLoginAction;
 import net.customer.action.CustomerLogoutAction;
 import net.customer.action.CustomerModifyAction;
-
 import net.customer.action.CustomerReviewAction;
-
 import net.customer.action.GetCouponAction;
 import net.customer.db.CustomerBean;
 import net.customer.db.CustomerDAO;
 import net.delivery.db.DeliveryBean;
 import net.delviery.action.DeliveryAction;
-
-import net.event.db.EventDAO;
-
 import net.delviery.action.DeliveryLoginAction;
-
-import net.manage.action.updateAction;
+import net.event.db.EventDAO;
 import net.menu.action.MenuAction;
 import net.menu.db.MenuBean;
 import net.menu.db.MenuDAO;
@@ -64,11 +54,8 @@ import net.orderList.db.OrderListDAO;
 import net.orderMenu.db.OrderMenuDAO;
 import net.review.action.writeReviewAction;
 import net.review.db.ReviewBean;
-
 import net.review.db.ReviewDAO;
-
 import net.store.action.GetStoreMoreAction;
-
 import net.store.action.StoreAction;
 import net.store.db.StoreBean;
 import net.store.db.StoreDAO;
@@ -1490,11 +1477,63 @@ public class FrontController extends HttpServlet {
 				out.print("noTicket");
 			}
 		}
+
+		/********************************************************/
+		// 어드민 영역
+			if(command.equals("admin.do")) {
+				forward = new ActionForward();
+				forward.setView("index.jsp?center=main/adminMain.jsp");
+				forward.execute(request, response);
+
+				System.out.println("admin adminpage.do 호출 ");
+			}
+
+			if(command.equals("admindelverylist.do")) {
+				adminAction adminajax = new adminAction();
+				
+				String jsonObj = adminajax.AdmingetdeliveryAction(request.getParameter("customerNo"));
+				
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = response.getWriter();
+				out.print(jsonObj);
+				
+			
+				System.out.println("admin deliverylist가져옴 : " + jsonObj);
+			}	
+			
+			
+			if(command.equals("adminstorelist.do")) {
+				adminAction adminajax = new adminAction();
+				
+				String jsonObj = adminajax.AdminStoreList(request.getParameter("customerNo"));
+				
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = response.getWriter();
+				out.print(jsonObj);
+				
+			
+				System.out.println(" adminstorelist가져옴 : " + jsonObj);
+			}	
+			
+			
+			
+			if(command.equals("admincustomerlist.do")) {
+				adminAction adminajax = new adminAction();
+				
+				String jsonObj = adminajax.AdminCustomerList(request.getParameter("customerNo"));
+				
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = response.getWriter();
+				out.print(jsonObj);
+				System.out.println(" admincustomerlist가져옴 : " + jsonObj);
+			}					
+
 		
 		if(command.equals("deliveryFinCheck.do")){
 			
 		}
-			
+
+	
 	}
 				
 }
