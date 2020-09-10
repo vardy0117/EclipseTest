@@ -1386,7 +1386,7 @@ public class FrontController extends HttpServlet {
 			
 			if(delivengersNo==null){
 				PrintWriter out = response.getWriter();
-				out.print("<script>alert('잘못된 접근 입니다 \\n메인페이지로 이동 합니다'); location.href='"+projectURL+"' </script>");
+				out.print("<script>alert('Delivengers 메인페이지로 이동합니다'); location.href='"+projectURL+"/deliveryIndex.jsp' </script>");
 			}else{
 				String list="";
 				DeliveryAction dAction = new DeliveryAction();
@@ -1488,6 +1488,10 @@ public class FrontController extends HttpServlet {
 			} else {
 				out.print("noTicket");
 			}
+		}
+		
+		if(command.equals("deliveryFinCheck.do")){
+			
 		}
 			
 	}
