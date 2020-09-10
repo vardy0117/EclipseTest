@@ -8,7 +8,6 @@
 <title>Ceo 주문내역 상세보기</title>
 
 <link rel="stylesheet" href="CSS/olderlistJSP.css">
-<link rel="stylesheet" media="print" href="CSS/orderTablePrint.css">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript" src="qrcode.js"></script>
@@ -125,7 +124,6 @@
 	    self.focus();
 	    win.document.open();
 	    win.document.write('<style>'+allCSS+'</style>');
-	    // win.document.write('<link rel="stylesheet" href="http://192.168.6.229:8080/GitTest/CSS/orderTablePrint.css">')
 	    win.document.write(printThis);
 	    win.document.close();
 	    win.print();

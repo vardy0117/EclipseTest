@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -59,19 +60,29 @@
 </style>
 </head>
 <body>
-	<div id="mainDiv">
-		<a href="./addStore.do">
-			<div id="leftDiv">
-				<h2>업체 등록하기</h2>
-				<img src="./images/addStore.svg">
-			</div>
-		</a>
-		<a href="./manageStore.do">
-			<div id="rightDiv">
-				<h2>업체 관리하기</h2>
-				<img src="./images/manageStore.svg">
-			</div>
-		</a>
-	</div>
+${sessionScope.permission}
+	<c:choose>
+	<c:when test="${sessionScope.permission eq 'T' }">
+		<div id="mainDiv">
+			<a href="./addStore.do">
+				<div id="leftDiv">
+					<h2>업체 등록하기</h2>
+					<img src="./images/addStore.svg">
+				</div>
+			</a>
+			<a href="./manageStore.do">
+				<div id="rightDiv">
+					<h2>업체 관리하기</h2>
+					<img src="./images/manageStore.svg">
+				</div>
+			</a>
+		</div>
+	</c:when>
+	<c:otherwise>
+		<div id="mainDiv">
+			<h1>아직 Delivenger의 승인을 받지 못했습니다. 기다려주세요!</h1>
+		</div>
+	</c:otherwise>
+	</c:choose>
 </body>
 </html>
