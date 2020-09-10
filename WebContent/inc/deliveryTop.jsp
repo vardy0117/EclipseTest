@@ -51,7 +51,7 @@
     
    h2 {
     float: left;
-    width: 60%;
+    width: 220px;
     font-size: 35px;
 
 }
