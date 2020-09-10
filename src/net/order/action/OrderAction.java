@@ -206,5 +206,14 @@ public class OrderAction {
 		
 	}
 
+	public void updateDeliveryCheckA(HttpServletRequest request, HttpServletResponse response) {
+	 
+		String orderNo=	request.getParameter("orderNo");
+		OrderListDAO odao = new OrderListDAO();
+		
+		odao.updateDeliveryCheckA(orderNo);
+		
+	}
+
 
 }

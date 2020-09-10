@@ -17,6 +17,7 @@ public class MenuAction {
 
 	public void insertStore(HttpServletRequest request, HttpServletResponse response, MultipartRequest multi,
 			int storeNo, MenuBean mbean) {
+		
 		int menuCnt = Integer.parseInt(multi.getParameter("menuCnt"));
 
 		List<MenuBean> menuList = new ArrayList();

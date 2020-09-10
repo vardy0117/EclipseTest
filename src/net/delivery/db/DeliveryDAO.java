@@ -140,4 +140,22 @@ public class DeliveryDAO {
 		return array;
 		
 	}
+
+	public void updateArrivalTime(String orderNo) {
+		
+		try {
+			con =getConnection();
+			sql="update delivery set arrivalTime=now() where orderNo=?";
+			pstmt=	con.prepareStatement(sql);
+			pstmt.setInt(1, Integer.parseInt(orderNo));
+			
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			System.out.println("updateinneArrivalTimer error :  "+e);
+		}finally {
+			resourceClose();
+		}
+		
+	}
 }
