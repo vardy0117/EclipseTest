@@ -22,7 +22,8 @@
 	}
 	#storeNameDiv > h3 {
 		margin: 0;
-		background: linear-gradient( to right, hsl(98 100% 62%), hsl(204 100% 59%) );
+		/* background: linear-gradient( to right, hsl(98 100% 62%), hsl(204 100% 59%) ); */
+		background-color:#19ce60;
 		color: white;
 		height: 50px;
 		line-height: 50px;
@@ -49,7 +50,8 @@
 		line-height: 50px;
 	}
 	.clicked{
-		background: linear-gradient( to right, hsl(98 100% 62%), hsl(204 100% 59%) );
+		/* background: linear-gradient( to right, hsl(98 100% 62%), hsl(204 100% 59%) ); */
+		background-color:#19ce60;
 		color: white;
 		cursor: pointer;
 		text-shadow: 2px 1px 1px grey;
@@ -88,7 +90,8 @@
 	
 	.cart-Head{
 		display : inline-block;
-		background: linear-gradient( to right, hsl(98 100% 62%), hsl(204 100% 59%) );
+		/* background: linear-gradient( to right, hsl(98 100% 62%), hsl(204 100% 59%) ); */
+		background-color: #19ce60;
 	}	
 	
 	.panelTitle > h3 {
