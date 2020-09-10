@@ -20,6 +20,7 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import action.ActionForward;
 import action.AjaxAction;
+import net.admin.action.AdminDao;
 import net.admin.action.adminAction;
 import net.ceo.action.CeoJoinAction;
 import net.ceo.action.CeoLoginAction;
@@ -1526,6 +1527,30 @@ public class FrontController extends HttpServlet {
 				
 			
 				System.out.println(" admincustomerlist가져옴 : " + jsonObj);
+			}	
+			
+			/******************************************************************************/		
+			
+			if(command.equals("ceopermission.do")) {
+				AdminDao dao = new AdminDao();
+				
+				String ceoNo = (String) request.getParameter("ceoNo");
+				
+				 int result = dao.updateCeo(ceoNo);
+
+				 response.setContentType("text/html; charset=UTF-8");
+				 PrintWriter out = response.getWriter();
+				 
+				if(result==1){
+					// out.print("<script>alert('ceo권한 수정이 완료 되었습니다.'); </script>");
+					out.print(result);
+
+				}else{
+					// out.print("<script>alert('ceo권한수정에 실패하였습니다.'); </script>");
+					out.print(result);
+				}
+			
+				System.out.println("ceopermission 호출 :  " + result);
 			}	
 	/******************************************************************************/		
 	}
