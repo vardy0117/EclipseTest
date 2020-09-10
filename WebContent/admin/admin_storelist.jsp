@@ -89,12 +89,12 @@ function Finish(ceoNo) {
 			
 			if(data == 1){
 				alert("변경되었습니다");
-				 $("tr#storelist"+ceoNo).text("T");
-	
+				$("#storelist_"+ceoNo+" th")[2].innerText = 'T';
+					
 
 				return;
 			} else {
-				$("#storelist_").text("F");
+				$("#storelist_"+ceoNo+" th")[2].innerText = 'F';
 				alert("실패");
 
 				return;
