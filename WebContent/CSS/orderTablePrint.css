@@ -1,0 +1,57 @@
+@CHARSET "UTF-8";
+	div {
+		box-sizing: border-box;
+		font-family: 'Binggrae-Bold';
+	}
+		
+	@font-face {
+		font-family: 'BMEULJIRO';
+		src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/BMEULJIRO.woff') format('woff');
+		font-weight: normal;
+		font-style: normal;
+	}
+	@font-face {
+	
+    	font-family: 'Binggrae-Bold';
+		src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Binggrae-Bold.woff') format('woff');
+		font-weight: normal;
+		font-style: normal;
+	}
+		
+	#printArea {
+		margin : 0 auto;
+		width : 580px;
+		padding : 5px;
+		border : 1px solid green;
+	}
+	
+	.orderDetail{
+		margin : 0 auto;
+		padding : 50px;
+		width : 500px;
+		height : 700px;
+		border : 1px solid green;
+	}
+	
+	
+	hr {
+		border-style:dashed;
+	}
+	
+	div.left {
+		margin-right: 50px;
+	}	
+	
+	div.qrcode {
+		margin-top : 20px;
+	}
+	
+	.deliveryInfo tr td{
+		padding : 5px;
+	}
+	
+	.orderMenuTable tr td{
+		padding-right : 20px;
+		text-align: center;
+	}
+	

@@ -1,0 +1,95 @@
+@CHARSET "UTF-8";
+div {
+		box-sizing: border-box;
+	}
+	
+	#mainDiv {
+		width: 1000px;
+		min-height: 600px;
+		margin: 0 auto;
+		margin-top:80px;
+		margin-bottom:80px;
+		position: relative;
+		padding-top: 10px;
+	}
+	
+	#printArea {
+		margin : 0 auto;
+		width : 580px;
+		padding : 5px;
+	}
+	
+	.orderDetail{
+		margin : 0 auto;
+		padding : 50px;
+		width : 500px;
+		height : 700px;
+		border : 1px solid green;
+	}
+	
+	#prepareTime  {
+		height : 30px;
+		font-family: Binggrae-Bold;
+		font-size: 16px;
+	}
+	
+	hr {
+		border-style:dashed;
+	}
+	
+	.btn {
+		width: 200px;
+		background: linear-gradient( to bottom, hsl(0deg 0% 0%), hsl(0deg 0% 57%));
+		font-family: Binggrae-Bold;
+		font-size: 1rem;
+		color: white;
+		border: none;
+		border-radius: 12px;
+		height: 35px;
+		transition-duration: 1s;
+		opacity: 0.7;
+	}
+	
+	div.left {
+		margin-right: 50px;
+	}	
+	
+	div.qrcode {
+		margin-top : 20px;
+	}
+	
+	.deliveryInfo tr td{
+		padding : 5px;
+	}
+	
+	.orderMenuTable tr td{
+		padding-right : 20px;
+		text-align: center;
+	}
+	
+	.print {
+		width : 500px;
+		margin : 0 auto;
+		padding : 10px;
+		text-align : left;
+		
+	}
+	#print-btn{
+		width : 100px;
+		height : 40px;
+		background: linear-gradient( to bottom, hsl(0deg 0% 0%), hsl(0deg 0% 57%));
+		font-family: Binggrae-Bold;
+		font-size: 1rem;
+		color: white;
+		border: none;
+		border-radius: 12px;
+		transition-duration: 1s;
+		opacity: 0.7;
+		
+	}
+	
+	#print-btn :focus{
+		outline : none;
+	}
+
+	
