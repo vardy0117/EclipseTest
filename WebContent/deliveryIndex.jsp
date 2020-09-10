@@ -149,6 +149,7 @@
 					<td>요청 사항</td>
 					<td>배달 완료</td>
 				</tr>
+				
 			</table>
 	</c:otherwise>
 	</c:choose>
