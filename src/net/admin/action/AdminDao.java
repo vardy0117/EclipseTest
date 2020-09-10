@@ -76,8 +76,7 @@ public class AdminDao {
 		try {
 			con = getConnection();
 		
-			sql="select a.storeNo, a.ceoNo, a.name'storeName' , "
-					+ "email 'ceoEmail', b.permission from store a, ceo b where a.ceoNo = b.ceoNo;";
+			sql="select ceoNo, email 'ceoEmail', permission from  ceo";
 		
 			pstmt = con.prepareStatement(sql);
 	
@@ -87,9 +86,9 @@ public class AdminDao {
 				JSONObject jsonObj = new JSONObject();
 			/*storeNo, ceoNo, storeName, ceoEmail
 			 * */
-				jsonObj.put("storeNo" ,rs.getString("storeNo" ));
+			//	jsonObj.put("storeNo" ,rs.getString("storeNo" ));
 				jsonObj.put("ceoNo" ,rs.getString("ceoNo" ));
-				jsonObj.put("storeName" ,rs.getString("storeName" ));
+			//	jsonObj.put("storeName" ,rs.getString("storeName" ));
 				jsonObj.put("ceoEmail" ,rs.getString("ceoEmail" ));
 				jsonObj.put("permission" ,rs.getString("permission" ));
 				array.add(jsonObj);

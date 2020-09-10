@@ -128,9 +128,9 @@ $(document).ready(function(){
 
 					  	   for (var i = 0; i <obj.adminstorelist.length; i++) {  
 					  		  
-							tag += '<tr id="storelist_' + obj.adminstorelist[i]['storeNo'] + '">'
-							tag += '<th>' + obj.adminstorelist[i]["storeNo"] +'</th>' 
-							tag += '<th>' + obj.adminstorelist[i]["storeName"] +'</th>'
+							tag += '<tr id="storelist_' + obj.adminstorelist[i]['ceoNo'] + '">'
+						///	tag += '<th>' + obj.adminstorelist[i]["storeNo"] +'</th>' 
+						//	tag += '<th>' + obj.adminstorelist[i]["storeName"] +'</th>'
 							tag += '<th>' + obj.adminstorelist[i]["ceoNo"] +'</th>'
 							tag += '<th>' + obj.adminstorelist[i]["ceoEmail"] +'</th>'
 							tag += '<th>' + obj.adminstorelist[i]["permission"] +'</th>'
@@ -181,12 +181,11 @@ $(document).ready(function(){
 		<table id="deliveryList" border="1">
 
 			<tr>
-				<th>스토어 번호</th>
-				<th>가게이름</th>
-				<th>ceo번호</th>
-				<th>ceo 이메일</th>
-				<th>버튼</th>
+				<th>ceo 번호</th>
+				<th>ceo이메일</th>
 				<th>승인여부</th>
+				<th>버튼</th>
+		
 			</tr>
 
 
