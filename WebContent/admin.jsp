@@ -32,7 +32,26 @@
 	<jsp:include page="/inc/adminTop.jsp"/>
 	<c:choose>
 	<c:when test="${empty sessionScope.adminNo}">
-		
+		<div id="formDiv">
+					<h1 style="text-align: center;">운영자 로그인</h1>
+					<form action="./AdminLoginAction.do" method="post">
+						<table>
+							<tr>
+								<td class="td_right"><input class="inputData" type="text"
+									name="adminNo" id="delivengersNo"  /></td>
+							</tr>
+							<tr>
+								<td class="td_right"><input class="inputData"
+									type="password" name="password" id="password"
+									placeholder="비밀번호" /></td>
+							</tr>
+							<tr>
+								<td class="td_right"><input class="btn" type="submit"
+									value="로그인" /></td>
+							</tr>
+						</table>
+					</form>
+				</div>
 	</c:when>
 	<c:when test="${!empty sessionScope.adminNo}">
 		<c:set  var="center" value="${param.center}"/>
