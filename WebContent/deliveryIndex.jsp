@@ -6,125 +6,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-@font-face {
-	font-family: 'BMEULJIRO';
-	src:
-		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/BMEULJIRO.woff')
-		format('woff');
-	font-weight: normal;
-	font-style: normal;
-}
-
-@font-face {
-	font-family: 'Binggrae-Bold';
-	src:
-		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Binggrae-Bold.woff')
-		format('woff');
-	font-weight: normal;
-	font-style: normal;
-}
-
-body {
-	margin: 0 0;
-	font-family: 'Binggrae-Bold';
-}
-
-#mainDiv {
-	margin: 0 auto;
-	margin-Top: 120px;
-}
-
-div {
-	box-sizing: border-box;
-}
-
-#loginDiv {
-	width: 1000px;
-	min-height: 600px;
-	border: 2px solid green;
-	margin: 0 auto;
-	margin-top: 50px;
-	position: relative;
-}
-
-.td_left {
-	text-align: right;
-}
-
-form>table {
-	font-size: 1.2rem;
-	margin: 0 auto;
-}
-
-.td_right {
-	padding-left: 10px;
-}
-
-.inputData {
-	width: 250px;
-	height: 30px;
-	border-radius: 12px;
-	border: 2px solid gray;
-	padding-left: 15px;
-	font-family: Binggrae-Bold;
-	font-size: 1rem;
-}
-
-input[type=password] {
-	font-family: 'pass', 'Roboto', Helvetica, Arial, sans-serif;
-}
-
-input[type=password]::placeholder {
-	font-family: Binggrae-Bold;
-}
-
-input:focus {
-	outline: none;
-}
-
-#formDiv {
-	width: 500px;
-	height: 300px;
-	margin: 0 auto;
-	border: 2px solid #c7c7c7;
-	border-radius: 15px;
-	box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0
-		rgba(0, 0, 0, 0.24);
-}
-
-.btn {
-	width: 245px;
-	background: linear-gradient(to bottom, hsl(0deg 0% 0%), hsl(0deg 0% 57%));
-	font-family: Binggrae-Bold;
-	font-size: 1rem;
-	color: white;
-	border: none;
-	border-radius: 12px;
-	width: 270px;
-	height: 35px;
-	transition-duration: 1s;
-	opacity: 0.7;
-}
-
-.btn:hover {
-	cursor: pointer;
-	opacity: 1;
-}
-
-@media ( max-width : 900px)and (min-width:400px) {
-	.left {
-		float: left;
-		width: 100%;
-		background-color: aqua;
-	}
-}
-</style>
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 <title>Insert title here</title>
 
+<link rel="stylesheet" href="CSS/deliveryIndexJSP.css">
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
 <script type="text/javascript">
+
 	var orderNo = "${param.orderNo}";
 	var tag = "";
 		$.ajax({
@@ -147,8 +36,8 @@ input:focus {
 									+ '</td>'
 
 							if (obj.list[i]["deliveryCheck"] == 'D') {
-								tag += '<td><button type="button" onclick="deliveryFinish();">배달 완료 확인!</button></td>';
-							} else if (obj.list[i]["deliveryCheck"] == 'T') {
+								tag += '<td><button type="button" onclick="deliveryFinish('+obj.list[i]["orderNo"]+');">배달 완료 확인!</button></td>';
+							} else if (obj.list[i]["deliveryCheck"] == 'T' || obj.list[i]["deliveryCheck"] == 'A') {
 								tag += '<td>' + obj.list[i]["departureTime"]
 										+ '</td>';
 							}
@@ -162,6 +51,13 @@ input:focus {
 				}
 
 			});//ajax 끝 */
+			
+			function deliveryFinish(orderNo){
+				
+				if(confirm(orderNo+"번  배달완료 하시겠습니까?")==true){
+				location.href='deleveryTrue.do?orderNo='+orderNo;
+				}
+			}
 
 	function mo_chk() {
 

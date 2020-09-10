@@ -60,8 +60,8 @@
 	}
 	input[type="submit"]{
 		color: white;
-		background-color: red;
-		border: 1px solid red;
+		background-color: #19ce60;
+		border: 1px solid #19ce60;
 		font-size: 15px;
 		font-weight: 800; 
 		padding: 0.8em;
@@ -81,8 +81,8 @@
 	/* file태그를 대신한 label 태그 */
 	#fakeFile{
 		color: white;
-		background-color: red;
-		border: 1px solid red;
+		background-color: #19ce60;
+		border: 1px solid #19ce60;
 		font-size: 15px;
 		font-weight: 800; 
 		padding: 0.8em;

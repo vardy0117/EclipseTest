@@ -35,7 +35,8 @@
 	}
 	.clicked {
 		color: white;
-		background: linear-gradient( to right, hsl(98 100% 62%), hsl(204 100% 59%) );
+		/* background: linear-gradient( to right, hsl(98 100% 62%), hsl(204 100% 59%) ); */
+		background-color:#19ce60;
     	text-shadow: 2px 1px 1px grey;
 	}
 	
@@ -61,7 +62,8 @@
 		padding-left: 15px;
 	}
 	#buttonDiv button {
-		background: linear-gradient( to right, hsl(98 100% 62%), hsl(204 100% 59%) );
+		/* background: linear-gradient( to right, hsl(98 100% 62%), hsl(204 100% 59%) ); */
+		background-color:#19ce60;
 	    font-family: Binggrae-Bold;
 	    font-size: 1rem;
 	    color: white;
@@ -128,7 +130,7 @@
 			dataType : "json",
 			success : function(jsonArray) {
 				for(var i=0; i<jsonArray.length; i++) {
-					var starPoint = jsonArray[i].orderCount == "0" ? 0 : Math.round(jsonArray[i].points / jsonArray[i].reviewCount);
+					var starPoint = jsonArray[i].reviewCount == "0" ? 0 : Math.round(jsonArray[i].points / jsonArray[i].reviewCount);
 					starPoint = starPoint.toFixed(1);
 					var storeHours = jsonArray[i].storeHours == '00시~00시' ? '24시간 영업' : jsonArray[i].storeHours;
 					var storeBox = /* '<div id="storeBox" onclick="location.href=\'Store.do?storeNo='+jsonArray[i].storeNo+'\'">'+  */

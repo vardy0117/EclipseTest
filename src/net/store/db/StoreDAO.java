@@ -631,6 +631,29 @@ public class StoreDAO {
 	
 		return checkceo;
 	}
+
+	public boolean isMine(int storeNo, int ceoNo) {
+		boolean result = false;
+		
+		try {
+			con = getConnection();
+			sql = "select * from store where storeNo = ? and ceoNo = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, storeNo);
+			pstmt.setInt(2, ceoNo);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				result = true;
+			}
+			
+		} catch (Exception e) {
+			System.out.println("isMine 메소드 내에서 에러 : " + e);
+		} finally {
+			resourceClose();
+		}
+		
+		return result;
+	}
 	
 	/*****************************************************************************/
 	

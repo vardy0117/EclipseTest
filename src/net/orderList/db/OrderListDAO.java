@@ -650,6 +650,40 @@ public class OrderListDAO {
 		}
 		return result;
 	}
+
+
+	public void setTwhereA(int orderNo) {
+		
+		try {
+			con = getConnection();
+			sql = "update orderList set deliveryCheck = 'T' where orderNo = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, orderNo);
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			resourceClose();
+		}
+  }
+
+	public void updateDeliveryCheckA(String orderNo) {
+		
+			try {
+				con =getConnection();
+				sql="update orderList set deliveryCheck='A' where orderNo=?";
+				pstmt=	con.prepareStatement(sql);
+				pstmt.setInt(1, Integer.parseInt(orderNo));
+				
+				pstmt.executeUpdate();
+				
+			} catch (Exception e) {
+				System.out.println("updateDeliveryCheckA inner error :  "+e);
+			} finally {
+				resourceClose();
+			}
+		
+	}
 	
 	
 }

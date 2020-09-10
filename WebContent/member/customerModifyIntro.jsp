@@ -17,7 +17,7 @@
 		padding: 190px;
 	}
 	#formDiv {
-		width: 500px;
+		width: 400px;
 	    height: 200px;
 	    margin: auto auto;
 	    border: 2px solid #c7c7c7;
@@ -42,11 +42,12 @@
 	input:focus { outline: none; }
 	.btn {
 		width: 245px;
-		background: linear-gradient(
+		/* background: linear-gradient(
 			to right, 
 			hsl(98 100% 62%), 
 			hsl(204 100% 59%)
-		);
+		); */
+		background-color:#19ce60;
 		font-family: Binggrae-Bold;
 		font-size: 1rem;
 		color: white;
@@ -70,17 +71,17 @@
 <body>
 	<div id="mainDiv">
 		<div id="formDiv">
-			<h2 style="text-align: center;">비밀번호 확인</h2>
+			<h2 style="text-align: center;">회원정보 수정</h2>
 			<form action="" method="post">
 				<table>
 					<tr>
 						<td>
-							<input class="textBox" type="password" name="password" placeholder="현재 비밀번호">
+							<input class="textBox" type="password" name="password" placeholder="비밀번호를 입력하세요">
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<input class="btn" type="submit" value="확인">
+							<input class="btn" type="submit" value="입력">
 						</td>
 					</tr>
 				</table>

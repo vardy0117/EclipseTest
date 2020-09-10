@@ -34,13 +34,13 @@
 		box-sizing: border-box;
 	}
 	#mainDiv {
-		width: 1000px;
+		width: 100%;
 		min-height: 600px;
 		margin: 0 auto;
 		margin-top: 80px;
 		position: relative;
 	}
-	#searchDiv {
+	#searchDiv  {
 		width: 450px;
 		height: 300px;
 		position: absolute;
@@ -68,11 +68,12 @@
 	}
 	.btn {
 		width: 25px;
-		background: linear-gradient(
+		/* background: linear-gradient(
 			to right, 
 			hsl(98 100% 62%), 
 			hsl(204 100% 59%)
-		);
+		); */
+		background-color: #19ce60;
 		font-family: Binggrae-Bold;
 		font-size: 1rem;
 		color: white;

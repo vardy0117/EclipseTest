@@ -12,11 +12,12 @@
 		color: white;
 		margin: 0 auto;
 		
-		background: linear-gradient(
+	/* 	background: linear-gradient(
 			to right, 
 			hsl(98 100% 62%), 
 			hsl(204 100% 59%)
-		);
+		); */
+		background-color: #19ce60;
 	}
 </style>
 </head>

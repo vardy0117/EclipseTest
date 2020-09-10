@@ -84,6 +84,16 @@ public class CeoLoginAction {
 		return result;
 		
 	} // method
+
+	public void getPermission(HttpServletRequest request, HttpServletResponse response) {
+		CeoDAO cdao = new CeoDAO();
+		String email=request.getParameter("email");
+		
+		String permission = cdao.getPermission(email);
+		HttpSession session = request.getSession();
+		
+		session.setAttribute("permission", permission);
+	}
 	
 	
 	

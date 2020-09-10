@@ -19,8 +19,8 @@
 		padding-top: 100px;
 		
 	}
-	#customerModifyDiv, #myOrderDiv, #myReviewDiv {
-		width: 30%;
+	#customerModifyDiv, #myOrderDiv, #myReviewDiv, #myCoupon {
+		width: 20%;
 		height: 400px;
 		float: left;
 		margin: 0 1%;
@@ -30,7 +30,7 @@
 	    border-radius: 15px;
 	    transition-duration: 0.4s;
 	}
-	#customerModifyDiv:hover, #myOrderDiv:hover, #myReviewDiv:hover {
+	#customerModifyDiv:hover, #myOrderDiv:hover, #myReviewDiv:hover, #myCoupon:hover {
 		box-shadow: 0 0 20px 0 hsl(98 100% 62%), 0 5px 5px 0 hsl(204 100% 59%);
 		background: hsl(98 100% 62%);
     	color: white;
@@ -44,7 +44,7 @@
 		margin-top: 40px;
 		font-size: 2rem;
 	}
-	#customerModifyDiv img, #myOrderDiv img, #myReviewDiv img {
+	#customerModifyDiv img, #myOrderDiv img, #myReviewDiv img ,#myCoupon img{
 		width: 90%;
 	}
 </style>
@@ -62,7 +62,7 @@
 		<div id="mainDiv">
 			<a href="./CustomerModifyIntro.do" onmouseover="hover(this);" onmouseout="unhover(this);">
 				<div id="customerModifyDiv" style="margin-left: 3%;">
-					<h2>회원 수정</h2>
+					<h2>정보 수정</h2>
 					<img src="images/customerModify_gradient.svg">
 				</div>
 			</a>
@@ -75,6 +75,12 @@
 			<a href="./MyReview.do" onmouseover="hover(this);" onmouseout="unhover(this);">
 				<div id="myReviewDiv">
 					<h2>나의 리뷰</h2>
+					<img src="images/myReview_gradient.svg">
+				</div>
+			</a>
+			<a href="./MyCoupon.do" onmouseover="hover(this);" onmouseout="unhover(this);">
+				<div id="myCoupon">
+					<h2>나의 쿠폰</h2>
 					<img src="images/myReview_gradient.svg">
 				</div>
 			</a>

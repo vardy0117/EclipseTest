@@ -265,5 +265,27 @@ public int deleteCeo(String ceoNo){
 	}
 	return result;
 }
+
+public String getPermission(String email) {
+	String permission = "F";
+	try {
+		con = getConnection();
+		sql = "select permission from ceo where email=?";
+		pstmt = con.prepareStatement(sql);
+		pstmt.setString(1, email);
+		
+		rs = pstmt.executeQuery();
+		
+		if(rs.next()){
+			permission = rs.getString("permission");
+		}
+	} catch (Exception e) {
+		e.printStackTrace();
+	} finally {
+		resourceClose();
+	}
+	return permission;
+
+}
 	
 }	

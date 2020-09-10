@@ -75,7 +75,7 @@
 			<input type="hidden" name="storeNo" value="${param.storeNo }">
 			<table>
 				<tr>
-					<th >메뉴사진</th>
+					<th>메뉴사진</th>
 					<td class="td_right"><input type="file" name="image"></td>
 				</tr>
 				<tr>

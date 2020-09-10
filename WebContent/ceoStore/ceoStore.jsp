@@ -10,8 +10,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="CSS/ceoStoreJSP.css">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <style>
 	div {
 		box-sizing: border-box;
@@ -135,6 +137,22 @@
 	    margin-left: 20px;
 	    margin-bottom: 10px;
 	}
+	#reviewTable input[type='button'] {
+		background: black;
+	    font-family: Binggrae-Bold;
+	    font-size: 1rem;
+	    color: white;
+	    border: none;
+	    border-radius: 12px;
+	    width: 150px;
+	    height: 35px;
+	    transition-duration: 1s;
+	    opacity: 0.7;
+	    cursor: pointer;
+	}
+	#reviewTable input[type='button']:hover {
+		opacity: 1;
+	}
 	textarea.commentOk {
 		background: #e2e2e2;
 		cursor: default;
@@ -178,7 +196,7 @@
 	     		  if(count != 0){
 	     			  var audio = new Audio();
 	     			  audio.src="./media/order_Voice.mp3";
-	     			  console.log(audio);
+	     			  //console.log(audio);
 	     			  audio.play();
 	     			  $(".uncheckedOrders").html('<img src="./images/ICON/icons8-meal-50 (3).png">');
 	     			
@@ -208,7 +226,7 @@
 		     		  if(count != 0){
 		     			  var audio = new Audio();
 		     			  audio.src="./media/order_Voice.mp3";
-		     			  console.log(audio);
+		     			  //console.log(audio);
 		     			  audio.play();
 		     			  $(".uncheckedOrders").html('<img src="./images/ICON/icons8-meal-50 (3).png">');
 		     			
@@ -217,8 +235,45 @@
 		     		  }
 		         }
 		   	});
-		}	
-		, 5000);	
+			var trList = document.getElementById("orderDiv").querySelectorAll("tbody tr");
+			for(let i=0; i<trList.length; i++) {
+				let id = trList[i].id;
+				let checkOrderNo = id.substr(id.indexOf("_")+1);
+				$.ajax({
+					url : "CheckAjax.do",
+					data : {"orderNo" : checkOrderNo},
+					dataType : "json",
+					success : function(jsonData) {
+						let thList = document.getElementById(id).querySelectorAll('th');
+						if(jsonData.orderCheck == 'F') {
+							thList[1].innerHTML = '<span style="color:green;">주문 확인중</span>';
+						} else if(jsonData.orderCheck == 'T') {
+							thList[1].innerHTML = '<span style="color:red;">수락</span>';
+						} else if(jsonData.orderCheck == 'N') {
+							thList[1].innerHTML = '<span style="color:orange;">주문 취소 처리됨</span>';
+						}
+						
+						if(jsonData.orderCheck == 'F') {
+							thList[3].innerHTML = '<span style="color:green;">주문 확인중</span>';
+						} else if(jsonData.orderCheck == 'T' && jsonData.deliveryCheck == 'F') {
+							thList[3].innerHTML = '<span style="color:blue;">배달 준비 중</span>';
+						} else if(jsonData.orderCheck == 'T' && jsonData.deliveryCheck == 'D') {
+							thList[3].innerHTML = '<span style="color:blue;">배달 중</span>';
+						} else if(jsonData.orderCheck == 'T' && jsonData.deliveryCheck == 'T') {
+							thList[3].innerHTML = '<span style="color:red;">배달 완료</span>';
+						} else if(jsonData.orderCheck == 'T' && jsonData.deliveryCheck == 'A') {
+							thList[3].innerHTML = '<span style="color:red;">배달 완료</span>';
+							var audio = new Audio();
+			     			audio.src="./media/delivery_Voice.mp3";
+							audio.play();
+							console.log(audio);
+						} else if(jsonData.orderCheck == 'N') {
+							thList[3].innerHTML = '<span style="color:orange;">배달 취소 처리됨</span>';
+						}
+					},
+				});
+			}
+		}, 3000);	
 	}
 	
 </script>
@@ -226,9 +281,9 @@
 <body>
 	<div id="mainDiv">
 		<div id="navDiv">
-			<div onclick="showDiv('menuDiv',this);">메뉴관리</div>
+			<div onclick="showDiv('menuDiv',this);" style="border-left: 0px;">메뉴관리</div>
 			<div onclick="showDiv('reviewDiv',this);">리뷰관리</div>
-			<div onclick="showDiv('orderDiv',this);">주문내역<span class="uncheckedOrders" style="vertical-align: middle;"></span></div>
+			<div onclick="showDiv('orderDiv',this);" style="border-right: 0px;">주문내역<span class="uncheckedOrders" style="vertical-align: middle;"></span></div>
 		</div>
 		
 		<div class="contentDiv display-on" id="menuDiv">
@@ -412,7 +467,7 @@
 						<td colspan="2">${fn:replace(review.contents, newLineChar, "<br/>")}</td>
 					</tr>
 					<tr>
-						<td colspan="2">
+						<td colspan="2" style="text-align: center;">
 							<c:choose>
 								<c:when test="${review.comment eq null }">
 									<textarea id="commentArea_${review.reviewNo}"></textarea>
@@ -463,7 +518,7 @@
 				</thead>
 
 			<c:forEach items="${orderList}" var="order">
-				<tr onclick="location.href='ceoOrder.do?orderNo=${order.orderNo}'">
+				<tr id="orderListTr_${order.orderNo}" onclick="location.href='ceoOrder.do?orderNo=${order.orderNo}'">
 					<th>${order.orderNo }</th>
 					<th>
 						<c:if test="${order.orderCheck eq 'F'}">
@@ -478,16 +533,22 @@
 					</th>
 					<th><fmt:formatDate value="${order.orderTime }" type="both" pattern="yyyy년 MM월 dd일 hh:mm "/></th>
 					<th>
-						<c:if test="${order.orderCheck eq 'F' and order.deliveryCheck eq 'F'}">
+						<c:if test="${order.orderCheck eq 'F'}">
 							<span style="color:green;">주문 확인중</span>
 						</c:if>
 						<c:if test="${order.orderCheck eq 'T' and order.deliveryCheck eq 'F'}">
+							<span style="color:blue;">배달 준비 중</span>
+						</c:if>
+						<c:if test="${order.orderCheck eq 'T' and order.deliveryCheck eq 'D'}">
 							<span style="color:blue;">배달 중</span>
 						</c:if>
 						<c:if test="${order.orderCheck eq 'T' and order.deliveryCheck eq 'T'}">
 							<span style="color:red;">배달 완료</span>
 						</c:if>
-						<c:if test="${order.orderCheck eq 'N' and order.deliveryCheck eq 'N'}">
+						<c:if test="${order.orderCheck eq 'T' and order.deliveryCheck eq 'A'}">
+							<span style="color:red;">배달 완료</span>
+						</c:if>
+						<c:if test="${order.orderCheck eq 'N'}">
 							<span style="color:orange;">배달 취소 처리됨</span>
 						</c:if>
 					</th>
@@ -536,7 +597,7 @@
 					alert("댓글등록완료");
 					document.getElementById("commentArea_"+reviewNo).classList.add("commentOk");
 					$("#commentArea_"+reviewNo).parent('td').children('input').remove();
-					var elements = '<input type="button" value="댓글삭제" onclick="deleteComment(' + reviewNo + ')"><input type="button" value="댓글수정" onclick="updateComment(' + reviewNo + ')">';
+					var elements = '<input type="button" value="댓글삭제" onclick="deleteComment(' + reviewNo + ')"> <input type="button" value="댓글수정" onclick="updateComment(' + reviewNo + ')">';
 					$("#commentArea_"+reviewNo).parent('td').append(elements);
 					$("#commentArea_"+reviewNo).html(comment);
 					$("#commentArea_"+reviewNo).attr("readonly",true);

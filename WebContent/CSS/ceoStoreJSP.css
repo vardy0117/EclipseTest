@@ -1,0 +1,153 @@
+@CHARSET "UTF-8";
+	div {
+		box-sizing: border-box;
+	}
+	#mainDiv {
+		width: 1000px;
+		min-height: 600px;
+		margin: 0 auto;
+		margin-top: 90px;
+		position: relative;
+	}
+	#navDiv {
+		width: 100%;
+		height: 80px;
+		border-radius: 12px;
+    	border: 2px solid #0000009c;
+	}
+	#navDiv > div {
+		width: 33.3333333%;
+		height: 100%;
+		float: left;
+		text-align: center;
+		font-size: 1.5rem;
+		line-height: 80px;
+		cursor: pointer;
+		background-color: #80808021;
+		border-left: 1px solid #0000009c;
+		border-right: 1px solid #0000009c;
+	}
+	.btn-on {
+		background-color: #80808054;
+	}
+	#navDiv > div:hover {
+		background-color: #80808054;
+	}
+	.contentDiv {
+		width:100%;
+		display: none;
+		padding: 50px;
+	}
+	.contentDiv table {
+		margin: 10px auto;
+		border: 2px solid #c7c7c7;
+		border-radius: 15px;
+		box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+		padding: 20px;
+	}
+	.contentDiv table img {
+		border-radius: 12px;
+	}
+	.display-on {
+		display: block;
+	}
+	#updateBtn {
+		background: url("images/setting_black.svg") no-repeat;
+		background-size: 32px;
+		width: 35px;
+		height: 35px;
+		cursor: pointer;
+		border: none;
+	}
+	#updateBtn:hover {
+		background: url("images/setting_gray.svg") no-repeat;
+		background-size: 32px;
+	}
+	#deleteBtn {
+		background: url("images/delete_black.svg") no-repeat;
+		background-size: 32px;
+		width: 35px;
+		height: 35px;
+		cursor: pointer;
+		border: none;
+	}
+	#deleteBtn:hover {
+		background: url("images/delete_gray.svg") no-repeat;
+		background-size: 32px;
+	}
+	#addBtn {
+		background: url("images/addBtn.svg") no-repeat;
+		background-size: 32px;
+		width: 35px;
+		height: 35px;
+		cursor: pointer;
+		border: none;
+	}	
+	#orderDiv table th {
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+	
+	#orderDiv table thead th {
+	    background-color: #80808069;
+	}
+	#orderDiv table tbody th:hover {
+		background: #8080801c;
+		cursor:pointer;
+	}
+	
+	.commentOk textArea{
+		margin-left: 10px;
+		border: 0px;
+		background-color: lightGray;	
+	}
+	.commentNo textArea{
+	
+	}
+	#reviewTable {
+		width: 700px;
+	}
+	#reviewTable textarea {
+	    width: 610px;
+	    height: 130px;
+	    resize: none;
+	    border: 2px black solid;
+	    border-radius: 12px;
+	    padding-left: 10px;
+	    padding-top: 5px;
+	    font-family: 'Binggrae-Bold';
+	    font-size: 1rem;
+	    outline: none;
+	    margin-left: 20px;
+	    margin-bottom: 10px;
+	}
+	textarea.commentOk {
+		background: #e2e2e2;
+		cursor: default;
+		border: 0px !important;
+	}
+	#star{
+		color: #ffa400;
+		margin-left: 40px;
+	}
+	#customerName{
+		color: #ffa400;
+	}
+	
+	#ceoReviewPageNo{
+		text-decoration: none;
+		font-size: 30px;
+		color: black;
+		margin-right: 5px;
+		text-align: center;
+	}
+	#ceoReviewPageNo:HOVER{
+		text-decoration: underline;
+	}
+	#page{
+		text-align: center;
+	}
+	#orderMenu{
+		font-size: 12px;
+		color: #d1bca4;
+	}

@@ -328,6 +328,7 @@ public class FrontController extends HttpServlet {
 				 forward = new ActionForward();
 				 result = action.execute(request, response);
 				 if(result){
+					 action.getPermission(request,response);
 					 forward.setRedirect(true);
 					 forward.setView("ceoIndex.jsp"); // 사장님 전용페이지가 없어서 일단 여기로 했습니당
 					 System.out.println("사장님 로그인 리다이렉트 작동 " + forward.getView());
@@ -650,66 +651,73 @@ public class FrontController extends HttpServlet {
 			request.setCharacterEncoding("utf-8");
 			int storeNo = Integer.parseInt(request.getParameter("storeNo"));
 			
-			// 주문목록을 ceoStore.jsp의 리뷰관리에 띄워주자!!!
-			OrderListDAO olDAO = new OrderListDAO();
-			List<OrderListBean> orderList = olDAO.getOrderListByStoreNo(storeNo);
-			ArrayList<String> orderMenu = new ArrayList<String>();
-			OrderMenuDAO omDAO = new OrderMenuDAO();
-			for(int i = 0;i<orderList.size();i++){
-				orderMenu.add(omDAO.getMenusToString(orderList.get(i).getOrderNo()));
-			}
-			request.setAttribute("orderMenu", orderMenu);
-			// 페이징 작업
-			// 페이지 선택을 안했을때 무조건 1페이지
-			request.setAttribute("ceoReviewPageNo", request.getParameter("ceoReviewPageNo")==null?"1":request.getParameter("ceoReviewPageNo"));
-
-			forward = new ActionForward();
-			
 			StoreDAO storeDAO = new StoreDAO();
-			StoreBean storeBean = storeDAO.getStoreInfo(storeNo);
-			
-			MenuDAO menuDAO = new MenuDAO();
-			List<MenuBean> menuList = menuDAO.getStoreMenu(storeNo);
-
-			
-			
-			// 페이징 작업
-			ReviewDAO reviewDAO = new ReviewDAO();
-			//ArrayList<ReviewBean> reviewList = reviewDAO.getStoreReview(storeNo);
-			ArrayList<ReviewBean> reviewList = new ArrayList<ReviewBean>();
-			if(request.getParameter("ceoReviewPageNo")==null){
-				reviewList = reviewDAO.getStoreReview(storeNo,1);
-			}else{
-				reviewList = reviewDAO.getStoreReview(storeNo,Integer.parseInt(request.getParameter("ceoReviewPageNo")));
-			}
-			
-			
-			
-			
-			// 총 페이지 수를 구하는 메소드
-			int ceoReviewCount = reviewDAO.getStoreReviewCount(storeNo);
-			request.setAttribute("ceoReviewCount",ceoReviewCount);
-			
-			CustomerDAO cDAO = new CustomerDAO();
-			ArrayList<CustomerBean> customerList = new ArrayList<CustomerBean>();
-			for(int i =0;i<reviewList.size();i++){
-				CustomerBean cBean = cDAO.getCustomer(reviewList.get(i).getCustomerNo());
-				customerList.add(cBean);
-			}
-			request.setAttribute("customerList", customerList);
-
-					
-			OrderAction orderAction = new OrderAction();
-			orderAction.getOrderListByStoreNo(request, response, storeNo);
+			if(request.getSession().getAttribute("ceoNo") == null || !storeDAO.isMine(storeNo, Integer.parseInt((String)request.getSession().getAttribute("ceoNo")))) {
+				response.setContentType("text/html;charset=UTF-8"); 
+				PrintWriter out = response.getWriter();
+				out.print("<script>alert('잘못된 접근입니다.'); location.href='./ceoIndex.jsp'; </script>");
+			} else {
+				// 주문목록을 ceoStore.jsp의 리뷰관리에 띄워주자!!!
+				OrderListDAO olDAO = new OrderListDAO();
+				List<OrderListBean> orderList = olDAO.getOrderListByStoreNo(storeNo);
+				ArrayList<String> orderMenu = new ArrayList<String>();
+				OrderMenuDAO omDAO = new OrderMenuDAO();
+				for(int i = 0;i<orderList.size();i++){
+					orderMenu.add(omDAO.getMenusToString(orderList.get(i).getOrderNo()));
+				}
+				request.setAttribute("orderMenu", orderMenu);
+				// 페이징 작업
+				// 페이지 선택을 안했을때 무조건 1페이지
+				request.setAttribute("ceoReviewPageNo", request.getParameter("ceoReviewPageNo")==null?"1":request.getParameter("ceoReviewPageNo"));
+	
+				forward = new ActionForward();
 				
-			
-			
-			request.setAttribute("storeBean", storeBean);
-			request.setAttribute("menuList", menuList);
-			request.setAttribute("reviewList", reviewList);
-			
-			forward.setView("ceoIndex.jsp?center=ceoStore/ceoStore.jsp");
-			forward.execute(request, response);
+				
+				StoreBean storeBean = storeDAO.getStoreInfo(storeNo);
+				
+				MenuDAO menuDAO = new MenuDAO();
+				List<MenuBean> menuList = menuDAO.getStoreMenu(storeNo);
+	
+				
+				
+				// 페이징 작업
+				ReviewDAO reviewDAO = new ReviewDAO();
+				//ArrayList<ReviewBean> reviewList = reviewDAO.getStoreReview(storeNo);
+				ArrayList<ReviewBean> reviewList = new ArrayList<ReviewBean>();
+				if(request.getParameter("ceoReviewPageNo")==null){
+					reviewList = reviewDAO.getStoreReview(storeNo,1);
+				}else{
+					reviewList = reviewDAO.getStoreReview(storeNo,Integer.parseInt(request.getParameter("ceoReviewPageNo")));
+				}
+				
+				
+				
+				
+				// 총 페이지 수를 구하는 메소드
+				int ceoReviewCount = reviewDAO.getStoreReviewCount(storeNo);
+				request.setAttribute("ceoReviewCount",ceoReviewCount);
+				
+				CustomerDAO cDAO = new CustomerDAO();
+				ArrayList<CustomerBean> customerList = new ArrayList<CustomerBean>();
+				for(int i =0;i<reviewList.size();i++){
+					CustomerBean cBean = cDAO.getCustomer(reviewList.get(i).getCustomerNo());
+					customerList.add(cBean);
+				}
+				request.setAttribute("customerList", customerList);
+	
+						
+				OrderAction orderAction = new OrderAction();
+				orderAction.getOrderListByStoreNo(request, response, storeNo);
+					
+				
+				
+				request.setAttribute("storeBean", storeBean);
+				request.setAttribute("menuList", menuList);
+				request.setAttribute("reviewList", reviewList);
+				
+				forward.setView("ceoIndex.jsp?center=ceoStore/ceoStore.jsp");
+				forward.execute(request, response);
+			}
 		}
 		
 		
@@ -944,6 +952,19 @@ public class FrontController extends HttpServlet {
 			forward.setView("index.jsp?center=member/myReview.jsp");
 			forward.execute(request, response);
 		}
+		
+		if(command.equals("MyCoupon.do")){
+			String customerNo = (String)session.getAttribute("customerNo");
+			
+			CouponDAO cDAO = new CouponDAO();
+			List<CouponBean> unUsedCouponList = cDAO.getCoupons(customerNo);
+			
+			request.setAttribute("unUsedCouponList", unUsedCouponList);
+			forward = new ActionForward();
+			forward.setView("index.jsp?center=member/myCoupon.jsp");
+			forward.execute(request, response);
+		}
+		
 	
 		//deleteMenu
 		if(command.equals("deleteMenu.do")){
@@ -1374,12 +1395,12 @@ public class FrontController extends HttpServlet {
 			
 			if(delivengersNo==null){
 				PrintWriter out = response.getWriter();
-				out.print("<script>alert('잘못된 접근 입니다 \\n메인페이지로 이동 합니다'); location.href='"+projectURL+"' </script>");
+				out.print("<script>alert('Delivengers 메인페이지로 이동합니다'); location.href='"+projectURL+"/deliveryIndex.jsp' </script>");
 			}else{
 				String list="";
 				DeliveryAction dAction = new DeliveryAction();
 				
-				if(orderNo == null || orderNo.equals("")){
+				if(orderNo == null || orderNo.equals("") || orderNo == ("0")){
 					
 					list = dAction.getDeliveryList(request, response, delivengersNo);	
 					
@@ -1387,6 +1408,7 @@ public class FrontController extends HttpServlet {
 					out.print(list);
 				
 				} else {
+					
 					int result=0;
 					DeliveryBean dbean = new DeliveryBean();
 					dbean.setDelivengersNo(delivengersNo);
@@ -1477,6 +1499,7 @@ public class FrontController extends HttpServlet {
 				out.print("noTicket");
 			}
 		}
+
 		/********************************************************/
 		// 어드민 영역
 			if(command.equals("admin.do")) {
@@ -1524,9 +1547,8 @@ public class FrontController extends HttpServlet {
 				response.setContentType("text/html; charset=UTF-8");
 				PrintWriter out = response.getWriter();
 				out.print(jsonObj);
-				
-			
 				System.out.println(" admincustomerlist가져옴 : " + jsonObj);
+
 			}	
 			
 			/******************************************************************************/		
@@ -1553,6 +1575,51 @@ public class FrontController extends HttpServlet {
 				System.out.println("ceopermission 호출 :  " + result);
 			}	
 	/******************************************************************************/		
+
+			}					
+
+		
+
+		if(command.equals("CheckAjax.do")){
+			
+			int orderNo = Integer.parseInt(request.getParameter("orderNo"));
+			
+			OrderListDAO orderListDAO = new OrderListDAO();
+			OrderListBean orderListBean = orderListDAO.getOrderList(orderNo);
+			
+			JSONObject jsonObj = new JSONObject();
+			jsonObj.put("orderCheck", orderListBean.getOrderCheck());
+			jsonObj.put("deliveryCheck", orderListBean.getDeliveryCheck());
+			
+			if(orderListBean.getDeliveryCheck().equals("A")) {
+				orderListDAO.setTwhereA(orderNo);
+			}
+			
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			//System.out.println(jsonObj.toJSONString());
+			out.print(jsonObj.toJSONString());
+    }
+
+		if(command.equals("deleveryTrue.do")){
+			DeliveryAction action = new DeliveryAction();
+			action.updateArrivalTime(request,response);
+			
+			OrderAction oaction = new OrderAction();
+			oaction.updateDeliveryCheckA(request,response);
+			
+			/*PrintWriter out = response.getWriter();
+			out.print("<script> alert('배달 완료!!') </script>");
+			*/
+			
+			forward= new ActionForward();
+			forward.setView("MoveDeliveryIndex.do?orderNo=0");
+			forward.execute(request, response);
+
+		}
+
+	
+
 	}
 				
 }
