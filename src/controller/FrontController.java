@@ -340,6 +340,7 @@ public class FrontController extends HttpServlet {
 				 forward = new ActionForward();
 				 result = action.execute(request, response);
 				 if(result){
+					 action.getPermission(request,response);
 					 forward.setRedirect(true);
 					 forward.setView("ceoIndex.jsp"); // 사장님 전용페이지가 없어서 일단 여기로 했습니당
 					 System.out.println("사장님 로그인 리다이렉트 작동 " + forward.getView());
