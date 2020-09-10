@@ -135,6 +135,22 @@
 	    margin-left: 20px;
 	    margin-bottom: 10px;
 	}
+	#reviewTable input[type='button'] {
+		background: black;
+	    font-family: Binggrae-Bold;
+	    font-size: 1rem;
+	    color: white;
+	    border: none;
+	    border-radius: 12px;
+	    width: 150px;
+	    height: 35px;
+	    transition-duration: 1s;
+	    opacity: 0.7;
+	    cursor: pointer;
+	}
+	#reviewTable input[type='button']:hover {
+		opacity: 1;
+	}
 	textarea.commentOk {
 		background: #e2e2e2;
 		cursor: default;
@@ -178,7 +194,7 @@
 	     		  if(count != 0){
 	     			  var audio = new Audio();
 	     			  audio.src="./media/order_Voice.mp3";
-	     			  console.log(audio);
+	     			  //console.log(audio);
 	     			  audio.play();
 	     			  $(".uncheckedOrders").html('<img src="./images/ICON/icons8-meal-50 (3).png">');
 	     			
@@ -208,7 +224,7 @@
 		     		  if(count != 0){
 		     			  var audio = new Audio();
 		     			  audio.src="./media/order_Voice.mp3";
-		     			  console.log(audio);
+		     			  //console.log(audio);
 		     			  audio.play();
 		     			  $(".uncheckedOrders").html('<img src="./images/ICON/icons8-meal-50 (3).png">');
 		     			
@@ -226,9 +242,9 @@
 <body>
 	<div id="mainDiv">
 		<div id="navDiv">
-			<div onclick="showDiv('menuDiv',this);">메뉴관리</div>
+			<div onclick="showDiv('menuDiv',this);" style="border-left: 0px;">메뉴관리</div>
 			<div onclick="showDiv('reviewDiv',this);">리뷰관리</div>
-			<div onclick="showDiv('orderDiv',this);">주문내역<span class="uncheckedOrders" style="vertical-align: middle;"></span></div>
+			<div onclick="showDiv('orderDiv',this);" style="border-right: 0px;">주문내역<span class="uncheckedOrders" style="vertical-align: middle;"></span></div>
 		</div>
 		
 		<div class="contentDiv display-on" id="menuDiv">
@@ -412,7 +428,7 @@
 						<td colspan="2">${fn:replace(review.contents, newLineChar, "<br/>")}</td>
 					</tr>
 					<tr>
-						<td colspan="2">
+						<td colspan="2" style="text-align: center;">
 							<c:choose>
 								<c:when test="${review.comment eq null }">
 									<textarea id="commentArea_${review.reviewNo}"></textarea>
@@ -536,7 +552,7 @@
 					alert("댓글등록완료");
 					document.getElementById("commentArea_"+reviewNo).classList.add("commentOk");
 					$("#commentArea_"+reviewNo).parent('td').children('input').remove();
-					var elements = '<input type="button" value="댓글삭제" onclick="deleteComment(' + reviewNo + ')"><input type="button" value="댓글수정" onclick="updateComment(' + reviewNo + ')">';
+					var elements = '<input type="button" value="댓글삭제" onclick="deleteComment(' + reviewNo + ')"> <input type="button" value="댓글수정" onclick="updateComment(' + reviewNo + ')">';
 					$("#commentArea_"+reviewNo).parent('td').append(elements);
 					$("#commentArea_"+reviewNo).html(comment);
 					$("#commentArea_"+reviewNo).attr("readonly",true);

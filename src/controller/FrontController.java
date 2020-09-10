@@ -662,66 +662,73 @@ public class FrontController extends HttpServlet {
 			request.setCharacterEncoding("utf-8");
 			int storeNo = Integer.parseInt(request.getParameter("storeNo"));
 			
-			// 주문목록을 ceoStore.jsp의 리뷰관리에 띄워주자!!!
-			OrderListDAO olDAO = new OrderListDAO();
-			List<OrderListBean> orderList = olDAO.getOrderListByStoreNo(storeNo);
-			ArrayList<String> orderMenu = new ArrayList<String>();
-			OrderMenuDAO omDAO = new OrderMenuDAO();
-			for(int i = 0;i<orderList.size();i++){
-				orderMenu.add(omDAO.getMenusToString(orderList.get(i).getOrderNo()));
-			}
-			request.setAttribute("orderMenu", orderMenu);
-			// 페이징 작업
-			// 페이지 선택을 안했을때 무조건 1페이지
-			request.setAttribute("ceoReviewPageNo", request.getParameter("ceoReviewPageNo")==null?"1":request.getParameter("ceoReviewPageNo"));
-
-			forward = new ActionForward();
-			
 			StoreDAO storeDAO = new StoreDAO();
-			StoreBean storeBean = storeDAO.getStoreInfo(storeNo);
-			
-			MenuDAO menuDAO = new MenuDAO();
-			List<MenuBean> menuList = menuDAO.getStoreMenu(storeNo);
-
-			
-			
-			// 페이징 작업
-			ReviewDAO reviewDAO = new ReviewDAO();
-			//ArrayList<ReviewBean> reviewList = reviewDAO.getStoreReview(storeNo);
-			ArrayList<ReviewBean> reviewList = new ArrayList<ReviewBean>();
-			if(request.getParameter("ceoReviewPageNo")==null){
-				reviewList = reviewDAO.getStoreReview(storeNo,1);
-			}else{
-				reviewList = reviewDAO.getStoreReview(storeNo,Integer.parseInt(request.getParameter("ceoReviewPageNo")));
-			}
-			
-			
-			
-			
-			// 총 페이지 수를 구하는 메소드
-			int ceoReviewCount = reviewDAO.getStoreReviewCount(storeNo);
-			request.setAttribute("ceoReviewCount",ceoReviewCount);
-			
-			CustomerDAO cDAO = new CustomerDAO();
-			ArrayList<CustomerBean> customerList = new ArrayList<CustomerBean>();
-			for(int i =0;i<reviewList.size();i++){
-				CustomerBean cBean = cDAO.getCustomer(reviewList.get(i).getCustomerNo());
-				customerList.add(cBean);
-			}
-			request.setAttribute("customerList", customerList);
-
-					
-			OrderAction orderAction = new OrderAction();
-			orderAction.getOrderListByStoreNo(request, response, storeNo);
+			if(request.getSession().getAttribute("ceoNo") == null || !storeDAO.isMine(storeNo, Integer.parseInt((String)request.getSession().getAttribute("ceoNo")))) {
+				response.setContentType("text/html;charset=UTF-8"); 
+				PrintWriter out = response.getWriter();
+				out.print("<script>alert('잘못된 접근입니다.'); location.href='./ceoIndex.jsp'; </script>");
+			} else {
+				// 주문목록을 ceoStore.jsp의 리뷰관리에 띄워주자!!!
+				OrderListDAO olDAO = new OrderListDAO();
+				List<OrderListBean> orderList = olDAO.getOrderListByStoreNo(storeNo);
+				ArrayList<String> orderMenu = new ArrayList<String>();
+				OrderMenuDAO omDAO = new OrderMenuDAO();
+				for(int i = 0;i<orderList.size();i++){
+					orderMenu.add(omDAO.getMenusToString(orderList.get(i).getOrderNo()));
+				}
+				request.setAttribute("orderMenu", orderMenu);
+				// 페이징 작업
+				// 페이지 선택을 안했을때 무조건 1페이지
+				request.setAttribute("ceoReviewPageNo", request.getParameter("ceoReviewPageNo")==null?"1":request.getParameter("ceoReviewPageNo"));
+	
+				forward = new ActionForward();
 				
-			
-			
-			request.setAttribute("storeBean", storeBean);
-			request.setAttribute("menuList", menuList);
-			request.setAttribute("reviewList", reviewList);
-			
-			forward.setView("ceoIndex.jsp?center=ceoStore/ceoStore.jsp");
-			forward.execute(request, response);
+				
+				StoreBean storeBean = storeDAO.getStoreInfo(storeNo);
+				
+				MenuDAO menuDAO = new MenuDAO();
+				List<MenuBean> menuList = menuDAO.getStoreMenu(storeNo);
+	
+				
+				
+				// 페이징 작업
+				ReviewDAO reviewDAO = new ReviewDAO();
+				//ArrayList<ReviewBean> reviewList = reviewDAO.getStoreReview(storeNo);
+				ArrayList<ReviewBean> reviewList = new ArrayList<ReviewBean>();
+				if(request.getParameter("ceoReviewPageNo")==null){
+					reviewList = reviewDAO.getStoreReview(storeNo,1);
+				}else{
+					reviewList = reviewDAO.getStoreReview(storeNo,Integer.parseInt(request.getParameter("ceoReviewPageNo")));
+				}
+				
+				
+				
+				
+				// 총 페이지 수를 구하는 메소드
+				int ceoReviewCount = reviewDAO.getStoreReviewCount(storeNo);
+				request.setAttribute("ceoReviewCount",ceoReviewCount);
+				
+				CustomerDAO cDAO = new CustomerDAO();
+				ArrayList<CustomerBean> customerList = new ArrayList<CustomerBean>();
+				for(int i =0;i<reviewList.size();i++){
+					CustomerBean cBean = cDAO.getCustomer(reviewList.get(i).getCustomerNo());
+					customerList.add(cBean);
+				}
+				request.setAttribute("customerList", customerList);
+	
+						
+				OrderAction orderAction = new OrderAction();
+				orderAction.getOrderListByStoreNo(request, response, storeNo);
+					
+				
+				
+				request.setAttribute("storeBean", storeBean);
+				request.setAttribute("menuList", menuList);
+				request.setAttribute("reviewList", reviewList);
+				
+				forward.setView("ceoIndex.jsp?center=ceoStore/ceoStore.jsp");
+				forward.execute(request, response);
+			}
 		}
 		
 		
