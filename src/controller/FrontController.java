@@ -951,6 +951,19 @@ public class FrontController extends HttpServlet {
 			forward.setView("index.jsp?center=member/myReview.jsp");
 			forward.execute(request, response);
 		}
+		
+		if(command.equals("MyCoupon.do")){
+			String customerNo = (String)session.getAttribute("customerNo");
+			
+			CouponDAO cDAO = new CouponDAO();
+			List<CouponBean> unUsedCouponList = cDAO.getCoupons(customerNo);
+			
+			request.setAttribute("unUsedCouponList", unUsedCouponList);
+			forward = new ActionForward();
+			forward.setView("index.jsp?center=member/myCoupon.jsp");
+			forward.execute(request, response);
+		}
+		
 	
 		//deleteMenu
 		if(command.equals("deleteMenu.do")){
