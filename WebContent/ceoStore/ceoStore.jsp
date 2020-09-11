@@ -285,7 +285,7 @@
 			<div onclick="showDiv('orderDiv',this);" style="border-right: 0px;">주문내역<span class="uncheckedOrders" style="vertical-align: middle;"></span></div>
 		</div>
 		
-		<div class="contentDiv display-on" id="menuDiv">
+		<div class="contentDiv" id="menuDiv">
 		
 			<c:forEach items="${menuList }" var="menu">
 				<c:if test="${menu.category eq '세트 메뉴'}">
@@ -505,7 +505,7 @@
 		<!---------------------------------/Review---------------------------------------->
 		
 		
-		<div class="contentDiv" id="orderDiv">
+		<div class="contentDiv display-on" id="orderDiv">
 			<table>
 				<thead>
 					<tr> 
