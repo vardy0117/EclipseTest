@@ -107,9 +107,37 @@ public class DeliveryDAO {
 			   +"d.departureTime, d.arrivalTime, o.deliveryCheck "
 			   +"from delivery d join orderList o "
 			   +"on d.orderNo = o.orderNo "
-			   +"where d.delivengersNo = ? "
-			   +"order by o.deliveryCheck, d.departureTime";
+			   +"where d.delivengersNo = ? and o.deliveryCheck = 'D' "
+			   +"order by d.departureTime";
 		
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, Integer.parseInt(delivengersNo));	
+			// pstmt.setInt(2, Integer.parseInt(dbean.getDelivengersNo());
+			
+			rs=pstmt.executeQuery(); 
+			while(rs.next()){				
+				JSONObject jsonObj = new JSONObject();
+				jsonObj.put("delivengerNo", delivengersNo);
+				jsonObj.put("storeNo",rs.getString("o.storeNo"));
+				jsonObj.put("orderNo",rs.getString("o.orderNo" ));
+				jsonObj.put("roadAddress", rs.getString("o.roadAddress"));
+				jsonObj.put("detailAddress", rs.getString("o.detailAddress"));
+				jsonObj.put("customerPhone",rs.getString("o.phone" ));
+				jsonObj.put("request", rs.getString("o.request"));
+				jsonObj.put("departureTime",rs.getTimestamp("d.departureTime").toString());
+				jsonObj.put("arrivalTime", rs.getTimestamp("d.arrivalTime").toString());
+				jsonObj.put("deliveryCheck", rs.getString("o.deliveryCheck"));
+				
+				array.add(jsonObj);
+			}
+			
+			sql="select o.orderNo, o.storeNo, o.roadAddress, o.detailAddress, o.phone, o.request, "
+					   +"d.departureTime, d.arrivalTime, o.deliveryCheck "
+					   +"from delivery d join orderList o "
+					   +"on d.orderNo = o.orderNo "
+					   +"where d.delivengersNo = ? and o.deliveryCheck != 'D' "
+					   +"order by d.departureTime";
+			
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, Integer.parseInt(delivengersNo));	
 			// pstmt.setInt(2, Integer.parseInt(dbean.getDelivengersNo());
