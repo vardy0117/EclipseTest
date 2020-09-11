@@ -91,7 +91,9 @@ return (document.compatMode && document.compatMode!="BackCompat")? document.docu
   }
 
   function reset(element) {
-	  element.style.top = doc_height+"px"s;
+	  console.log(element.style.top);
+	  element.style.top = doc_height+"px";
+	  console.log(element.style.top);
   }
 
 
