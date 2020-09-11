@@ -29,12 +29,37 @@
 </style>
 </head>
 <body>
+	<%--
 	<c:set  var="center" value="${param.center}"/>
 	<c:if test="${center==null}">
 		<c:set var="center" value="/main/ceoMain.jsp" />
 	</c:if>
 	<jsp:include page="/inc/ceoTop.jsp"/>
 	<jsp:include page="${center }"/>
+	<jsp:include page="/inc/ceoBottom.jsp"></jsp:include> --%>
+
+
+	<jsp:include page="/inc/ceoTop.jsp"/>
+	<c:set  var="center" value="${param.center}"/>
+	<c:choose>
+	<c:when test="${center eq null && empty sessionScope.ceoNo}">
+		<c:set var="center" value="/member/ceoLogin.jsp" />
+		<jsp:include page="${center }"/>
+	</c:when>
+	<c:when test="${center eq null && !empty sessionScope.ceoNo}">
+		<c:set var="center" value="/main/ceoMain.jsp" />
+		<jsp:include page="${center }"/>
+	</c:when>
+	<c:when test="${center eq 'member/ceoLogin.jsp' || center eq 'member/ceoJoin.jsp'}">
+			<jsp:include page="${center }"/>
+	</c:when>
+	<c:otherwise>
+		<c:if test="${empty sessionScope.ceoNo}">
+			<c:set var="center" value="/main/ceoLogin.jsp"/>
+			<jsp:include page="${center }"/>
+		</c:if>
+	</c:otherwise>
+	</c:choose>
 	<jsp:include page="/inc/ceoBottom.jsp"></jsp:include>
 </body>
 </html>
