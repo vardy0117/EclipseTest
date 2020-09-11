@@ -23,10 +23,12 @@
 		padding-bottom: 15px;
 	}
 	#reviewT{
-		border: 1px solid gray;
 		padding: 0;
 		margin: 0 auto;
 		width: 100%;
+		margin-bottom: 20px;
+	    border-bottom: 1px solid #d9d9d9;
+	    padding-bottom: 10px;
 	}
 	
 	#appendT{
@@ -103,7 +105,10 @@
 		font-size: 15px;
 		font-weight: 800; 
 		padding: 0.8em;
-		
+		opacity: 1;
+	}
+	#btnReview:hover {
+		opacity: 0.7;
 	}
 	#unReviewPageNo{
 		text-decoration: none;
@@ -140,6 +145,8 @@
 		border-radius: 20px;
 		padding-left: 1em;
 		padding-top: 1em;
+		width: 90%;
+    	margin: 0 auto;
 	}
 	#ceoNick{
 		font-size: 20px;
@@ -165,7 +172,7 @@
 					<td>
 						<div class="storeName">${unReviewStoreNameList[i].name}</div>
 					</td>
-					<td>
+					<td rowspan="3">
 						<button onclick="location.href='writeReview.do?storeNo=${unReviewStoreNameList[i].storeNo}&orderNo=${unReviewOrder.orderNo }'" id="btnReview" style="cursor: pointer;">리뷰쓰기</button>
 					</td>
 				</tr>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -20,12 +21,17 @@
 		width: 900px;
 		margin: 0 auto;
 	}
-	#title{
-		color: yellowgreen;
-		border-bottom: 1px;
+	#title td{
+		background: #19ce60;
+    	color: white;
+		border-bottom: 1px solid black;
 	}
 	#tableInner:HOVER{
 		background-color: #f5f5f5;
+	}
+	#unUsedCoupon {
+		text-align: center;
+		font-size: 1.5rem;
 	}
 </style>
 <body>
@@ -44,7 +50,7 @@
 					<td>${unUsedCoupon.couponNo }</td>
 					<td>${unUsedCoupon.name }</td>
 					<td>${unUsedCoupon.discount }%</td>
-					<td>${unUsedCoupon.expDate }</td>
+					<td>${fn:substring(unUsedCoupon.expDate,0, 10) }</td>
 				</tr>
 			</c:forEach>
 		</table>

@@ -61,13 +61,13 @@
       box-sizing: border-box;
    }
    
-      #mainDiv {
+     #mainDiv {
       width: 1000px;
       min-height: 600px;
       margin: 0 auto;
       margin-top: 80px;
       position: relative;
-      padding-top: 30px;
+      padding-top: 100px;
    }
    #mainDiv li{
       list-style: none;
@@ -95,11 +95,6 @@
       display: none;
    }
    
-   #more{
-          text-align: center;
-          padding: 20px;
-          clear:both;
-   }
    
    #cancelorder {
    /* float: right; */
@@ -272,8 +267,6 @@ function cancelorder (orderNo) {
          </tr>
       </table>
    </div>
-   
-   <div id="more"></div>
    
 <div  style="clear : both; ">
 </div>

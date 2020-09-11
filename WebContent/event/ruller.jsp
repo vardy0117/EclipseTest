@@ -231,7 +231,7 @@ function goRoulette() {
 		margin: 30px auto;
 	}
 	#rouletteBtnDiv button {
-		background: linear-gradient(to right, hsl(98 100% 62%), hsl(204 100% 59%));
+		background: #19ce60;
 		font-family: Binggrae-Bold;
 		font-size: 1rem;
 		color: white;
