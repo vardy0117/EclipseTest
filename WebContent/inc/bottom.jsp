@@ -24,7 +24,7 @@
 <body>
 	<div id="bottomDiv">
 		bottom
-		<div><a href="./CeoLogin.do" target="_blank">사장님 로그인</a></div>
+		<div><a href="./ceoIndex.jsp" target="_blank">사장님 로그인</a></div>
 	</div>
 	
 	
