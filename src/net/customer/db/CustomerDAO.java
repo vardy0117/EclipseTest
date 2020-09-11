@@ -180,10 +180,10 @@ public class CustomerDAO {
 
 			if (rs.next()) {
 				result = true;
-				log.info("로그인 체크 성공 값 체크 : " + result);
+				log.info("암호화된 고객 로그인 체크 성공 값 체크 : " + result);
 
 			}else{
-				log.info("로그인 체크 실패 값 " + result);
+				log.info("암호화된 고객 로그인 체크 실패 값 " + result);
 			}
 	
 			 
@@ -269,6 +269,8 @@ public class CustomerDAO {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			resourceClose();
 		}
 		 
 		
@@ -307,13 +309,64 @@ public class CustomerDAO {
 	}
 	
 	/****************************************************/
-/*	public CustomerBean AesCheckCustomer(String customerNo){ // 암호화 고객 정보 조회
+	public CustomerBean AesCheckCustomer(String email, String password){ // 암호 확인후 고객 정보 조회해주는  함수
 		CustomerBean cBean = new CustomerBean();
 		try {
 			con=getConnection();
-			sql="select * from customer where customerNo=?";
+
+			sql="select * from customer where email =  ? "
+					+ "and password = ? =  "
+					+ "(select aes_decrypt(unhex(password),?) " // 패스워드
+					+ "as email from customer where email=?)";
+			
+			 log.info("AesCheckCustomer (암호화된 패스워드로 정보 확인) 받은 이메일 정보 : " + email);
+			 
 			pstmt=con.prepareStatement(sql);
-			pstmt.setString(1, customerNo);
+			 pstmt.setString(1, email);
+			 pstmt.setString(2, password);
+			 pstmt.setString(3, password); // 검사용
+			 pstmt.setString(4, email);
+			 
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()){
+				cBean.setCustomerNo(rs.getString(1));
+				cBean.setEmail(rs.getString(2));
+				cBean.setPassword(rs.getString(3));
+				cBean.setNickname(rs.getString(4));
+				cBean.setRoadAddress(rs.getString(5));
+				cBean.setDetailAddress(rs.getString(6));
+				cBean.setBname(rs.getString(7));
+				cBean.setPhone(rs.getString(8));
+				cBean.setGrad(rs.getString(9));
+				cBean.setAgreeAD(rs.getString(10));
+				cBean.setSido(rs.getString(11));
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.info("AesCheckCustomer 오류 발생 " + e);
+		} finally {
+			resourceClose();
+		}
+		return cBean;
+	}
+	
+	/***********************************************************************************************/
+	/*public CustomerBean AesNoCustomer(String email, String password){ // 암호화가 되어있지 않은 고객 정보 호출 함수
+		CustomerBean cBean = new CustomerBean();
+		try {
+			con=getConnection();
+
+			// 암호화가 안되어있는 고객 정보를 호출함 (회원정보 수정란에서 사용하는 함수) 
+			sql="select * from customer where email = ? and password = ? ";
+			
+			 log.info("AesNoCustomer No 암호화 고객  정보 확인) 받은 이메일 정보 : " + email);
+			 
+			pstmt=con.prepareStatement(sql);
+			 pstmt.setString(1, email);
+			 pstmt.setString(2, password);
+			 
 			rs = pstmt.executeQuery();
 			if(rs.next()){
 				cBean.setCustomerNo(rs.getString(1));
@@ -331,6 +384,7 @@ public class CustomerDAO {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.info("AesNoCustomer 오류 발생 " + e);
 		} finally {
 			resourceClose();
 		}
@@ -361,7 +415,7 @@ public class CustomerDAO {
 			
 			
 	log.info("게터로 받은 패스워드 : " + cBean.getPassword());
-	log.info("게터로 받은 패스워드 : " + cBean.getEmail());
+	log.info("게터로 받은 이메일 : " + cBean.getEmail());
 			// 암호화 안된 버전
 		/*	sql="update customer set password=?,nickname=?,phone=?,roadAddress=?,detailAddress=?,bname=?,sido=? "
 					+ "where customerNo=?";

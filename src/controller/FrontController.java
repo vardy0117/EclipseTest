@@ -285,14 +285,31 @@ public class FrontController extends HttpServlet {
 
 		
 		if(command.equals("CustomerModify.do")){
+			String email = (String) session.getAttribute("email");
+			String password = request.getParameter("password");
+			String customerNo = (String) request.getSession().getAttribute("customerNo");
 			
-			if(request.getSession().getAttribute("customerNo") != null){
+			System.out.println("CustomerModify.do (회원정보 수정 받은 customerNo) : " + customerNo);
+			if( customerNo != null && password != null){
+				// 커스터머 번호, 패스워드가 널이 아니면 접근후 다오로 가서 유효성 한번더 검사함
+				
 				CustomerDAO cDAO = new CustomerDAO();
-				CustomerBean cBean = cDAO.getCustomer((String)request.getSession().getAttribute("customerNo"));
+			//	String email = (String) session.getAttribute("email");
+			//	CustomerBean cBean = cDAO.getCustomer((String)request.getSession().getAttribute("customerNo"));
+
+				CustomerBean cBean = cDAO.AesCheckCustomer(email, password);
+				
+				System.out.println("CustomerModify.do (회원정보 수정 접근) 받은 이메일 : " + email);
 				request.setAttribute("cBean", cBean);
+				
 				forward = new ActionForward();
 				forward.setView("index.jsp?center=member/customerModify.jsp");
 				forward.execute(request, response);
+			}else{
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = response.getWriter();
+				out.println("<script>alert('잘못된 접근입니다 (고객정보 수정)'); location.href='./';</script>");
+				out.flush();
 			}
 		}
 		if(command.equals("CustomerModifyAction.do")){
