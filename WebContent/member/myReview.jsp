@@ -132,6 +132,7 @@
 	#orderMenuUnReview{
 		font-size: 12px;
 		color: #d1bca4;
+		min-width: 250px;
 	}
 	#comment{
 		background: #e2e2e2;
@@ -170,7 +171,7 @@
 				</tr>
 				<tr>
 					<td>
-						<span id="orderMenuUnReview">${requestScope.menusList[i]}</span>
+						<div id="orderMenuUnReview">${requestScope.menusList[i]}</div>
 					</td>
 				</tr>
 				<tr>
