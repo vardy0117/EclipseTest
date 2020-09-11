@@ -256,7 +256,7 @@ function cancelorder (orderNo) {
 <hr>
 		<c:forEach var="orderstatus" items="${OrderRealDetail}" begin="0" end="0">
 			<c:if test="${orderstatus.orderCheck eq 'F' }">
-				상태 : 주문확인중
+				상태 : 주문 접수 중!
 				<input class="btn"  id="btn" type="submit" value="주문취소요청" onclick="cancelorder('${orderstatus.orderNo}');">
 			</c:if>
 			<c:if test="${orderstatus.orderCheck eq 'N' }">
@@ -265,7 +265,13 @@ function cancelorder (orderNo) {
 			<c:if test="${orderstatus.orderCheck eq 'T' && orderstatus.deliveryCheck eq'T' }">
 				상태 : 배달완료
 			</c:if>
+			<c:if test="${orderstatus.orderCheck eq 'T' && orderstatus.deliveryCheck eq'A' }">
+				상태 : 배달완료
+			</c:if>
 			<c:if test="${orderstatus.orderCheck eq 'T' && orderstatus.deliveryCheck eq'F' }">
+				상태 : 음식 준비 중!
+			</c:if>
+			<c:if test="${orderstatus.orderCheck eq 'T' && orderstatus.deliveryCheck eq'D' }">
 				상태 : 배달중
 			</c:if>
 		</c:forEach>				

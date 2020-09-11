@@ -115,15 +115,21 @@
 							<td>
 								<c:choose>
 								<c:when test="${orderlist.orderCheck eq 'F'}">
-										<span style="color:green;">주문 확인 중!</span>
+										<span style="color:green;">주문 접수 중!</span>
 								</c:when>	
 								<c:when test="${orderlist.orderCheck eq 'N'}">
 										<span style="color:red;">주문 취소!</span>
 								</c:when>
 								<c:when test="${orderlist.orderCheck eq 'T' && orderlist.deliveryCheck eq 'T'}">
 										<span style="color:orange;">배달 완료!</span>
+								</c:when>
+								<c:when test="${orderlist.orderCheck eq 'T' && orderlist.deliveryCheck eq 'A'}">
+										<span style="color:orange;">배달 완료!</span>
 								</c:when>	
 								<c:when test="${orderlist.orderCheck eq 'T' && orderlist.deliveryCheck eq 'F'}">
+										<span style="color:blue;">음식 준비 중!</span>
+								</c:when>
+								<c:when test="${orderlist.orderCheck eq 'T' && orderlist.deliveryCheck eq 'D'}">
 										<span style="color:blue;">배달 중!</span>
 								</c:when>
 								
