@@ -16,7 +16,7 @@
 		left: 0;
 		right: 0;
 		z-index: 1000;
-		background: linear-gradient( to bottom, hsl(0deg 0% 0%), hsl(0deg 0% 57%));
+		background-color: black;
 	}
 	
 	#topDiv #logo {

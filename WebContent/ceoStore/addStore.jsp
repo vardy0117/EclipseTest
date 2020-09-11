@@ -62,7 +62,7 @@
 	textarea:focus {outline: none;}
 	input:focus { outline: none; }
 	.btn {
-		background: linear-gradient( to bottom, hsl(0deg 0% 0%), hsl(0deg 0% 57%));
+		background-color: black;
 		font-family: Binggrae-Bold;
 		font-size: 1rem;
 		color: white;
@@ -86,7 +86,7 @@
 		border: none;
 	}
 	
-	/* input[type="file"] {
+	input[type="file"] {
 		position: absolute;
 		width: 1px;
 		height: 1px;
@@ -97,18 +97,20 @@
 		border: 0;
 	}
 	label {
-		display: inline-block;
-		padding: .5em .75em;
 		color: white;
-		font-size: inherit;
-		line-height: normal;
-		vertical-align: middle;
-		background: linear-gradient( to bottom, hsl(0deg 0% 0%), hsl(0deg 0% 57%));
-		cursor: pointer;
-		border: 1px solid #ebebeb;
-		border-bottom-color: #e2e2e2;
+		background-color: black;
+		border: 1px solid black;
+		font-size: 10px;
+		font-weight: 800; 
+		padding: 0.8em;
 		border-radius: 12px;
-	} */
+		transition-duration: 1s;
+		opacity: 0.7;
+	}
+	label:HOVER {
+		cursor: pointer;
+		opacity: 1;
+	}
 </style>
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <script>
@@ -199,9 +201,8 @@
 					</tr>
 					<tr>
 						<td>대표이미지</td>
-						<td>
-							<!-- <input class="store-name textBox" value="파일선택" disabled="disabled">
-							<label for="storeImage">업로드</label> -->
+						<td style="height: 30px;">
+							<label for="storeImage" id="fakeStoreImage">업로드</label>
 							<input id="storeImage" type="file" name="image"> 
 						</td>
 					</tr>
@@ -351,8 +352,9 @@
 					
 					<tr>
 						<td>메뉴사진</td>
-						<td>
-							<input type="file" name="menu_image1">
+						<td style="height: 30px;">
+							<label for="mi">업로드</label>
+							<input type="file" name="menu_image1" id="mi">
 						</td>
 					</tr>
 					<tr>
