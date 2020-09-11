@@ -30,10 +30,28 @@
 		font-size: 3rem;
     	margin-bottom: 100px;
 	}
+	#playBtn {
+		background: url('./images/yellow-play.svg') no-repeat;
+		width: 50px;
+    	height: 50px;
+    	border: none;
+    	cursor: pointer;
+	}
+	#playBtn:focus {
+		outline: none;
+	}
 </style>
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script>
+	
+</script>
 </head>
-<body onclick="location.href='./';">
-	<marquee scrollamount=15 direction=up id="wrap">
+<body>
+	<audio id="BGM" src='./media/welcomeBGM.mp3' style="display:none;" controls autoplay></audio>
+	<div style="position:absolute; left: 95vw; top: 10px;">
+		<button id="playBtn" onclick='document.getElementById("BGM").play();'></button>
+	</div>
+	<marquee scrollamount=15 direction=up id="wrap" onclick="location.href='./';">
 		<div style="font-size: 2rem;">"태초에"</div>
 		<div style="font-size: 2.5rem;">"지구로 날라온"</div>
 		<div style="">"6 생명체들이"</div>
