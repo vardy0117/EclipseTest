@@ -23,11 +23,18 @@
 
 
 <style>
-	#detailReceipt{
-		padding: 1em;
-		background-color: #19ce60;
+	#totalPrice{
+		text-align: left;
+		min-width: 998px;
 	}
-	
+	#totalPrice th{
+		background-color: #19ce60;
+		text-align: center;
+		width: 20%;
+	}
+	#totalPrice td{
+		text-align: center;
+	}
 	#receipt{
 		border: 1px solid;
 		text-decoration: none;
@@ -36,8 +43,19 @@
 		padding: 0.4em;
 		float: right;
 	}
+	#receipt:HOVER{
+		background-color: red;
+	}
 	#receiptTable{
 		text-align: center;
+		min-width: 998px;
+	}
+	#receiptTable th{
+		background-color: #19ce60;
+	}
+	#receiptTable td{
+		font-family: none;
+		font-size: 12px;
 	}
 
 	div {
@@ -92,11 +110,8 @@
 	/* background: linear-gradient( to right, hsl(98 100% 62%), hsl(204 100% 59%) ); */
 	background-color: red;
     font-family: Binggrae-Bold;
-    font-size: 1rem;
     color: white;
     border: 0;
-    width: 270px;
-    height: 35px;
     cursor: pointer;
    
 }
@@ -150,125 +165,107 @@ function cancelorder (orderNo) {
 <body>
 
 	<div id="mainDiv">
-		<div id="detailReceipt">주문상세보기</div>
 		<table id="receiptTable">
 			<tr>
-				<td>
+				<th>
 					주문번호				
-				</td>
+				</th>
+				<th>
+					업체명
+				</th>
+				<th>
+					주문받으신 주소
+				</th>
+				<th>
+					요청사항
+				</th>
+				<th>
+					주문날짜
+				</th>
+				<th>
+					주문메뉴
+				</th>
+				<th>
+					주문수량
+				</th>
+				<th>
+					주문금액
+				</th>
+			</tr>
+			
+			
+		<c:forEach items="${requestScope.OrderRealDetail }" var="orderList">
+			<tr>
 				<td>
 					${param.orderNo}
 				</td>
-			</tr>
-			<tr>
 				<td>
-					업체명
+					${orderList.storeName }
 				</td>
 				<td>
-					<c:forEach var="name" items="${OrderRealDetail}">
-						${name.storeName }
-					</c:forEach>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					주문받으신 주소
+					${orderList.roadAddress } / ${orderList.detailAddress }
 				</td>
 				<td>
-					<c:forEach var="address" items="${OrderRealDetail}" begin="0" end="0">
-						${address.roadAddress } / ${address.detailAddress }
-					</c:forEach>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					요청사항
+					${orderList.request }
 				</td>
 				<td>
-					<c:forEach var="message" items="${OrderRealDetail}" begin="0" end="0">
-						${message.request }
-					</c:forEach>
+					${orderList.orderTime }
+				</td>
+				<td>
+					${orderList.name}
+				</td>
+				<td>
+					${orderList.ea}개
+				</td>
+				<td>
+					${orderList.price}
 				</td>
 			</tr>
+		</c:forEach>
+		</table>
+		<hr>
+		<table id="totalPrice">
 			<tr>
-				<td>
-					주문날짜
-				</td>
-				<td>
-					<c:forEach var="time" items="${OrderRealDetail}" begin="0" end="0">
-						${time.orderTime }
-					</c:forEach>
-				</td>
-			</tr>
-			
-			
-			<c:forEach var="orderdetail" items="${OrderRealDetail}" varStatus="status" >
-			<tr>
-				<td>
-					주문메뉴
-				</td>
-				<td>
-					
-						${orderdetail.name}
-					
-				</td>
-			</tr>
-			<tr>
-				<td>
-					주문수량
-				</td>
-				<td>
-						${orderdetail.ea}개
-				</td>
-			</tr>
-			<tr>
-				<td>
-					주문금액
-				</td>
-				<td>
-						${orderdetail.price}
-				</td>
-			</tr>
-			</c:forEach>
-			<tr>
-				<td>
-					주문총액
-				</td>
+				<th>총 금액</th>
 				<td>
 					<c:forEach var="sum" items="${OrderRealDetail}" varStatus="status">
 						<c:set var="total" value="${total + sum.price}" />
 					</c:forEach> 
  					${total}원 
 				</td>
+				
 			</tr>
-			
 			<tr>
+				<th>배달상태</th>
 				<td>
-					<a href=""
+					<c:forEach var="orderstatus" items="${OrderRealDetail}" begin="0" end="0">
+						<c:if test="${orderstatus.orderCheck eq 'F' }">
+							주문확인중
+							<input class="btn"  id="btn" type="submit" value="주문취소요청" onclick="cancelorder('${orderstatus.orderNo}');">
+						</c:if>
+						<c:if test="${orderstatus.orderCheck eq 'N' }">
+							주문취소
+						</c:if>
+						<c:if test="${orderstatus.orderCheck eq 'T' && orderstatus.deliveryCheck eq'T' }">
+							배달완료
+						</c:if>
+						<c:if test="${orderstatus.orderCheck eq 'T' && orderstatus.deliveryCheck eq'F' }">
+							배달중
+						</c:if>
+					</c:forEach>	
+				</td>
+			</tr>
+			<tr>
+				<th>명세서</th>
+				<td>
+					<a href="" style="text-align: center;" 
 					 	onclick="window.open('<c:url value="receipt.do" >
 					 							<c:param name="orderNo" value="${param.orderNo}">명세서 발행 </c:param> 
 					 						  </c:url>', 'a', 'width=600, height=600, left=100, top=50')" id="receipt">명세서 발행
-	  				</a>	
+					</a>	
 				</td>
 			</tr>
 		</table>
-
-<hr>
-		<c:forEach var="orderstatus" items="${OrderRealDetail}" begin="0" end="0">
-			<c:if test="${orderstatus.orderCheck eq 'F' }">
-				상태 : 주문확인중
-				<input class="btn"  id="btn" type="submit" value="주문취소요청" onclick="cancelorder('${orderstatus.orderNo}');">
-			</c:if>
-			<c:if test="${orderstatus.orderCheck eq 'N' }">
-				상태 : 주문취소
-			</c:if>
-			<c:if test="${orderstatus.orderCheck eq 'T' && orderstatus.deliveryCheck eq'T' }">
-				상태 : 배달완료
-			</c:if>
-			<c:if test="${orderstatus.orderCheck eq 'T' && orderstatus.deliveryCheck eq'F' }">
-				상태 : 배달중
-			</c:if>
-		</c:forEach>				
 	</div>
 	
 	<div id="more"></div>
