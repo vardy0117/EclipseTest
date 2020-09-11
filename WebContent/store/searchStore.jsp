@@ -117,6 +117,7 @@
 		});
 	
 		document.getElementById("koreanTap").addEventListener("click", function() {
+			tapIndex = 1;
 			document.getElementById("koreanTap").classList.add("clicked");
 			document.getElementById("chineseTap").classList.remove("clicked");
 			document.getElementById("japaneseTap").classList.remove("clicked");
@@ -126,6 +127,7 @@
 			document.getElementById("japaneseDiv").classList.add("display-none");
 		});
 		document.getElementById("chineseTap").addEventListener("click", function() {
+			tapIndex = 2;
 			document.getElementById("koreanTap").classList.remove("clicked");
 			document.getElementById("chineseTap").classList.add("clicked");
 			document.getElementById("japaneseTap").classList.remove("clicked");
@@ -135,6 +137,7 @@
 			document.getElementById("japaneseDiv").classList.add("display-none");
 		});
 		document.getElementById("japaneseTap").addEventListener("click", function() {
+			tapIndex = 3;
 			document.getElementById("koreanTap").classList.remove("clicked");
 			document.getElementById("chineseTap").classList.remove("clicked");
 			document.getElementById("japaneseTap").classList.add("clicked");
