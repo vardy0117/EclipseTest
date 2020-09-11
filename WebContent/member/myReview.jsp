@@ -132,6 +132,7 @@
 	#orderMenuUnReview{
 		font-size: 12px;
 		color: #d1bca4;
+		min-width: 250px;
 	}
 	#comment{
 		background: #e2e2e2;
@@ -162,7 +163,7 @@
 						<img src="./upload/store/${unReviewStoreNameList[i].image}" id="storeImg"> 
 					</td>
 					<td>
-						<span class="storeName">${unReviewStoreNameList[i].name}</span>
+						<div class="storeName">${unReviewStoreNameList[i].name}</div>
 					</td>
 					<td>
 						<button onclick="location.href='writeReview.do?storeNo=${unReviewStoreNameList[i].storeNo}&orderNo=${unReviewOrder.orderNo }'" id="btnReview" style="cursor: pointer;">리뷰쓰기</button>
@@ -170,7 +171,7 @@
 				</tr>
 				<tr>
 					<td>
-						<span id="orderMenuUnReview">${requestScope.menusList[i]}</span>
+						<div id="orderMenuUnReview">${requestScope.menusList[i]}</div>
 					</td>
 				</tr>
 				<tr>
