@@ -36,7 +36,7 @@
 	}
 	.btn {
 		width: 25px;
-		background: linear-gradient( to bottom, hsl(0deg 0% 0%), hsl(0deg 0% 57%));
+		background-color: black;
 		font-family: Binggrae-Bold;
 		font-size: 1rem;
 		color: white;
@@ -64,6 +64,32 @@
 	.td_right {
 		padding-left: 15px;
 	}
+	input[type="file"] {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip:rect(0,0,0,0);
+		border: 0;
+	}
+	label {
+		color: white;
+		background-color: black;
+		border: 1px solid black;
+		font-size: 10px;
+		font-weight: 800; 
+		padding: 0.8em;
+		border-radius: 12px;
+		transition-duration: 1s;
+		opacity: 0.7;
+	}
+	
+	label:HOVER {
+		cursor: pointer;
+		opacity: 1;
+	}
 </style>
 </head>
 <body>
@@ -76,7 +102,10 @@
 			<table>
 				<tr>
 					<th>메뉴사진</th>
-					<td class="td_right"><input type="file" name="image"></td>
+					<td class="td_right">
+						<label for="img">업로드</label>
+						<input type="file" name="image" id="img">
+					</td>
 				</tr>
 				<tr>
 					<th>카테고리</th>

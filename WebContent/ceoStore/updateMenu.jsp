@@ -40,7 +40,7 @@
 	select:focus { outline: none; }
 	.btn {
 		width: 25px;
-		background: linear-gradient( to bottom, hsl(0deg 0% 0%), hsl(0deg 0% 57%));
+		background-color:black;
 		font-family: Binggrae-Bold;
 		font-size: 1rem;
 		color: white;
@@ -64,6 +64,32 @@
 	    font-size: 1rem;
     	padding-left: 10px;
 	}
+	input[type="file"] {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip:rect(0,0,0,0);
+		border: 0;
+	}
+	label {
+		color: white;
+		background-color: black;
+		border: 1px solid black;
+		font-size: 10px;
+		font-weight: 800; 
+		padding: 0.8em;
+		border-radius: 12px;
+		transition-duration: 1s;
+		opacity: 0.7;
+	}
+	
+	label:HOVER {
+		cursor: pointer;
+		opacity: 1;
+	}
 </style>
 
 
@@ -82,9 +108,10 @@
 				<table  id="updatemenu">
 					<tr>
 						<th>메뉴사진</th>
-						<td>
-							<input type="file" value="${cBean.image }" onchange="document.getElementById('imageflag').value = 'true';" name="image">
-							<br><span style="color:red; font-size: 0.7rem;">※변경안할시 원본상태 유지됩니다.</span>
+						<td style="height: 30px;">
+							<label for="img">업로드</label>
+							<input type="file" value="${cBean.image }" onchange="document.getElementById('imageflag').value = 'true';" name="image" id="img">
+							<span style="color:red; font-size: 0.7rem;">※변경안할시 원본상태 유지됩니다.</span>
 						</td>
 					</tr>
 					<tr>

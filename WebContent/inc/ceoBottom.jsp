@@ -14,8 +14,8 @@
 		min-height: 100px;
 		color: white;
 		margin: 0 auto;
-		background: linear-gradient( to bottom, hsl(0deg 0% 0%), hsl(0deg 0% 57%));
 		padding-bottom: 20px;
+		background-color: black;
 	}
 	#bottomWrap {
 		width: 1000px;
