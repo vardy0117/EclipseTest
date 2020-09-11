@@ -18,7 +18,7 @@
 		left: 0;
 		right: 0;
 		z-index: 1000;
-		background: linear-gradient( to bottom, hsl(0deg 0% 0%), hsl(0deg 0% 57%));
+		background: #ff8a19;
 	}
 	
 	#topDiv #logo {
@@ -33,6 +33,7 @@
 		position: absolute;
 		right: 10px;
 		top: 10px;
+		text-align: right;
 	}
 	#loginAndJoin a {
 		text-decoration: none;
@@ -46,15 +47,14 @@
 	
 	
  /*************************************************/   
-@media (max-width: 900px) and (min-width:400px)   {
-
+@media (max-width: 768px)  {
+	
+	h2#logo {
+		font-size: 1.2rem;
+		width: 140px;
+	}
     
-   h2 {
-    float: left;
-    width: 220px;
-    font-size: 35px;
-
-}
+   
    #loginAndJoin {
 		position: absolute;
 		right: 10px;
@@ -72,12 +72,8 @@
 		color: white;
 	}
             
-            #topDiv {
     
-                height: 110px;
-    }
-    
-    }
+}
 /************************************************ */
 
 
@@ -92,12 +88,12 @@
 </head>
 <body>
 	<div id="topDiv">
-		<h2 id="logo"><a href="deliveryIndex.jsp">Delivengers 배달원 페이지</a></h2>
+		<h2 id="logo"><a href="deliveryIndex.jsp">Delivengers 배달원</a></h2>
 		<c:choose>
 			<c:when test="${!empty sessionScope.delivengersNo}">
 				<div id="loginAndJoin">
-					${sessionScope.delivengersNo} 배달원님 어서 오세요! |
-					<a href="./DelivengersLogOut.do">logout</a> |	
+					${sessionScope.delivengersNo} 배달원님 어서 오세요! <br>
+					<a href="./DelivengersLogOut.do">로그아웃</a>	
 				</div>
 			</c:when>
 		</c:choose>	

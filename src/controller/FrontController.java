@@ -1648,13 +1648,14 @@ public class FrontController extends HttpServlet {
 			OrderAction oaction = new OrderAction();
 			oaction.updateDeliveryCheckA(request,response);
 			
-			/*PrintWriter out = response.getWriter();
-			out.print("<script> alert('배달 완료!!') </script>");
-			*/
+			response.setContentType("text/html;charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.print("<script> alert('배달 완료!!'); location.href='./deliveryIndex.jsp'; </script>");
 			
-			forward= new ActionForward();
-			forward.setView("MoveDeliveryIndex.do?orderNo=0");
-			forward.execute(request, response);
+			
+			/*forward= new ActionForward();
+			forward.setView("MoveDeliveryIndex.do");
+			forward.execute(request, response);*/
 
 		}
 

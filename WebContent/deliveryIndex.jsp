@@ -27,18 +27,19 @@
 					} else {
 						var obj = JSON.parse(data);
 						for (var i = 0; i < obj.list.length; i++) {
-							tag += '<tr class="deliveryInfo">' + '<td>'
+							var departureTime = obj.list[i]["departureTime"];
+							tag += '<tr class="deliveryInfo">' + '<td style="text-align: center;">'
 									+ obj.list[i]["orderNo"] + '</td>' + '<td>'
-									+ obj.list[i]["roadAddress"] + '&nbsp;'
+									+ obj.list[i]["roadAddress"] + ' '
 									+ obj.list[i]["detailAddress"] + '</td>'
 									+ '<td>' + obj.list[i]["customerPhone"]
 									+ '</td>' + '<td>' + obj.list[i]["request"]
 									+ '</td>'
 
 							if (obj.list[i]["deliveryCheck"] == 'D') {
-								tag += '<td><button type="button" onclick="deliveryFinish('+obj.list[i]["orderNo"]+');">배달 완료 확인!</button></td>';
+								tag += '<td style="text-align:center;"><button id="deliveryFinishBtn" type="button" onclick="deliveryFinish('+obj.list[i]["orderNo"]+');">완료하기</button></td>';
 							} else if (obj.list[i]["deliveryCheck"] == 'T' || obj.list[i]["deliveryCheck"] == 'A') {
-								tag += '<td>' + obj.list[i]["departureTime"]
+								tag += '<td style="text-align:center; color:green;">' + '배달완료'
 										+ '</td>';
 							}
 						}
@@ -55,7 +56,7 @@
 			function deliveryFinish(orderNo){
 				
 				if(confirm(orderNo+"번  배달완료 하시겠습니까?")==true){
-				location.href='deleveryTrue.do?orderNo='+orderNo;
+					location.href='deleveryTrue.do?orderNo='+orderNo;
 				}
 			}
 
@@ -127,27 +128,28 @@
 							</tr>
 						</table>
 					</form>
+					<img id="leftImg" src="images/배달.jpg" alt="사진이 읎네" width="150" height="150" />
 				</div>
 
 
-				<center>
-					<img src="images/배달.jpg" alt="사진이 읎네" width="300" height="300" />
-				</center>
+				<%-- <center style="position: absolute; top:23.5%; left:65%;">
+					<img style="transform: scaleX(-1);" src="images/배달.jpg" alt="사진이 읎네" width="300" height="300" />
+				</center> --%>
 		</c:when>
 		<c:otherwise>
 			<div class="row">
 				<div class="left">
-					<a href="intent://paxi.site#Intent;package=com.kitkats.qrscanner;scheme=https;end" target="blank">주문 배차</a>
+					<a href="intent://paxi.site#Intent;package=com.kitkats.qrscanner;scheme=https;end" target="blank">&nbsp;&nbsp;&nbsp;주문 배차&nbsp;&nbsp;&nbsp;</a>
 				</div>
 			</div>
 			<hr>
 			<table id="deliveryList">
 				<tr style="text-align: center;">
-					<td>주문 번호</td>
-					<td>배달 장소</td>
-					<td>연락처</td>
-					<td>요청 사항</td>
-					<td>배달 완료</td>
+					<th>No</th>
+					<th>배달 주소</th>
+					<th>연락처</th>
+					<th>요청 사항</th>
+					<th>배달 완료</th>
 				</tr>
 			</table>
 	</c:otherwise>
