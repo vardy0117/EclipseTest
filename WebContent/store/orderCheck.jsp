@@ -179,8 +179,7 @@
 			
 		//document.getElementById("orderfr").submit();
 			
-		var cartList = new Array();
-		    cart = sessionStorage.getItem("cart");  
+		var cart = sessionStorage.getItem("cart");  
 		var deliveryInfoItem ={
 						   roadAddress:document.getElementById("roadAddress").value,
 				           detailAddress:document.getElementById("detailAddress").value,
@@ -198,11 +197,10 @@
                async : false,
                url : "Order.do?storeNo="+storeNo,
                data : {"cart":cart,"deliveryInfo":deliveryInfo},
-               success : function() {
-            	   var cart = null;
+               success : function(orderNo) {
            		   sessionStorage.clear();
-            	   alert("주문이 완료되었습니다. 메인 페이지로 이동합니다.");
-            	   location.href='./';
+            	   alert("주문이 완료되었습니다.");
+            	   location.href='./OrderRealDetail.do?orderNo='+orderNo;
                }
          });
 		
