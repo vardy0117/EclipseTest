@@ -79,6 +79,14 @@
 		cursor: pointer;
 		opacity: 1;
 	}
+	#prevBtn,#nextBtn {
+		font-size: 2rem;
+	    font-family: 'Binggrae-Bold';
+	    color: gray;
+	    border: none;
+	    border-radius: 12px;
+	    cursor: pointer;
+	}
 </style>
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <script>
@@ -86,7 +94,24 @@
 	var chineseStartNo = 0;
 	var japaneseStartNo = 0;
 	
+	var tapIndex = 1;
+	
 	window.onload = function() {
+		
+		document.getElementById("prevBtn").addEventListener("click", function() {
+			if(tapIndex > 0) {
+				tapIndex -= 1;
+			}
+			if(tapIndex==1) document.getElementById("koreanTap").click();
+			else if(tapIndex==2) document.getElementById("chineseTap").click();
+		});
+		document.getElementById("nextBtn").addEventListener("click", function() {
+			if(tapIndex <= 2) {
+				tapIndex += 1;
+			}
+			if(tapIndex==2) document.getElementById("chineseTap").click();
+			else if(tapIndex==3) document.getElementById("japaneseTap").click();
+		});
 	
 		document.getElementById("koreanTap").addEventListener("click", function() {
 			document.getElementById("koreanTap").classList.add("clicked");
@@ -243,5 +268,7 @@
 		
 		<div style="clear:both;"></div>
 	</div>
+	<div style="position:fixed; left:10px; top:50%;"><button id="prevBtn">&lt;</button></div>
+	<div style="position:fixed; right:10px; top:50%;"><button id="nextBtn">&gt;</button></div>
 </body>
 </html>​
