@@ -23,6 +23,22 @@
 
 
 <style>
+	#detailReceipt{
+		padding: 1em;
+		background-color: #19ce60;
+	}
+	
+	#receipt{
+		border: 1px solid;
+		text-decoration: none;
+		background-color: #19ce60;
+		color: white;
+		padding: 0.4em;
+		float: right;
+	}
+	#receiptTable{
+		text-align: center;
+	}
 
 	div {
 		box-sizing: border-box;
@@ -73,14 +89,14 @@
 	}
 	
 	.btn {
-	background: linear-gradient( to right, hsl(98 100% 62%), hsl(204 100% 59%) ); */
+	/* background: linear-gradient( to right, hsl(98 100% 62%), hsl(204 100% 59%) ); */
+	background-color: red;
     font-family: Binggrae-Bold;
     font-size: 1rem;
     color: white;
     border: 0;
     width: 270px;
     height: 35px;
-    opacity: 0.7;
     cursor: pointer;
    
 }
@@ -134,110 +150,125 @@ function cancelorder (orderNo) {
 <body>
 
 	<div id="mainDiv">
-		<c:set var="length" value="${fn:length(orderlist) }" />
-		
+		<div id="detailReceipt">주문상세보기</div>
+		<table id="receiptTable">
+			<tr>
+				<td>
+					주문번호				
+				</td>
+				<td>
+					${param.orderNo}
+				</td>
+			</tr>
+			<tr>
+				<td>
+					업체명
+				</td>
+				<td>
+					<c:forEach var="name" items="${OrderRealDetail}">
+						${name.storeName }
+					</c:forEach>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					주문받으신 주소
+				</td>
+				<td>
+					<c:forEach var="address" items="${OrderRealDetail}" begin="0" end="0">
+						${address.roadAddress } / ${address.detailAddress }
+					</c:forEach>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					요청사항
+				</td>
+				<td>
+					<c:forEach var="message" items="${OrderRealDetail}" begin="0" end="0">
+						${message.request }
+					</c:forEach>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					주문날짜
+				</td>
+				<td>
+					<c:forEach var="time" items="${OrderRealDetail}" begin="0" end="0">
+						${time.orderTime }
+					</c:forEach>
+				</td>
+			</tr>
+			
+			
+			<c:forEach var="orderdetail" items="${OrderRealDetail}" varStatus="status" >
+			<tr>
+				<td>
+					주문메뉴
+				</td>
+				<td>
+					
+						${orderdetail.name}
+					
+				</td>
+			</tr>
+			<tr>
+				<td>
+					주문수량
+				</td>
+				<td>
+						${orderdetail.ea}개
+				</td>
+			</tr>
+			<tr>
+				<td>
+					주문금액
+				</td>
+				<td>
+						${orderdetail.price}
+				</td>
+			</tr>
+			</c:forEach>
+			<tr>
+				<td>
+					주문총액
+				</td>
+				<td>
+					<c:forEach var="sum" items="${OrderRealDetail}" varStatus="status">
+						<c:set var="total" value="${total + sum.price}" />
+					</c:forEach> 
+ 					${total}원 
+				</td>
+			</tr>
+			
+			<tr>
+				<td>
+					<a href=""
+					 	onclick="window.open('<c:url value="receipt.do" >
+					 							<c:param name="orderNo" value="${param.orderNo}">명세서 발행 </c:param> 
+					 						  </c:url>', 'a', 'width=600, height=600, left=100, top=50')" id="receipt">명세서 발행
+	  				</a>	
+				</td>
+			</tr>
+		</table>
 
-
-		<font color="black" size="5"> ${nickname}님의 상세주문내역 입니다 
-		</font>  <br> <br>
-		주문번호 :  ${param.orderNo }
-		
-		<c:forEach var="name" items="${OrderRealDetail}" begin="0" end="0">
-						<br> - 주문했던 가게이름 :	${name.storeName }
-		</c:forEach>
-		
-		<c:forEach var="address" items="${OrderRealDetail}" begin="0" end="0">
-						<br> - 주문했던 도로명 주소 :	${address.roadAddress }
-						<br> - 상세 주소 :	${address.detailAddress }
-						
-		</c:forEach>
-		
-		
-		<c:forEach var="message" items="${OrderRealDetail}" begin="0" end="0">
-						<br> - 요청사항 :	${message.request}
-
-						
-		</c:forEach>
-		
-		<c:forEach var="time" items="${OrderRealDetail}" begin="0" end="0">
-						<br> - 주문날짜 & 시간 :	${time.orderTime}
-
-						
-		</c:forEach>
-		<br><br>
-			<!-- window.open("receipt.do", "a", "width=600, height=600, left=100, top=50") -->
-			<a href="
-					" onclick="window.open('<c:url value="receipt.do" >         
-			  				<c:param name="orderNo" value="${param.orderNo}">명세서 발행 </c:param>
-			  				
-				  			</c:url>', 'a', 'width=600, height=600, left=100, top=50')"> - 명세서 발행하기	
-	  		</a>		  
-	  		
-		<br> <br>
-	
-	
-							
-		<c:forEach var="orderdetail" items="${OrderRealDetail}" varStatus="status" >
-			<div id="storeBox">
-				<table>
-					<tr>
-						<td>
-						     주문했던메뉴 : ${orderdetail.name} <br> 
-						     가격 : ${orderdetail.price} 원<br>
-							수량 : ${orderdetail.ea} 개
-						
-							
-						</td>
-					</tr>
-				</table>
-			</div>
-				
-	
-							
-		</c:forEach>
-
-<!--합계계산 --------------------------------- -->
-		<c:forEach var="sum" items="${OrderRealDetail}" varStatus="status">
-			<c:set var="total" value="${total + sum.price}" />
-
-		</c:forEach>
-
-		합계 : ${total}원
-<!--합계계산 --------------------------------- -->
-<br>
-<br>
-
-
-<!--고객 주문 취소 --------------------------------------- -->
-<c:forEach var="orderstatus" items="${OrderRealDetail}" begin="0" end="0">
-	<center>
-		<c:if test="${orderstatus.orderCheck eq 'F'}">
-			<div id="cancelorder">
-				<font id="ordercheck" color="orange">상태 : 주문 확인 중!</font>
-				<br>
-				
+<hr>
+		<c:forEach var="orderstatus" items="${OrderRealDetail}" begin="0" end="0">
+			<c:if test="${orderstatus.orderCheck eq 'F' }">
+				상태 : 주문확인중
 				<input class="btn"  id="btn" type="submit" value="주문취소요청" onclick="cancelorder('${orderstatus.orderNo}');">
-			</div>
-		</c:if>	
-		<c:if test="${orderstatus.orderCheck eq 'N'}">
-			<div id="cancelorder">
-				 <font color="red">상태 : 주문 취소! </font>
-			</div>
-		</c:if>
-		<c:if test="${orderstatus.orderCheck eq 'T' && orderstatus.deliveryCheck eq 'T'}">
-			<div id="cancelorder">
-				<font color="green">상태 : 배달 완료!</font>
-			</div>
-		</c:if>	
-		<c:if test="${orderstatus.orderCheck eq 'T' && orderstatus.deliveryCheck eq 'F'}">
-			<div id="cancelorder">
-				<font color="blue">상태 : 배달 중!</font>
-			</div>
-		</c:if>					
-	</center>		
-</c:forEach>	
-<!--고객 주문 취소 --------------------------------------- -->
-		
+			</c:if>
+			<c:if test="${orderstatus.orderCheck eq 'N' }">
+				상태 : 주문취소
+			</c:if>
+			<c:if test="${orderstatus.orderCheck eq 'T' && orderstatus.deliveryCheck eq'T' }">
+				상태 : 배달완료
+			</c:if>
+			<c:if test="${orderstatus.orderCheck eq 'T' && orderstatus.deliveryCheck eq'F' }">
+				상태 : 배달중
+			</c:if>
+		</c:forEach>				
 	</div>
 	
 	<div id="more"></div>
