@@ -52,7 +52,7 @@
 	}
 	
 	function discountCoupon(){			
-		var tag = "<tr><th style='width:120px'>이 름</th><th style='width:120px'>만료기한</th></tr>";
+		var tag = "<tr><th style='width:200px'>이 름</th><th style='width:120px'>만료기한</th></tr>";
 		$.ajax({
 			url : "DiscountCheck.do",
 			type: "post",
@@ -150,7 +150,7 @@
    					
 		console.log(msg);
 				   
-		/* if(confirm(msg)==true){
+		 if(confirm(msg)==true){
 			IMP.init('imp93100667');
 			
 			IMP.request_pay({
@@ -169,42 +169,39 @@
 			        msg += '카드 승인번호 : ' + rsp.apply_num;
 			       
 			        alert(msg);
-			        document.getElementById("orderfr").submit();
+			
+				var cart = sessionStorage.getItem("cart");  
+				var deliveryInfoItem ={
+								   roadAddress:document.getElementById("roadAddress").value,
+						           detailAddress:document.getElementById("detailAddress").value,
+						           phone:document.getElementById("phone").value,
+						           payment:document.getElementById("payment").value,
+						           request:document.getElementById("request").value,
+						           couponNo:document.getElementById("couponNo").value
+								  }
+			
+				deliveryInfo = JSON.stringify(deliveryInfoItem);
+				console.log(deliveryInfo);
+			
+		        $.ajax({
+		               type : "post",
+		               async : false,
+		               url : "Order.do?storeNo="+storeNo,
+		               data : {"cart":cart,"deliveryInfo":deliveryInfo},
+		               success : function(orderNo) {
+		           		   sessionStorage.clear();
+		            	   alert("주문이 완료되었습니다.");
+		            	   location.href='./OrderRealDetail.do?orderNo='+orderNo;
+		               }
+		         });
+        
 			    } else {
 			        var msg = '결제에 실패하였습니다.';
 			        msg += '에러내용 : ' + rsp.error_msg;
 			        alert(msg);
 			    }
-			}); */
-			
-		//document.getElementById("orderfr").submit();
-			
-		var cart = sessionStorage.getItem("cart");  
-		var deliveryInfoItem ={
-						   roadAddress:document.getElementById("roadAddress").value,
-				           detailAddress:document.getElementById("detailAddress").value,
-				           phone:document.getElementById("phone").value,
-				           payment:document.getElementById("payment").value,
-				           request:document.getElementById("request").value,
-				           couponNo:document.getElementById("couponNo").value
-						  }
-		
-		deliveryInfo = JSON.stringify(deliveryInfoItem);
-		console.log(deliveryInfo);
-		
-        $.ajax({
-               type : "post",
-               async : false,
-               url : "Order.do?storeNo="+storeNo,
-               data : {"cart":cart,"deliveryInfo":deliveryInfo},
-               success : function(orderNo) {
-           		   sessionStorage.clear();
-            	   alert("주문이 완료되었습니다.");
-            	   location.href='./OrderRealDetail.do?orderNo='+orderNo;
-               }
-         });
-		
-		
+			}); 
+		 }
 	}
 </script>	
 
