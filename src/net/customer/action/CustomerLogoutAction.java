@@ -30,6 +30,7 @@ public class CustomerLogoutAction implements Action {
 		//session.invalidate();
 		session.removeAttribute("nickname");
 		session.removeAttribute("customerNo");
+		session.removeAttribute("email");
 
 		System.out.println("로그아웃 처리 함수 호출");
 

@@ -20,6 +20,7 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import action.ActionForward;
 import action.AjaxAction;
+import jdk.nashorn.internal.runtime.options.LoggingOption.LoggerInfo;
 import net.admin.action.AdminDao;
 import net.admin.action.adminAction;
 import net.adminlogin.action.AdminLoginAction;
@@ -64,8 +65,8 @@ import net.store.db.StoreDAO;
 
 @WebServlet("*.do")
 public class FrontController extends HttpServlet {
-    String projectURL="http://paxi.site/GitTest/";  
-	
+   //  String projectURL="http://paxi.site/GitTest/";  
+	 String projectURL="/GitTest"; // 도메인 서버 안열리면 접속 오류떠서 그냥 프로젝트 주소로 들어갈 수 있게 하였습니다
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doProcesss(request,response);
@@ -177,14 +178,17 @@ public class FrontController extends HttpServlet {
 		if(command.equals("CustomerLoginAction.do")) {
 			CustomerLoginAction action = new CustomerLoginAction() ;
 			boolean result = false;
+			int notaes = 0;
 			try {
 				 forward = new ActionForward();
 				 result = action.execute(request, response);
-				 if(result){
+				 notaes = action.Aesexecute(request, response);
+				 if(result || notaes == 1){
 					 forward.setRedirect(true);
 					 forward.setView("index.jsp"); // 사장님 전용페이지가 없어서 일단 여기로 했습니당
 					 System.out.println("일반 고객 로그인 리다이렉트 작동 " + forward.getView());
-				 } else {
+					 
+				 	} else {
 					 response.setContentType("text/html;charset=UTF-8"); 
 					 PrintWriter out = response.getWriter();
 					 
@@ -205,6 +209,33 @@ public class FrontController extends HttpServlet {
 			}
 		}		
 		
+		
+		if(command.equals("test.do")) { // 로그인이 안될것을 대비해 만든 마법의 세션
+			CustomerLoginAction action = new CustomerLoginAction() ;
+			try {
+				 forward = new ActionForward();
+				 action.magicsession(request, response); // 익명계정 호출
+				 System.out.println("익명계정모드로 컨트롤러 접속");
+
+					System.out.println("익명 계정 : Anonymous@naver.com ");
+					System.out.println("익명 닉네임 : Anonymous ");
+					System.out.println("익명  고객번호 : 9999");
+					System.out.println("익명  계정 비밀번호  : 1234");
+					System.out.println("나머지 정보가 없기 때문에 회원정보 수정이나 주문하기 들어가면 DB제약조건에 걸림");
+					System.out.println("테스트용");
+					
+				 forward.setRedirect(false);
+				 forward.setView("index.jsp");
+				 forward.execute(request, response);
+			
+
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}		
+		
+		
 		if(command.equals("LogOut.do")) {
 			CustomerLogoutAction action = new CustomerLogoutAction() ;
 			try {
@@ -220,12 +251,25 @@ public class FrontController extends HttpServlet {
 			String password = request.getParameter("password");
 			String customerNo = (String)request.getSession().getAttribute("customerNo");
 			CustomerDAO cDAO = new CustomerDAO();
-			CustomerBean cBean = cDAO.getCustomer(customerNo);
-			if(password != null && cBean.getPassword().equals(password)){
+			
+			// CustomerBean cBean = cDAO.getCustomer(customerNo);
+			CustomerBean cBean = new CustomerBean();
+			/*******************************************************/
+			// 객체로 전달함 
+			cBean.setEmail((String) session.getAttribute("email"));
+			 cBean.setPassword(password);
+			 /*******************************************************/
+			System.out.println("CustomerModifyIntro 전달받은 이메일값 " + session.getAttribute("email") );
+			
+			boolean checkcustomer = cDAO.CheckCustomer(cBean); // id, pw 한꺼번에 객체단위로 같이 전달
+			int notaescustomer = cDAO.NotAesCheckCustomer(cBean); // 암호화 안된 고객 전용
+		//	if(password != null && cBean.getPassword().equals(password)){
+			if(password != null && checkcustomer || notaescustomer == 1){
 				forward = new ActionForward();
 				forward.setView("./CustomerModify.do");
 				forward.execute(request, response);
-			}else if(password != null && !cBean.getPassword().equals(password)){
+			}// else if(password != null && !cBean.getPassword().equals(password)){
+			else if(password != null && checkcustomer == false){
 				response.setContentType("text/html; charset=UTF-8");
 				PrintWriter out = response.getWriter();
 				out.println("<script>alert('비밀번호가 다릅니다.'); location.href='./CustomerModifyIntro.do';</script>");
@@ -340,8 +384,7 @@ public class FrontController extends HttpServlet {
 					  
 					 out.println("<script>"); 
 					 out.println("alert('사업자 로그인에 실패하셨습니다. \\n 아이디와 비밀번호 확인 후 다시 로그인해주세요.');"); 
-					  out.println("history.back();"); 
-					// out.println("location.href= 'CustomerLogin.do' "); 
+					 out.println("history.back();");  
 					 out.println("</script>");
 					System.out.println("사업자 로그인 실패 result값 " + result);
 				 }

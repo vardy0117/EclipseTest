@@ -16,7 +16,7 @@ public class CustomerJoinAction{
 	
 	public void customerJoin(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
-		log.info("CustomerJoinAction execute()");
+		log.info("CustomerJoinAction execute() 성공");
 		
 		request.setCharacterEncoding("UTF-8");
 		

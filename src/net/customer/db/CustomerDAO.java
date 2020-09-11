@@ -6,12 +6,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 public class CustomerDAO {
+	private final static Logger log = Logger.getGlobal();
+
 	Connection con = null;
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
@@ -98,19 +101,26 @@ public class CustomerDAO {
 		try {
 			 getConnection();
 
-			 sql="insert into customer(email, password, nickname, roadAddress, detailAddress, bname, phone, agreeAD, sido) "
-			 			     + "values(?, ?, ?, ?, ?, ?, ?,?,?)";
-
-/*********占쏙옙호 占쏙옙占� 占쏙옙占쏙옙**************/			 
-/* sql="insert into customer(customerNo, email, password, nickname, address, bname, phone, agreeAD) "
-	 			     + "values(null, ?, hex(aes_encrypt(?,?)), ?, ?, ?, ?, ?)";
-*/
-
-			 
-			
+			 sql="insert into customer(customerNo, email, password, nickname, roadAddress, detailAddress,bname, phone, agreeAD, sido) "
+	 			     + "values(null, ?, hex(aes_encrypt(?,?)), ?, ?, ?, ?,?,?,?)";	 
+			 /*sql="insert into customer(email, password, nickname, roadAddress, detailAddress, bname, phone, agreeAD, sido) "
+	 			     + "values(?, ?, ?, ?, ?, ?, ?,?,?)";*/
 			 pstmt = con.prepareStatement(sql);
 			 
+
 			 pstmt.setString(1, cb.getEmail());
+			 pstmt.setString(2, cb.getEmail()); // 이메일 키 검증용
+			 pstmt.setString(3, cb.getPassword());
+			 pstmt.setString(4, cb.getNickname());
+			 pstmt.setString(5, cb.getRoadAddress());
+			 pstmt.setString(6, cb.getDetailAddress());
+			 pstmt.setString(7, cb.getBname());
+			 pstmt.setString(8, cb.getPhone());
+			 pstmt.setString(9, cb.getAgreeAD());
+			 pstmt.setString(10, cb.getSido());
+			 
+			 // 일반 로그인 전용 (암호화 없이)
+		/*	 pstmt.setString(1, cb.getEmail());
 			 pstmt.setString(2, cb.getPassword());
 			 pstmt.setString(3, cb.getNickname());
 			 pstmt.setString(4, cb.getRoadAddress());
@@ -118,18 +128,10 @@ public class CustomerDAO {
 			 pstmt.setString(6, cb.getBname());
 			 pstmt.setString(7, cb.getPhone());
 			 pstmt.setString(8, cb.getAgreeAD());
-			 pstmt.setString(9, cb.getSido());
+			 pstmt.setString(9, cb.getSido());*/
 			 
-			/*// 占쏙옙호화 占쏙옙占쏙옙
-			 pstmt.setString(1, cb.getEmail());
-			 pstmt.setString(2, cb.getEmail());
-			 pstmt.setString(3, cb.getPassword());
-			 pstmt.setString(4, cb.getNickname());
-			 pstmt.setString(5, cb.getAddress());
-			 pstmt.setString(6, cb.getBname());
-			 pstmt.setString(7, cb.getPhone());
-			 pstmt.setString(8, cb.getAgreeAD());
-			 */
+		
+		
 			 result = pstmt.executeUpdate();
 			 
 			 if(result != 0) {
@@ -145,7 +147,7 @@ public class CustomerDAO {
 		return result;
 	} // method
 /***********************************************************************************************/
-	public boolean CheckCustomer(CustomerBean cb) { // 占싸깍옙占쏙옙 占싯삼옙 
+	public boolean CheckCustomer(CustomerBean cb) { // 암호화된 고객체크
 	
 		boolean result = false;
 		
@@ -154,12 +156,65 @@ public class CustomerDAO {
 		try {
 			 getConnection();
 			 
-//			sql ="select aes_decrypt(unhex(password), ?) as email from customer where email = ? ";
-			 sql ="select email from customer where password = ? and email = ?";
+		
+/*			 sql ="select email from customer where password = ? and email = ?";*/
 
-			 
+		sql="select * from customer where email =  ? "
+				+ "and password = ? =  "
+				+ "(select aes_decrypt(unhex(password),?) " // 패스워드
+				+ "as email from customer where email=?)";
+	 
 
 			 pstmt = con.prepareStatement(sql);
+			 
+			 pstmt.setString(1, cb.getEmail());
+			 pstmt.setString(2, cb.getPassword());
+			 pstmt.setString(3, cb.getPassword()); // 검사용
+			 pstmt.setString(4, cb.getEmail());
+			 // 기존 select 문
+		/*	  pstmt.setString(1, cb.getPassword());
+			  pstmt.setString(2, cb.getEmail());*/
+
+			 
+			 rs = pstmt.executeQuery();		 
+
+			if (rs.next()) {
+				result = true;
+				log.info("로그인 체크 성공 값 체크 : " + result);
+
+			}else{
+				log.info("로그인 체크 실패 값 " + result);
+			}
+	
+			 
+
+			
+		} catch (Exception e){
+			log.info("고객체크 오류 발생 " + e);
+		} finally {
+			resourceClose();
+		}
+		
+		return result;
+	} // method
+/***********************************************************/
+	public int NotAesCheckCustomer(CustomerBean cb) { // 암호화 안된 고객 체크
+		
+		int result = 0;
+		
+
+
+		try {
+			 getConnection();
+			 
+		
+			 sql ="select email from customer where password = ? and email = ?";
+
+	 
+
+			 pstmt = con.prepareStatement(sql);
+			 
+
 			  pstmt.setString(1, cb.getPassword());
 			  pstmt.setString(2, cb.getEmail());
 
@@ -167,16 +222,18 @@ public class CustomerDAO {
 			 rs = pstmt.executeQuery();		 
 
 			if (rs.next()) {
-				System.out.println("占싸깍옙占쏙옙 占쏙옙占쏙옙");
-				result = true;
+				result = 1;
+				log.info("암호화 안된 고객 로그인 체크 성공 값 체크 : " + result);
 
+			}else{
+				log.info("암호화 안된 로그인 체크 실패 값 " + result);
 			}
 	
 			 
 
 			
 		} catch (Exception e){
-			System.out.println("CheckCustomer占쌨소듸옙 占쏙옙占싸울옙占쏙옙 占쏙옙占쏙옙 占쌩삼옙 : " + e);
+			log.info("고객체크 오류 발생 " + e);
 		} finally {
 			resourceClose();
 		}
@@ -184,6 +241,8 @@ public class CustomerDAO {
 		return result;
 	} // method
 
+	
+	
 	public CustomerBean CustomerInformation (String email) {
 		
 		CustomerBean cb = new CustomerBean();
@@ -201,7 +260,6 @@ public class CustomerDAO {
 			cb.setCustomerNo(rs.getString("customerNo"));
 			cb.setPhone(rs.getString("phone"));
 			/************************************************************************************/
-			// 占싸깍옙占싸쏙옙 占쏙옙占쏙옙 select 占쌔쇽옙 占쏙옙占쏙옙占쏙옙占쏙옙
 			System.out.println("-----------------------CustomerInformation ------------------------------------");
 			System.out.println("customer dao 닉네임 값  :  " + cb.getNickname());
 			System.out.println("customer dao 고객번호 값 customerNo :  " + cb.getCustomerNo());
@@ -248,13 +306,64 @@ public class CustomerDAO {
 		return cBean;
 	}
 	
+	/****************************************************/
+/*	public CustomerBean AesCheckCustomer(String customerNo){ // 암호화 고객 정보 조회
+		CustomerBean cBean = new CustomerBean();
+		try {
+			con=getConnection();
+			sql="select * from customer where customerNo=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, customerNo);
+			rs = pstmt.executeQuery();
+			if(rs.next()){
+				cBean.setCustomerNo(rs.getString(1));
+				cBean.setEmail(rs.getString(2));
+				cBean.setPassword(rs.getString(3));
+				cBean.setNickname(rs.getString(4));
+				cBean.setRoadAddress(rs.getString(5));
+				cBean.setDetailAddress(rs.getString(6));
+				cBean.setBname(rs.getString(7));
+				cBean.setPhone(rs.getString(8));
+				cBean.setGrad(rs.getString(9));
+				cBean.setAgreeAD(rs.getString(10));
+				cBean.setSido(rs.getString(11));
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			resourceClose();
+		}
+		return cBean;
+	}*/
 /***********************************************************************************************/
 	// update Customer
 	public int updateMember(CustomerBean cBean){
 		int result = 0;
 		try {
 			con = getConnection();
-			sql="update customer set password=?,nickname=?,phone=?,roadAddress=?,detailAddress=?,bname=?,sido=? "
+	sql="UPDATE customer SET  password = "
+			+ "hex(aes_encrypt(?, ?)), nickname=?,phone=?,roadAddress=?,detailAddress=?,bname=?,sido=? "
+			+ "where email = ? and customerNo = ?";
+
+
+	pstmt=con.prepareStatement(sql);
+	pstmt.setString(1, cBean.getEmail());
+	pstmt.setString(2, cBean.getPassword());
+	pstmt.setString(3, cBean.getNickname());
+	pstmt.setString(4, cBean.getPhone());
+	pstmt.setString(5, cBean.getRoadAddress());
+	pstmt.setString(6, cBean.getDetailAddress());
+	pstmt.setString(7, cBean.getBname());
+	pstmt.setString(8, cBean.getSido());	
+	pstmt.setString(9, cBean.getEmail()); // 중복아님, 이메일 확인용 
+	pstmt.setString(10, cBean.getCustomerNo());
+			
+			
+	log.info("게터로 받은 패스워드 : " + cBean.getPassword());
+	log.info("게터로 받은 패스워드 : " + cBean.getEmail());
+			// 암호화 안된 버전
+		/*	sql="update customer set password=?,nickname=?,phone=?,roadAddress=?,detailAddress=?,bname=?,sido=? "
 					+ "where customerNo=?";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setString(1, cBean.getPassword());
@@ -264,15 +373,55 @@ public class CustomerDAO {
 			pstmt.setString(5, cBean.getDetailAddress());
 			pstmt.setString(6, cBean.getBname());
 			pstmt.setString(7, cBean.getSido());
-			pstmt.setString(8, cBean.getCustomerNo());
+			pstmt.setString(8, cBean.getCustomerNo());*/
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
+			log.info("고객정보 수정 메서드 오류 발생 " + e);
 			e.printStackTrace();
 		} finally {
 			resourceClose();
 		}
+		log.info("회원정보 수정 액션 result 값 : " + result);
 		return result;
 	}
+	
+	
+	
+	
+	// update Customer, 사용자가 패스워드 변경을 하지않은경우
+	// 암호화 된 키 값을 원래대로 돌리는 문구가 없어서 update가 null값 인경우 본 함수로 대체함
+		public int updateMemberNoPassword(CustomerBean cBean){
+			int result = 0;
+			try {
+				con = getConnection();
+		sql="UPDATE customer SET nickname=?,phone=?,roadAddress=?,detailAddress=?,bname=?,sido=? "
+				+ "where email = ? and customerNo = ?";
+
+
+		pstmt=con.prepareStatement(sql);
+		pstmt.setString(1, cBean.getNickname());
+		pstmt.setString(2, cBean.getPhone());
+		pstmt.setString(3, cBean.getRoadAddress());
+		pstmt.setString(4, cBean.getDetailAddress());
+		pstmt.setString(5, cBean.getBname());
+		pstmt.setString(6, cBean.getSido());	
+		pstmt.setString(7, cBean.getEmail()); // 중복아님, 이메일 확인용 
+		pstmt.setString(8, cBean.getCustomerNo());
+				
+				
+		log.info("updateMemberNoPassword 게터로 받은 패스워드 : " + cBean.getPassword());
+		log.info("updateMemberNoPassword 게터로 받은 패스워드 : " + cBean.getEmail());
+		
+				result = pstmt.executeUpdate();
+			} catch (Exception e) {
+				log.info("고객정보 수정 메서드 오류 발생 " + e);
+				e.printStackTrace();
+			} finally {
+				resourceClose();
+			}
+			log.info("updateMemberNoPassword 회원정보 수정 액션 result 값 : " + result);
+			return result;
+		}
 /***********************************************************************************************/
 	
 	public int deleteCustomer(String customerNo){
