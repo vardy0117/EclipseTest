@@ -53,6 +53,9 @@
 		margin-right: 10px;
 		margin-bottom: 10px;
 	}
+	#storeBox:hover {
+		background-color: #8080800f;
+	}
 	#storeBox img {
 		width: 100px;
 		height: 100px;
@@ -192,7 +195,7 @@
 	
 	
 	function setStoreInStorage(storeNo, storeName){
-		console.log(storeName);
+		//console.log(storeName);
 		var store = {
 			storeNo : storeNo,	
 			storeName : storeName
