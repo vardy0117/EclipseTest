@@ -178,12 +178,13 @@ public class FrontController extends HttpServlet {
 		if(command.equals("CustomerLoginAction.do")) {
 			CustomerLoginAction action = new CustomerLoginAction() ;
 			boolean result = false;
-			int notaes = 0;
+		//	int notaes = 0;
 			try {
 				 forward = new ActionForward();
 				 result = action.execute(request, response);
-				 notaes = action.Aesexecute(request, response);
-				 if(result || notaes == 1){
+			//	 notaes = action.Aesexecute(request, response); // 암호화 안된고객 전용
+			//	 if(result || notaes == 1){
+			 if(result){
 					 forward.setRedirect(true);
 					 forward.setView("index.jsp"); // 사장님 전용페이지가 없어서 일단 여기로 했습니당
 					 System.out.println("일반 고객 로그인 리다이렉트 작동 " + forward.getView());

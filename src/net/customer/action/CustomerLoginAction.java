@@ -47,11 +47,6 @@ public class CustomerLoginAction {
 			HttpSession session=req.getSession();
 			log.info("로그인 완료!");
 			System.out.println("로그인 성공 result값 " + result); 
-	
-			
-			//	String nickname=req.getParameter("nickname");
-		
-				// cdao.CustomerInformation(email);
 				
 				CustomerBean a = cdao.CustomerInformation(email);
 				
@@ -66,9 +61,8 @@ public class CustomerLoginAction {
 				session.setAttribute("nickname", a.getNickname());
 				session.setAttribute("customerNo", a.getCustomerNo());
 				session.setAttribute("phone", a.getPhone());
-				System.out.println("세션 폰번호 값 " + session.getAttribute("phone"));
 				session.setAttribute("sido", a.getSido());
-				
+				System.out.println("세션 폰번호 값 " + session.getAttribute("phone"));
 				
 				System.out.println("세션 등록 완료 ");
 				
@@ -84,8 +78,8 @@ public class CustomerLoginAction {
 			
 		}else{
 			System.out.println("고갱님 로그인 실패됨");
-			log.info("로그인 성공했는데 이 메시지 뜨면 암호화 안된 고객이 로그인에 성공한경우임");
-			log.info("로그인 함수를 2개 호출하기 때문에 발생하는 메시지");
+	//		log.info("로그인 성공했는데 이 메시지 뜨면 암호화 안된 고객이 로그인에 성공한경우임");
+	//		log.info("로그인 함수를 2개 호출하기 때문에 발생하는 메시지");
 			System.out.println("로그인 실패 아이디 : " + email);
 		}
 		
@@ -133,11 +127,9 @@ public int Aesexecute(HttpServletRequest req, HttpServletResponse resp) throws E
 			System.out.println("aesnotcheck 로그인 성공 result값 (암호화 안된 고객) " + aesnotcheck); 
 	
 			
-			//	String nickname=req.getParameter("nickname");
+
 				String email = req.getParameter("email");
-				
-				// cdao.CustomerInformation(email);
-				
+
 				CustomerBean a = cdao.CustomerInformation(email);
 				
 				System.out.println("-----------------------------------------");
