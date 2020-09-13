@@ -81,7 +81,7 @@
 			<a href="./MyCoupon.do" onmouseover="hover(this);" onmouseout="unhover(this);">
 				<div id="myCoupon">
 					<h2>나의 쿠폰</h2>
-					<img src="images/myReview_gradient.svg">
+					<img src="images/coupon_gradient.svg">
 				</div>
 			</a>
 		</div>
