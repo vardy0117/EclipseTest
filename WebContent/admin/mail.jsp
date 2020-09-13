@@ -72,8 +72,8 @@ console.log(list);
 
 
                 <tr><th colspan="2">광고 메일 보내기</th></tr>
-                <tr><td>from</td><td><input type="text" name="from" value="6ydz642@naver.com"/></td></tr>
-                <tr><td >to</td><td ><input type="text"  id="maillist" name="to" value=""/></td></tr>
+                <tr><td>from</td><td><input type="text" name="from" value="6ydz642@naver.com" readonly="readonly" style="background-color: #e2e2e2;"/></td></tr>
+                <tr><td >to</td><td ><input type="text"  id="maillist" name="to" value="" /></td></tr>
                 <tr><td>subject</td><td><input type="text" name="subject" /></td></tr>
                 <tr><td>content</td><td><textarea name="content" style="width:600px; height:183px;"></textarea></td></tr>
                 <tr><td colspan="2" style="text-align:right;"><input class="btn" type="submit" value="발송하기"/></td></tr>
