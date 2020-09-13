@@ -48,7 +48,7 @@
 </head>
 <body>
 	<div id="topDiv">
-		<h2 id="logo"><a href="./ceoIndex.jsp">Delivengers 운영자 페이지</a></h2>
+		<h2 id="logo"><a href="./admin.jsp">Delivengers 운영자 페이지</a></h2>
 		
 			<c:if test="${!empty sessionScope.adminNo}">
 				<div id="loginAndJoin">

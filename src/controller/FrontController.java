@@ -22,6 +22,7 @@ import action.ActionForward;
 import action.AjaxAction;
 import jdk.nashorn.internal.runtime.options.LoggingOption.LoggerInfo;
 import net.admin.action.AdminDao;
+import net.admin.action.MailAction;
 import net.admin.action.adminAction;
 import net.adminlogin.action.AdminLoginAction;
 import net.ceo.action.CeoJoinAction;
@@ -178,12 +179,13 @@ public class FrontController extends HttpServlet {
 		if(command.equals("CustomerLoginAction.do")) {
 			CustomerLoginAction action = new CustomerLoginAction() ;
 			boolean result = false;
-			int notaes = 0;
+		//	int notaes = 0;
 			try {
 				 forward = new ActionForward();
 				 result = action.execute(request, response);
-				 notaes = action.Aesexecute(request, response);
-				 if(result || notaes == 1){
+			//	 notaes = action.Aesexecute(request, response); // 암호화 안된고객 전용
+			//	 if(result || notaes == 1){
+			 if(result){
 					 forward.setRedirect(true);
 					 forward.setView("index.jsp"); // 사장님 전용페이지가 없어서 일단 여기로 했습니당
 					 System.out.println("일반 고객 로그인 리다이렉트 작동 " + forward.getView());
@@ -285,14 +287,31 @@ public class FrontController extends HttpServlet {
 
 		
 		if(command.equals("CustomerModify.do")){
+			String email = (String) session.getAttribute("email");
+			String password = request.getParameter("password");
+			String customerNo = (String) request.getSession().getAttribute("customerNo");
 			
-			if(request.getSession().getAttribute("customerNo") != null){
+			System.out.println("CustomerModify.do (회원정보 수정 받은 customerNo) : " + customerNo);
+			if( customerNo != null && password != null){
+				// 커스터머 번호, 패스워드가 널이 아니면 접근후 다오로 가서 유효성 한번더 검사함
+				
 				CustomerDAO cDAO = new CustomerDAO();
-				CustomerBean cBean = cDAO.getCustomer((String)request.getSession().getAttribute("customerNo"));
+			//	String email = (String) session.getAttribute("email");
+			//	CustomerBean cBean = cDAO.getCustomer((String)request.getSession().getAttribute("customerNo"));
+
+				CustomerBean cBean = cDAO.AesCheckCustomer(email, password);
+				
+				System.out.println("CustomerModify.do (회원정보 수정 접근) 받은 이메일 : " + email);
 				request.setAttribute("cBean", cBean);
+				
 				forward = new ActionForward();
 				forward.setView("index.jsp?center=member/customerModify.jsp");
 				forward.execute(request, response);
+			}else{
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = response.getWriter();
+				out.println("<script>alert('잘못된 접근입니다 (고객정보 수정)'); location.href='./';</script>");
+				out.flush();
 			}
 		}
 		if(command.equals("CustomerModifyAction.do")){
@@ -1690,6 +1709,30 @@ public class FrontController extends HttpServlet {
 		
 		
 		
+	}
+	
+
+	
+	if(command.equals("sendmail.do")){
+		System.out.println("메일 컨트롤러 호출");
+		AdminDao dao = new AdminDao();
+		List<CustomerBean> email = dao.GetUserMail();
+		request.setAttribute("UserMailList",email);
+		forward = new ActionForward();
+		 forward.setRedirect(false);
+		 // forward.setView("admin/mail.jsp"); 
+		 forward.setView("admin.jsp?center=admin/mail.jsp");
+		forward.execute(request, response);
+
+	}
+	
+	
+	if(command.equals("sendmailaction.do")){
+		System.out.println("메일 액션 호출");
+		MailAction mail = new MailAction();
+		mail.mailtest(request, response);
+
+
 	}
 
 

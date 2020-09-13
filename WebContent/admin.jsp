@@ -49,6 +49,8 @@
 								<td class="td_right"><input class="btn" type="submit"
 									value="로그인" /></td>
 							</tr>
+							
+							
 						</table>
 					</form>
 				</div>

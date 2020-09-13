@@ -6,7 +6,16 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>어드민 페이지</title>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
 </head>
+<script>
+/* function mailpopup() {
+  window.open(location.href="sendmail.do", "a", "width=600, height=600, left=100, top=50");
+
+} */
+
+</script>
+
 <style>
 	div {
 		box-sizing: border-box;
@@ -66,7 +75,23 @@ table {
     margin: 66px auto;
 
 }
-
+	.btn {
+		width: 25px;
+		background: linear-gradient( to bottom, hsl(0deg 0% 0%), hsl(0deg 0% 57%));
+		font-family: Binggrae-Bold;
+		font-size: 1rem;
+		color: white;
+		border: none;
+		border-radius: 12px;
+		width: 270px;
+		height: 35px;
+		transition-duration: 1s;
+		opacity: 0.7;
+	}
+	.btn:hover {
+		cursor: pointer;
+		opacity: 1;
+	}
     
 </style>
 
@@ -126,7 +151,7 @@ table {
 	</div>
 
 
-
+<button class="btn" onclick="window.open('sendmail.do','메일발송','width=900,height=500,location=no,status=no,scrollbars=yes');">메일발송하기</button>
 	
 
 	<br>
