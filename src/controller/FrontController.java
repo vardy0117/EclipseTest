@@ -1718,6 +1718,7 @@ public class FrontController extends HttpServlet {
 		AdminDao dao = new AdminDao();
 		List<CustomerBean> email = dao.GetUserMail();
 		request.setAttribute("UserMailList",email);
+		System.out.println("유저 이메일 프론트 컨트롤러 : " + email.toString());
 		forward = new ActionForward();
 		 forward.setRedirect(false);
 		 // forward.setView("admin/mail.jsp"); 

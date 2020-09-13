@@ -164,9 +164,9 @@ public class AdminDao {
 	
 	// 어드민이 메일 대량 발송 할때 사용하는 메서드
 public List<CustomerBean> GetUserMail(){
-		
+	CustomerBean mailbean = null;
 		List<CustomerBean> UserMailList = new ArrayList<CustomerBean>();
-		CustomerBean mailbean = new CustomerBean();
+		
 		try {
 
 			con = getConnection();
@@ -175,6 +175,7 @@ public List<CustomerBean> GetUserMail(){
 			// pstmt.setString(1, customerNo);
 			rs = pstmt.executeQuery();
 			while(rs.next()){
+				mailbean = new CustomerBean();
 				mailbean.setEmail(rs.getString("email"));
 				System.out.println("쿼리해서 가져온 광고 발송 가능 메일 리스트 : " + rs.getString("email"));
 				UserMailList.add(mailbean);

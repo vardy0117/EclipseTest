@@ -97,6 +97,13 @@ public class CustomerBean {
 	public void setAgreeAD(String agreeAD) {
 		this.agreeAD = agreeAD;
 	}
+	@Override
+	public String toString() {
+		return "CustomerBean [customerNo=" + customerNo + ", email=" + email + ", password=" + password + ", nickname="
+				+ nickname + ", date=" + date + ", roadAddress=" + roadAddress + ", detailAddress=" + detailAddress
+				+ ", bname=" + bname + ", phone=" + phone + ", grad=" + grad + ", agreeAD=" + agreeAD + ", sido=" + sido
+				+ "]";
+	}
 
 	
 	
