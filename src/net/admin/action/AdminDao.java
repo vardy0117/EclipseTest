@@ -3,6 +3,8 @@ package net.admin.action;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -159,4 +161,31 @@ public class AdminDao {
 		}
 		return result;
 	}
+	
+	// 어드민이 메일 대량 발송 할때 사용하는 메서드
+public List<CustomerBean> GetUserMail(){
+		
+		List<CustomerBean> UserMailList = new ArrayList<CustomerBean>();
+		CustomerBean mailbean = new CustomerBean();
+		try {
+
+			con = getConnection();
+			sql = "select email from customer where agreeAD = 'T' ";
+			pstmt=con.prepareStatement(sql);
+			// pstmt.setString(1, customerNo);
+			rs = pstmt.executeQuery();
+			while(rs.next()){
+				mailbean.setEmail(rs.getString("email"));
+				System.out.println("쿼리해서 가져온 광고 발송 가능 메일 리스트 : " + rs.getString("email"));
+				UserMailList.add(mailbean);
+			}
+		} catch (Exception e) {
+			System.out.println("get user email 메서드 오류 " + e);
+			e.printStackTrace();
+		} finally {
+			resourceClose();
+		}
+		return UserMailList;
+	}
+	
 }

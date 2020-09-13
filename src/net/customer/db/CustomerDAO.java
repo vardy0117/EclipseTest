@@ -34,7 +34,7 @@ public class CustomerDAO {
 			if(pstmt!=null) pstmt.close();
 			if(con!=null) con.close();
 		} catch (Exception e) {
-			System.out.println("占쌘울옙 占쏙옙占쏙옙 占쏙옙占쏙옙! : " + e);
+			System.out.println("자원해제 실패! : " + e);
 		}
 	} // resourceClose()
 
@@ -87,7 +87,7 @@ public class CustomerDAO {
 				 result = "useable";			 				
 			 }
 		} catch (Exception e) {
-			System.out.println("joinCheckPhone占쌨소듸옙 占쏙옙占싸울옙占쏙옙 占쏙옙占쏙옙 占쌩삼옙 : " + e);
+			System.out.println("joinCheckPhone메서드 오류 발생: " + e);
 		} finally {
 			resourceClose();
 		}

@@ -22,6 +22,7 @@ import action.ActionForward;
 import action.AjaxAction;
 import jdk.nashorn.internal.runtime.options.LoggingOption.LoggerInfo;
 import net.admin.action.AdminDao;
+import net.admin.action.MailAction;
 import net.admin.action.adminAction;
 import net.adminlogin.action.AdminLoginAction;
 import net.ceo.action.CeoJoinAction;
@@ -1708,6 +1709,30 @@ public class FrontController extends HttpServlet {
 		
 		
 		
+	}
+	
+
+	
+	if(command.equals("sendmail.do")){
+		System.out.println("메일 컨트롤러 호출");
+		AdminDao dao = new AdminDao();
+		List<CustomerBean> email = dao.GetUserMail();
+		request.setAttribute("UserMailList",email);
+		forward = new ActionForward();
+		 forward.setRedirect(false);
+		 // forward.setView("admin/mail.jsp"); 
+		 forward.setView("admin.jsp?center=admin/mail.jsp");
+		forward.execute(request, response);
+
+	}
+	
+	
+	if(command.equals("sendmailaction.do")){
+		System.out.println("메일 액션 호출");
+		MailAction mail = new MailAction();
+		mail.mailtest(request, response);
+
+
 	}
 
 
