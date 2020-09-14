@@ -1069,7 +1069,7 @@ public class FrontController extends HttpServlet {
 			menuAction.insertMenu(request, response, multi, Integer.parseInt(multi.getParameter("storeNo")));
 			
 			forward = new ActionForward();
-			forward.setView("ceo?storeNo="+multi.getParameter("storeNo"));
+			forward.setView("ceoStore.do?storeNo="+multi.getParameter("storeNo"));
 			forward.setRedirect(true);
 			forward.execute(request, response);
 			

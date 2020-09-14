@@ -59,7 +59,7 @@
 	.textArea:focus {outline: none;}
 	input:focus { outline: none; }
 	.btn {
-		background: linear-gradient( to bottom, hsl(0deg 0% 0%), hsl(0deg 0% 57%));
+		background: black;
 		font-family: Binggrae-Bold;
 		font-size: 1rem;
 		color: white;
