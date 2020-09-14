@@ -50,7 +50,7 @@
 	#linkWrap a:hover {
 		text-decoration: underline;
 	}
-	select {
+	#fontSelect {
 		border-radius: 12px;
 	    height: 30px;
 	    border: 1px solid gray;
@@ -61,14 +61,16 @@
 	    background: #19ce60;
 	}
 </style>
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <script>
 	function fontChange(font) {
 		document.body.style.fontFamily = font;
 		var inputList = document.querySelectorAll('input, select');
-		console.log(inputList);
 		for(var i=0; i<inputList.length; i++) {
 			inputList[i].style.fontFamily = font;
 		}
+		$("body").append("<style>input[type=password]::placeholder {font-family: " + font +";}</style>");
+		localStorage.CustomerFont = font;
 	}
 </script>
 </head>
@@ -110,4 +112,10 @@
 	
 	
 </body>
+<script>
+	if(localStorage.CustomerFont != null) {
+		fontChange(localStorage.CustomerFont);
+		document.getElementById("fontSelect").value = localStorage.CustomerFont;
+	}
+</script>
 </html>

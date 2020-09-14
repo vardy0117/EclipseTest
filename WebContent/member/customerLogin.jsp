@@ -47,7 +47,7 @@
 		font-size: 1rem;
 	}
 	input[type=password] {
-		font-family: 'pass', 'Roboto', Helvetica, Arial, sans-serif ;
+		font-family: 'pass', 'Roboto', Helvetica, Arial, sans-serif  !important; 
 	}
 	input[type=password]::placeholder {
 		font-family: Binggrae-Bold;
