@@ -50,7 +50,7 @@
 	#linkWrap a:hover {
 		text-decoration: underline;
 	}
-	select {
+	#fontSelect {
 		border-radius: 12px;
 	    height: 30px;
 	    border: 1px solid gray;
@@ -61,14 +61,16 @@
 	    background: #19ce60;
 	}
 </style>
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <script>
 	function fontChange(font) {
 		document.body.style.fontFamily = font;
 		var inputList = document.querySelectorAll('input, select');
-		console.log(inputList);
 		for(var i=0; i<inputList.length; i++) {
 			inputList[i].style.fontFamily = font;
 		}
+		$("body").append("<style>input[type=password]::placeholder {font-family: " + font +";}</style>");
+		localStorage.CustomerFont = font;
 	}
 </script>
 </head>
@@ -91,9 +93,9 @@
 			<div id="linkWrap">
 				폰트 변경
 				<select id="fontSelect" onchange="fontChange(this.value);">
+					<option value='MapoGoldenPier'>마포금빛나루</option>
 					<option value='Binggrae-Bold'>빙그레체</option>
 					<option value='NanumSquare'>나눔스퀘어</option>
-					<option value='MapoGoldenPier'>마포금빛나루</option>
 					<option value='Cafe24Oneprettynight'>카페24 고운밤</option>
 					<option value='MapoFlowerIsland'>마포꽃섬</option>
 					<option value='NEXON Lv1 Gothic OTF'>넥슨고딕</option>
@@ -110,4 +112,10 @@
 	
 	
 </body>
-</html>
+<script>
+	if(localStorage.CustomerFont != null) {
+		fontChange(localStorage.CustomerFont);
+		document.getElementById("fontSelect").value = localStorage.CustomerFont;
+	}
+</script>
+</html> 

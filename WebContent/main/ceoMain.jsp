@@ -80,9 +80,9 @@
 	</c:when>
 	<c:otherwise>
 		<div id="mainDiv">
-			<h1>아직 Delivenger의 승인을 받지 못했습니다. 기다려주세요!</h1>
+			<h1 style="text-align:center;">아직 Delivenger의 승인을 받지 못했습니다. 기다려주세요!</h1>
 		</div>
 	</c:otherwise>
 	</c:choose>
 </body>
-</html>
+</html> 

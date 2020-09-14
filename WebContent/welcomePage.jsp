@@ -68,4 +68,8 @@
 		</div>
 	</marquee>
 </body>
+<script>
+	localStorage.CustomerFont = 'MapoGoldenPier';
+	localStorage.CeoFont = 'MapoGoldenPier';
+</script>
 </html>
