@@ -16,4 +16,9 @@
 		<location>/error/code500.jsp</location>
 	</error-page>
   
+    <error-page>
+		<error-code>404</error-code>
+		<location>/error/code404.jsp</location>
+	</error-page>
+	
 </web-app>
