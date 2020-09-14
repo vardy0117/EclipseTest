@@ -244,7 +244,7 @@
 </body>
 <script type="text/javascript">
     var qrcode = new QRCode(document.getElementById("qrcode"), {
-        text: "http://paxi.site/GitTest/MoveDeliveryIndex.do?orderNo=${param.orderNo}",
+        text: "http://paxi.site/Delivengers/MoveDeliveryIndex.do?orderNo=${param.orderNo}",
         width: 128,
         height: 128,
         colorDark : "#000000",

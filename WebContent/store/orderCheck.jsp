@@ -151,7 +151,7 @@
 		console.log(msg);
 				   
 		 if(confirm(msg)==true){
-			IMP.init('imp93100667');
+			IMP.init('imp59001566');
 			
 			IMP.request_pay({
 			    pg : 'inicis', // version 1.1.0부터 지원.
