@@ -67,7 +67,7 @@ import net.store.db.StoreDAO;
 @WebServlet("*.do")
 public class FrontController extends HttpServlet {
    //  String projectURL="http://paxi.site/GitTest/";  
-	 String projectURL="/GitTest"; // 도메인 서버 안열리면 접속 오류떠서 그냥 프로젝트 주소로 들어갈 수 있게 하였습니다
+	 String projectURL="/Delivengers"; // 도메인 서버 안열리면 접속 오류떠서 그냥 프로젝트 주소로 들어갈 수 있게 하였습니다
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doProcesss(request,response);
