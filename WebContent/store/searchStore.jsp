@@ -274,7 +274,7 @@
 		
 		<div style="clear:both;"></div>
 	</div>
-	<div style="position:fixed; left:10px; top:50%;"><button id="prevBtn">&lt;</button></div>
-	<div style="position:fixed; right:10px; top:50%;"><button id="nextBtn">&gt;</button></div>
+	<div style="position:fixed; left:-550px; top:50%; margin-left: 50%;"><button id="prevBtn">&lt;</button></div>
+	<div style="position:fixed; left:50%; top:50%; margin-left: 510px;"><button id="nextBtn">&gt;</button></div>
 </body>
 </html>​
