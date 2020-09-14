@@ -174,7 +174,7 @@
 		document.getElementById("menuCnt").value = parseInt(document.getElementById("menuCnt").value) + 1;
 		var cnt = document.getElementById("menuCnt").value; 
 		
-		var elements = '<tr><td></td><td>　</td></tr><tr><td>메뉴사진</td><td><input type="file" name="menu_image' + cnt + '"></td></tr>' + 
+		var elements = '<tr><td></td><td>　</td></tr><tr><td>메뉴사진</td><td><label for="mi">업로드</label><input type="file" name="menu_image' + cnt + '"></td></tr>' + 
 						'<tr><td>카테고리</td><td><select class="select" style="width:130px;" name="menu_category' + cnt + '"><option value="세트 메뉴">세트 메뉴</option><option value="주 메뉴">주 메뉴</option><option value="사이드 메뉴">사이드 메뉴</option><option value="음료/주류">음료/주류</option></select></td></tr>' + 
 						'<tr><td>메뉴이름</td><td><input class="textBox" type="text" name="menu_name' + cnt + '"></td></tr>' + 
 						'<tr><td>가격</td><td><input class="textBox" type="text" name="menu_price' + cnt + '">원</td></tr>' + 
