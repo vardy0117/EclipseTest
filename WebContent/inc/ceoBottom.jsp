@@ -95,9 +95,9 @@
 			<div id="linkWrap">
 				폰트 변경
 				<select id="fontSelect" onchange="fontChange(this.value);">
+					<option value='MapoGoldenPier'>마포금빛나루</option>
 					<option value='Binggrae-Bold'>빙그레체</option>
 					<option value='NanumSquare'>나눔스퀘어</option>
-					<option value='MapoGoldenPier'>마포금빛나루</option>
 					<option value='Cafe24Oneprettynight'>카페24 고운밤</option>
 					<option value='MapoFlowerIsland'>마포꽃섬</option>
 					<option value='NEXON Lv1 Gothic OTF'>넥슨고딕</option>
@@ -116,4 +116,4 @@
 		document.getElementById("fontSelect").value = localStorage.CeoFont;
 	}
 </script>
-</html>
+</html> 
