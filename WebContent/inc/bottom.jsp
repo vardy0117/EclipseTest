@@ -50,7 +50,27 @@
 	#linkWrap a:hover {
 		text-decoration: underline;
 	}
+	select {
+		border-radius: 12px;
+	    height: 30px;
+	    border: 1px solid gray;
+	    font-family: Binggrae-Bold;
+	    padding-left: 5px;
+	    margin-right: 20px;
+	    color: white;
+	    background: #19ce60;
+	}
 </style>
+<script>
+	function fontChange(font) {
+		document.body.style.fontFamily = font;
+		var inputList = document.querySelectorAll('input, select');
+		console.log(inputList);
+		for(var i=0; i<inputList.length; i++) {
+			inputList[i].style.fontFamily = font;
+		}
+	}
+</script>
 </head>
 
 <body>
@@ -69,7 +89,20 @@
 				</p>
 			</div>
 			<div id="linkWrap">
+				폰트 변경
+				<select id="fontSelect" onchange="fontChange(this.value);">
+					<option value='Binggrae-Bold'>빙그레체</option>
+					<option value='NanumSquare'>나눔스퀘어</option>
+					<option value='MapoGoldenPier'>마포금빛나루</option>
+					<option value='Cafe24Oneprettynight'>카페24 고운밤</option>
+					<option value='MapoFlowerIsland'>마포꽃섬</option>
+					<option value='NEXON Lv1 Gothic OTF'>넥슨고딕</option>
+					<option value='BMEULJIRO'>배민을지로체</option>
+				</select>
 				<a href="./CeoLogin.do" target="_blank">딜리벤져스 사장님</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="https://github.com/vardy0117/Group1-Team-Project" target="_blank">Github 바로가기</a>			
+			</div>
+			<div id="fontChangeWrap">
+				
 			</div>
 		</div>
 		<!-- <div><a href="./CeoLogin.do" target="_blank">사장님 로그인</a></div> -->
