@@ -71,5 +71,9 @@
 <script>
 	localStorage.CustomerFont = 'MapoGoldenPier';
 	localStorage.CeoFont = 'MapoGoldenPier';
+	
+	setTimeout(function() {
+		document.querySelector("marquee").stop();
+	}, 11300);
 </script>
 </html>
