@@ -73,7 +73,7 @@
 				<table>
 					<tr>
 						<th>이메일</th>
-						<td><input class="textBox" type="text" value="${cBean.email }" name="email"></td>
+						<td><input class="textBox" type="text" value="${cBean.email }" name="email" readonly></td>
 					</tr>
 					<tr>
 						<th>새 비밀번호</th>

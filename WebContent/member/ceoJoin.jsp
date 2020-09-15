@@ -236,7 +236,7 @@
 							<select id="emailServerSelBox" name="emailServerSelBox" onchange="emailAddress_Change()" onfocusout="emailCheck()"> 
 								<option value="">직접 입력</option>
 								<option value="naver.com">naver.com</option>
-								<option value="google.com">google.com</option>
+								<option value="gmail.com">gmail.com</option>
 								<option value="hanmail.net">hanmail.net</option>
 							</select>
 						</td>
