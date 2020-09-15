@@ -158,7 +158,8 @@ function turnPlate(target) {
 		}
 		
 		$('.roulPan').css("transition-duration", "3s");
-		$(".roulPan").rotate(angle);
+		//$(".roulPan").rotate(angle);
+		$(".roulPan").css("transform", "rotate(" + angle + "deg)");
 		
 		setTimeout(function() {
 			if(target == 1) alert("10% 할인 쿠폰 당첨입니다!\n축하합니다.");
