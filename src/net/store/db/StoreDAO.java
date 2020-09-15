@@ -435,7 +435,8 @@ public class StoreDAO {
 
 	public List<StoreBean> getStoreList(String category, String startNo, String currentHour, String orderSido, String orderBname) {
 		//System.out.println("ajaxAction -> StoreDAO.getStoreList() 호출");
-		//System.out.println("category : " + category + " / orderSido : " + orderSido + " / orderBname : " + orderBname);
+		//System.out.println("category : " + category + " / orderSido : " + orderSido + " / orderBname : " + orderBname + " / currentHour : " + currentHour);
+		//System.out.println("startNo : " + startNo);
 		List<StoreBean> storeList = new ArrayList<>();
 		
 		try {
@@ -446,9 +447,9 @@ public class StoreDAO {
 			pstmt.setString(1, orderSido);
 			pstmt.setString(2, "%"+orderBname+"%");
 			pstmt.setString(3, category);
-			pstmt.setString(4, currentHour);
-			pstmt.setString(5, currentHour);
-			pstmt.setString(6, currentHour);
+			pstmt.setInt(4, Integer.parseInt(currentHour));
+			pstmt.setInt(5, Integer.parseInt(currentHour));
+			pstmt.setInt(6, Integer.parseInt(currentHour));
 			pstmt.setInt(7, Integer.parseInt(startNo));
 			
 			rs = pstmt.executeQuery();

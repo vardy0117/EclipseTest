@@ -175,6 +175,7 @@ function printIt(printThis)
 </div>
 </div>
 </div>
+<br>
 <input type="button" value="출력하기" onclick="javascript:printIt(document.getElementById('printme').innerHTML)" />
 
 

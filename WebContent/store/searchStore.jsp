@@ -160,6 +160,7 @@
 			data : {category:category, startNo:startNo, currentHour:currentHour},
 			dataType : "json",
 			success : function(jsonArray) {
+				console.log(jsonArray);
 				for(var i=0; i<jsonArray.length; i++) {
 					var starPoint = jsonArray[i].reviewCount == "0" ? 0 : Math.round(jsonArray[i].points / jsonArray[i].reviewCount);
 					starPoint = starPoint.toFixed(1);
